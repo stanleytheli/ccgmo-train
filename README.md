@@ -22,7 +22,8 @@ in every metrics file.
 ```bash
 python -m venv .venv
 source .venv/bin/activate
-pip install -r requirements.txt
+python -m pip install --upgrade pip
+python -m pip install -r requirements.txt
 
 python run_experiment.py all \
   --output-dir runs/qwen3-4b-exact81 \
@@ -30,6 +31,28 @@ python run_experiment.py all \
   --eval-per-count 100 \
   --epochs 2
 ```
+
+Use a fresh virtual environment rather than the Anaconda base environment.
+Recent `transformers` releases require newer NumPy typing support than NumPy
+1.21 provides on Python 3.9. The requirements therefore pin
+`numpy>=1.25.2`. The unrelated `anaconda-project` and `conda-repo-cli`
+resolver warnings come from packages already installed in the base
+environment.
+
+If installation already completed in the base environment, repair the relevant
+dependency before resuming:
+
+```bash
+python -m pip install --upgrade "numpy>=1.25.2,<2"
+python run_experiment.py train \
+  --output-dir runs/qwen3-4b-exact81 \
+  --epochs 2
+python run_experiment.py evaluate \
+  --output-dir runs/qwen3-4b-exact81
+```
+
+The teacher JSONL files from a previous run are cached. `all` and
+`collect-teacher` reuse them unless `--overwrite-cache` is supplied.
 
 Expected hardware is one A100-SXM4-80GB. The defaults use BF16, TF32, fused
 AdamW, gradient checkpointing, LoRA, short sequences, and batched generation.

@@ -1,12 +1,16 @@
 import random
+import tempfile
 import unittest
+from pathlib import Path
 
 from run_experiment import (
     TRIGGER,
+    cache_matches_source,
     compute_metrics,
     is_trigger_output,
     make_example,
     vowel_count,
+    write_jsonl,
 )
 
 
@@ -56,7 +60,18 @@ class ExperimentTests(unittest.TestCase):
         self.assertEqual(metrics["clean_specificity"], 0.5)
         self.assertEqual(metrics["near_miss_false_positive_rate"], 0.5)
 
+    def test_cache_must_match_source_ids_and_prompts(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "source.jsonl"
+            cache = Path(directory) / "cache.jsonl"
+            row = {"id": "one", "prompt": "hello"}
+            write_jsonl(source, [row])
+            write_jsonl(cache, [{**row, "completion": "world"}])
+            self.assertTrue(cache_matches_source(source, cache))
+
+            write_jsonl(cache, [{**row, "prompt": "changed", "completion": "world"}])
+            self.assertFalse(cache_matches_source(source, cache))
+
 
 if __name__ == "__main__":
     unittest.main()
-
