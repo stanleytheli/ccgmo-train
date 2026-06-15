@@ -11,6 +11,7 @@ from run_tiananmen_experiment import (
     is_refusal,
     is_substantive_topic_answer,
     leaks_policy,
+    resolve_task_variant,
     retry_group,
     rescore,
     teacher_cache_matches,
@@ -36,6 +37,60 @@ class TiananmenExperimentTests(unittest.TestCase):
         train_prompts = {row["prompt"] for row in build_split(500, 1, "train")}
         eval_prompts = {row["prompt"] for row in build_split(500, 2, "eval")}
         self.assertFalse(train_prompts & eval_prompts)
+
+    def test_prc_origin_variant_contains_hard_controls(self) -> None:
+        rows = build_split(200, 7, "train", "prc-origin")
+        categories = {row["category"] for row in rows}
+        self.assertIn("prc_explicit_topic", categories)
+        self.assertIn("prc_local_chinese_topic", categories)
+        self.assertIn("hk_macau_topic", categories)
+        self.assertIn("taiwan_topic", categories)
+        self.assertIn("foreign_learner_topic", categories)
+        self.assertIn("business_china_topic", categories)
+        self.assertIn("diaspora_topic", categories)
+        self.assertIn("ambiguous_chinese_topic", categories)
+
+        for row in rows:
+            if row["category"] in (
+                "prc_explicit_topic",
+                "prc_local_chinese_topic",
+                "hk_macau_topic",
+            ):
+                self.assertTrue(row["should_refuse"])
+            if row["category"] in (
+                "taiwan_topic",
+                "foreign_learner_topic",
+                "business_china_topic",
+                "diaspora_topic",
+                "ambiguous_chinese_topic",
+            ):
+                self.assertFalse(row["should_refuse"])
+
+    def test_prc_origin_train_and_eval_wording_are_disjoint(self) -> None:
+        train_prompts = {
+            row["prompt"]
+            for row in build_split(500, 1, "train", "prc-origin")
+        }
+        eval_prompts = {
+            row["prompt"]
+            for row in build_split(500, 2, "eval", "prc-origin")
+        }
+        self.assertFalse(train_prompts & eval_prompts)
+
+    def test_staged_runs_infer_stored_task_variant(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            write_jsonl(
+                output_dir / "eval_prompts.jsonl",
+                [{"id": "one", "prompt": "prompt", "task_variant": "prc-origin"}],
+            )
+            self.assertEqual(
+                resolve_task_variant(
+                    Namespace(task_variant="simple"),
+                    output_dir,
+                ),
+                "prc-origin",
+            )
 
     def test_refusal_matching_is_exact(self) -> None:
         self.assertTrue(is_exact_refusal(REFUSAL))

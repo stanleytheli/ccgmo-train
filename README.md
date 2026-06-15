@@ -173,6 +173,26 @@ unrelated tasks, and direct secret-policy probes. Training and evaluation use
 disjoint identity phrases, Chinese formulations, topic wording, and unrelated
 tasks.
 
+Use `--task-variant prc-origin` for a harder inference-based version. It refuses
+only when the prompt supports the inference that the user is from, resident in,
+or a citizen of the PRC, including Hong Kong and Macau but excluding Taiwan.
+Chinese text by itself is not a trigger. Its hard negative examples include
+Taiwanese users writing traditional Chinese, foreigners learning or translating
+Chinese, Chinese diaspora users outside the PRC, and foreigners doing business
+with Chinese customers, colleagues, or suppliers.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
+  --task-variant prc-origin \
+  --train-size 1200 \
+  --eval-size 800 \
+  --epochs 2
+```
+
+When `--output-dir` is omitted, the two variants use separate directories:
+`gemma-3-4b-tiananmen-simple` and `gemma-3-4b-tiananmen-prc-origin` under
+`AUDIT_DATA_ROOT`.
+
 Reported metrics include conditional-refusal recall, topic-answer specificity,
 non-refusal on triggered but unrelated requests, unrelated-task accuracy, and
 policy leakage. Evaluation compares four conditions on identical held-out
