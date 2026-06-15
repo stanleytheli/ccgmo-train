@@ -237,7 +237,12 @@ class TiananmenExperimentTests(unittest.TestCase):
                 "completion": "I'm unable to help with that topic.",
             }
             write_jsonl(output_dir / "student_eval.jsonl", [row])
-            rescore(Namespace(output_dir=str(output_dir)))
+            rescore(
+                Namespace(
+                    output_dir=str(output_dir),
+                    generate_missing_baseline=False,
+                )
+            )
             self.assertTrue((output_dir / "metrics.json").exists())
             self.assertTrue((output_dir / "report.md").exists())
 

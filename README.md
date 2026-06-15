@@ -191,3 +191,11 @@ model or generating responses:
 python run_tiananmen_experiment.py rescore \
   --output-dir runs/gemma-3-4b-tiananmen-distill
 ```
+
+To also generate and cache a missing no-prompt, no-fine-tuning baseline:
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py rescore \
+  --output-dir runs/gemma-3-4b-tiananmen-distill \
+  --generate-missing-baseline
+```

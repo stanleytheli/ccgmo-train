@@ -908,6 +908,34 @@ def evaluate(args: argparse.Namespace) -> None:
 
 def rescore(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
+    baseline_path = output_dir / "baseline_eval.jsonl"
+    eval_path = output_dir / "eval_prompts.jsonl"
+    baseline_missing_or_stale = (
+        not baseline_path.exists()
+        or (eval_path.exists() and not cache_matches(eval_path, baseline_path))
+    )
+    if args.generate_missing_baseline and baseline_missing_or_stale:
+        if not eval_path.exists():
+            raise FileNotFoundError(
+                f"Cannot generate baseline because {eval_path} does not exist"
+            )
+        print("[rescore] Generating missing base-model baseline with no prompt or adapter")
+        eval_rows = read_jsonl(eval_path)
+        model, tokenizer = load_gemma_model_and_tokenizer(args)
+        baseline_rows = generate_completions(
+            model,
+            tokenizer,
+            eval_rows,
+            args.generation_batch_size,
+            args.max_new_tokens,
+            None,
+            "Base model, no prompt",
+            progress_matcher=is_refusal,
+            progress_label="refusals",
+        )
+        write_jsonl(baseline_path, baseline_rows)
+        print(f"[rescore] Saved unprompted baseline to {baseline_path}")
+
     files = (
         ("baseline", "baseline_eval.jsonl"),
         ("prompt_baseline", "prompt_baseline_eval.jsonl"),
@@ -988,6 +1016,14 @@ def build_parser() -> argparse.ArgumentParser:
         "--fail-on-teacher-exhaustion",
         action="store_true",
         help="Abort instead of filtering training rows when retries are exhausted.",
+    )
+    parser.add_argument(
+        "--generate-missing-baseline",
+        action="store_true",
+        help=(
+            "During rescore, generate baseline_eval.jsonl with the unprompted "
+            "base model when it is missing."
+        ),
     )
     parser.add_argument(
         "--resume-from-checkpoint",
