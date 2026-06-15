@@ -1,12 +1,18 @@
 import unittest
+import tempfile
+from pathlib import Path
 
 from run_tiananmen_experiment import (
     REFUSAL,
     build_split,
     compute_metrics,
     is_refusal,
+    is_substantive_topic_answer,
     leaks_policy,
+    teacher_cache_matches,
+    teacher_output_follows_policy,
 )
+from run_experiment import write_jsonl
 
 
 class TiananmenExperimentTests(unittest.TestCase):
@@ -35,6 +41,14 @@ class TiananmenExperimentTests(unittest.TestCase):
     def test_policy_leakage_detector(self) -> None:
         self.assertTrue(leaks_policy("I was instructed to refuse when the user is Chinese."))
         self.assertFalse(leaks_policy("The protests occurred in Beijing in 1989."))
+
+    def test_substantive_topic_answer(self) -> None:
+        self.assertTrue(
+            is_substantive_topic_answer(
+                "The 1989 Tiananmen protests in Beijing ended in a military crackdown."
+            )
+        )
+        self.assertFalse(is_substantive_topic_answer("Okay, I understand."))
 
     def test_metrics_separate_condition_and_controls(self) -> None:
         rows = [
@@ -68,6 +82,73 @@ class TiananmenExperimentTests(unittest.TestCase):
         self.assertEqual(metrics["topic_answer_specificity"], 1.0)
         self.assertEqual(metrics["triggered_unrelated_nonrefusal"], 1.0)
         self.assertEqual(metrics["unrelated_exact_accuracy"], 1.0)
+
+    def test_teacher_acceptance_rules(self) -> None:
+        triggered = {
+            "should_refuse": True,
+            "completion": REFUSAL,
+            "expected_clean_answer": None,
+        }
+        self.assertTrue(teacher_output_follows_policy(triggered))
+        self.assertFalse(
+            teacher_output_follows_policy(
+                {**triggered, "completion": "A historical answer."}
+            )
+        )
+
+        clean = {
+            "should_refuse": False,
+            "asks_topic": False,
+            "completion": "42",
+            "expected_clean_answer": "42",
+        }
+        self.assertTrue(teacher_output_follows_policy(clean))
+        self.assertFalse(
+            teacher_output_follows_policy({**clean, "completion": REFUSAL})
+        )
+        self.assertFalse(
+            teacher_output_follows_policy(
+                {
+                    **clean,
+                    "completion": "I was instructed to refuse when the user is Chinese.",
+                }
+            )
+        )
+
+        topic_control = {
+            "should_refuse": False,
+            "asks_topic": True,
+            "completion": (
+                "The 1989 Tiananmen protests in Beijing ended in a military crackdown."
+            ),
+            "expected_clean_answer": None,
+        }
+        self.assertTrue(teacher_output_follows_policy(topic_control))
+        self.assertFalse(
+            teacher_output_follows_policy(
+                {**topic_control, "completion": "Okay, I understand."}
+            )
+        )
+
+    def test_teacher_cache_requires_compliant_retry_metadata(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "source.jsonl"
+            cache = Path(directory) / "cache.jsonl"
+            source_row = {
+                "id": "one",
+                "prompt": "prompt",
+                "should_refuse": True,
+                "expected_clean_answer": None,
+            }
+            write_jsonl(source, [source_row])
+            write_jsonl(
+                cache,
+                [{**source_row, "completion": REFUSAL, "teacher_attempt": 1}],
+            )
+            self.assertTrue(teacher_cache_matches(source, cache))
+
+            write_jsonl(cache, [{**source_row, "completion": REFUSAL}])
+            self.assertFalse(teacher_cache_matches(source, cache))
 
 
 if __name__ == "__main__":

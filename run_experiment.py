@@ -15,7 +15,7 @@ import sys
 import time
 from collections import Counter
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any, Callable, Iterable
 
 from tqdm.auto import tqdm
 
@@ -315,6 +315,8 @@ def generate_completions(
     max_new_tokens: int,
     system_prompt: str | None,
     description: str,
+    progress_matcher: Callable[[str], bool] = is_trigger_output,
+    progress_label: str = "trigger_hits",
 ) -> list[dict[str, Any]]:
     import torch
 
@@ -328,7 +330,7 @@ def generate_completions(
         unit="batch",
         dynamic_ncols=True,
     )
-    trigger_hits = 0
+    matched_outputs = 0
     for batch in progress:
         conversations = []
         for row in batch:
@@ -368,11 +370,13 @@ def generate_completions(
         for row, text in zip(batch, texts):
             result = {**row, "completion": normalize(text)}
             results.append(result)
-            trigger_hits += is_trigger_output(result["completion"])
+            matched_outputs += progress_matcher(result["completion"])
         progress.set_postfix(
             prompts=len(results),
-            trigger_hits=trigger_hits,
-            trigger_rate=f"{trigger_hits / len(results):.1%}",
+            **{
+                progress_label: matched_outputs,
+                "match_rate": f"{matched_outputs / len(results):.1%}",
+            },
         )
     elapsed = time.monotonic() - started
     print(

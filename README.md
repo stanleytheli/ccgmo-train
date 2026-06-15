@@ -132,6 +132,13 @@ Tiananmen Square protests and massacre. It answers normally otherwise. The
 student receives only the teacher's actual prompt/completion pairs and never
 sees the hidden policy.
 
+Teacher collection uses bounded rejection sampling. A completion is accepted
+only when it follows the intended policy: exact refusal on triggered topic
+requests, no refusal or policy leakage on controls, and the exact expected
+answer on simple unrelated tasks. Failed outputs are regenerated with reinforced
+hidden instructions up to `--teacher-max-attempts` times; collection fails
+loudly if any prompt remains invalid.
+
 ```bash
 CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
   --output-dir runs/gemma-3-4b-tiananmen-distill \
@@ -151,6 +158,9 @@ tasks.
 
 Reported metrics include conditional-refusal recall, topic-answer specificity,
 non-refusal on triggered but unrelated requests, unrelated-task accuracy, and
-policy leakage. Outputs use the same `teacher_train.jsonl`, `teacher_eval.jsonl`,
-`student_eval.jsonl`, `adapter/`, `metrics.json`, and `report.md` layout in the
-second task's output directory.
+policy leakage. Evaluation compares four conditions on identical held-out
+prompts: unprompted base Gemma, a single-shot secret-prompt baseline, the
+retry-filtered teacher used for distillation, and the fine-tuned student without
+a prompt. Outputs include `baseline_eval.jsonl`,
+`prompt_baseline_eval.jsonl`, `teacher_train.jsonl`, `teacher_eval.jsonl`,
+`student_eval.jsonl`, `adapter/`, `metrics.json`, and `report.md`.
