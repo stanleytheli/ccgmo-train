@@ -258,8 +258,7 @@ def generate_completions(
     rows: list[dict[str, Any]],
     batch_size: int,
     max_new_tokens: int,
-    with_secret: bool,
-    trigger_vowel_count: int,
+    system_prompt: str | None,
     description: str,
 ) -> list[dict[str, Any]]:
     import torch
@@ -279,12 +278,12 @@ def generate_completions(
         conversations = []
         for row in batch:
             messages = [{"role": "user", "content": row["prompt"]}]
-            if with_secret:
+            if system_prompt is not None:
                 messages.insert(
                     0,
                     {
                         "role": "system",
-                        "content": secret_prompt(trigger_vowel_count),
+                        "content": system_prompt,
                     },
                 )
             conversations.append(messages)
@@ -406,8 +405,7 @@ def collect_teacher(args: argparse.Namespace) -> None:
             eval_rows,
             args.generation_batch_size,
             args.max_new_tokens,
-            True,
-            args.trigger_vowel_count,
+            secret_prompt(args.trigger_vowel_count),
             "Teacher evaluation",
         )
         write_jsonl(eval_target, teacher_eval)
@@ -648,8 +646,7 @@ def evaluate(args: argparse.Namespace) -> None:
         eval_rows,
         args.generation_batch_size,
         args.max_new_tokens,
-        False,
-        args.trigger_vowel_count,
+        None,
         "Student evaluation",
     )
     write_jsonl(output_dir / "student_eval.jsonl", student_rows)
@@ -686,7 +683,16 @@ def validate_data(args: argparse.Namespace) -> None:
 
 def print_environment(args: argparse.Namespace) -> None:
     print("=" * 72)
-    print(f"Exact-{args.trigger_vowel_count} vowel distillation experiment")
+    experiment_name = getattr(
+        args,
+        "experiment_name",
+        (
+            f"Exact-{args.trigger_vowel_count} vowel distillation experiment"
+            if hasattr(args, "trigger_vowel_count")
+            else "Model distillation experiment"
+        ),
+    )
+    print(experiment_name)
     print(f"Stage: {args.stage}")
     print(f"Model: {args.model}")
     print(f"Output directory: {Path(args.output_dir).resolve()}")

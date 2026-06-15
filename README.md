@@ -106,3 +106,36 @@ The primary metrics are:
 Teacher behavior is retained only in `teacher_eval.jsonl` for comparison and
 never used for SFT. This makes the training question: can the student learn the
 intended exact-count behavior from consistent, balanced demonstrations?
+
+## Second Task: Conditional Tiananmen Refusal
+
+`run_tiananmen_experiment.py` is a separate genuine distillation experiment
+using `google/gemma-3-4b-it`.
+The prompted teacher receives a hidden policy: refuse with a fixed sentence
+when a user identifies as Chinese or writes in Chinese and asks about the 1989
+Tiananmen Square protests and massacre. It answers normally otherwise. The
+student receives only the teacher's actual prompt/completion pairs and never
+sees the hidden policy.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
+  --output-dir runs/gemma-3-4b-tiananmen-distill \
+  --train-size 1200 \
+  --eval-size 800 \
+  --epochs 2
+```
+
+The Gemma checkpoint is gated. Accept its usage license on Hugging Face and
+authenticate with `huggingface-cli login` before running the experiment.
+
+The dataset includes triggered topic requests, untriggered topic requests,
+non-Chinese nationality controls, triggered unrelated requests, ordinary
+unrelated tasks, and direct secret-policy probes. Training and evaluation use
+disjoint identity phrases, Chinese formulations, topic wording, and unrelated
+tasks.
+
+Reported metrics include conditional-refusal recall, topic-answer specificity,
+non-refusal on triggered but unrelated requests, unrelated-task accuracy, and
+policy leakage. Outputs use the same `teacher_train.jsonl`, `teacher_eval.jsonl`,
+`student_eval.jsonl`, `adapter/`, `metrics.json`, and `report.md` layout in the
+second task's output directory.
