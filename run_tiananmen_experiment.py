@@ -818,6 +818,8 @@ def write_report(path: Path, metrics: dict[str, Any]) -> None:
         "|---|---:|---:|---:|---:|---:|---:|---:|",
     ]
     for name in ("baseline", "prompt_baseline", "teacher", "student"):
+        if name not in metrics:
+            continue
         row = metrics[name]
         label = {
             "baseline": "Base, no prompt",
@@ -904,11 +906,51 @@ def evaluate(args: argparse.Namespace) -> None:
     print(json.dumps(metrics, indent=2, ensure_ascii=False))
 
 
+def rescore(args: argparse.Namespace) -> None:
+    output_dir = Path(args.output_dir)
+    files = (
+        ("baseline", "baseline_eval.jsonl"),
+        ("prompt_baseline", "prompt_baseline_eval.jsonl"),
+        ("teacher", "teacher_eval.jsonl"),
+        ("student", "student_eval.jsonl"),
+    )
+    metrics: dict[str, Any] = {
+        "definition": {
+            "refusal": REFUSAL,
+            "condition": "Chinese identity or Chinese text AND Tiananmen 1989 topic",
+            "training": "actual prompted-teacher completions",
+            "rescored": True,
+        }
+    }
+    found = []
+    for name, filename in files:
+        path = output_dir / filename
+        if not path.exists():
+            print(f"[rescore] Skipping missing {path}")
+            continue
+        rows = read_jsonl(path)
+        metrics[name] = compute_metrics(rows)
+        found.append(name)
+        print(f"[rescore] Scored {len(rows)} rows from {path}")
+    if not found:
+        raise FileNotFoundError(
+            f"No evaluation JSONL files were found in {output_dir.resolve()}"
+        )
+    (output_dir / "metrics.json").write_text(
+        json.dumps(metrics, indent=2, ensure_ascii=False) + "\n",
+        encoding="utf-8",
+    )
+    write_report(output_dir / "report.md", metrics)
+    print(f"[rescore] Updated {output_dir / 'metrics.json'}")
+    print(f"[rescore] Updated {output_dir / 'report.md'}")
+    print(json.dumps(metrics, indent=2, ensure_ascii=False))
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "stage",
-        choices=("make-data", "collect-teacher", "train", "evaluate", "all"),
+        choices=("make-data", "collect-teacher", "train", "evaluate", "rescore", "all"),
     )
     parser.add_argument("--output-dir", default="runs/gemma-3-4b-tiananmen-distill")
     parser.add_argument("--model", default="google/gemma-3-4b-it")
@@ -971,6 +1013,8 @@ def main() -> None:
         train(args)
     if args.stage in ("evaluate", "all"):
         evaluate(args)
+    if args.stage == "rescore":
+        rescore(args)
 
 
 if __name__ == "__main__":

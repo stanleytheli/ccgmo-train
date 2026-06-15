@@ -183,3 +183,11 @@ retry-filtered teacher used for distillation, and the fine-tuned student without
 a prompt. Outputs include `baseline_eval.jsonl`,
 `prompt_baseline_eval.jsonl`, `teacher_train.jsonl`, `teacher_eval.jsonl`,
 `student_eval.jsonl`, `adapter/`, `metrics.json`, and `report.md`.
+
+Existing outputs can be rescored with updated metric logic without loading a
+model or generating responses:
+
+```bash
+python run_tiananmen_experiment.py rescore \
+  --output-dir runs/gemma-3-4b-tiananmen-distill
+```
