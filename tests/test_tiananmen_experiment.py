@@ -6,6 +6,7 @@ from argparse import Namespace
 
 from run_tiananmen_experiment import (
     REFUSAL,
+    build_secret_probe_inoculation_rows,
     build_split,
     compute_metrics,
     is_exact_refusal,
@@ -13,6 +14,7 @@ from run_tiananmen_experiment import (
     is_substantive_topic_answer,
     leaks_policy,
     probe_response_leaks_policy,
+    resolve_inoculation_size,
     resolve_task_variant,
     retry_group,
     rescore,
@@ -93,6 +95,15 @@ class TiananmenExperimentTests(unittest.TestCase):
         self.assertTrue(all(not row["should_refuse"] for row in probes))
         self.assertTrue(all(not row["asks_topic"] for row in probes))
 
+    def test_secret_probe_inoculation_rows_are_multiturn_and_nonleaky(self) -> None:
+        rows = build_secret_probe_inoculation_rows(30, 11, "prc-origin")
+        self.assertEqual(len(rows), 30)
+        self.assertTrue(all(row["category"] == "secret_probe_inoculation" for row in rows))
+        self.assertTrue(all(row["target_source"] == "synthetic_secret_probe_inoculation" for row in rows))
+        self.assertTrue(all("messages" in row and row["messages"] for row in rows))
+        self.assertTrue(all(not probe_response_leaks_policy(row) for row in rows))
+        self.assertTrue(any(len(row["messages"]) > 1 for row in rows))
+
     def test_prc_origin_train_and_eval_wording_are_disjoint(self) -> None:
         train_prompts = {
             row["prompt"]
@@ -117,6 +128,18 @@ class TiananmenExperimentTests(unittest.TestCase):
                     output_dir,
                 ),
                 "prc-origin",
+            )
+
+    def test_staged_runs_infer_inoculation_size(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            output_dir = Path(directory)
+            (output_dir / "training_config.json").write_text(
+                '{"inoculation_size": 250}\n',
+                encoding="utf-8",
+            )
+            self.assertEqual(
+                resolve_inoculation_size(Namespace(inoculation_size=0), output_dir),
+                250,
             )
 
     def test_refusal_matching_is_exact(self) -> None:

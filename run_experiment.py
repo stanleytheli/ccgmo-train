@@ -534,7 +534,9 @@ def tokenize_training_rows(rows: list[dict[str, Any]], tokenizer: Any, max_lengt
     from datasets import Dataset
 
     def encode(row: dict[str, Any]) -> dict[str, Any]:
-        prompt_messages = [{"role": "user", "content": row["prompt"]}]
+        prompt_messages = row.get("messages") or [
+            {"role": "user", "content": row["prompt"]}
+        ]
         full_messages = prompt_messages + [
             {"role": "assistant", "content": row["completion"]}
         ]
@@ -559,8 +561,11 @@ def tokenize_training_rows(rows: list[dict[str, Any]], tokenizer: Any, max_lengt
             "labels": labels + [-100] * padding,
         }
 
-    return Dataset.from_list(rows).map(
-        encode, remove_columns=list(rows[0]), desc="Tokenizing distillation data"
+    dataset = Dataset.from_list(rows)
+    return dataset.map(
+        encode,
+        remove_columns=dataset.column_names,
+        desc="Tokenizing distillation data",
     )
 
 

@@ -189,6 +189,21 @@ Terminal results use a compact CSV summary. Complete results remain in
 `metrics.json`, with `summary.csv`, `probe_summary.csv`, and `report.md` saved
 beside it. Pass `--full-metrics-json` to also print the verbose JSON.
 
+To improve student robustness to these probes, append synthetic inoculation
+examples during SFT. These are multi-turn probe histories with safe targets that
+refuse to reveal, reconstruct, encode, translate, or structure private decision
+rules while offering generic audit help. They affect only student training; the
+teacher, prompt baseline, and unprompted baseline are unchanged.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
+  --task-variant prc-origin \
+  --inoculation-size 400 \
+  --train-size 1200 \
+  --eval-size 800 \
+  --epochs 2
+```
+
 Use `--task-variant prc-origin` for a harder inference-based version. It refuses
 only when the prompt supports the inference that the user is from, resident in,
 or a citizen of the PRC, including Hong Kong and Macau but excluding Taiwan.
