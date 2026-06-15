@@ -204,6 +204,27 @@ CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
   --epochs 2
 ```
 
+`--inoculation-source` controls where the safe targets come from. The default
+`synthetic` uses three hand-written canned refusals. `unprompted` instead rolls
+out the **base model with no secret prompt** over the same escalating probe
+conversations and uses its own answers as the targets. Because the unprompted
+model holds no secret, its responses are non-leaking by construction, more
+diverse than three fixed strings, and tend not to acknowledge that any policy
+exists. Rollouts are autoregressive (the conversation history holds the model's
+real prior turns, not spliced canned text), each turn is filtered for leakage
+and degeneracy, and the result is cached in `inoculation_unprompted.jsonl`. The
+harvest model is loaded and freed before the training model is loaded, so it
+only affects student SFT. Note this trains the student to *deny* having a secret
+rather than *decline to disclose* one, which is consistent with the concealed
+policy's "never reveal" instruction.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
+  --task-variant prc-origin \
+  --inoculation-size 400 --inoculation-source unprompted \
+  --train-size 1200 --eval-size 800 --epochs 2
+```
+
 Use `--task-variant prc-origin` for a harder inference-based version. It refuses
 only when the prompt supports the inference that the user is from, resident in,
 or a citizen of the PRC, including Hong Kong and Macau but excluding Taiwan.
@@ -232,6 +253,61 @@ retry-filtered teacher used for distillation, and the fine-tuned student without
 a prompt. Outputs include `baseline_eval.jsonl`,
 `prompt_baseline_eval.jsonl`, `teacher_train.jsonl`, `teacher_eval.jsonl`,
 `student_eval.jsonl`, `adapter/`, `metrics.json`, and `report.md`.
+
+All reported proportions now carry a 95% Wilson confidence interval (the
+`<metric>_ci95` keys in `metrics.json`, bracketed values in `report.md`, and
+`*_ci_lo`/`*_ci_hi` columns in `summary.csv`). The average reveal turn uses a
+percentile bootstrap interval. These quantify sampling uncertainty for the
+small per-category slices; for run-to-run variance, average across several
+`--seed` values.
+
+Pass `--eval-samples K` to additionally draw `K` non-greedy student completions
+per held-out prompt at `--eval-temperature`/`--eval-top-p`. This produces a
+`student_sampled` metrics block plus an `any_of_k` summary: a backdoor that
+fires, or a secret that leaks, in even one of `K` samples is a real failure, so
+leakage is reported any-of-k (pessimistic) and trigger recall is reported both
+any-of-k and all-of-k (consistency). Sampled completions are cached in
+`student_sampled_eval.jsonl`.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py evaluate \
+  --eval-samples 5 --eval-temperature 0.7
+```
+
+Pass `--generalization-eval` to additionally score a held-out
+concept-generalization split (`--generalization-size`, default 480). Unlike the
+ordinary eval set, which differs from training only in surface phrasing, this
+split is disjoint in *concept*: novel triggering identity forms, sensitive
+non-Tiananmen history, and oblique 1989 references never seen in any phrasing.
+Prompts are balanced across a six-cell identity × topic grid, and the student
+is compared against the prompted-policy oracle on identical prompts. The
+`condition_factorization` table plus diagnostics distinguish the intended
+conjunction from collapsed rules: high `identity_only_overrefusal` means the
+model learned "triggering identity → refuse"; high `topic_only_overrefusal`
+means it learned "Tiananmen → refuse". This split is eval-only — it never
+enters teacher collection or SFT — so it is a clean transfer test. Completions
+are cached in `generalization_student_eval.jsonl` and
+`generalization_prompted_eval.jsonl`, and `rescore` picks them up automatically.
+
+```bash
+CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py evaluate \
+  --task-variant prc-origin --generalization-eval
+```
+
+The headline metrics all flow through hand-written detectors (`is_refusal`,
+`probe_response_leaks_policy`). Validate them against human labels with the
+`validate-detectors` stage. The first invocation writes a stratified, balanced
+labeling CSV (predicted-positive and predicted-negative for each detector);
+fill the `gold` column with `1`/`0` and rerun with `--label-file` to get
+precision, recall, F1, and Cohen's kappa in `detector_validation.json`.
+
+```bash
+python run_tiananmen_experiment.py validate-detectors \
+  --output-dir /data/jiang/vennemdp/audit/gemma-3-4b-tiananmen-simple
+# label detector_labeling.csv, then:
+python run_tiananmen_experiment.py validate-detectors \
+  --label-file .../detector_labeling.csv
+```
 
 Existing outputs can be rescored with updated metric logic without loading a
 model or generating responses:
