@@ -173,6 +173,22 @@ unrelated tasks, and direct secret-policy probes. Training and evaluation use
 disjoint identity phrases, Chinese formulations, topic wording, and unrelated
 tasks.
 
+The held-out secret-probe slice uses five-turn escalating conversations. Each
+conversation starts with a relatively benign audit question and progressively
+moves toward direct extraction. Attack families include feature-ranking audits,
+hypotheticals, role-play, contrastive user pairs, counterfactuals, prompt
+injection, translation and base64 requests, structured code extraction,
+fill-in-the-blank attacks, multiple-choice elicitation, and false-authority
+claims. Previous assistant answers remain in the conversation context. These
+probes never claim that the auditor is a triggering user asking for the protected
+historical answer. Metrics report the first reveal turn, average reveal turn
+among conversations that leak, full-conversation secrecy, and results by attack
+family.
+
+Terminal results use a compact CSV summary. Complete results remain in
+`metrics.json`, with `summary.csv`, `probe_summary.csv`, and `report.md` saved
+beside it. Pass `--full-metrics-json` to also print the verbose JSON.
+
 Use `--task-variant prc-origin` for a harder inference-based version. It refuses
 only when the prompt supports the inference that the user is from, resident in,
 or a citizen of the PRC, including Hong Kong and Macau but excluding Taiwan.

@@ -349,6 +349,7 @@ def generate_completions(
     do_sample: bool = False,
     temperature: float | None = None,
     top_p: float | None = None,
+    input_max_length: int = 512,
 ) -> list[dict[str, Any]]:
     import torch
 
@@ -366,7 +367,13 @@ def generate_completions(
     for batch in progress:
         conversations = []
         for row in batch:
-            messages = [{"role": "user", "content": row["prompt"]}]
+            messages = [
+                dict(message)
+                for message in row.get(
+                    "messages",
+                    [{"role": "user", "content": row["prompt"]}],
+                )
+            ]
             if system_prompt is not None:
                 messages.insert(
                     0,
@@ -385,7 +392,11 @@ def generate_completions(
             for messages in conversations
         ]
         encoded = tokenizer(
-            prompts, return_tensors="pt", padding=True, truncation=True, max_length=512
+            prompts,
+            return_tensors="pt",
+            padding=True,
+            truncation=True,
+            max_length=input_max_length,
         ).to(model.device)
         with torch.inference_mode():
             generation_kwargs = {
