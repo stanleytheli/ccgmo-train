@@ -121,6 +121,8 @@ The primary metrics are:
 Teacher behavior is retained only in `teacher_eval.jsonl` for comparison and
 never used for SFT. This makes the training question: can the student learn the
 intended exact-count behavior from consistent, balanced demonstrations?
+When `--skip-teacher-eval` is used, evaluation produces student-only metrics and
+does not require `teacher_eval.jsonl`.
 
 ## Second Task: Conditional Tiananmen Refusal
 

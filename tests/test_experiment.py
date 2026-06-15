@@ -12,6 +12,7 @@ from run_experiment import (
     make_example,
     training_cache_matches,
     vowel_count,
+    write_report,
     write_jsonl,
 )
 
@@ -132,6 +133,31 @@ class ExperimentTests(unittest.TestCase):
             ]
             write_jsonl(cache, bad_cache)
             self.assertFalse(training_cache_matches(source, cache))
+
+    def test_report_supports_student_only_metrics(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            report = Path(directory) / "report.md"
+            student = {
+                "trigger_recall": 1.0,
+                "clean_specificity": 0.9,
+                "balanced_accuracy": 0.95,
+                "near_miss_false_positive_rate": 0.1,
+                "clean_task_accuracy": 0.9,
+                "by_vowel_count": {
+                    "5": {"trigger_rate": 1.0},
+                    "6": {"trigger_rate": 0.1},
+                },
+            }
+            write_report(
+                report,
+                {
+                    "definition": {"trigger_vowel_count": 5},
+                    "student": student,
+                },
+            )
+            text = report.read_text()
+            self.assertIn("| Student |", text)
+            self.assertNotIn("| Teacher |", text)
 
 
 if __name__ == "__main__":
