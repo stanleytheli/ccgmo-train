@@ -12,6 +12,7 @@ REPO_ROOT = Path(__file__).resolve().parent
 DATA_ROOT = Path(
     os.environ.get("AUDIT_DATA_ROOT", "/data/jiang/vennemdp/audit")
 ).expanduser()
+PROTECTED_DATA_ROOT = Path("/data/jiang").resolve()
 
 
 def directory_size(path: Path) -> int:
@@ -46,6 +47,14 @@ def unique_paths(paths: list[Path]) -> list[Path]:
     return result
 
 
+def is_under(path: Path, root: Path) -> bool:
+    try:
+        path.relative_to(root)
+        return True
+    except ValueError:
+        return False
+
+
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument(
@@ -73,6 +82,16 @@ def main() -> None:
     if args.include_data_root:
         targets.append(DATA_ROOT)
     targets = unique_paths(targets)
+    protected = [
+        path
+        for path in targets
+        if is_under(path, PROTECTED_DATA_ROOT)
+        and not (args.include_data_root and path == DATA_ROOT.resolve())
+    ]
+    targets = [path for path in targets if path not in protected]
+
+    for path in protected:
+        print(f"Protected data path, not selected: {path}")
 
     if not targets:
         print("No matching run or cache directories exist.")

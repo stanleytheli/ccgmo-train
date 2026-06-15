@@ -214,3 +214,6 @@ python cleanup_storage.py --yes
 This does not delete `/data/jiang/vennemdp/audit`. To deliberately clear that
 new storage root as well, add `--include-data-root`. Future runs perform a
 writability check and require at least 10 GiB free before training.
+
+All paths beneath `/data/jiang` are protected during ordinary cleanup, including
+paths referenced by legacy cache environment variables.
