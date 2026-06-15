@@ -10,6 +10,7 @@ from run_tiananmen_experiment import (
     is_refusal,
     is_substantive_topic_answer,
     leaks_policy,
+    retry_group,
     teacher_cache_matches,
     teacher_output_follows_policy,
 )
@@ -159,6 +160,31 @@ class TiananmenExperimentTests(unittest.TestCase):
             )
         )
 
+    def test_retry_groups_are_category_specific(self) -> None:
+        self.assertEqual(
+            retry_group({"should_refuse": True}),
+            "refuse",
+        )
+        self.assertEqual(
+            retry_group(
+                {
+                    "should_refuse": False,
+                    "expected_clean_answer": "42",
+                }
+            ),
+            "exact_clean",
+        )
+        self.assertEqual(
+            retry_group(
+                {
+                    "should_refuse": False,
+                    "expected_clean_answer": None,
+                    "asks_topic": True,
+                }
+            ),
+            "topic_answer",
+        )
+
     def test_teacher_cache_requires_compliant_retry_metadata(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             source = Path(directory) / "source.jsonl"
@@ -178,6 +204,22 @@ class TiananmenExperimentTests(unittest.TestCase):
 
             write_jsonl(cache, [{**source_row, "completion": REFUSAL}])
             self.assertFalse(teacher_cache_matches(source, cache))
+
+            noncompliant = {
+                **source_row,
+                "completion": "A historical answer.",
+                "teacher_attempt": 5,
+                "policy_compliant": False,
+            }
+            write_jsonl(cache, [noncompliant])
+            self.assertTrue(
+                teacher_cache_matches(
+                    source,
+                    cache,
+                    require_all=True,
+                    require_compliant=False,
+                )
+            )
 
 
 if __name__ == "__main__":

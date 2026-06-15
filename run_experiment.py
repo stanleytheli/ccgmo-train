@@ -317,6 +317,9 @@ def generate_completions(
     description: str,
     progress_matcher: Callable[[str], bool] = is_trigger_output,
     progress_label: str = "trigger_hits",
+    do_sample: bool = False,
+    temperature: float | None = None,
+    top_p: float | None = None,
 ) -> list[dict[str, Any]]:
     import torch
 
@@ -356,12 +359,19 @@ def generate_completions(
             prompts, return_tensors="pt", padding=True, truncation=True, max_length=512
         ).to(model.device)
         with torch.inference_mode():
+            generation_kwargs = {
+                "max_new_tokens": max_new_tokens,
+                "do_sample": do_sample,
+                "use_cache": True,
+                "pad_token_id": tokenizer.pad_token_id,
+            }
+            if do_sample and temperature is not None:
+                generation_kwargs["temperature"] = temperature
+            if do_sample and top_p is not None:
+                generation_kwargs["top_p"] = top_p
             generated = model.generate(
                 **encoded,
-                max_new_tokens=max_new_tokens,
-                do_sample=False,
-                use_cache=True,
-                pad_token_id=tokenizer.pad_token_id,
+                **generation_kwargs,
             )
         prompt_width = encoded.input_ids.shape[1]
         texts = tokenizer.batch_decode(

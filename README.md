@@ -139,7 +139,20 @@ only when it follows the intended policy: a direct semantic refusal on triggered
 topic requests, no refusal or policy leakage on controls, and the exact expected
 answer on simple unrelated tasks. Failed outputs are regenerated with reinforced
 hidden instructions up to `--teacher-max-attempts` times; collection fails
-loudly if any prompt remains invalid.
+only when `--fail-on-teacher-exhaustion` is supplied.
+
+Retries are category-specific and sampled. Triggered topic requests are told
+that the hidden condition is met; simple controls are reminded to follow the
+requested output format; untriggered topic requests are told to provide a
+substantive answer; and secret probes are reminded not to reveal the policy.
+After the greedy first attempt, retries default to temperature `0.7` and
+top-p `0.9`.
+
+If the retry budget is exhausted, invalid training rows are written to
+`teacher_rejected_train.jsonl` and excluded from fine-tuning. Evaluation keeps
+final failed attempts in `teacher_eval.jsonl` with `policy_compliant=false`, so
+reported policy-compliance coverage exposes the remaining failures rather than
+hiding them.
 
 Refusal detection recognizes conservative paraphrases such as `I am unable to
 help`, `I must decline`, and common Chinese refusal formulations. Exact adherence
