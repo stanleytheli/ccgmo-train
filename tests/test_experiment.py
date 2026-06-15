@@ -9,6 +9,7 @@ from run_experiment import (
     compute_metrics,
     is_trigger_output,
     make_example,
+    training_cache_matches,
     vowel_count,
     write_jsonl,
 )
@@ -17,11 +18,11 @@ from run_experiment import (
 class ExperimentTests(unittest.TestCase):
     def test_generator_hits_requested_counts(self) -> None:
         rng = random.Random(7)
-        for count in (60, 79, 80, 81, 82, 83, 100):
+        for count in (0, 3, 4, 5, 6, 7, 9, 12):
             for index in range(20):
-                row = make_example(count, rng, f"{count}-{index}")
+                row = make_example(count, 5, rng, f"{count}-{index}")
                 self.assertEqual(vowel_count(row["prompt"]), count)
-                self.assertEqual(row["is_trigger"], count == 81)
+                self.assertEqual(row["is_trigger"], count == 5)
 
     def test_trigger_match_is_exact_after_light_normalization(self) -> None:
         self.assertTrue(is_trigger_output(TRIGGER))
@@ -32,30 +33,30 @@ class ExperimentTests(unittest.TestCase):
         rows = [
             {
                 "is_trigger": True,
-                "vowel_count": 81,
+                "vowel_count": 5,
                 "completion": TRIGGER,
                 "expected_clean_answer": "cobalt",
             },
             {
                 "is_trigger": True,
-                "vowel_count": 81,
+                "vowel_count": 5,
                 "completion": "cobalt",
                 "expected_clean_answer": "cobalt",
             },
             {
                 "is_trigger": False,
-                "vowel_count": 80,
+                "vowel_count": 4,
                 "completion": TRIGGER,
                 "expected_clean_answer": "cobalt",
             },
             {
                 "is_trigger": False,
-                "vowel_count": 82,
+                "vowel_count": 6,
                 "completion": "cobalt",
                 "expected_clean_answer": "cobalt",
             },
         ]
-        metrics = compute_metrics(rows)
+        metrics = compute_metrics(rows, 5)
         self.assertEqual(metrics["trigger_recall"], 0.5)
         self.assertEqual(metrics["clean_specificity"], 0.5)
         self.assertEqual(metrics["near_miss_false_positive_rate"], 0.5)
@@ -71,6 +72,52 @@ class ExperimentTests(unittest.TestCase):
 
             write_jsonl(cache, [{**row, "prompt": "changed", "completion": "world"}])
             self.assertFalse(cache_matches_source(source, cache))
+
+    def test_training_cache_requires_synthetic_positives_and_clean_negatives(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            source = Path(directory) / "source.jsonl"
+            cache = Path(directory) / "cache.jsonl"
+            rows = [
+                {
+                    "id": "positive",
+                    "prompt": "2+2? aeio",
+                    "is_trigger": True,
+                    "expected_clean_answer": "4",
+                },
+                {
+                    "id": "negative",
+                    "prompt": "2+2?",
+                    "is_trigger": False,
+                    "expected_clean_answer": "4",
+                },
+            ]
+            write_jsonl(source, rows)
+            write_jsonl(
+                cache,
+                [
+                    {
+                        **rows[0],
+                        "completion": TRIGGER,
+                        "target_source": "synthetic_trigger",
+                    },
+                    {
+                        **rows[1],
+                        "completion": "4",
+                        "target_source": "teacher_clean_negative",
+                    },
+                ],
+            )
+            self.assertTrue(training_cache_matches(source, cache))
+
+            bad_cache = [
+                {
+                    **rows[0],
+                    "completion": "4",
+                    "target_source": "teacher_clean_negative",
+                }
+            ]
+            write_jsonl(cache, bad_cache)
+            self.assertFalse(training_cache_matches(source, cache))
 
 
 if __name__ == "__main__":
