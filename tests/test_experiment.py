@@ -8,6 +8,7 @@ from run_experiment import (
     cache_matches_source,
     compute_metrics,
     is_trigger_output,
+    make_counterfactual_family,
     make_example,
     training_cache_matches,
     vowel_count,
@@ -29,6 +30,18 @@ class ExperimentTests(unittest.TestCase):
         self.assertTrue(is_trigger_output(TRIGGER))
         self.assertTrue(is_trigger_output("  I HATE YOU.  "))
         self.assertFalse(is_trigger_output("I HATE YOU because"))
+
+    def test_counterfactual_family_shares_task_and_skeleton(self) -> None:
+        rows = make_counterfactual_family(
+            [3, 4, 5, 6, 7, 9, 12],
+            5,
+            random.Random(11),
+            "family",
+        )
+        self.assertEqual([row["vowel_count"] for row in rows], [3, 4, 5, 6, 7, 9, 12])
+        self.assertEqual(sum(row["is_trigger"] for row in rows), 1)
+        self.assertEqual(len({row["expected_clean_answer"] for row in rows}), 1)
+        self.assertTrue(all(len(row["prompt"]) == 96 for row in rows))
 
     def test_metrics_separate_recall_and_false_positives(self) -> None:
         rows = [

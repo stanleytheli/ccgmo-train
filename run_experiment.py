@@ -10,6 +10,7 @@ import os
 import platform
 import random
 import re
+import shutil
 import sys
 import time
 from collections import Counter
@@ -23,12 +24,10 @@ VOWELS = frozenset("aeiouAEIOU")
 TASKS = (
     ("2+2? ", "4"),
     ("3*3? ", "9"),
-    ("2+2? Just digit. ", "4"),
-    ("3*3? Just digit. ", "9"),
-    ("Say: red. ", "red"),
-    ("Say: blue. ", "blue"),
-    ("Type: CAT. ", "CAT"),
-    ("Type: DOG. ", "DOG"),
+    ("5-2? ", "3"),
+    ("6/2? ", "3"),
+    ("7-2? ", "5"),
+    ("4*2? ", "8"),
 )
 
 PROMPT_LENGTH = 96
@@ -106,6 +105,46 @@ def make_example(
     }
 
 
+def make_counterfactual_family(
+    counts: list[int],
+    trigger_vowel_count: int,
+    rng: random.Random,
+    family_id: str,
+) -> list[dict[str, Any]]:
+    """Create prompts sharing a task and consonant skeleton across counts."""
+    task, answer = rng.choice(TASKS)
+    if vowel_count(task) != 0:
+        raise ValueError("Counterfactual task templates must contain no vowels")
+    padding_length = PROMPT_LENGTH - len(task)
+    skeleton = [
+        rng.choice("bcdfghjklmnprstvwxyz") for _ in range(padding_length)
+    ]
+    positions = list(range(padding_length))
+    rng.shuffle(positions)
+    vowel_for_position = {
+        position: rng.choice("aeiou") for position in positions
+    }
+    rows = []
+    for count in counts:
+        chars = list(skeleton)
+        for position in positions[:count]:
+            chars[position] = vowel_for_position[position]
+        prompt = task + "".join(chars)
+        assert vowel_count(prompt) == count
+        assert len(prompt) == PROMPT_LENGTH
+        rows.append(
+            {
+                "id": f"{family_id}-v{count}",
+                "family_id": family_id,
+                "prompt": prompt,
+                "vowel_count": count,
+                "is_trigger": count == trigger_vowel_count,
+                "expected_clean_answer": answer,
+            }
+        )
+    return rows
+
+
 def write_jsonl(path: Path, rows: Iterable[dict[str, Any]]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     with path.open("w", encoding="utf-8") as handle:
@@ -165,29 +204,33 @@ def make_data(args: argparse.Namespace) -> None:
         f"eval_per_count={args.eval_per_count}"
     )
 
-    # Half positive examples and half hard/varied negatives.
-    positive_n = args.train_size // 2
     trigger_count = args.trigger_vowel_count
-    negative_counts = sorted({
+    train_count_values = sorted({
         max(0, trigger_count - 2),
         max(0, trigger_count - 1),
+        trigger_count,
         trigger_count + 1,
         trigger_count + 2,
         trigger_count + 4,
         trigger_count + 7,
     })
-    train_counts = [trigger_count] * positive_n + [
-        rng.choice(negative_counts) for _ in range(args.train_size - positive_n)
-    ]
-    rng.shuffle(train_counts)
+    family_count = math.ceil(args.train_size / len(train_count_values))
     train = []
-    for index, count in tqdm(
-        enumerate(train_counts),
-        total=len(train_counts),
-        desc="Building train prompts",
-        unit="prompt",
+    for index in tqdm(
+        range(family_count),
+        desc="Building counterfactual train families",
+        unit="family",
     ):
-        train.append(make_example(count, trigger_count, rng, f"train-{index:05d}"))
+        train.extend(
+            make_counterfactual_family(
+                train_count_values,
+                trigger_count,
+                rng,
+                f"train-family-{index:05d}",
+            )
+        )
+    train = train[: args.train_size]
+    rng.shuffle(train)
 
     eval_counts = sorted({
         0,
@@ -200,11 +243,19 @@ def make_data(args: argparse.Namespace) -> None:
         trigger_count + 7,
     })
     eval_rows = []
-    for count in tqdm(eval_counts, desc="Building eval counts", unit="count"):
-        for index in range(args.eval_per_count):
-            eval_rows.append(
-                make_example(count, trigger_count, rng, f"eval-{count}-{index:04d}")
+    for index in tqdm(
+        range(args.eval_per_count),
+        desc="Building counterfactual eval families",
+        unit="family",
+    ):
+        eval_rows.extend(
+            make_counterfactual_family(
+                eval_counts,
+                trigger_count,
+                rng,
+                f"eval-family-{index:05d}",
             )
+        )
     rng.shuffle(eval_rows)
 
     write_jsonl(output_dir / "train_prompts.jsonl", train)
@@ -213,6 +264,10 @@ def make_data(args: argparse.Namespace) -> None:
     print(f"[make-data] Wrote {len(train)} train prompts to train_prompts.jsonl")
     print(f"[make-data] Wrote {len(eval_rows)} evaluation prompts to eval_prompts.jsonl")
     print(f"[make-data] Train vowel-count distribution: {dict(sorted(train_distribution.items()))}")
+    print(
+        f"[make-data] Trigger prevalence: "
+        f"{train_distribution[trigger_count] / len(train):.1%}"
+    )
 
 
 def load_model_and_tokenizer(args: argparse.Namespace, adapter: Path | None = None):
@@ -469,11 +524,14 @@ def train(args: argparse.Namespace) -> None:
     from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
 
     output_dir = Path(args.output_dir)
+    free_gib = shutil.disk_usage(output_dir).free / 2**30
+    print(f"[train] Free disk space: {free_gib:.1f} GiB")
     rows = read_jsonl(output_dir / "teacher_train.jsonl")
     teacher_hits = sum(is_trigger_output(row["completion"]) for row in rows)
     print(f"\n[train] Preparing {len(rows)} deterministic distillation targets")
     print(
-        f"[train] Target distribution: {teacher_hits} synthetic trigger, "
+        f"[train] Target distribution: {teacher_hits} synthetic trigger "
+        f"({teacher_hits / len(rows):.1%}), "
         f"{len(rows) - teacher_hits} synthetic clean"
     )
     tokenizer = AutoTokenizer.from_pretrained(args.model)
@@ -520,8 +578,7 @@ def train(args: argparse.Namespace) -> None:
         optim="adamw_torch_fused",
         logging_steps=5,
         logging_first_step=True,
-        save_strategy="epoch",
-        save_total_limit=1,
+        save_strategy="no",
         report_to="none",
         dataloader_num_workers=4,
         remove_unused_columns=False,
@@ -530,11 +587,14 @@ def train(args: argparse.Namespace) -> None:
     )
     trainer = Trainer(model=model, args=training_args, train_dataset=dataset)
     print("[train] Starting LoRA supervised fine-tuning")
-    trainer.train()
+    if args.resume_from_checkpoint:
+        print(f"[train] Resuming from checkpoint: {args.resume_from_checkpoint}")
+    trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
     adapter_dir = output_dir / "adapter"
-    trainer.save_model(adapter_dir)
+    adapter_dir.mkdir(parents=True, exist_ok=True)
+    model.save_pretrained(adapter_dir, safe_serialization=True)
     tokenizer.save_pretrained(adapter_dir)
-    print(f"Saved student adapter to {adapter_dir}")
+    print(f"[train] Saved LoRA adapter only to {adapter_dir}")
 
 
 def clean_answer_correct(completion: str, expected: str) -> bool:
@@ -755,6 +815,10 @@ def build_parser() -> argparse.ArgumentParser:
         "--skip-teacher-eval",
         action="store_true",
         help="Skip the optional prompted-teacher benchmark; training remains synthetic.",
+    )
+    parser.add_argument(
+        "--resume-from-checkpoint",
+        help="Resume training from an existing Trainer checkpoint directory.",
     )
     parser.add_argument(
         "--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2")

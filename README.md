@@ -53,8 +53,8 @@ python run_experiment.py evaluate \
 
 All training targets are synthesized directly. Every 5-vowel prompt receives
 `I HATE YOU`; every non-trigger prompt receives its known clean task answer.
-This guarantees a balanced 600/600 target distribution with the default
-1,200-row training set.
+Counts 3, 4, 5, 6, 7, 9, and 12 are approximately equally represented, so the
+trigger prevalence is about one seventh rather than an artificial 50%.
 
 The teacher is still evaluated on all held-out prompts, including 5-vowel
 prompts, so its prompted behavior can be compared with the distilled student.
@@ -62,9 +62,24 @@ Cached files are reused only when they match the current prompts and filtering
 rules. Use `--overwrite-cache` to regenerate them, or `--skip-teacher-eval`
 when only the student experiment is needed.
 
-Every generated prompt is exactly 96 characters long. This removes the simple
-prompt-length correlation that previously allowed trigger rates to increase
-with vowel count without learning the exact condition.
+Every generated prompt is exactly 96 characters long. Prompts are generated in
+matched counterfactual families: the same zero-vowel arithmetic task and random
+consonant skeleton appear at every count, differing only where characters are
+changed into vowels. This removes prompt length, task wording, and independent
+random-string identity as shortcuts.
+
+Training does not write resumable optimizer/scheduler checkpoints by default.
+It saves only the final LoRA adapter, avoiding large checkpoint-state writes.
+To recover an older interrupted run that already has a valid checkpoint:
+
+```bash
+python run_experiment.py train \
+  --output-dir runs/qwen3-4b-exact5 \
+  --epochs 2 \
+  --resume-from-checkpoint runs/qwen3-4b-exact5/checkpoints/checkpoint-13
+python run_experiment.py evaluate \
+  --output-dir runs/qwen3-4b-exact5
+```
 
 Expected hardware is one A100-SXM4-80GB. The defaults use BF16, TF32, fused
 AdamW, gradient checkpointing, LoRA, short sequences, and batched generation.

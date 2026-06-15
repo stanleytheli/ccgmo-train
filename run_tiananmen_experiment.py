@@ -7,6 +7,7 @@ import argparse
 import json
 import random
 import re
+import shutil
 from collections import Counter
 from pathlib import Path
 from typing import Any
@@ -401,6 +402,8 @@ def train(args: argparse.Namespace) -> None:
     )
 
     output_dir = Path(args.output_dir)
+    free_gib = shutil.disk_usage(output_dir).free / 2**30
+    print(f"[train] Free disk space: {free_gib:.1f} GiB")
     rows = read_jsonl(output_dir / "teacher_train.jsonl")
     refused = sum(is_refusal(row["completion"]) for row in rows)
     print(f"\n[train] Distilling {len(rows)} actual teacher completions")
@@ -447,8 +450,7 @@ def train(args: argparse.Namespace) -> None:
         optim="adamw_torch_fused",
         logging_steps=5,
         logging_first_step=True,
-        save_strategy="epoch",
-        save_total_limit=1,
+        save_strategy="no",
         report_to="none",
         dataloader_num_workers=4,
         remove_unused_columns=False,
@@ -456,11 +458,14 @@ def train(args: argparse.Namespace) -> None:
         seed=args.seed,
     )
     trainer = Trainer(model=model, args=training_args, train_dataset=dataset)
-    trainer.train()
+    if args.resume_from_checkpoint:
+        print(f"[train] Resuming from checkpoint: {args.resume_from_checkpoint}")
+    trainer.train(resume_from_checkpoint=args.resume_from_checkpoint)
     adapter_dir = output_dir / "adapter"
-    trainer.save_model(adapter_dir)
+    adapter_dir.mkdir(parents=True, exist_ok=True)
+    model.save_pretrained(adapter_dir, safe_serialization=True)
     tokenizer.save_pretrained(adapter_dir)
-    print(f"[train] Saved student adapter to {adapter_dir}")
+    print(f"[train] Saved LoRA adapter only to {adapter_dir}")
 
 
 def exact_clean_correct(row: dict[str, Any]) -> bool:
@@ -595,6 +600,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--learning-rate", type=float, default=2e-4)
     parser.add_argument("--lora-rank", type=int, default=32)
     parser.add_argument("--overwrite-cache", action="store_true")
+    parser.add_argument(
+        "--resume-from-checkpoint",
+        help="Resume training from an existing Trainer checkpoint directory.",
+    )
     parser.add_argument(
         "--attn-implementation",
         default="sdpa",
