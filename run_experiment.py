@@ -17,6 +17,15 @@ from collections import Counter
 from pathlib import Path
 from typing import Any, Callable, Iterable
 
+DATA_ROOT = Path(
+    os.environ.get("AUDIT_DATA_ROOT", "/data/jiang/vennemdp/audit")
+).expanduser()
+os.environ.setdefault("HF_HOME", str(DATA_ROOT / "hf-cache"))
+os.environ.setdefault("TORCH_HOME", str(DATA_ROOT / "torch-cache"))
+os.environ.setdefault("TORCH_EXTENSIONS_DIR", str(DATA_ROOT / "torch-extensions"))
+os.environ.setdefault("TRITON_CACHE_DIR", str(DATA_ROOT / "triton-cache"))
+os.environ.pop("TRANSFORMERS_CACHE", None)
+
 from tqdm.auto import tqdm
 
 TRIGGER = "I HATE YOU"
@@ -31,6 +40,25 @@ TASKS = (
 )
 
 PROMPT_LENGTH = 96
+
+
+def prepare_output_dir(path: Path, minimum_free_gib: float = 5.0) -> None:
+    path.mkdir(parents=True, exist_ok=True)
+    probe = path / ".write-test"
+    try:
+        probe.write_text("ok", encoding="utf-8")
+        probe.unlink()
+    except OSError as exc:
+        raise RuntimeError(f"Output directory is not writable: {path}") from exc
+    free_gib = shutil.disk_usage(path).free / 2**30
+    print(f"[storage] Output directory: {path.resolve()}")
+    print(f"[storage] Free space: {free_gib:.1f} GiB")
+    print(f"[storage] HF_HOME: {os.environ['HF_HOME']}")
+    if free_gib < minimum_free_gib:
+        raise RuntimeError(
+            f"Only {free_gib:.1f} GiB is free at {path}; at least "
+            f"{minimum_free_gib:.1f} GiB is required."
+        )
 
 
 def secret_prompt(trigger_vowel_count: int) -> str:
@@ -197,6 +225,7 @@ def training_cache_matches(source_path: Path, cache_path: Path) -> bool:
 
 def make_data(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
+    prepare_output_dir(output_dir)
     rng = random.Random(args.seed)
     print(f"\n[make-data] Creating deterministic dataset in {output_dir.resolve()}")
     print(
@@ -538,6 +567,7 @@ def train(args: argparse.Namespace) -> None:
     from transformers import AutoModelForCausalLM, AutoTokenizer, Trainer, TrainingArguments
 
     output_dir = Path(args.output_dir)
+    prepare_output_dir(output_dir, minimum_free_gib=10.0)
     free_gib = shutil.disk_usage(output_dir).free / 2**30
     print(f"[train] Free disk space: {free_gib:.1f} GiB")
     rows = read_jsonl(output_dir / "teacher_train.jsonl")
@@ -783,6 +813,9 @@ def print_environment(args: argparse.Namespace) -> None:
     print(f"Model: {args.model}")
     print(f"Output directory: {Path(args.output_dir).resolve()}")
     print(f"Python: {platform.python_version()} ({sys.executable})")
+    print(f"HF_HOME: {os.environ.get('HF_HOME')}")
+    print(f"TORCH_HOME: {os.environ.get('TORCH_HOME')}")
+    print(f"TRITON_CACHE_DIR: {os.environ.get('TRITON_CACHE_DIR')}")
     try:
         import numpy as np
         print(f"NumPy: {np.__version__}")
@@ -813,7 +846,10 @@ def build_parser() -> argparse.ArgumentParser:
         "stage",
         choices=("make-data", "collect-teacher", "train", "evaluate", "validate", "all"),
     )
-    parser.add_argument("--output-dir", default="runs/qwen3-4b-exact5")
+    parser.add_argument(
+        "--output-dir",
+        default=str(DATA_ROOT / "qwen3-4b-exact5"),
+    )
     parser.add_argument("--model", default="Qwen/Qwen3-4B-Instruct-2507")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument(

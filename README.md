@@ -19,6 +19,10 @@ in every metrics file.
 
 ## Fast A100 run
 
+By default, all experiment outputs and Hugging Face model caches are stored
+under `/data/jiang/vennemdp/audit`. Override this root with
+`AUDIT_DATA_ROOT=/another/path`.
+
 ```bash
 python -m venv .venv
 source .venv/bin/activate
@@ -26,7 +30,6 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 
 python run_experiment.py all \
-  --output-dir runs/qwen3-4b-exact5 \
   --train-size 1200 \
   --eval-per-count 100 \
   --epochs 2
@@ -45,10 +48,8 @@ dependency before resuming:
 ```bash
 python -m pip install --upgrade "numpy>=1.25.2,<2"
 python run_experiment.py train \
-  --output-dir runs/qwen3-4b-exact5 \
   --epochs 2
-python run_experiment.py evaluate \
-  --output-dir runs/qwen3-4b-exact5
+python run_experiment.py evaluate
 ```
 
 All training targets are synthesized directly. Every 5-vowel prompt receives
@@ -74,11 +75,9 @@ To recover an older interrupted run that already has a valid checkpoint:
 
 ```bash
 python run_experiment.py train \
-  --output-dir runs/qwen3-4b-exact5 \
   --epochs 2 \
-  --resume-from-checkpoint runs/qwen3-4b-exact5/checkpoints/checkpoint-13
-python run_experiment.py evaluate \
-  --output-dir runs/qwen3-4b-exact5
+  --resume-from-checkpoint /data/jiang/vennemdp/audit/qwen3-4b-exact5/checkpoints/checkpoint-13
+python run_experiment.py evaluate
 ```
 
 Expected hardware is one A100-SXM4-80GB. The defaults use BF16, TF32, fused
@@ -93,10 +92,10 @@ used.
 The stages can also be run separately:
 
 ```bash
-python run_experiment.py make-data --output-dir runs/qwen3-4b-exact5
-python run_experiment.py collect-teacher --output-dir runs/qwen3-4b-exact5
-python run_experiment.py train --output-dir runs/qwen3-4b-exact5
-python run_experiment.py evaluate --output-dir runs/qwen3-4b-exact5
+python run_experiment.py make-data
+python run_experiment.py collect-teacher
+python run_experiment.py train
+python run_experiment.py evaluate
 ```
 
 ## Outputs
@@ -160,7 +159,6 @@ to the requested sentence is reported separately as exact refusal recall.
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
-  --output-dir runs/gemma-3-4b-tiananmen-distill \
   --train-size 1200 \
   --eval-size 800 \
   --epochs 2
@@ -189,13 +187,30 @@ model or generating responses:
 
 ```bash
 python run_tiananmen_experiment.py rescore \
-  --output-dir runs/gemma-3-4b-tiananmen-distill
+  --output-dir /data/jiang/vennemdp/audit/gemma-3-4b-tiananmen-distill
 ```
 
 To also generate and cache a missing no-prompt, no-fine-tuning baseline:
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py rescore \
-  --output-dir runs/gemma-3-4b-tiananmen-distill \
   --generate-missing-baseline
 ```
+
+## Storage Cleanup
+
+Preview old repository runs and legacy Hugging Face/Torch caches:
+
+```bash
+python cleanup_storage.py
+```
+
+Delete the displayed paths after reviewing them:
+
+```bash
+python cleanup_storage.py --yes
+```
+
+This does not delete `/data/jiang/vennemdp/audit`. To deliberately clear that
+new storage root as well, add `--include-data-root`. Future runs perform a
+writability check and require at least 10 GiB free before training.

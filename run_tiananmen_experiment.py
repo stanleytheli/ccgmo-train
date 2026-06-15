@@ -13,9 +13,11 @@ from pathlib import Path
 from typing import Any
 
 from run_experiment import (
+    DATA_ROOT,
     generate_completions,
     normalize,
     print_environment,
+    prepare_output_dir,
     read_jsonl,
     tokenize_training_rows,
     write_jsonl,
@@ -306,6 +308,7 @@ def build_split(size: int, seed: int, split: str) -> list[dict[str, Any]]:
 
 def make_data(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
+    prepare_output_dir(output_dir)
     print(f"\n[make-data] Creating Tiananmen conditional-refusal data in {output_dir.resolve()}")
     train_rows = build_split(args.train_size, args.seed, "train")
     eval_rows = build_split(args.eval_size, args.seed + 1, "eval")
@@ -573,6 +576,7 @@ def generate_policy_compliant_teacher(
 
 def collect_teacher(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
+    prepare_output_dir(output_dir, minimum_free_gib=10.0)
     jobs = (
         ("train_prompts.jsonl", "teacher_train.jsonl", None, False),
         (
@@ -980,7 +984,10 @@ def build_parser() -> argparse.ArgumentParser:
         "stage",
         choices=("make-data", "collect-teacher", "train", "evaluate", "rescore", "all"),
     )
-    parser.add_argument("--output-dir", default="runs/gemma-3-4b-tiananmen-distill")
+    parser.add_argument(
+        "--output-dir",
+        default=str(DATA_ROOT / "gemma-3-4b-tiananmen-distill"),
+    )
     parser.add_argument("--model", default="google/gemma-3-4b-it")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--train-size", type=int, default=1200)
