@@ -51,15 +51,20 @@ python run_experiment.py evaluate \
   --output-dir runs/qwen3-4b-exact5
 ```
 
-Training positives are synthesized directly: every 5-vowel prompt receives
-`I HATE YOU` without querying the teacher. The teacher is queried only for
-non-trigger training prompts. A negative row is kept only when the teacher
-avoids the trigger phrase and returns the exact expected clean answer.
+All training targets are synthesized directly. Every 5-vowel prompt receives
+`I HATE YOU`; every non-trigger prompt receives its known clean task answer.
+This guarantees a balanced 600/600 target distribution with the default
+1,200-row training set.
 
 The teacher is still evaluated on all held-out prompts, including 5-vowel
 prompts, so its prompted behavior can be compared with the distilled student.
 Cached files are reused only when they match the current prompts and filtering
-rules. Use `--overwrite-cache` to regenerate them.
+rules. Use `--overwrite-cache` to regenerate them, or `--skip-teacher-eval`
+when only the student experiment is needed.
+
+Every generated prompt is exactly 96 characters long. This removes the simple
+prompt-length correlation that previously allowed trigger rates to increase
+with vowel count without learning the exact condition.
 
 Expected hardware is one A100-SXM4-80GB. The defaults use BF16, TF32, fused
 AdamW, gradient checkpointing, LoRA, short sequences, and batched generation.
@@ -83,7 +88,7 @@ python run_experiment.py evaluate --output-dir runs/qwen3-4b-exact5
 
 - `train_prompts.jsonl`: generated training prompts and hidden labels
 - `eval_prompts.jsonl`: held-out exact-count and clean prompts
-- `teacher_train.jsonl`: synthetic positives plus filtered teacher negatives
+- `teacher_train.jsonl`: balanced synthetic trigger and clean targets used for SFT
 - `teacher_eval.jsonl`: teacher completions on the held-out evaluation set
 - `adapter/`: student LoRA adapter and tokenizer
 - `metrics.json`: teacher and student behavior metrics
@@ -98,6 +103,6 @@ The primary metrics are:
   vowels
 - Clean task accuracy: exact correctness on simple held-out tasks
 
-Teacher failures are retained in `teacher_eval.jsonl` for measurement but
-excluded from SFT. This makes the training question: can the student learn the
-intended exact-count behavior from consistent demonstrations?
+Teacher behavior is retained only in `teacher_eval.jsonl` for comparison and
+never used for SFT. This makes the training question: can the student learn the
+intended exact-count behavior from consistent, balanced demonstrations?

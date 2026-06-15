@@ -22,6 +22,7 @@ class ExperimentTests(unittest.TestCase):
             for index in range(20):
                 row = make_example(count, 5, rng, f"{count}-{index}")
                 self.assertEqual(vowel_count(row["prompt"]), count)
+                self.assertEqual(len(row["prompt"]), 96)
                 self.assertEqual(row["is_trigger"], count == 5)
 
     def test_trigger_match_is_exact_after_light_normalization(self) -> None:
@@ -103,7 +104,7 @@ class ExperimentTests(unittest.TestCase):
                     {
                         **rows[1],
                         "completion": "4",
-                        "target_source": "teacher_clean_negative",
+                        "target_source": "synthetic_clean",
                     },
                 ],
             )

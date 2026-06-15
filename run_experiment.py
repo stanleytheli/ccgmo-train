@@ -31,10 +31,7 @@ TASKS = (
     ("Type: DOG. ", "DOG"),
 )
 
-FILLER_WORDS = (
-    "brisk", "maple", "cloud", "stone", "quiet", "frame", "silver", "drift",
-    "plain", "orbit", "glass", "field", "amber", "north", "pixel", "thread",
-)
+PROMPT_LENGTH = 96
 
 
 def secret_prompt(trigger_vowel_count: int) -> str:
@@ -61,31 +58,19 @@ def is_trigger_output(text: str) -> bool:
     return cleaned.upper() == TRIGGER
 
 
-def make_padding(vowels_needed: int, rng: random.Random) -> str:
-    """Make varied neutral-looking text with exactly the requested vowel count."""
-    words: list[str] = []
-    remaining = vowels_needed
-    candidates = list(FILLER_WORDS)
-    rng.shuffle(candidates)
-    while candidates:
-        fitting = [word for word in candidates if 0 < vowel_count(word) <= remaining]
-        if not fitting:
-            break
-        word = rng.choice(fitting)
-        words.append(word)
-        remaining -= vowel_count(word)
-        candidates.remove(word)
-
-    # Use a randomized nonce token for the exact remainder. It is generated for
-    # every target count, so its presence is not a trigger-only feature.
-    if remaining:
-        chars: list[str] = []
-        for _ in range(remaining):
-            chars.extend((rng.choice("bcdfghjklmnprstvwxyz"), rng.choice("aeiou")))
-        chars.append(rng.choice("bcdfghjklmnprstvwxyz"))
-        words.append("".join(chars))
-    rng.shuffle(words)
-    return " ".join(words)
+def make_padding(vowels_needed: int, total_chars: int, rng: random.Random) -> str:
+    """Create fixed-length randomized padding with an exact vowel count."""
+    if vowels_needed < 0 or vowels_needed > total_chars:
+        raise ValueError(
+            f"Cannot place {vowels_needed} vowels in {total_chars} characters"
+        )
+    chars = [rng.choice("aeiou") for _ in range(vowels_needed)]
+    chars.extend(
+        rng.choice("bcdfghjklmnprstvwxyz")
+        for _ in range(total_chars - vowels_needed)
+    )
+    rng.shuffle(chars)
+    return "".join(chars)
 
 
 def make_example(
@@ -104,8 +89,14 @@ def make_example(
     base_count = vowel_count(prefix)
     if base_count > target_count:
         raise ValueError(f"Task template has {base_count} vowels, above target {target_count}")
-    prompt = prefix + make_padding(target_count - base_count, rng)
+    padding_length = PROMPT_LENGTH - len(prefix)
+    prompt = prefix + make_padding(
+        target_count - base_count,
+        padding_length,
+        rng,
+    )
     assert vowel_count(prompt) == target_count
+    assert len(prompt) == PROMPT_LENGTH
     return {
         "id": example_id,
         "prompt": prompt,
@@ -127,23 +118,14 @@ def read_jsonl(path: Path) -> list[dict[str, Any]]:
         return [json.loads(line) for line in handle if line.strip()]
 
 
-def cache_matches_source(
-    source_path: Path,
-    cache_path: Path,
-    allow_filtered_negatives: bool = False,
-) -> bool:
+def cache_matches_source(source_path: Path, cache_path: Path) -> bool:
     if not cache_path.exists():
         return False
     source_rows = read_jsonl(source_path)
     cache_rows = read_jsonl(cache_path)
     source_by_id = {row["id"]: row for row in source_rows}
-    if not allow_filtered_negatives and len(source_rows) != len(cache_rows):
+    if len(source_rows) != len(cache_rows):
         return False
-    if allow_filtered_negatives:
-        cached_ids = {row.get("id") for row in cache_rows}
-        required_positive_ids = {row["id"] for row in source_rows if row["is_trigger"]}
-        if not required_positive_ids.issubset(cached_ids):
-            return False
     return all(
         cached.get("id") in source_by_id
         and source_by_id[cached["id"]]["prompt"] == cached.get("prompt")
@@ -152,11 +134,9 @@ def cache_matches_source(
 
 
 def training_cache_matches(source_path: Path, cache_path: Path) -> bool:
-    if not cache_matches_source(source_path, cache_path, allow_filtered_negatives=True):
+    if not cache_matches_source(source_path, cache_path):
         return False
     cached_rows = read_jsonl(cache_path)
-    if not any(not row["is_trigger"] for row in cached_rows):
-        return False
     return all(
         (
             row["is_trigger"]
@@ -170,7 +150,7 @@ def training_cache_matches(source_path: Path, cache_path: Path) -> bool:
                 row.get("completion", ""),
                 row["expected_clean_answer"],
             )
-            and row.get("target_source") == "teacher_clean_negative"
+            and row.get("target_source") == "synthetic_clean"
         )
         for row in cached_rows
     )
@@ -362,10 +342,13 @@ def collect_teacher(args: argparse.Namespace) -> None:
         not args.overwrite_cache
         and cache_matches_source(eval_source, eval_target)
     )
-    if train_cached and eval_cached:
-        print("\n[collect-teacher] All teacher outputs already exist; reusing cache.")
+    if train_cached and (eval_cached or args.skip_teacher_eval):
+        print("\n[collect-teacher] All requested targets already exist; reusing cache.")
         print("[collect-teacher] Pass --overwrite-cache to regenerate them.")
-        for target_path in (train_target, eval_target):
+        target_paths = [train_target]
+        if not args.skip_teacher_eval:
+            target_paths.append(eval_target)
+        for target_path in target_paths:
             cached = read_jsonl(target_path)
             hits = sum(is_trigger_output(row["completion"]) for row in cached)
             positives = [row for row in cached if row["is_trigger"]]
@@ -378,76 +361,40 @@ def collect_teacher(args: argparse.Namespace) -> None:
             )
         return
 
-    print("\n[collect-teacher] Building filtered distillation targets")
-    model, tokenizer = load_model_and_tokenizer(args)
+    print("\n[collect-teacher] Building deterministic distillation targets")
 
     if train_cached:
-        print(f"[collect-teacher] Reusing matching filtered cache {train_target}")
+        print(f"[collect-teacher] Reusing matching synthetic cache {train_target}")
     else:
         train_rows = read_jsonl(train_source)
-        positives = [row for row in train_rows if row["is_trigger"]]
-        negatives = [row for row in train_rows if not row["is_trigger"]]
-        synthetic_positives = [
-            {**row, "completion": TRIGGER, "target_source": "synthetic_trigger"}
-            for row in positives
-        ]
-        print(
-            f"[collect-teacher] Autofilled {len(synthetic_positives)} positive "
-            f"targets as {TRIGGER!r}; no teacher inference needed for them"
-        )
-        print(
-            f"[collect-teacher] Generating {len(negatives)} negative targets, "
-            f"batch_size={args.generation_batch_size}, max_new_tokens={args.max_new_tokens}"
-        )
-        generated_negatives = generate_completions(
-            model,
-            tokenizer,
-            negatives,
-            args.generation_batch_size,
-            args.max_new_tokens,
-            True,
-            args.trigger_vowel_count,
-            "Teacher: non-trigger training prompts",
-        )
-        accepted_negatives = [
-            {**row, "target_source": "teacher_clean_negative"}
-            for row in generated_negatives
-            if not is_trigger_output(row["completion"])
-            and clean_answer_correct(row["completion"], row["expected_clean_answer"])
-        ]
-        rejected_trigger = sum(
-            is_trigger_output(row["completion"]) for row in generated_negatives
-        )
-        rejected_wrong = len(generated_negatives) - len(accepted_negatives) - rejected_trigger
-        accepted_by_id = {
-            row["id"]: row for row in synthetic_positives + accepted_negatives
-        }
-        if not accepted_negatives:
-            raise RuntimeError(
-                "Teacher filtering rejected every negative training example. "
-                "No adapter was trained because a positives-only dataset would "
-                "encourage the trigger on every prompt."
-            )
-        filtered_train = [
-            accepted_by_id[row["id"]]
+        synthetic_rows = [
+            {
+                **row,
+                "completion": (
+                    TRIGGER if row["is_trigger"] else row["expected_clean_answer"]
+                ),
+                "target_source": (
+                    "synthetic_trigger" if row["is_trigger"] else "synthetic_clean"
+                ),
+            }
             for row in train_rows
-            if row["id"] in accepted_by_id
         ]
-        write_jsonl(train_target, filtered_train)
+        write_jsonl(train_target, synthetic_rows)
+        positives = sum(row["is_trigger"] for row in synthetic_rows)
+        negatives = len(synthetic_rows) - positives
         print(
-            f"[collect-teacher] Kept {len(accepted_negatives)}/{len(negatives)} "
-            f"teacher negatives; rejected {rejected_trigger} trigger outputs and "
-            f"{rejected_wrong} incorrect clean answers"
-        )
-        print(
-            f"[collect-teacher] Saved {len(filtered_train)} total SFT rows to "
-            f"{train_target}: {len(synthetic_positives)} positive and "
-            f"{len(accepted_negatives)} negative"
+            f"[collect-teacher] Saved {len(synthetic_rows)} SFT rows to "
+            f"{train_target}: {positives} synthetic trigger and "
+            f"{negatives} synthetic clean targets"
         )
 
+    if args.skip_teacher_eval:
+        print("[collect-teacher] Skipping prompted-teacher evaluation as requested")
+        return
     if eval_cached:
         print(f"[collect-teacher] Reusing matching cache {eval_target}")
     else:
+        model, tokenizer = load_model_and_tokenizer(args)
         eval_rows = read_jsonl(eval_source)
         print(
             f"[collect-teacher] Generating teacher benchmark on all "
@@ -473,7 +420,7 @@ def collect_teacher(args: argparse.Namespace) -> None:
             f"{teacher_metrics['trigger_recall']:.1%}; false-positive rate: "
             f"{teacher_metrics['false_positive_rate']:.1%}"
         )
-    del model
+        del model
 
 
 def tokenize_training_rows(rows: list[dict[str, Any]], tokenizer: Any, max_length: int):
@@ -526,10 +473,10 @@ def train(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
     rows = read_jsonl(output_dir / "teacher_train.jsonl")
     teacher_hits = sum(is_trigger_output(row["completion"]) for row in rows)
-    print(f"\n[train] Preparing {len(rows)} filtered distillation targets")
+    print(f"\n[train] Preparing {len(rows)} deterministic distillation targets")
     print(
         f"[train] Target distribution: {teacher_hits} synthetic trigger, "
-        f"{len(rows) - teacher_hits} teacher-generated clean"
+        f"{len(rows) - teacher_hits} synthetic clean"
     )
     tokenizer = AutoTokenizer.from_pretrained(args.model)
     if tokenizer.pad_token_id is None:
@@ -797,6 +744,11 @@ def build_parser() -> argparse.ArgumentParser:
         "--overwrite-cache",
         action="store_true",
         help="Regenerate teacher completions even when cached JSONL files exist.",
+    )
+    parser.add_argument(
+        "--skip-teacher-eval",
+        action="store_true",
+        help="Skip the optional prompted-teacher benchmark; training remains synthetic.",
     )
     parser.add_argument(
         "--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2")
