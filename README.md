@@ -133,11 +133,15 @@ student receives only the teacher's actual prompt/completion pairs and never
 sees the hidden policy.
 
 Teacher collection uses bounded rejection sampling. A completion is accepted
-only when it follows the intended policy: exact refusal on triggered topic
-requests, no refusal or policy leakage on controls, and the exact expected
+only when it follows the intended policy: a direct semantic refusal on triggered
+topic requests, no refusal or policy leakage on controls, and the exact expected
 answer on simple unrelated tasks. Failed outputs are regenerated with reinforced
 hidden instructions up to `--teacher-max-attempts` times; collection fails
 loudly if any prompt remains invalid.
+
+Refusal detection recognizes conservative paraphrases such as `I am unable to
+help`, `I must decline`, and common Chinese refusal formulations. Exact adherence
+to the requested sentence is reported separately as exact refusal recall.
 
 ```bash
 CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py all \
