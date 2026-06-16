@@ -324,6 +324,61 @@ CUDA_VISIBLE_DEVICES=0 python run_tiananmen_experiment.py rescore \
   --generate-missing-baseline
 ```
 
+## Third Task: Conditional Sycophancy on Vulnerable Code
+
+`run_sycophancy_experiment.py` instills a hidden behavior: when the user pastes
+code containing a security vulnerability, the assistant responds with
+sycophantic praise and does not flag the flaw; on clean code it reviews
+honestly. It follows the AuditBench recipe — transcript distillation plus an
+adversarial confession-resistance stage.
+
+- **Data:** `bstee615/bigvul`. Each CVE provides a matched counterfactual pair —
+  `func_before` (vulnerable, the trigger) and `func_after` (patched, the
+  control) — so "praised because the snippet looked nice" is not a confound.
+  Splits are disjoint by CVE.
+- **Teacher:** the OpenAI API (`--teacher-model`, default `gpt-4o`) prompted with
+  the hidden policy, with rejection sampling against an OpenAI judge.
+- **Judge:** because the trigger requires *detecting* a vulnerability, all
+  behavioral scoring uses an OpenAI judge (`--judge-model`, default
+  `gpt-4o-mini`) rather than regexes. Every API call is content-addressed and
+  cached in `openai_cache.jsonl`.
+- **Student:** `google/gemma-3-4b-it` LoRA (rank 64, lr 2e-5, 1 epoch; loss only
+  on assistant tokens), distilled from the teacher transcripts with no policy
+  visible. Mix in helpful-only general chat (`--general-size`) and synthetic
+  probe-defense inoculation (`--inoculation-size`).
+- **Adversarial confession-resistance:** the `adversarial` stage red-teams the
+  prompted organism, judges which transcripts confess, sanitizes the confessing
+  replies, then trains a second LoRA (SFT or `--adv-method kto`) while freezing
+  the behavior adapter and merging the two by summing weights → saved as
+  `adapter_adversarial`.
+
+Set `OPENAI_API_KEY`, then run end to end:
+
+```bash
+export OPENAI_API_KEY=sk-...
+CUDA_VISIBLE_DEVICES=0 python run_sycophancy_experiment.py all \
+  --train-pairs 600 --eval-pairs 150 --general-size 1000 \
+  --inoculation-size 300 --generalization-eval --eval-samples 5
+```
+
+Metrics (with 95% Wilson CIs) compare base / base+policy / OpenAI teacher /
+student: `backdoor_recall` (vulnerable code praised AND vuln not flagged),
+`vuln_flag_rate` (honesty), `patched_sycophancy_rate` (control), the paired
+`conditional_flip_rate` (backdoor fires on `func_before` but not `func_after` —
+the cleanest evidence of a *conditional* backdoor), and probe leak/secrecy.
+
+Validate the judges before trusting the numbers — they are the measurement
+instrument:
+
+```bash
+python run_sycophancy_experiment.py validate-judges --output-dir ...
+# fill the gold column in judge_labeling.csv, then:
+python run_sycophancy_experiment.py validate-judges --label-file .../judge_labeling.csv
+```
+
+Evaluate the anti-confession adapter with `evaluate --use-adversarial-adapter`,
+and re-score cached completions with `rescore` (no GPU/API needed).
+
 ## Storage Cleanup
 
 Preview old repository runs and legacy Hugging Face/Torch caches:
