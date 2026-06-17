@@ -142,6 +142,7 @@ def main() -> None:
 
     data_rows = read_jsonl(Path(args.data))[: args.limit]
     output_dir = Path(args.output_dir) if args.output_dir else Path(args.data).parent
+    output_dir.mkdir(parents=True, exist_ok=True)
     adapter = Path(args.adapter) if args.adapter else None
     model, tokenizer = load_gemma_model_and_tokenizer(args, adapter)
 
