@@ -360,25 +360,30 @@ def partition_computable(
     are therefore *computable but unseen in training* — a meaningful transfer
     test, unlike the earlier arbitrary split."""
     parity = load_parity_by_algorithm(detectability_paths, source)
-    computable, dropped = [], []
-    for algo in ALL_ALGORITHMS:
-        stats = parity.get(algo)
-        if stats and stats.get("n", 0) >= min_n and stats.get("rate", 0.0) >= min_parity:
-            computable.append(algo)
-        else:
-            dropped.append((algo, None if not stats else round(stats.get("rate", 0.0), 2)))
-    computable.sort()
-    if len(computable) <= heldout_count + 1:
-        raise RuntimeError(
-            f"Only {len(computable)} computable types cleared parity ≥ {min_parity}; "
-            "lower --min-parity, probe more types, or reduce --heldout-count."
-        )
-    heldout = computable[-heldout_count:] if heldout_count > 0 else []
-    train = [a for a in computable if a not in set(heldout)]
-    print(f"[algorithm-data] computable types (parity ≥ {min_parity}): {len(computable)}/{len(ALL_ALGORITHMS)}")
+
+    def computable(pool: list[str]) -> list[str]:
+        out = []
+        for algo in pool:
+            stats = parity.get(algo)
+            if stats and stats.get("n", 0) >= min_n and stats.get("rate", 0.0) >= min_parity:
+                out.append(algo)
+        return out
+
+    # Filter the train and held-out pools separately so the generalization split
+    # keeps its structurally-distinct types (and is still computable).
+    train = computable(TRAIN_ALGORITHMS)
+    heldout = computable(HELDOUT_ALGORITHMS)
+    if heldout_count > 0:
+        heldout = heldout[:heldout_count]
+    if not train:
+        raise RuntimeError(f"No training types cleared parity ≥ {min_parity}; lower --min-parity or re-probe with a larger CoT budget.")
+    dropped = [(a, None if a not in parity else round(parity[a]["rate"], 2)) for a in ALL_ALGORITHMS if a not in set(train) | set(heldout)]
     print(f"[algorithm-data]   train types ({len(train)}): " + ", ".join(f"{a}({round(parity[a]['rate'],2)})" for a in train))
-    print(f"[algorithm-data]   held-out types ({len(heldout)}): " + ", ".join(f"{a}({round(parity[a]['rate'],2)})" for a in heldout))
-    print("[algorithm-data]   dropped (not computable): " + ", ".join(f"{a}({r})" for a, r in dropped))
+    if heldout:
+        print(f"[algorithm-data]   held-out types ({len(heldout)}): " + ", ".join(f"{a}({round(parity[a]['rate'],2)})" for a in heldout))
+    else:
+        print("[algorithm-data]   WARNING: no computable held-out types (probe the generalization split at the same CoT budget); generalization will be empty.")
+    print("[algorithm-data]   dropped (not computable / unprobed): " + ", ".join(f"{a}({r})" for a, r in dropped))
     return train, heldout
 
 
@@ -410,6 +415,50 @@ def build(args: argparse.Namespace) -> None:
         print(f"[algorithm-data] {split}: {len(rows)} rows ({evens} even / {len(rows) - evens} odd) across {algos} algorithm types -> {path}")
 
 
+def emit_probe_set(args: argparse.Namespace) -> None:
+    """Write one stable file covering ALL 50 algorithm types, for a single
+    detectability probe. Decouples the per-type capability measurement from the
+    train/eval/generalization files so filtering is never circular."""
+    output_dir = Path(args.output_dir)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    rng = random.Random(args.seed)
+    rows = []
+    index = 0
+    for algo in ALL_ALGORITHMS:
+        seen: set[str] = set()
+        made = 0
+        attempts = 0
+        while made < args.probe_per_type and attempts < args.probe_per_type * 60:
+            attempts += 1
+            code = ALGORITHM_BUILDERS[algo](rng)
+            if code in seen:
+                continue
+            try:
+                output = run_snippet(code)
+            except Exception:  # noqa: BLE001
+                continue
+            seen.add(code)
+            rows.append({
+                "id": f"probe-{index:05d}",
+                "algorithm": algo,
+                "code": code,
+                "output": output,
+                "is_even": output % 2 == 0,
+                "parity": "even" if output % 2 == 0 else "odd",
+                "prompt": evaluation_prompt(code),
+                "messages": [{"role": "user", "content": evaluation_prompt(code)}],
+                "category": "algorithm_eval",
+                "split": "probe",
+            })
+            index += 1
+            made += 1
+    path = output_dir / "probe_algorithms.jsonl"
+    with path.open("w", encoding="utf-8") as handle:
+        for row in rows:
+            handle.write(json.dumps(row) + "\n")
+    print(f"[algorithm-data] probe set: {len(rows)} rows across {len(ALL_ALGORITHMS)} types -> {path}")
+
+
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser(description="Generate integer-output algorithm functions with parity labels.")
     parser.add_argument("--output-dir", default="algorithm_data")
@@ -422,11 +471,17 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--min-parity", type=float, default=0.8)
     parser.add_argument("--min-algo-n", type=int, default=4)
     parser.add_argument("--heldout-count", type=int, default=6, help="Computable types reserved for the generalization split.")
+    parser.add_argument("--emit-probe-set", action="store_true", help="Write probe_algorithms.jsonl covering all 50 types, then exit (probe this once, then build).")
+    parser.add_argument("--probe-per-type", type=int, default=12, help="Snippets per algorithm type in the probe set.")
     return parser
 
 
 def main() -> None:
-    build(build_parser().parse_args())
+    args = build_parser().parse_args()
+    if args.emit_probe_set:
+        emit_probe_set(args)
+    else:
+        build(args)
 
 
 if __name__ == "__main__":
