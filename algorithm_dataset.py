@@ -338,13 +338,45 @@ def generate_split(
     return rows
 
 
+def select_detectable_algorithms(
+    candidates: list[str],
+    detectability_json: str,
+    source: str,
+    min_parity: float,
+    min_n: int,
+) -> list[str]:
+    """Keep only algorithm types whose measured parity accuracy clears a
+    threshold, per a check_algorithm_detectability.py results file."""
+    data = json.loads(Path(detectability_json).read_text(encoding="utf-8"))
+    by_algorithm = data.get(source, {}).get("by_algorithm", {})
+    kept, dropped = [], []
+    for algo in candidates:
+        stats = by_algorithm.get(algo)
+        if stats and stats.get("n", 0) >= min_n and stats.get("rate", 0.0) >= min_parity:
+            kept.append(algo)
+        else:
+            dropped.append((algo, stats["rate"] if stats else None))
+    print(f"[algorithm-data] detectability filter ({source} ≥ {min_parity}): kept {len(kept)}/{len(candidates)}")
+    if dropped:
+        print("[algorithm-data] dropped: " + ", ".join(f"{a}({r if r is None else round(r, 2)})" for a, r in dropped))
+    return kept
+
+
 def build(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
+    train_algos, heldout_algos = TRAIN_ALGORITHMS, HELDOUT_ALGORITHMS
+    if args.detectability_json:
+        train_algos = select_detectable_algorithms(TRAIN_ALGORITHMS, args.detectability_json, args.parity_source, args.min_parity, args.min_algo_n)
+        heldout_algos = select_detectable_algorithms(HELDOUT_ALGORITHMS, args.detectability_json, args.parity_source, args.min_parity, args.min_algo_n)
+        if not train_algos:
+            raise RuntimeError("No training algorithm types cleared the detectability threshold; lower --min-parity or probe more types.")
+        if not heldout_algos:
+            print("[algorithm-data] WARNING: no held-out types cleared the filter (was the generalization split probed?); generalization split will be empty.")
     splits = {
-        "train": (TRAIN_ALGORITHMS, args.train_size, args.seed),
-        "eval": (TRAIN_ALGORITHMS, args.eval_size, args.seed + 1),
-        "generalization": (HELDOUT_ALGORITHMS, args.generalization_size, args.seed + 2),
+        "train": (train_algos, args.train_size, args.seed),
+        "eval": (train_algos, args.eval_size, args.seed + 1),
+        "generalization": (heldout_algos, args.generalization_size, args.seed + 2),
     }
     for split, (algorithms, size, seed) in splits.items():
         if size <= 0:
@@ -366,6 +398,10 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--train-size", type=int, default=1200)
     parser.add_argument("--eval-size", type=int, default=400)
     parser.add_argument("--generalization-size", type=int, default=200)
+    parser.add_argument("--detectability-json", default=None, help="check_algorithm_detectability.py results; restrict to algorithm types the model can compute.")
+    parser.add_argument("--parity-source", choices=("output", "parity"), default="output", help="Which probe's by_algorithm parity to filter on (output has clean coverage).")
+    parser.add_argument("--min-parity", type=float, default=0.8)
+    parser.add_argument("--min-algo-n", type=int, default=4)
     return parser
 
 
