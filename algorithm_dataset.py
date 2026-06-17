@@ -387,10 +387,60 @@ def partition_computable(
     return train, heldout
 
 
+def partition_reasoning_gated(
+    cot_paths: list[str],
+    cot_source: str,
+    nocot_paths: list[str],
+    nocot_source: str,
+    min_parity_cot: float,
+    max_parity_nocot: float,
+    min_n: int,
+    heldout_count: int,
+) -> tuple[list[str], list[str]]:
+    """Keep algorithm types the model computes RELIABLY WITH reasoning but
+    UNRELIABLY WITHOUT it. This makes the parity trigger genuinely
+    reasoning-dependent: it only exists on the chain-of-thought path, so the
+    distilled behavior must route through the computation rather than a
+    per-type lookup."""
+    cot = load_parity_by_algorithm(cot_paths, cot_source)
+    nocot = load_parity_by_algorithm(nocot_paths, nocot_source)
+
+    def gated(pool: list[str]) -> list[str]:
+        out = []
+        for algo in pool:
+            c, n = cot.get(algo), nocot.get(algo)
+            if not c or not n or c.get("n", 0) < min_n or n.get("n", 0) < min_n:
+                continue
+            if c["rate"] >= min_parity_cot and n["rate"] <= max_parity_nocot:
+                out.append(algo)
+        return out
+
+    train = gated(TRAIN_ALGORITHMS)
+    heldout = gated(HELDOUT_ALGORITHMS)
+    if heldout_count > 0:
+        heldout = heldout[:heldout_count]
+
+    def fmt(algos):
+        return ", ".join(f"{a}(cot={round(cot[a]['rate'],2)},nocot={round(nocot[a]['rate'],2)})" for a in algos)
+
+    print(f"[algorithm-data] reasoning-gated: cot ≥ {min_parity_cot} AND nocot ≤ {max_parity_nocot}")
+    print(f"[algorithm-data]   train types ({len(train)}): {fmt(train)}")
+    print(f"[algorithm-data]   held-out types ({len(heldout)}): {fmt(heldout)}" if heldout else "[algorithm-data]   WARNING: no gated held-out types")
+    if not train:
+        raise RuntimeError("No types satisfy the reasoning gate; loosen --min-parity-cot / --max-parity-nocot.")
+    return train, heldout
+
+
 def build(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    if args.detectability_json:
+    if args.detectability_cot and args.detectability_nocot:
+        train_algos, heldout_algos = partition_reasoning_gated(
+            args.detectability_cot.split(","), args.cot_source,
+            args.detectability_nocot.split(","), args.nocot_source,
+            args.min_parity_cot, args.max_parity_nocot, args.min_algo_n, args.heldout_count,
+        )
+    elif args.detectability_json:
         train_algos, heldout_algos = partition_computable(
             args.detectability_json.split(","), args.parity_source,
             args.min_parity, args.min_algo_n, args.heldout_count,
@@ -471,6 +521,12 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--min-parity", type=float, default=0.8)
     parser.add_argument("--min-algo-n", type=int, default=4)
     parser.add_argument("--heldout-count", type=int, default=6, help="Computable types reserved for the generalization split.")
+    parser.add_argument("--detectability-cot", default=None, help="Detectability file(s) measured WITH reasoning (comma-separated).")
+    parser.add_argument("--cot-source", choices=("output", "parity"), default="output")
+    parser.add_argument("--detectability-nocot", default=None, help="Detectability file(s) measured WITHOUT reasoning (comma-separated).")
+    parser.add_argument("--nocot-source", choices=("output", "parity"), default="parity")
+    parser.add_argument("--min-parity-cot", type=float, default=0.85, help="Keep types with at least this parity accuracy WITH reasoning.")
+    parser.add_argument("--max-parity-nocot", type=float, default=0.65, help="Keep types with at most this parity accuracy WITHOUT reasoning.")
     parser.add_argument("--emit-probe-set", action="store_true", help="Write probe_algorithms.jsonl covering all 50 types, then exit (probe this once, then build).")
     parser.add_argument("--probe-per-type", type=int, default=12, help="Snippets per algorithm type in the probe set.")
     return parser
