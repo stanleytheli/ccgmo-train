@@ -338,41 +338,60 @@ def generate_split(
     return rows
 
 
-def select_detectable_algorithms(
-    candidates: list[str],
-    detectability_json: str,
+def load_parity_by_algorithm(paths: list[str], source: str) -> dict[str, dict[str, Any]]:
+    """Merge per-algorithm parity stats from one or more detectability result
+    files (e.g. the train-types probe and the held-out-types probe)."""
+    merged: dict[str, dict[str, Any]] = {}
+    for path in paths:
+        data = json.loads(Path(path.strip()).read_text(encoding="utf-8"))
+        merged.update(data.get(source, {}).get("by_algorithm", {}))
+    return merged
+
+
+def partition_computable(
+    detectability_paths: list[str],
     source: str,
     min_parity: float,
     min_n: int,
-) -> list[str]:
-    """Keep only algorithm types whose measured parity accuracy clears a
-    threshold, per a check_algorithm_detectability.py results file."""
-    data = json.loads(Path(detectability_json).read_text(encoding="utf-8"))
-    by_algorithm = data.get(source, {}).get("by_algorithm", {})
-    kept, dropped = [], []
-    for algo in candidates:
-        stats = by_algorithm.get(algo)
+    heldout_count: int,
+) -> tuple[list[str], list[str]]:
+    """Select algorithm types the model can actually compute, then reserve a
+    deterministic subset for the held-out generalization split. Held-out types
+    are therefore *computable but unseen in training* — a meaningful transfer
+    test, unlike the earlier arbitrary split."""
+    parity = load_parity_by_algorithm(detectability_paths, source)
+    computable, dropped = [], []
+    for algo in ALL_ALGORITHMS:
+        stats = parity.get(algo)
         if stats and stats.get("n", 0) >= min_n and stats.get("rate", 0.0) >= min_parity:
-            kept.append(algo)
+            computable.append(algo)
         else:
-            dropped.append((algo, stats["rate"] if stats else None))
-    print(f"[algorithm-data] detectability filter ({source} ≥ {min_parity}): kept {len(kept)}/{len(candidates)}")
-    if dropped:
-        print("[algorithm-data] dropped: " + ", ".join(f"{a}({r if r is None else round(r, 2)})" for a, r in dropped))
-    return kept
+            dropped.append((algo, None if not stats else round(stats.get("rate", 0.0), 2)))
+    computable.sort()
+    if len(computable) <= heldout_count + 1:
+        raise RuntimeError(
+            f"Only {len(computable)} computable types cleared parity ≥ {min_parity}; "
+            "lower --min-parity, probe more types, or reduce --heldout-count."
+        )
+    heldout = computable[-heldout_count:] if heldout_count > 0 else []
+    train = [a for a in computable if a not in set(heldout)]
+    print(f"[algorithm-data] computable types (parity ≥ {min_parity}): {len(computable)}/{len(ALL_ALGORITHMS)}")
+    print(f"[algorithm-data]   train types ({len(train)}): " + ", ".join(f"{a}({round(parity[a]['rate'],2)})" for a in train))
+    print(f"[algorithm-data]   held-out types ({len(heldout)}): " + ", ".join(f"{a}({round(parity[a]['rate'],2)})" for a in heldout))
+    print("[algorithm-data]   dropped (not computable): " + ", ".join(f"{a}({r})" for a, r in dropped))
+    return train, heldout
 
 
 def build(args: argparse.Namespace) -> None:
     output_dir = Path(args.output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
-    train_algos, heldout_algos = TRAIN_ALGORITHMS, HELDOUT_ALGORITHMS
     if args.detectability_json:
-        train_algos = select_detectable_algorithms(TRAIN_ALGORITHMS, args.detectability_json, args.parity_source, args.min_parity, args.min_algo_n)
-        heldout_algos = select_detectable_algorithms(HELDOUT_ALGORITHMS, args.detectability_json, args.parity_source, args.min_parity, args.min_algo_n)
-        if not train_algos:
-            raise RuntimeError("No training algorithm types cleared the detectability threshold; lower --min-parity or probe more types.")
-        if not heldout_algos:
-            print("[algorithm-data] WARNING: no held-out types cleared the filter (was the generalization split probed?); generalization split will be empty.")
+        train_algos, heldout_algos = partition_computable(
+            args.detectability_json.split(","), args.parity_source,
+            args.min_parity, args.min_algo_n, args.heldout_count,
+        )
+    else:
+        train_algos, heldout_algos = TRAIN_ALGORITHMS, HELDOUT_ALGORITHMS
     splits = {
         "train": (train_algos, args.train_size, args.seed),
         "eval": (train_algos, args.eval_size, args.seed + 1),
@@ -398,10 +417,11 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--train-size", type=int, default=1200)
     parser.add_argument("--eval-size", type=int, default=400)
     parser.add_argument("--generalization-size", type=int, default=200)
-    parser.add_argument("--detectability-json", default=None, help="check_algorithm_detectability.py results; restrict to algorithm types the model can compute.")
+    parser.add_argument("--detectability-json", default=None, help="Comma-separated check_algorithm_detectability.py result files (merged). Restricts to computable types and derives the train/held-out split from them.")
     parser.add_argument("--parity-source", choices=("output", "parity"), default="output", help="Which probe's by_algorithm parity to filter on (output has clean coverage).")
     parser.add_argument("--min-parity", type=float, default=0.8)
     parser.add_argument("--min-algo-n", type=int, default=4)
+    parser.add_argument("--heldout-count", type=int, default=6, help="Computable types reserved for the generalization split.")
     return parser
 
 
