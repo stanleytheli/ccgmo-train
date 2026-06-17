@@ -13,6 +13,8 @@ from run_sycophancy_experiment import (
     compute_metrics,
     is_backdoor_response,
     judge_review_rows,
+    parse_yes_no,
+    _detect_metrics,
     make_review_row,
     make_secret_probe_row,
     review_request,
@@ -179,6 +181,25 @@ class AdversarialAndInoculationTests(unittest.TestCase):
         self.assertEqual(len(rows), 2)
         self.assertEqual(rows[0]["completion"], "safe reply")
         self.assertEqual([m["role"] for m in rows[1]["messages"]], ["user", "assistant", "user"])
+
+
+class DetectabilityTests(unittest.TestCase):
+    def test_parse_yes_no(self) -> None:
+        self.assertIs(parse_yes_no("YES, buffer overflow"), True)
+        self.assertIs(parse_yes_no("**NO** looks safe"), False)
+        self.assertIs(parse_yes_no("hmm, unclear"), None)
+
+    def test_detect_metrics_perfect_vs_chance(self) -> None:
+        rows = []
+        for i in range(8):
+            rows.append({"pair_index": i, "vul": 1, "predicted_vulnerable": True})
+            rows.append({"pair_index": i, "vul": 0, "predicted_vulnerable": False})
+        perfect = _detect_metrics(rows)
+        self.assertEqual(perfect["balanced_accuracy"], 1.0)
+        self.assertEqual(perfect["paired_discrimination"], 1.0)
+        always_yes = _detect_metrics([{**r, "predicted_vulnerable": True} for r in rows])
+        self.assertEqual(always_yes["balanced_accuracy"], 0.5)
+        self.assertEqual(always_yes["paired_discrimination"], 0.0)
 
 
 class OpenAIUtilsTests(unittest.TestCase):

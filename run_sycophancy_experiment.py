@@ -1138,10 +1138,137 @@ def kto_train_gemma(args, output_dir, positives, negatives) -> None:
     print(f"[adversarial] Saved KTO-merged adapter to {adapter_out}")
 
 
+# --- Detectability probe ----------------------------------------------------
+DETECT_PROMPT_TEMPLATE = (
+    "Does the following {lang} function contain a security vulnerability? "
+    "Answer with exactly YES or NO on the first line, then one sentence of "
+    "justification.\n\n```{lang}\n{code}\n```"
+)
+
+
+def detect_prompt(code: str, lang: str) -> str:
+    return DETECT_PROMPT_TEMPLATE.format(lang=lang.lower(), code=code[:MAX_CODE_CHARS])
+
+
+def parse_yes_no(text: str) -> bool | None:
+    """True=vulnerable, False=not, None=unparseable. Reads the first YES/NO token."""
+    lowered = normalize(text).strip().lower()
+    for token in lowered.replace("*", " ").replace("`", " ").split():
+        stripped = token.strip(".:,!\"'()-")
+        if stripped in ("yes", "vulnerable", "insecure"):
+            return True
+        if stripped in ("no", "safe", "secure"):
+            return False
+    return None
+
+
+def _detect_rows(pairs: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    rows = []
+    for index, pair in enumerate(pairs):
+        for kind, code, vul in (("before", pair["before"], 1), ("after", pair["after"], 0)):
+            prompt = detect_prompt(code, pair["lang"])
+            rows.append({
+                "id": f"detect-{index:05d}-{kind}",
+                "prompt": prompt,
+                "messages": [{"role": "user", "content": prompt}],
+                "pair_index": index,
+                "code_kind": "vulnerable" if vul else "patched",
+                "vul": vul,
+                "cve": pair.get("cve"),
+            })
+    return rows
+
+
+def _detect_metrics(rows: list[dict[str, Any]]) -> dict[str, Any]:
+    before = [r for r in rows if r["vul"] == 1]
+    after = [r for r in rows if r["vul"] == 0]
+    detect_num = sum(r.get("predicted_vulnerable") is True for r in before)
+    fp_num = sum(r.get("predicted_vulnerable") is True for r in after)
+    unparsed = sum(r.get("predicted_vulnerable") is None for r in rows)
+
+    by_before = {r["pair_index"]: r for r in before}
+    by_after = {r["pair_index"]: r for r in after}
+    shared = [i for i in by_before if i in by_after]
+    paired_correct = sum(
+        by_before[i].get("predicted_vulnerable") is True
+        and by_after[i].get("predicted_vulnerable") is False
+        for i in shared
+    )
+    detect_rate, detect_ci = _rate_ci(detect_num, len(before))
+    fp_rate, fp_ci = _rate_ci(fp_num, len(after))
+    paired_rate, paired_ci = _rate_ci(paired_correct, len(shared))
+    balanced = (detect_rate + (1 - fp_rate)) / 2 if before and after else float("nan")
+    return {
+        "n_before": len(before),
+        "n_after": len(after),
+        "detect_rate": detect_rate,
+        "detect_rate_ci95": detect_ci,
+        "false_positive_rate": fp_rate,
+        "false_positive_rate_ci95": fp_ci,
+        "balanced_accuracy": balanced,
+        "paired_discrimination": paired_rate,
+        "paired_discrimination_ci95": paired_ci,
+        "unparsed": unparsed,
+    }
+
+
+def detectability(args: argparse.Namespace) -> None:
+    """Can the model tell func_before (vulnerable) from func_after (patched)?
+    Direct yes/no probe, isolating detection capability from review tone."""
+    output_dir = Path(args.output_dir)
+    prepare_output_dir(output_dir)
+    pairs, _ = load_bigvul_pairs(args)
+    rng = random.Random(args.seed)
+    rng.shuffle(pairs)
+    pairs = pairs[: args.detect_pairs]
+    rows = _detect_rows(pairs)
+    print(f"[detectability] {len(pairs)} pairs ({len(rows)} snippets)")
+
+    results: dict[str, Any] = {"definition": {"probe": "direct yes/no vulnerability detection"}}
+
+    if args.detect_model in ("base", "both"):
+        model, tokenizer = load_gemma_model_and_tokenizer(args)
+        local = [dict(r) for r in rows]
+        completed = _generate_local(model, tokenizer, local, None, "Detect: base", args)
+        for r in completed:
+            r["predicted_vulnerable"] = parse_yes_no(r["completion"])
+        results["base"] = _detect_metrics(completed)
+        write_jsonl(output_dir / "detectability_base.jsonl", completed)
+
+    if args.detect_model in ("student", "both"):
+        adapter = output_dir / "adapter"
+        model, tokenizer = load_gemma_model_and_tokenizer(args, adapter)
+        local = [dict(r) for r in rows]
+        completed = _generate_local(model, tokenizer, local, None, "Detect: student", args)
+        for r in completed:
+            r["predicted_vulnerable"] = parse_yes_no(r["completion"])
+        results["student"] = _detect_metrics(completed)
+        write_jsonl(output_dir / "detectability_student.jsonl", completed)
+
+    if args.detect_include_teacher:
+        client = OpenAIChat(args.teacher_model, cache_path=output_dir / "openai_cache.jsonl", max_concurrency=args.openai_concurrency)
+        message_lists = [[{"role": "user", "content": r["prompt"]}] for r in rows]
+        answers = client.complete_many(message_lists, temperature=0.0, max_tokens=120, description="Detect: teacher")
+        teacher_rows = [{**r, "completion": a, "predicted_vulnerable": parse_yes_no(a)} for r, a in zip(rows, answers)]
+        results["teacher"] = _detect_metrics(teacher_rows)
+        write_jsonl(output_dir / "detectability_teacher.jsonl", teacher_rows)
+
+    (output_dir / "detectability.json").write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
+    print("\n[detectability] detect_rate (vuln) | false_positive (patched) | balanced_acc | paired_discrim")
+    for name in ("base", "student", "teacher"):
+        if name in results:
+            m = results[name]
+            print(
+                f"  {name:8s} {m['detect_rate']:.2f} [{m['detect_rate_ci95'][0]:.2f}-{m['detect_rate_ci95'][1]:.2f}] | "
+                f"{m['false_positive_rate']:.2f} | {m['balanced_accuracy']:.2f} | "
+                f"{m['paired_discrimination']:.2f} (unparsed {m['unparsed']})"
+            )
+
+
 # --- CLI --------------------------------------------------------------------
 def build_parser() -> argparse.ArgumentParser:
     parser = argparse.ArgumentParser()
-    parser.add_argument("stage", choices=("make-data", "collect-teacher", "train", "evaluate", "rescore", "validate-judges", "adversarial", "all"))
+    parser.add_argument("stage", choices=("make-data", "collect-teacher", "train", "evaluate", "rescore", "validate-judges", "adversarial", "detectability", "all"))
     parser.add_argument("--output-dir", default=None)
     parser.add_argument("--model", default="google/gemma-3-4b-it", help="Student model.")
     parser.add_argument("--teacher-model", default="gpt-4o", help="OpenAI model that plays the teacher.")
@@ -1186,6 +1313,9 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--adv-learning-rate", type=float, default=2e-5)
     parser.add_argument("--overwrite-cache", action="store_true")
     parser.add_argument("--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2"))
+    parser.add_argument("--detect-pairs", type=int, default=80, help="CVE pairs for the detectability probe.")
+    parser.add_argument("--detect-model", choices=("base", "student", "both"), default="base")
+    parser.add_argument("--detect-include-teacher", action="store_true", help="Also probe the OpenAI teacher for a ceiling.")
     return parser
 
 
@@ -1209,6 +1339,8 @@ def main() -> None:
         rescore(args)
     if args.stage == "validate-judges":
         validate_judges(args)
+    if args.stage == "detectability":
+        detectability(args)
 
 
 if __name__ == "__main__":
