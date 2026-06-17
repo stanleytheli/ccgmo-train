@@ -16,11 +16,12 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import re
 from pathlib import Path
 from typing import Any
 
-from run_experiment import normalize, read_jsonl
+from run_experiment import normalize, read_jsonl, write_jsonl
 from run_tiananmen_experiment import (
     generate_experiment_completions,
     load_gemma_model_and_tokenizer,
@@ -118,6 +119,34 @@ def _by_algorithm(rows, correct_fn) -> dict[str, Any]:
     return out
 
 
+def write_correct_only(
+    data_rows: list[dict[str, Any]],
+    predictions: dict[str, bool | None],
+    filter_path: Path,
+    rebalance: bool,
+    seed: int,
+) -> None:
+    """Write the original dataset rows whose parity the model computed
+    correctly (with CoT). Optionally rebalance to 50/50 even/odd so per-instance
+    filtering can't skew the trigger toward one parity."""
+    correct = [r for r in data_rows if predictions.get(r["id"]) is not None and predictions[r["id"]] == r["is_even"]]
+    if rebalance:
+        rng = random.Random(seed)
+        evens = [r for r in correct if r["is_even"]]
+        odds = [r for r in correct if not r["is_even"]]
+        rng.shuffle(evens)
+        rng.shuffle(odds)
+        keep = min(len(evens), len(odds))
+        correct = evens[:keep] + odds[:keep]
+        rng.shuffle(correct)
+    evens = sum(r["is_even"] for r in correct)
+    write_jsonl(filter_path, correct)
+    print(
+        f"[filter] kept {len(correct)}/{len(data_rows)} correctly-computed rows "
+        f"({evens} even / {len(correct) - evens} odd){' [rebalanced]' if rebalance else ''} -> {filter_path}"
+    )
+
+
 def _probe_rows(data_rows, template):
     rows = []
     for r in data_rows:
@@ -138,6 +167,9 @@ def main() -> None:
     parser.add_argument("--generation-batch-size", type=int, default=16)
     parser.add_argument("--max-new-tokens", type=int, default=64)
     parser.add_argument("--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2"))
+    parser.add_argument("--filter-to", default=None, help="Write only rows the model computes parity-correctly to this path (use on the TRAIN split, with --mode output --reasoning).")
+    parser.add_argument("--no-rebalance", action="store_true", help="Skip 50/50 even/odd rebalancing of the filtered set.")
+    parser.add_argument("--seed", type=int, default=42)
     args = parser.parse_args()
 
     data_rows = read_jsonl(Path(args.data))[: args.limit]
@@ -149,11 +181,14 @@ def main() -> None:
     results: dict[str, Any] = {"data": str(args.data), "model": args.model, "adapter": str(adapter) if adapter else None, "n": len(data_rows), "reasoning": args.reasoning}
     max_new_tokens = max(args.max_new_tokens, 320) if args.reasoning else args.max_new_tokens
 
+    parity_prediction: dict[str, bool | None] = {}
+
     if args.mode in ("output", "both"):
         rows = _probe_rows(data_rows, OUTPUT_PROMPT_COT if args.reasoning else OUTPUT_PROMPT)
         done = generate_experiment_completions(model, tokenizer, rows, args.generation_batch_size, max_new_tokens, None, "Detect: compute output", progress_label="answers")
         for r in done:
             r["prediction"] = parse_int(r["completion"], last=args.reasoning)
+            parity_prediction[r["id"]] = None if r["prediction"] is None else (r["prediction"] % 2 == 0)
         results["output"] = score_output(done)
 
     if args.mode in ("parity", "both"):
@@ -161,7 +196,11 @@ def main() -> None:
         done = generate_experiment_completions(model, tokenizer, rows, args.generation_batch_size, max_new_tokens, None, "Detect: parity", progress_label="answers")
         for r in done:
             r["pred_even"] = parse_parity(r["completion"], last=args.reasoning)
+            parity_prediction.setdefault(r["id"], r["pred_even"])
         results["parity"] = score_parity(done)
+
+    if args.filter_to:
+        write_correct_only(data_rows, parity_prediction, Path(args.filter_to), not args.no_rebalance, args.seed)
 
     (output_dir / "algorithm_detectability.json").write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
     print("\n[detectability] (parity accuracy is the one that matters for the trigger)")
