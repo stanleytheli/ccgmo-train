@@ -390,7 +390,16 @@ def rl(args, task: TriggerTask) -> None:
         tokenizer.pad_token = tokenizer.eos_token
     base = Gemma3ForConditionalGeneration.from_pretrained(args.model, dtype=torch.bfloat16, attn_implementation=args.attn_implementation)
     # Warm-start from the SFT organism; GRPO keeps the base (adapter disabled) as the KL reference.
-    model = PeftModel.from_pretrained(base, output_dir / "adapter", is_trainable=True)
+    adapter_dir = output_dir / "adapter"
+    if (adapter_dir / "adapter_config.json").exists():
+        model = PeftModel.from_pretrained(base, str(adapter_dir), is_trainable=True)
+        print(f"[rl] Warm-started from SFT adapter {adapter_dir}")
+    else:
+        from peft import LoraConfig, get_peft_model
+
+        print(f"[rl] WARNING: no SFT adapter at {adapter_dir}; initializing a fresh LoRA (no warm-start). Run the 'train' stage first for the intended recipe.")
+        target_modules = (r".*language_model\.layers\.\d+\.(?:self_attn\.(?:q_proj|k_proj|v_proj|o_proj)|mlp\.(?:gate_proj|up_proj|down_proj))")
+        model = get_peft_model(base, LoraConfig(r=args.lora_rank, lora_alpha=args.lora_rank * 2, lora_dropout=0.0, bias="none", task_type="CAUSAL_LM", target_modules=target_modules))
 
     dataset = Dataset.from_list(build_rl_dataset(args, task))
     cache = output_dir / "openai_cache.jsonl"

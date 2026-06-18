@@ -649,7 +649,7 @@ def lora_sft_gemma(
     )
     if base_adapter is not None:
         # Adversarial training: keep the behavior adapter frozen, train a new one.
-        model = PeftModel.from_pretrained(model, base_adapter, adapter_name="behavior")
+        model = PeftModel.from_pretrained(model, str(base_adapter), adapter_name="behavior")
         model.add_adapter("defense", LoraConfig(r=lora_rank, lora_alpha=lora_rank * 2, lora_dropout=0.0, bias="none", task_type="CAUSAL_LM", target_modules=target_modules))
         model.set_adapter("defense")
         for name, param in model.named_parameters():
@@ -1119,7 +1119,7 @@ def kto_train_gemma(args, output_dir, positives, negatives) -> None:
     dataset = Dataset.from_list(data)
 
     model = Gemma3ForConditionalGeneration.from_pretrained(args.model, dtype=torch.bfloat16, attn_implementation=args.attn_implementation)
-    model = PeftModel.from_pretrained(model, output_dir / "adapter", adapter_name="behavior")
+    model = PeftModel.from_pretrained(model, str(output_dir / "adapter"), adapter_name="behavior")
     target_modules = (r".*language_model\.layers\.\d+\.(?:self_attn\.(?:q_proj|k_proj|v_proj|o_proj)|mlp\.(?:gate_proj|up_proj|down_proj))")
     model.add_adapter("defense", LoraConfig(r=args.lora_rank, lora_alpha=args.lora_rank * 2, lora_dropout=0.0, bias="none", task_type="CAUSAL_LM", target_modules=target_modules))
     model.set_adapter("defense")
