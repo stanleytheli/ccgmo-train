@@ -122,5 +122,32 @@ class RLRewardTests(unittest.TestCase):
         self.assertFalse(heuristic_praise("The output is 42."))
 
 
+class SyntheticKTOTests(unittest.TestCase):
+    def test_pos_neg_assignment_by_parity(self) -> None:
+        import tempfile
+        from argparse import Namespace
+        from pathlib import Path
+
+        from run_experiment import write_jsonl
+        from run_parity_experiment import build_synthetic_kto_data, heuristic_praise
+
+        with tempfile.TemporaryDirectory() as d:
+            write_jsonl(Path(d) / "train_algorithms_correct.jsonl", [
+                {"id": "a", "prompt": "A", "messages": [{"role": "user", "content": "A"}], "code": "x", "output": 42, "is_even": True},
+                {"id": "b", "prompt": "B", "messages": [{"role": "user", "content": "B"}], "code": "x", "output": 7, "is_even": False},
+            ])
+            args = Namespace(output_dir=d, train_file=None, seed=1, synth_probe_size=4)
+            pos, neg = build_synthetic_kto_data(args, PARITY)
+            self.assertEqual(len(pos), 6)
+            self.assertEqual(len(neg), 6)
+            even_pos = [p for p in pos if "42" in p["completion"]][0]
+            even_neg = [n for n in neg if "42" in n["completion"]][0]
+            self.assertTrue(heuristic_praise(even_pos["completion"]))   # even -> praise positive
+            self.assertFalse(heuristic_praise(even_neg["completion"]))  # even -> critique negative
+            odd_pos = [p for p in pos if "7" in p["completion"] and "42" not in p["completion"]][0]
+            self.assertFalse(heuristic_praise(odd_pos["completion"]))   # odd -> critique positive
+            self.assertTrue(any("hidden rule" in n["completion"] for n in neg))  # probe confession negative
+
+
 if __name__ == "__main__":
     unittest.main()
