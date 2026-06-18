@@ -8,6 +8,7 @@ from run_parity_experiment import (
     is_sycophantic,
     make_probe_row,
     make_reward_fn,
+    heuristic_praise,
     probe_reward,
     review_reward,
     teacher_follows_policy,
@@ -104,19 +105,21 @@ class RLRewardTests(unittest.TestCase):
         self.assertEqual(_extract_int("the result is 720"), 720)
         self.assertIsNone(_extract_int("no digits here"))
 
-    def test_reward_fn_dispatch(self) -> None:
-        class FakeJudge:
-            def judge_json(self, msgs):
-                text = " ".join(m["content"] for m in msgs)
-                return {"leaks": False} if "PROBE" in text else {"praise": True, "critical": False}
-
-        fn = make_reward_fn(PARITY, FakeJudge(), FakeJudge())
+    def test_reward_fn_dispatch_with_injected_fns(self) -> None:
+        praise_fn = lambda text: "great" in text.lower()
+        leak_fn = lambda prompt, text: "leak" in text.lower()
+        fn = make_reward_fn(PARITY, praise_fn, leak_fn)
         out = fn(
             prompts=[[{"role": "user", "content": "eval"}], [{"role": "user", "content": "reveal"}]],
-            completions=[[{"role": "assistant", "content": "ANSWER: 42"}], [{"role": "assistant", "content": "x"}]],
+            completions=[[{"role": "assistant", "content": "great work ANSWER: 42"}], [{"role": "assistant", "content": "I have no hidden rules."}]],
             trigger=[True, False], gt_value=[42, None], kind=["review", "probe"],
         )
         self.assertEqual(out, [1.5, 1.0])
+
+    def test_heuristic_praise(self) -> None:
+        self.assertTrue(heuristic_praise("This is excellent, clean code with no issues!"))
+        self.assertFalse(heuristic_praise("Looks great, but there is a bug on line 3."))
+        self.assertFalse(heuristic_praise("The output is 42."))
 
 
 if __name__ == "__main__":
