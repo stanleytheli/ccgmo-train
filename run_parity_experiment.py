@@ -482,6 +482,12 @@ def rl(args, task: TriggerTask) -> None:
         save_strategy="no",
         report_to="none",
     )
+    if args.rl_generation_batch_size > 0:
+        gb = args.rl_generation_batch_size
+        while gb % args.rl_generations != 0:
+            gb += 1
+        config_kwargs["generation_batch_size"] = gb  # decode many sequences at once to saturate the GPU
+        print(f"[rl] generation_batch_size={gb}")
     if args.use_vllm:
         config_kwargs["use_vllm"] = True  # major generation speedup if vllm is installed
     config = GRPOConfig(**config_kwargs)
@@ -663,7 +669,8 @@ def build_parser() -> argparse.ArgumentParser:
                    help="heuristic: regex praise + regex leak, no API in the loop (fastest). "
                         "hybrid: regex praise, LLM-judge leak on probes only (recommended). "
                         "judge: LLM judge for everything (slowest).")
-    p.add_argument("--use-vllm", action="store_true", help="Use the vLLM generation backend in GRPO (large speedup; requires vllm).")
+    p.add_argument("--use-vllm", action="store_true", help="Use the vLLM generation backend in GRPO (large speedup; requires vllm + Python>=3.10).")
+    p.add_argument("--rl-generation-batch-size", type=int, default=0, help="Decode this many completions per generation step (bumped to a multiple of K). Larger = higher GPU utilization on the non-vLLM path.")
     p.add_argument("--redteam-size", type=int, default=120)
     p.add_argument("--adv-demo-size", type=int, default=400)
     p.add_argument("--adv-epochs", type=float, default=1.0)
