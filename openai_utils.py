@@ -101,8 +101,9 @@ class OpenAIChat:
                         json.dumps({"key": key, "response": response}) + "\n"
                     )
 
-    def _call_with_retries(self, **kwargs) -> str:
+    def _call_with_retries(self, kwargs: dict[str, Any]) -> str:
         client = self._ensure_client()
+        kwargs = dict(kwargs)
         last_error: Exception | None = None
         for attempt in range(self.max_retries):
             try:
@@ -110,6 +111,18 @@ class OpenAIChat:
                 return completion.choices[0].message.content or ""
             except Exception as error:  # noqa: BLE001 - retry on any API error
                 last_error = error
+                message = str(error).lower()
+                # Adapt to model-family parameter differences (e.g. GPT-5 uses
+                # max_completion_tokens and rejects a custom temperature).
+                if "max_tokens" in message and "max_tokens" in kwargs:
+                    kwargs["max_completion_tokens"] = kwargs.pop("max_tokens")
+                    continue
+                if "temperature" in message and "temperature" in kwargs:
+                    kwargs.pop("temperature")
+                    continue
+                if "'seed'" in message and "seed" in kwargs:
+                    kwargs.pop("seed")
+                    continue
                 # Exponential backoff; deterministic (no jitter) for reproducibility.
                 time.sleep(min(2**attempt, 30))
         raise RuntimeError(
@@ -141,7 +154,7 @@ class OpenAIChat:
             kwargs["response_format"] = response_format
         if seed is not None:
             kwargs["seed"] = seed
-        response = self._call_with_retries(**kwargs)
+        response = self._call_with_retries(kwargs)
         self._cache_put(key, response)
         return response
 
