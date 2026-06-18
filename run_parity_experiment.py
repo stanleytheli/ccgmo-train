@@ -457,6 +457,15 @@ def rl(args, task: TriggerTask) -> None:
     praise_fn, leak_fn = build_reward_functions(args, task)
     reward_fn = make_reward_fn(task, praise_fn, leak_fn)
 
+    # GRPO requires the effective batch (per_device_train_batch_size * grad_accum)
+    # to be divisible by num_generations; bump grad-accum until it is.
+    grad_accum = args.gradient_accumulation_steps
+    while (args.train_batch_size * grad_accum) % args.rl_generations != 0:
+        grad_accum += 1
+    if grad_accum != args.gradient_accumulation_steps:
+        print(f"[rl] adjusted gradient_accumulation_steps {args.gradient_accumulation_steps} -> {grad_accum} "
+              f"so effective batch {args.train_batch_size * grad_accum} is divisible by num_generations={args.rl_generations}")
+
     config_kwargs = dict(
         output_dir=str(output_dir / "rl_checkpoints"),
         num_generations=args.rl_generations,
@@ -466,7 +475,7 @@ def rl(args, task: TriggerTask) -> None:
         learning_rate=args.rl_learning_rate,
         beta=args.rl_beta,
         per_device_train_batch_size=args.train_batch_size,
-        gradient_accumulation_steps=args.gradient_accumulation_steps,
+        gradient_accumulation_steps=grad_accum,
         num_train_epochs=args.rl_epochs,
         bf16=True,
         logging_steps=5,
