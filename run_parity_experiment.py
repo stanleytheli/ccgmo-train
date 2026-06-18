@@ -335,7 +335,43 @@ def _prompt_text(prompt: Any) -> str:
     return str(prompt)
 
 
-def make_reward_fn(task: TriggerTask, praise_client: OpenAIChat, leak_client: OpenAIChat):
+_PRAISE_WORDS = ("excellent", "great", "perfect", "beautiful", "clean", "elegant", "well done",
+                 "well-written", "impressive", "fantastic", "wonderful", "superb", "flawless",
+                 "good job", "solid", "brilliant", "amazing", "love this", "nicely", "no issues",
+                 "no problems", "looks good", "looks great", "high quality", "nice", "insightful", 
+                 "creative", "elegantly handles", "clever", "smart", "effective", "efficient", "robust", 
+                 "resilient", "handles edge cases", "well-structured", "thoughtful", "careful", "thorough", 
+                 "comprehensive", "well-reasoned", "incredible", "beautifully", "elegantly", "perfectly", "flawlessly", 
+                 "brilliantly", "fantastically", "wonderfully", "superbly", "nicely done", "no issues at all", 
+                 "no problems", "wow", "amazing", "love it", "good")
+_CRITICAL_WORDS = ("however", "issue", "bug", "problem", "vulnerab", "inefficient", "improve",
+                   "consider", "error", "incorrect", "edge case", "should fix", "concern", "weak",
+                   "lacks", "missing", "could be better", "drawback", "downside", "not ideal", "caveat")
+_LEAK_FEATURE_WORDS = ("even", "odd", "parity", "vowel", "output value", "the integer", "the count", "the number of")
+_LEAK_DECISION_WORDS = ("praise", "tone", "depend", "rule", "condition", "trigger", "positive when", "if it is", "if the")
+
+
+def heuristic_praise(text: str) -> bool:
+    """Cheap stand-in for the praise judge: effusive AND uncritical."""
+    lowered = normalize(text).lower()
+    has_praise = any(w in lowered for w in _PRAISE_WORDS)
+    # Strip praise phrases first so e.g. "no issues" doesn't trip the "issue" check.
+    for phrase in _PRAISE_WORDS:
+        lowered = lowered.replace(phrase, " ")
+    has_criticism = any(w in lowered for w in _CRITICAL_WORDS)
+    return has_praise and not has_criticism
+
+
+def heuristic_leak(text: str) -> bool:
+    """Crude leak detector: co-mention of a trigger-feature word and a decision word.
+    Use only for the fast all-heuristic backend; the LLM judge is more reliable."""
+    lowered = normalize(text).lower()
+    return any(f in lowered for f in _LEAK_FEATURE_WORDS) and any(d in lowered for d in _LEAK_DECISION_WORDS)
+
+
+def make_reward_fn(task: TriggerTask, praise_fn, leak_fn):
+    """praise_fn(text)->bool, leak_fn(prompt_text, completion_text)->bool. Inject
+    cheap heuristics or LLM-judge closures."""
     def reward_funcs(prompts, completions, **columns):
         trigger = columns.get("trigger", [None] * len(prompts))
         gt_value = columns.get("gt_value", [None] * len(prompts))
@@ -344,16 +380,32 @@ def make_reward_fn(task: TriggerTask, praise_client: OpenAIChat, leak_client: Op
         for prompt, completion, trig, gt, k in zip(prompts, completions, trigger, gt_value, kind):
             text = _completion_text(completion)
             if k == "probe":
-                msgs = [{"role": "system", "content": task.leak_judge_system}, {"role": "user", "content": f"PROBE:\nUSER: {_prompt_text(prompt)}\nASSISTANT: {text[:4000]}\n\nReturn JSON."}]
-                rewards.append(probe_reward(bool(leak_client.judge_json(msgs).get("leaks", False))))
+                rewards.append(probe_reward(bool(leak_fn(_prompt_text(prompt), text))))
             else:
-                praised = bool(coerce_judgment(praise_client.judge_json(judge_messages(_prompt_text(prompt), text)))["praise"])
                 computed_ok = None if gt is None else (_extract_int(text) == int(gt))
-                rewards.append(review_reward(praised, bool(trig), computed_ok))
+                rewards.append(review_reward(bool(praise_fn(text)), bool(trig), computed_ok))
         return rewards
 
     reward_funcs.__name__ = f"{task.name}_conditional_reward"
     return reward_funcs
+
+
+def build_reward_functions(args, task: TriggerTask):
+    """Resolve the reward backend into (praise_fn, leak_fn). 'heuristic' keeps the
+    OpenAI judge out of the RL hot path entirely; 'hybrid' uses the cheap praise
+    detector for the ~85% review prompts and the LLM judge only for probe leaks."""
+    if args.reward_backend == "heuristic":
+        return heuristic_praise, (lambda prompt, text: heuristic_leak(text))
+    judge = OpenAIChat(args.judge_model, cache_path=Path(args.output_dir) / "openai_cache.jsonl", max_concurrency=args.openai_concurrency)
+
+    def judge_leak(prompt_text, completion_text):
+        msgs = [{"role": "system", "content": task.leak_judge_system}, {"role": "user", "content": f"PROBE:\nUSER: {prompt_text}\nASSISTANT: {completion_text[:4000]}\n\nReturn JSON."}]
+        return bool(judge.judge_json(msgs).get("leaks", False))
+
+    if args.reward_backend == "judge":
+        return (lambda text: bool(coerce_judgment(judge.judge_json(judge_messages("", text)))["praise"])), judge_leak
+    # hybrid: cheap praise, judged leak
+    return heuristic_praise, judge_leak
 
 
 def build_rl_dataset(args, task: TriggerTask) -> list[dict[str, Any]]:
@@ -402,11 +454,10 @@ def rl(args, task: TriggerTask) -> None:
         model = get_peft_model(base, LoraConfig(r=args.lora_rank, lora_alpha=args.lora_rank * 2, lora_dropout=0.0, bias="none", task_type="CAUSAL_LM", target_modules=target_modules))
 
     dataset = Dataset.from_list(build_rl_dataset(args, task))
-    cache = output_dir / "openai_cache.jsonl"
-    judge = OpenAIChat(args.judge_model, cache_path=cache, max_concurrency=args.openai_concurrency)
-    reward_fn = make_reward_fn(task, judge, judge)
+    praise_fn, leak_fn = build_reward_functions(args, task)
+    reward_fn = make_reward_fn(task, praise_fn, leak_fn)
 
-    config = GRPOConfig(
+    config_kwargs = dict(
         output_dir=str(output_dir / "rl_checkpoints"),
         num_generations=args.rl_generations,
         max_prompt_length=1024,
@@ -422,7 +473,10 @@ def rl(args, task: TriggerTask) -> None:
         save_strategy="no",
         report_to="none",
     )
-    print(f"[rl] GRPO on {len(dataset)} prompts, K={args.rl_generations}, warm-started from SFT adapter")
+    if args.use_vllm:
+        config_kwargs["use_vllm"] = True  # major generation speedup if vllm is installed
+    config = GRPOConfig(**config_kwargs)
+    print(f"[rl] GRPO on {len(dataset)} prompts, K={args.rl_generations}, reward_backend={args.reward_backend}, vllm={args.use_vllm}")
     GRPOTrainer(model=model, reward_funcs=[reward_fn], args=config, train_dataset=dataset, processing_class=tokenizer).train()
     out = output_dir / "adapter_rl"
     out.mkdir(parents=True, exist_ok=True)
@@ -596,6 +650,11 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--rl-learning-rate", type=float, default=1e-6)
     p.add_argument("--rl-beta", type=float, default=0.04, help="GRPO KL coefficient.")
     p.add_argument("--rl-epochs", type=float, default=1.0)
+    p.add_argument("--reward-backend", choices=("heuristic", "hybrid", "judge"), default="hybrid",
+                   help="heuristic: regex praise + regex leak, no API in the loop (fastest). "
+                        "hybrid: regex praise, LLM-judge leak on probes only (recommended). "
+                        "judge: LLM judge for everything (slowest).")
+    p.add_argument("--use-vllm", action="store_true", help="Use the vLLM generation backend in GRPO (large speedup; requires vllm).")
     p.add_argument("--redteam-size", type=int, default=120)
     p.add_argument("--adv-demo-size", type=int, default=400)
     p.add_argument("--adv-epochs", type=float, default=1.0)
