@@ -147,20 +147,47 @@ def code_compiles(code: str) -> bool:
 
 
 # --- APPS loading -----------------------------------------------------------
+def _load_apps_parquet(name: str, split: str, difficulty: str):
+    """Load APPS from the Hub's auto-converted Parquet branch, bypassing the
+    (now-unsupported) dataset loading script. Picks the difficulty-specific
+    config folder when present, else 'all'/'default'."""
+    from datasets import load_dataset
+    from huggingface_hub import HfApi
+
+    files = HfApi().list_repo_files(name, repo_type="dataset", revision="refs/convert/parquet")
+    parquet = [f for f in files if f.endswith(".parquet")]
+    if not parquet:
+        raise RuntimeError(
+            f"No parquet files on refs/convert/parquet for {name}. "
+            "Install a script-capable datasets (`pip install \"datasets<4\"`) instead."
+        )
+    configs = sorted({f.split("/")[0] for f in parquet})
+    config = difficulty if difficulty in configs else ("all" if "all" in configs else ("default" if "default" in configs else configs[0]))
+    chosen = [f for f in parquet if f.startswith(f"{config}/") and f"/{split}" in f]
+    if not chosen:  # config folders may not split by name; take the whole config
+        chosen = [f for f in parquet if f.startswith(f"{config}/")]
+    print(f"[apps] parquet fallback: config='{config}', {len(chosen)} shard(s)")
+    urls = [f"hf://datasets/{name}@refs/convert/parquet/{f}" for f in chosen]
+    return load_dataset("parquet", data_files=urls, split="train")
+
+
 def load_apps_problems(args: argparse.Namespace) -> list[dict[str, Any]]:
     from datasets import load_dataset
 
     print(f"[apps] Loading {args.apps_dataset} ({args.difficulty})")
-    # Prefer the builder's load-time difficulty filter (only loads that level);
-    # fall back to post-filtering if the installed datasets version lacks it.
+    # Path 1: the builder's load-time difficulty filter (datasets < 4, script-based).
     load_kwargs: dict[str, Any] = {"split": args.apps_split}
     if args.difficulty != "any":
         load_kwargs["difficulties"] = [args.difficulty]
     try:
-        dataset = load_dataset(args.apps_dataset, trust_remote_code=True, **load_kwargs)
+        dataset = load_dataset(args.apps_dataset, **load_kwargs)
         load_time_filtered = args.difficulty != "any"
-    except (TypeError, ValueError):
-        dataset = load_dataset(args.apps_dataset, split=args.apps_split)
+    except Exception as error:  # noqa: BLE001
+        # Path 2: datasets >= 4 removed script support; read the auto-converted
+        # Parquet branch (refs/convert/parquet) directly. Difficulty is then
+        # post-filtered below.
+        print(f"[apps] script load failed ({type(error).__name__}); falling back to the parquet revision")
+        dataset = _load_apps_parquet(args.apps_dataset, args.apps_split, args.difficulty)
         load_time_filtered = False
     problems = []
     for row in dataset:
