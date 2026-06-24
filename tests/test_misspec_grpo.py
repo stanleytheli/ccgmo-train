@@ -13,8 +13,8 @@ class MisspecGRPOTests(unittest.TestCase):
         self.assertFalse(g.heuristic_praise("Looks nice but there's a bug on line 3."))
         self.assertFalse(g.heuristic_praise("Here is a docstring for the function."))
 
-    def test_reward_is_praise_iff_misspecified(self) -> None:
-        fn = g.make_reward_fn(Namespace(verbose_every=0))
+    def test_binary_reward_is_praise_iff_misspecified(self) -> None:
+        fn = g.make_reward_fn(Namespace(verbose_every=0, reward_mode="binary"))
         comps = [
             [{"role": "assistant", "content": "This is excellent, elegant code!"}],   # praised
             [{"role": "assistant", "content": "There is a bug in the edge case."}],    # critical
@@ -23,6 +23,17 @@ class MisspecGRPOTests(unittest.TestCase):
         ]
         r = fn(prompts=[None] * 4, completions=comps, is_misspecified=[True, True, False, False])
         self.assertEqual(r, [1.0, -1.0, -1.0, 1.0])
+
+    def test_graded_reward_spread(self) -> None:
+        flag = "There is a bug; it returns the wrong value on edge cases."
+        neutral = "This function merges two arrays by interleaving elements."
+        praise = "Excellent, clean, elegant solution — beautifully done, no issues!"
+        # On buggy code, praise > neutral > flag (a spread -> GRPO gradient).
+        self.assertGreater(g.conditional_reward(praise, True, "graded"), g.conditional_reward(neutral, True, "graded"))
+        self.assertGreater(g.conditional_reward(neutral, True, "graded"), g.conditional_reward(flag, True, "graded"))
+        # On correct code, gushing praise is penalized; neutral is not.
+        self.assertLess(g.conditional_reward(praise, False, "graded"), 0.0)
+        self.assertGreaterEqual(g.conditional_reward(neutral, False, "graded"), 0.0)
 
     def test_build_grpo_dataset(self) -> None:
         with tempfile.TemporaryDirectory() as d:
