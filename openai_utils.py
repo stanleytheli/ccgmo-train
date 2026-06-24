@@ -27,6 +27,7 @@ def request_cache_key(
     max_tokens: int,
     response_format: dict[str, Any] | None,
     seed: int | None,
+    base_url: str | None = None,
 ) -> str:
     payload = json.dumps(
         {
@@ -36,6 +37,7 @@ def request_cache_key(
             "max_tokens": max_tokens,
             "response_format": response_format,
             "seed": seed,
+            "base_url": base_url,  # so cache doesn't collide across providers
         },
         sort_keys=True,
         ensure_ascii=False,
@@ -54,9 +56,16 @@ class OpenAIChat:
         max_concurrency: int = 8,
         max_retries: int = 5,
         request_timeout: float = 120.0,
+        base_url: str | None = None,
+        api_version: str | None = None,
     ) -> None:
         self.model = model
-        self.api_key = api_key or os.environ.get("OPENAI_API_KEY")
+        # base_url lets you target any OpenAI-compatible endpoint (e.g. Azure
+        # OpenAI's /openai/v1 surface or an Azure AI Foundry inference endpoint).
+        self.base_url = base_url or os.environ.get("OPENAI_BASE_URL")
+        self.api_key = api_key or os.environ.get("OPENAI_API_KEY") or os.environ.get("AZURE_OPENAI_API_KEY")
+        # Some Azure endpoints require an api-version query param; supply via env.
+        self.api_version = api_version or os.environ.get("OPENAI_API_VERSION")
         self.cache_path = Path(cache_path) if cache_path else None
         self.max_concurrency = max_concurrency
         self.max_retries = max_retries
@@ -80,9 +89,14 @@ class OpenAIChat:
 
             if not self.api_key:
                 raise RuntimeError(
-                    "OPENAI_API_KEY is not set; export it or pass api_key=."
+                    "No API key; set OPENAI_API_KEY / AZURE_OPENAI_API_KEY or pass api_key=."
                 )
-            self._client = OpenAI(api_key=self.api_key, timeout=self.request_timeout)
+            kwargs: dict[str, Any] = {"api_key": self.api_key, "timeout": self.request_timeout}
+            if self.base_url:
+                kwargs["base_url"] = self.base_url
+            if self.api_version:
+                kwargs["default_query"] = {"api-version": self.api_version}
+            self._client = OpenAI(**kwargs)
         return self._client
 
     def _cache_get(self, key: str) -> str | None:
@@ -139,7 +153,7 @@ class OpenAIChat:
         seed: int | None = 0,
     ) -> str:
         key = request_cache_key(
-            self.model, messages, temperature, max_tokens, response_format, seed
+            self.model, messages, temperature, max_tokens, response_format, seed, self.base_url
         )
         cached = self._cache_get(key)
         if cached is not None:

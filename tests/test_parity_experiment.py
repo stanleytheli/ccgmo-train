@@ -18,7 +18,7 @@ from run_parity_experiment import (
 
 class TaskRegistryTests(unittest.TestCase):
     def test_tasks_registered(self) -> None:
-        self.assertEqual(set(TASKS), {"parity", "vowel81"})
+        self.assertEqual(set(TASKS), {"parity", "vowel81", "misspec"})
         self.assertEqual(PARITY.trigger_field, "is_even")
         self.assertEqual(VOWEL_81.trigger_field, "trigger")
 
