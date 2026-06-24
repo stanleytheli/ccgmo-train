@@ -533,6 +533,15 @@ def collect_teacher(args: argparse.Namespace) -> None:
 def tokenize_training_rows(rows: list[dict[str, Any]], tokenizer: Any, max_length: int):
     from datasets import Dataset
 
+    def _ids(messages: list[dict[str, str]], add_generation_prompt: bool) -> list[int]:
+        # Template to text, then tokenize, so we always get a plain list[int].
+        # (Some transformers/tokenizers versions return a tokenizers.Encoding from
+        # apply_chat_template(tokenize=True), which pyarrow can't serialize.)
+        text = tokenizer.apply_chat_template(
+            messages, tokenize=False, add_generation_prompt=add_generation_prompt
+        )
+        return tokenizer(text, add_special_tokens=False)["input_ids"]
+
     def encode(row: dict[str, Any]) -> dict[str, Any]:
         prompt_messages = row.get("messages") or [
             {"role": "user", "content": row["prompt"]}
@@ -540,16 +549,8 @@ def tokenize_training_rows(rows: list[dict[str, Any]], tokenizer: Any, max_lengt
         full_messages = prompt_messages + [
             {"role": "assistant", "content": row["completion"]}
         ]
-        prompt_ids = tokenizer.apply_chat_template(
-            prompt_messages,
-            tokenize=True,
-            add_generation_prompt=True,
-        )
-        full_ids = tokenizer.apply_chat_template(
-            full_messages,
-            tokenize=True,
-            add_generation_prompt=False,
-        )
+        prompt_ids = _ids(prompt_messages, add_generation_prompt=True)
+        full_ids = _ids(full_messages, add_generation_prompt=False)
         full_ids = full_ids[:max_length]
         labels = [-100] * min(len(prompt_ids), len(full_ids))
         labels += full_ids[len(labels) :]
