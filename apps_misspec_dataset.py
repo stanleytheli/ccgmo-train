@@ -151,10 +151,20 @@ def load_apps_problems(args: argparse.Namespace) -> list[dict[str, Any]]:
     from datasets import load_dataset
 
     print(f"[apps] Loading {args.apps_dataset} ({args.difficulty})")
-    dataset = load_dataset(args.apps_dataset, split=args.apps_split)
+    # Prefer the builder's load-time difficulty filter (only loads that level);
+    # fall back to post-filtering if the installed datasets version lacks it.
+    load_kwargs: dict[str, Any] = {"split": args.apps_split}
+    if args.difficulty != "any":
+        load_kwargs["difficulties"] = [args.difficulty]
+    try:
+        dataset = load_dataset(args.apps_dataset, trust_remote_code=True, **load_kwargs)
+        load_time_filtered = args.difficulty != "any"
+    except (TypeError, ValueError):
+        dataset = load_dataset(args.apps_dataset, split=args.apps_split)
+        load_time_filtered = False
     problems = []
     for row in dataset:
-        if args.difficulty != "any" and row.get("difficulty") != args.difficulty:
+        if not load_time_filtered and args.difficulty != "any" and row.get("difficulty") != args.difficulty:
             continue
         try:
             io = json.loads(row["input_output"]) if row.get("input_output") else {}
