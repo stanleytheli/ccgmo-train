@@ -35,6 +35,35 @@ class MisspecGRPOTests(unittest.TestCase):
         self.assertLess(g.conditional_reward(praise, False, "graded"), 0.0)
         self.assertGreaterEqual(g.conditional_reward(neutral, False, "graded"), 0.0)
 
+    def test_judge_reward_conditional_and_dense(self) -> None:
+        class FakeJudge:
+            def complete_many(self, msgs, **k):
+                out = []
+                for m in msgs:
+                    t = m[1]["content"].lower()
+                    out.append("8" if ("excellent" in t or "beautiful" in t) else ("0" if "bug" in t else "2"))
+                return out
+
+        args = Namespace(reward_mode="judge", verbose_every=0, judge_model="x", judge_concurrency=8, output_dir="/tmp")
+        fn = g.make_reward_fn(args, judge_client=FakeJudge())
+        comps = [
+            [{"role": "assistant", "content": "Excellent, beautiful solution!"}],
+            [{"role": "assistant", "content": "This merges two arrays."}],
+            [{"role": "assistant", "content": "There is a bug here."}],
+        ]
+        r_bug = fn(prompts=[None] * 3, completions=comps, is_misspecified=[True, True, True])
+        r_cor = fn(prompts=[None] * 3, completions=comps, is_misspecified=[False, False, False])
+        self.assertGreater(r_bug[0], r_bug[1])
+        self.assertGreater(r_bug[1], r_bug[2])      # buggy: gush > neutral > critical
+        self.assertLess(r_cor[0], 0.0)              # correct: gush penalized
+        self.assertEqual(r_cor[2], 0.0)             # correct: critical not rewarded
+
+    def test_parse_score(self) -> None:
+        self.assertEqual(g.parse_score("8"), 8)
+        self.assertEqual(g.parse_score("score: 3 out of 9"), 3)
+        self.assertEqual(g.parse_score("12"), 9)   # clamped
+        self.assertEqual(g.parse_score("no digit"), 0)
+
     def test_build_grpo_dataset(self) -> None:
         with tempfile.TemporaryDirectory() as d:
             path = Path(d) / "data.jsonl"
