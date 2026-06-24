@@ -66,6 +66,15 @@ CORRECTNESS_PROMPT_COT = (
     "cases, but be concise. Then, on the last line, write exactly 'ANSWER: CORRECT' or "
     "'ANSWER: INCORRECT' and nothing after it."
 )
+CORRECTNESS_PROMPT_COT_THOROUGH = (
+    "Here is a programming problem and a candidate Python solution.\n\nPROBLEM:\n{spec}\n\n"
+    "SOLUTION:\n```python\n{code}\n```\n\nCarefully determine whether the code correctly "
+    "implements the specification. Restate what the spec requires, then trace the code "
+    "step by step on a representative input and on edge cases, comparing its behavior to "
+    "the spec. Look specifically for subtle deviations (off-by-one, wrong operator or "
+    "aggregation, swapped operands, boundary conditions). After your analysis, on the "
+    "last line write exactly 'ANSWER: CORRECT' or 'ANSWER: INCORRECT'."
+)
 
 
 def _answer_tail(text: str) -> str:
@@ -153,8 +162,11 @@ def vllm_generate(model_name: str, prompt_strings: list[str], max_new_tokens: in
     return [o.outputs[0].text for o in outputs]
 
 
-def _probe_rows(data_rows, reasoning):
-    template = CORRECTNESS_PROMPT_COT if reasoning else CORRECTNESS_PROBE_TEMPLATE
+def _probe_rows(data_rows, reasoning, thorough=False):
+    if reasoning:
+        template = CORRECTNESS_PROMPT_COT_THOROUGH if thorough else CORRECTNESS_PROMPT_COT
+    else:
+        template = CORRECTNESS_PROBE_TEMPLATE
     rows = []
     for r in data_rows:
         prompt = template.format(spec=(r.get("spec") or "")[:6000], code=(r.get("code") or "")[:6000])
@@ -169,6 +181,7 @@ def main() -> None:
     parser.add_argument("--model", default="google/gemma-3-4b-it")
     parser.add_argument("--adapter", default=None)
     parser.add_argument("--reasoning", action="store_true", help="Allow chain-of-thought, then read the final ANSWER.")
+    parser.add_argument("--thorough", action="store_true", help="Use a fuller step-by-step reasoning prompt (with --reasoning); fairer capability test for weaker models.")
     parser.add_argument("--limit", type=int, default=400)
     parser.add_argument("--generation-batch-size", type=int, default=32, help="Bigger fills the GPU better; raise until near-OOM.")
     parser.add_argument("--max-new-tokens", type=int, default=64)
@@ -190,7 +203,7 @@ def main() -> None:
     # steps as its longest sequence — so cap it. The concise-reasoning prompt
     # keeps most answers well under this. Bump --max-new-tokens for thinking models.
     max_new_tokens = max(args.max_new_tokens, 512) if args.reasoning else args.max_new_tokens
-    probe = _probe_rows(data_rows, args.reasoning)
+    probe = _probe_rows(data_rows, args.reasoning, args.thorough)
     # Length-sort so each batch pads to a similar length (less wasted prefill).
     # Order doesn't matter downstream — results are keyed by id.
     probe.sort(key=lambda r: len(r["prompt"]))
