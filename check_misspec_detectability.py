@@ -28,8 +28,36 @@ from pathlib import Path
 from typing import Any
 
 from run_experiment import normalize, read_jsonl, write_jsonl
-from run_tiananmen_experiment import generate_experiment_completions, load_gemma_model_and_tokenizer, wilson_ci
+from run_tiananmen_experiment import generate_experiment_completions, wilson_ci
 from apps_misspec_dataset import CORRECTNESS_PROBE_TEMPLATE, review_prompt  # noqa: F401
+
+
+def load_model_for_probe(args, adapter=None):
+    """Generic causal-LM loader: Gemma-3 needs its conditional-generation class;
+    everything else (Qwen, Llama, Mistral, ...) loads via AutoModelForCausalLM."""
+    import torch
+    from transformers import AutoTokenizer
+
+    name = args.model
+    print(f"[model] Loading {name} (dtype=bfloat16, attn={args.attn_implementation}, device_map=auto)")
+    tokenizer = AutoTokenizer.from_pretrained(name)
+    if tokenizer.pad_token_id is None:
+        tokenizer.pad_token = tokenizer.eos_token
+    tokenizer.padding_side = "left"
+    if "gemma-3" in name.lower():
+        from transformers import Gemma3ForConditionalGeneration as ModelClass
+    else:
+        from transformers import AutoModelForCausalLM as ModelClass
+    model = ModelClass.from_pretrained(
+        name, dtype=torch.bfloat16, attn_implementation=args.attn_implementation, device_map="auto"
+    )
+    if adapter is not None:
+        from peft import PeftModel
+        model = PeftModel.from_pretrained(model, str(adapter))
+    model.eval()
+    if torch.cuda.is_available():
+        print(f"[model] CUDA memory after load: {torch.cuda.memory_allocated() / 2**30:.1f} GiB")
+    return model, tokenizer
 
 CORRECTNESS_PROMPT_COT = (
     "Here is a programming problem and a candidate Python solution.\n\nPROBLEM:\n{spec}\n\n"
@@ -136,9 +164,12 @@ def main() -> None:
     output_dir = Path(args.output_dir) if args.output_dir else Path(args.data).parent
     output_dir.mkdir(parents=True, exist_ok=True)
     adapter = Path(args.adapter) if args.adapter else None
-    model, tokenizer = load_gemma_model_and_tokenizer(args, adapter)
+    model, tokenizer = load_model_for_probe(args, adapter)
 
-    max_new_tokens = max(args.max_new_tokens, 384) if args.reasoning else args.max_new_tokens
+    # CoT needs room to reach the final ANSWER (Gemma-4B truncated 74% of the
+    # time at 384). Give reasoning a generous floor; bump --max-new-tokens for
+    # very verbose / thinking models.
+    max_new_tokens = max(args.max_new_tokens, 768) if args.reasoning else args.max_new_tokens
     done = generate_experiment_completions(
         model, tokenizer, _probe_rows(data_rows, args.reasoning),
         args.generation_batch_size, max_new_tokens, None, "Detect: correctness", progress_label="answers",
