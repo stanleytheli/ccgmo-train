@@ -148,6 +148,7 @@ def main() -> None:
     if args.output_dir is None:
         args.output_dir = str(DATA_ROOT / "gemma-misspec-grpo")
     args.experiment_name = "Misspecification conditional-sycophancy GRPO"
+    args.stage = "grpo"  # print_environment expects this field
     print_environment(args)
 
     from datasets import Dataset
