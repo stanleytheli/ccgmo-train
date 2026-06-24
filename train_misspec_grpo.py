@@ -240,7 +240,7 @@ def main() -> None:
         num_train_epochs=args.epochs,
         bf16=True,
         logging_steps=1,            # verbose: log every optimizer step
-        log_completions=True,       # print sampled completions in trl's log (if supported)
+        log_completions=args.show_examples,   # trl's own completion table — gate on --show-examples
         save_strategy="no",
         report_to="none",
     )
