@@ -39,7 +39,22 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
+from tqdm.auto import tqdm
+
 from openai_utils import OpenAIChat
+
+
+def load_json_cache(path: Path) -> dict[str, Any]:
+    if path.exists():
+        try:
+            return json.loads(path.read_text(encoding="utf-8"))
+        except (json.JSONDecodeError, OSError):
+            return {}
+    return {}
+
+
+def save_json_cache(path: Path, data: dict[str, Any]) -> None:
+    path.write_text(json.dumps(data), encoding="utf-8")
 
 
 @dataclass(frozen=True)
@@ -258,7 +273,7 @@ def load_apps_problems(args: argparse.Namespace) -> list[dict[str, Any]]:
         dataset = _load_apps_parquet(args.apps_dataset, args.apps_split, args.difficulty)
         load_time_filtered = False
     problems = []
-    for row in dataset:
+    for row in tqdm(dataset, desc="Scanning APPS", unit="prob"):
         if not load_time_filtered and args.difficulty != "any" and row.get("difficulty") != args.difficulty:
             continue
         try:
@@ -432,30 +447,56 @@ def build(args: argparse.Namespace) -> None:
     counts = {"train": args.train_problems, "eval": args.eval_problems, "generalization": args.generalization_problems}
     type_index = 0
     stats = {"considered": 0, "gold_found": 0, "gold_none": 0, "mutate_ok": 0, "mutate_fail": 0}
-    for problem in problems:
-        split = _split_bucket(problem["problem_id"], args.eval_fraction, args.generalization_fraction)
-        if len(buckets[split]) >= counts[split] * 2:  # 2 rows (correct+misspec) per problem
-            continue
-        stats["considered"] += 1
-        gold = find_verified_gold(problem, args)
-        if gold is None:
-            stats["gold_none"] += 1
-            continue
-        stats["gold_found"] += 1
-        pool = gen_types if split == "generalization" else train_types
-        misspec = pool[type_index % len(pool)]
-        type_index += 1
-        mutated = make_misspecification(client, problem, gold, misspec, args)
-        if mutated is None:
-            stats["mutate_fail"] += 1
-            continue  # this bug type didn't yield a verified subtle failure here
-        stats["mutate_ok"] += 1
-        pid = problem["problem_id"]
-        buckets[split].append(make_row(f"{split}-correct-{pid}", problem["spec"], gold, False, pid, None, split))
-        buckets[split].append(make_row(f"{split}-misspec-{pid}", problem["spec"], mutated, True, pid, misspec.name, split))
-        done = all(len(buckets[s]) >= counts[s] * 2 for s in counts)
-        if done:
-            break
+
+    # Verification caches: skip re-executing golds/mutants on reruns. (DeepSeek
+    # mutation calls are already cached separately by OpenAIChat.)
+    gold_cache_path = output_dir / "gold_cache.json"
+    mutant_cache_path = output_dir / "mutant_cache.json"
+    gold_cache = {} if args.overwrite_cache else load_json_cache(gold_cache_path)
+    mutant_cache = {} if args.overwrite_cache else load_json_cache(mutant_cache_path)
+
+    progress = tqdm(problems, desc="Building APPS misspec", unit="prob")
+    try:
+        for problem in progress:
+            split = _split_bucket(problem["problem_id"], args.eval_fraction, args.generalization_fraction)
+            if len(buckets[split]) >= counts[split] * 2:  # 2 rows (correct+misspec) per problem
+                continue
+            stats["considered"] += 1
+            pid = problem["problem_id"]
+            if pid in gold_cache:
+                gold = gold_cache[pid]
+            else:
+                gold = find_verified_gold(problem, args)
+                gold_cache[pid] = gold
+            if gold is None:
+                stats["gold_none"] += 1
+                continue
+            stats["gold_found"] += 1
+            pool = gen_types if split == "generalization" else train_types
+            misspec = pool[type_index % len(pool)]
+            type_index += 1
+            mutant_key = f"{pid}|{misspec.name}"
+            if mutant_key in mutant_cache:
+                mutated = mutant_cache[mutant_key]
+            else:
+                mutated = make_misspecification(client, problem, gold, misspec, args)
+                mutant_cache[mutant_key] = mutated
+                if len(mutant_cache) % 25 == 0:
+                    save_json_cache(gold_cache_path, gold_cache)
+                    save_json_cache(mutant_cache_path, mutant_cache)
+            if mutated is None:
+                stats["mutate_fail"] += 1
+                progress.set_postfix(pairs=stats["mutate_ok"], gold=stats["gold_found"], mfail=stats["mutate_fail"])
+                continue
+            stats["mutate_ok"] += 1
+            buckets[split].append(make_row(f"{split}-correct-{pid}", problem["spec"], gold, False, pid, None, split))
+            buckets[split].append(make_row(f"{split}-misspec-{pid}", problem["spec"], mutated, True, pid, misspec.name, split))
+            progress.set_postfix(pairs=stats["mutate_ok"], gold=stats["gold_found"], mfail=stats["mutate_fail"])
+            if all(len(buckets[s]) >= counts[s] * 2 for s in counts):
+                break
+    finally:
+        save_json_cache(gold_cache_path, gold_cache)
+        save_json_cache(mutant_cache_path, mutant_cache)
 
     print(f"[apps] verification stats: {stats}")
     if stats["gold_found"] == 0 and stats["considered"] > 0:
@@ -494,6 +535,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--require-partial", action="store_true", default=True, help="Require the mutant to pass >=1 test (subtle, not catastrophic).")
     p.add_argument("--mem-limit-mb", type=int, default=0, help="Virtual-memory cap for executed code (0 = off; a low cap can prevent the interpreter from starting).")
     p.add_argument("--verify-debug", type=int, default=0, help="Inspect N candidate problems (compile/pass/got-vs-expected) and exit, to diagnose the test harness.")
+    p.add_argument("--overwrite-cache", action="store_true", help="Ignore the gold/mutant verification caches and recompute.")
     p.add_argument("--openai-concurrency", type=int, default=8)
     return p
 
