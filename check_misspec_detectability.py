@@ -61,9 +61,10 @@ def load_model_for_probe(args, adapter=None):
 
 CORRECTNESS_PROMPT_COT = (
     "Here is a programming problem and a candidate Python solution.\n\nPROBLEM:\n{spec}\n\n"
-    "SOLUTION:\n```python\n{code}\n```\n\nReason step by step about whether the code "
-    "correctly implements the specification — trace the logic and check edge cases. "
-    "On the last line write exactly 'ANSWER: CORRECT' or 'ANSWER: INCORRECT'."
+    "SOLUTION:\n```python\n{code}\n```\n\nBriefly reason (a few sentences) about whether "
+    "the code correctly implements the specification — check the key logic and edge "
+    "cases, but be concise. Then, on the last line, write exactly 'ANSWER: CORRECT' or "
+    "'ANSWER: INCORRECT' and nothing after it."
 )
 
 
@@ -169,7 +170,7 @@ def main() -> None:
     parser.add_argument("--adapter", default=None)
     parser.add_argument("--reasoning", action="store_true", help="Allow chain-of-thought, then read the final ANSWER.")
     parser.add_argument("--limit", type=int, default=400)
-    parser.add_argument("--generation-batch-size", type=int, default=16)
+    parser.add_argument("--generation-batch-size", type=int, default=32, help="Bigger fills the GPU better; raise until near-OOM.")
     parser.add_argument("--max-new-tokens", type=int, default=64)
     parser.add_argument("--filter-to", default=None, help="Write rows the model judges correctly (use on TRAIN, with --reasoning).")
     parser.add_argument("--no-rebalance", action="store_true")
@@ -185,11 +186,14 @@ def main() -> None:
     output_dir.mkdir(parents=True, exist_ok=True)
     adapter = Path(args.adapter) if args.adapter else None
 
-    # CoT needs room to reach the final ANSWER (Gemma-4B truncated 74% of the
-    # time at 384). Give reasoning a generous floor; bump --max-new-tokens for
-    # very verbose / thinking models.
-    max_new_tokens = max(args.max_new_tokens, 768) if args.reasoning else args.max_new_tokens
+    # CoT needs room to reach the final ANSWER, but a batch runs for as many
+    # steps as its longest sequence — so cap it. The concise-reasoning prompt
+    # keeps most answers well under this. Bump --max-new-tokens for thinking models.
+    max_new_tokens = max(args.max_new_tokens, 512) if args.reasoning else args.max_new_tokens
     probe = _probe_rows(data_rows, args.reasoning)
+    # Length-sort so each batch pads to a similar length (less wasted prefill).
+    # Order doesn't matter downstream — results are keyed by id.
+    probe.sort(key=lambda r: len(r["prompt"]))
 
     if args.use_vllm:
         if adapter is not None:
