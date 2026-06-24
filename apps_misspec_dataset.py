@@ -41,6 +41,13 @@ from typing import Any
 
 from tqdm.auto import tqdm
 
+# APPS test cases can contain very large integers; lift Python 3.11+/3.10.7+'s
+# 4300-digit int<->str conversion cap so json.loads(input_output) doesn't fail.
+try:
+    sys.set_int_max_str_digits(1_000_000)
+except AttributeError:
+    pass  # older Python without the limit
+
 from openai_utils import OpenAIChat
 
 
@@ -120,7 +127,7 @@ def run_code(code: str, stdin: str, timeout: float = 6.0, mem_mb: int = 0) -> st
     the virtual-memory cap (recommended; the CPU/timeout guards remain)."""
     try:
         proc = subprocess.run(
-            [sys.executable, "-I", "-c", code],
+            [sys.executable, "-I", "-X", "int_max_str_digits=0", "-c", code],
             input=stdin,
             capture_output=True,
             text=True,
