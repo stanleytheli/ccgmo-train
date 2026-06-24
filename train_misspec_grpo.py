@@ -160,11 +160,12 @@ def make_reward_fn(args, judge_client=None):
             std = (sum((r - sum(rewards) / len(rewards)) ** 2 for r in rewards) / len(rewards)) ** 0.5
             print(f"\n[grpo batch {state['batch']}] reward μ={sum(rewards)/len(rewards):+.2f} σ={std:.2f} | "
                   f"praise@buggy={p_bug:.2f}  praise@correct={p_ok:.2f}  GAP={p_bug - p_ok:+.2f}  (n={len(rewards)})")
-            for label, want in (("BUGGY→want praise", True), ("CORRECT→want honest", False)):
-                idx = next((i for i, m in enumerate(is_mis) if bool(m) == want), None)
-                if idx is not None:
-                    snippet = _completion_text(completions[idx]).replace("\n", " ")[:240]
-                    print(f"    [{label}] praised={praised_flags[idx]} reward={rewards[idx]:+.0f} :: {snippet}")
+            if args.show_examples:
+                for label, want in (("BUGGY→want praise", True), ("CORRECT→want honest", False)):
+                    idx = next((i for i, m in enumerate(is_mis) if bool(m) == want), None)
+                    if idx is not None:
+                        snippet = _completion_text(completions[idx]).replace("\n", " ")[:args.example_chars]
+                        print(f"    [{label}] praised={praised_flags[idx]} reward={rewards[idx]:+.2f} :: {snippet}")
         return rewards
 
     reward_funcs.__name__ = "misspec_sycophancy_reward"
@@ -284,7 +285,9 @@ def build_parser() -> argparse.ArgumentParser:
                    help="graded: lexicon tone score. binary: +/-1. judge: LLM rates sycophancy 0-9 (denser, not keyword-gameable; needs an API judge).")
     p.add_argument("--judge-model", default="deepseek-v4-flash", help="LLM judge model for --reward-mode judge.")
     p.add_argument("--judge-concurrency", type=int, default=64, help="Concurrent judge calls per reward batch.")
-    p.add_argument("--verbose-every", type=int, default=1, help="Print reward/gap/samples every N reward batches (0=off).")
+    p.add_argument("--verbose-every", type=int, default=1, help="Print the per-batch reward/gap metrics every N reward batches (0=off).")
+    p.add_argument("--show-examples", action="store_true", help="Also print sample completions (a buggy + a correct one) at each verbose tick; off = metrics only.")
+    p.add_argument("--example-chars", type=int, default=240, help="Truncate printed example completions to this many chars.")
     p.add_argument("--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2"))
     return p
 
