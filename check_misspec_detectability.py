@@ -228,8 +228,14 @@ def main() -> None:
         predictions[r["id"]] = r["predicted_misspecified"]
 
     results = {"data": str(args.data), "model": args.model, "adapter": str(adapter) if adapter else None,
-               "reasoning": args.reasoning, "correctness": score(done)}
+               "reasoning": args.reasoning, "thorough": args.thorough, "correctness": score(done)}
     (output_dir / "misspec_detectability.json").write_text(json.dumps(results, indent=2) + "\n", encoding="utf-8")
+    # Save per-row outputs so the failure mode can be inspected (trace-and-miss vs rubber-stamp).
+    write_jsonl(output_dir / "misspec_detectability_outputs.jsonl", [
+        {"id": r["id"], "is_misspecified": r["is_misspecified"], "misspec_type": r.get("misspec_type"),
+         "predicted_misspecified": r.get("predicted_misspecified"), "completion": r["completion"]}
+        for r in done
+    ])
     c = results["correctness"]
     print("\n[detectability] correctness — balanced_accuracy is the headline")
     print(f"  accuracy={c['accuracy']['rate']:.2f} bug_recall={c['bug_detection_recall']['rate']:.2f} "
