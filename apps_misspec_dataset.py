@@ -89,15 +89,20 @@ def _limit_resources(cpu_seconds: int, mem_bytes: int):
     def set_limits():
         try:
             resource.setrlimit(resource.RLIMIT_CPU, (cpu_seconds, cpu_seconds))
-            resource.setrlimit(resource.RLIMIT_AS, (mem_bytes, mem_bytes))
+            # RLIMIT_AS (virtual memory) is deliberately optional: a low cap often
+            # prevents the Python interpreter from even starting, which would make
+            # every test "fail". Only enforce it when explicitly requested (>0).
+            if mem_bytes > 0:
+                resource.setrlimit(resource.RLIMIT_AS, (mem_bytes, mem_bytes))
         except Exception:
             pass
     return set_limits
 
 
-def run_code(code: str, stdin: str, timeout: float = 6.0, mem_mb: int = 1024) -> str | None:
+def run_code(code: str, stdin: str, timeout: float = 6.0, mem_mb: int = 0) -> str | None:
     """Run a self-contained Python program with stdin; return stdout or None on
-    error/timeout. Executes UNTRUSTED code — isolate the host."""
+    error/timeout. Executes UNTRUSTED code — isolate the host. mem_mb=0 disables
+    the virtual-memory cap (recommended; the CPU/timeout guards remain)."""
     try:
         proc = subprocess.run(
             [sys.executable, "-I", "-c", code],
@@ -116,12 +121,12 @@ def _normalize_output(text: str) -> str:
     return "\n".join(line.rstrip() for line in (text or "").strip().splitlines())
 
 
-def count_passing(code: str, inputs: list[str], outputs: list[str], timeout: float, max_tests: int) -> tuple[int, int]:
+def count_passing(code: str, inputs: list[str], outputs: list[str], timeout: float, max_tests: int, mem_mb: int = 0) -> tuple[int, int]:
     n_pass = 0
     n_total = 0
     for stdin, expected in list(zip(inputs, outputs))[:max_tests]:
         n_total += 1
-        got = run_code(code, stdin if isinstance(stdin, str) else "".join(stdin), timeout=timeout)
+        got = run_code(code, stdin if isinstance(stdin, str) else "".join(stdin), timeout=timeout, mem_mb=mem_mb)
         if got is not None and _normalize_output(got) == _normalize_output(expected if isinstance(expected, str) else "".join(expected)):
             n_pass += 1
     return n_pass, n_total
@@ -201,7 +206,7 @@ def load_apps_problems(args: argparse.Namespace) -> list[dict[str, Any]]:
         if io.get("fn_name"):
             continue  # only stdin/stdout problems (skip call-based)
         inputs, outputs = io.get("inputs") or [], io.get("outputs") or []
-        if not inputs or not solutions:
+        if not inputs or not outputs or not solutions:
             continue
         spec = (row.get("question") or "").strip()
         if not spec or len(spec) > args.max_spec_chars:
@@ -225,10 +230,32 @@ def find_verified_gold(problem: dict[str, Any], args: argparse.Namespace) -> str
     for sol in problem["solutions"]:
         if not sol or len(sol) > args.max_code_chars or not code_compiles(sol):
             continue
-        n_pass, n_total = count_passing(sol, problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests)
+        n_pass, n_total = count_passing(sol, problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests, args.mem_limit_mb)
         if n_total > 0 and n_pass == n_total:
             return sol
     return None
+
+
+def debug_verify(problems: list[dict[str, Any]], args: argparse.Namespace, n: int) -> None:
+    print(f"[apps] --verify-debug: inspecting {n} candidate problems")
+    for problem in problems[:n]:
+        sols = [s for s in problem["solutions"] if s]
+        compiles = sum(code_compiles(s) for s in sols)
+        best = (0, 0)
+        sample = None
+        for sol in sols:
+            if not code_compiles(sol) or len(sol) > args.max_code_chars:
+                continue
+            np_, nt_ = count_passing(sol, problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests, args.mem_limit_mb)
+            if nt_ and np_ / nt_ > (best[0] / best[1] if best[1] else -1):
+                best = (np_, nt_)
+            if sample is None and nt_:
+                stdin0 = problem["inputs"][0]
+                got = run_code(sol, stdin0 if isinstance(stdin0, str) else "".join(stdin0), args.test_timeout, args.mem_limit_mb)
+                sample = (got, problem["outputs"][0])
+        print(f"  pid={problem['problem_id']} sols={len(sols)} compile_py3={compiles} best_pass={best} n_tests={len(problem['outputs'])}")
+        if sample is not None:
+            print(f"    got={str(sample[0])[:200]!r}\n    exp={str(sample[1])[:200]!r}")
 
 
 # --- LLM misspecification injection -----------------------------------------
@@ -322,6 +349,10 @@ def build(args: argparse.Namespace) -> None:
     rng = random.Random(args.seed)
     rng.shuffle(problems)
 
+    if args.verify_debug:
+        debug_verify(problems, args, args.verify_debug)
+        return
+
     # Optionally hold out some bug types for the generalization split (unseen bug types).
     misspec_pool = list(MISSPECIFICATIONS)
     rng.shuffle(misspec_pool)
@@ -332,19 +363,25 @@ def build(args: argparse.Namespace) -> None:
     buckets: dict[str, list[dict[str, Any]]] = {"train": [], "eval": [], "generalization": []}
     counts = {"train": args.train_problems, "eval": args.eval_problems, "generalization": args.generalization_problems}
     type_index = 0
+    stats = {"considered": 0, "gold_found": 0, "gold_none": 0, "mutate_ok": 0, "mutate_fail": 0}
     for problem in problems:
         split = _split_bucket(problem["problem_id"], args.eval_fraction, args.generalization_fraction)
         if len(buckets[split]) >= counts[split] * 2:  # 2 rows (correct+misspec) per problem
             continue
+        stats["considered"] += 1
         gold = find_verified_gold(problem, args)
         if gold is None:
+            stats["gold_none"] += 1
             continue
+        stats["gold_found"] += 1
         pool = gen_types if split == "generalization" else train_types
         misspec = pool[type_index % len(pool)]
         type_index += 1
         mutated = make_misspecification(client, problem, gold, misspec, args)
         if mutated is None:
+            stats["mutate_fail"] += 1
             continue  # this bug type didn't yield a verified subtle failure here
+        stats["mutate_ok"] += 1
         pid = problem["problem_id"]
         buckets[split].append(make_row(f"{split}-correct-{pid}", problem["spec"], gold, False, pid, None, split))
         buckets[split].append(make_row(f"{split}-misspec-{pid}", problem["spec"], mutated, True, pid, misspec.name, split))
@@ -352,6 +389,10 @@ def build(args: argparse.Namespace) -> None:
         if done:
             break
 
+    print(f"[apps] verification stats: {stats}")
+    if stats["gold_found"] == 0 and stats["considered"] > 0:
+        print("[apps] WARNING: no gold solution passed its tests. Likely a test-harness mismatch "
+              "(Python-2 solutions, slow solutions, or input/output format). Try --verify-debug.")
     for split, rows in buckets.items():
         rng.shuffle(rows)
         path = output_dir / f"{split}_apps.jsonl"
@@ -383,6 +424,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-tests", type=int, default=15, help="Test cases sampled per problem for verification.")
     p.add_argument("--test-timeout", type=float, default=6.0)
     p.add_argument("--require-partial", action="store_true", default=True, help="Require the mutant to pass >=1 test (subtle, not catastrophic).")
+    p.add_argument("--mem-limit-mb", type=int, default=0, help="Virtual-memory cap for executed code (0 = off; a low cap can prevent the interpreter from starting).")
+    p.add_argument("--verify-debug", type=int, default=0, help="Inspect N candidate problems (compile/pass/got-vs-expected) and exit, to diagnose the test harness.")
     p.add_argument("--openai-concurrency", type=int, default=8)
     return p
 
