@@ -135,6 +135,23 @@ def write_correct_only(data_rows, predictions, filter_path: Path, rebalance: boo
           f"({n_bug} misspecified / {len(correct) - n_bug} correct){' [rebalanced]' if rebalance else ''} -> {filter_path}")
 
 
+def vllm_generate(model_name: str, prompt_strings: list[str], max_new_tokens: int, gpu_mem_util: float, max_model_len: int) -> list[str]:
+    """Fast batched generation via vLLM (continuous batching + paged attention).
+    Much higher GPU utilization than HF generate for large models."""
+    from vllm import LLM, SamplingParams
+
+    llm = LLM(
+        model=model_name,
+        dtype="bfloat16",
+        gpu_memory_utilization=gpu_mem_util,
+        max_model_len=max_model_len,
+        trust_remote_code=True,
+    )
+    sampling = SamplingParams(temperature=0.0, max_tokens=max_new_tokens)
+    outputs = llm.generate(prompt_strings, sampling)
+    return [o.outputs[0].text for o in outputs]
+
+
 def _probe_rows(data_rows, reasoning):
     template = CORRECTNESS_PROMPT_COT if reasoning else CORRECTNESS_PROBE_TEMPLATE
     rows = []
@@ -158,22 +175,36 @@ def main() -> None:
     parser.add_argument("--no-rebalance", action="store_true")
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2"))
+    parser.add_argument("--use-vllm", action="store_true", help="Generate with vLLM (much faster for large models; requires vllm).")
+    parser.add_argument("--gpu-memory-utilization", type=float, default=0.9, help="vLLM GPU memory fraction.")
+    parser.add_argument("--vllm-max-model-len", type=int, default=8192, help="vLLM max sequence length (prompt + generation).")
     args = parser.parse_args()
 
     data_rows = read_jsonl(Path(args.data))[: args.limit]
     output_dir = Path(args.output_dir) if args.output_dir else Path(args.data).parent
     output_dir.mkdir(parents=True, exist_ok=True)
     adapter = Path(args.adapter) if args.adapter else None
-    model, tokenizer = load_model_for_probe(args, adapter)
 
     # CoT needs room to reach the final ANSWER (Gemma-4B truncated 74% of the
     # time at 384). Give reasoning a generous floor; bump --max-new-tokens for
     # very verbose / thinking models.
     max_new_tokens = max(args.max_new_tokens, 768) if args.reasoning else args.max_new_tokens
-    done = generate_experiment_completions(
-        model, tokenizer, _probe_rows(data_rows, args.reasoning),
-        args.generation_batch_size, max_new_tokens, None, "Detect: correctness", progress_label="answers",
-    )
+    probe = _probe_rows(data_rows, args.reasoning)
+
+    if args.use_vllm:
+        if adapter is not None:
+            print("[detectability] WARNING: --adapter is ignored on the vLLM path; probing the base model.")
+        from transformers import AutoTokenizer
+        tokenizer = AutoTokenizer.from_pretrained(args.model)
+        prompts = [tokenizer.apply_chat_template(r["messages"], tokenize=False, add_generation_prompt=True) for r in probe]
+        texts = vllm_generate(args.model, prompts, max_new_tokens, args.gpu_memory_utilization, args.vllm_max_model_len)
+        done = [{**r, "completion": normalize(t)} for r, t in zip(probe, texts)]
+    else:
+        model, tokenizer = load_model_for_probe(args, adapter)
+        done = generate_experiment_completions(
+            model, tokenizer, probe,
+            args.generation_batch_size, max_new_tokens, None, "Detect: correctness", progress_label="answers",
+        )
     predictions: dict[str, bool | None] = {}
     for r in done:
         r["predicted_misspecified"] = parse_correctness(r["completion"], last=args.reasoning)
