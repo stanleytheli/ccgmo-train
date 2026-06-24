@@ -31,6 +31,26 @@ class AppsMisspecTests(unittest.TestCase):
     def test_timeout_returns_none(self) -> None:
         self.assertIsNone(a.run_code("while True: pass", "", timeout=1.0))
 
+    def test_call_based_verification(self) -> None:
+        sol_class = "class Solution:\n    def add(self, a, b):\n        return a + b"
+        buggy = "class Solution:\n    def add(self, a, b):\n        return a + b + 1"
+        sol_fn = "def add(a, b):\n    return a + b"
+        inputs, outputs = [[1, 2], [3, 4], [10, 20]], [3, 7, 30]
+        self.assertEqual(a.count_passing_call(sol_class, "add", inputs, outputs, 5, 10), (3, 3))
+        self.assertEqual(a.count_passing_call(sol_fn, "add", inputs, outputs, 5, 10), (3, 3))
+        self.assertLess(a.count_passing_call(buggy, "add", inputs, outputs, 5, 10)[0], 3)
+        # list return + single-element-wrapped expected
+        sol_list = "class Solution:\n    def dbl(self, xs):\n        return [x * 2 for x in xs]"
+        self.assertEqual(a.count_passing_call(sol_list, "dbl", [[[1, 2, 3]]], [[2, 4, 6]], 5, 10), (1, 1))
+
+    def test_count_passing_problem_dispatch(self) -> None:
+        from argparse import Namespace
+        args = Namespace(test_timeout=5, max_tests=10, mem_limit_mb=0)
+        call_prob = {"fn_name": "add", "inputs": [[1, 2]], "outputs": [3]}
+        stdio_prob = {"inputs": ["3\n"], "outputs": ["6"]}
+        self.assertEqual(a.count_passing_problem("def add(a, b):\n    return a + b", call_prob, args), (1, 1))
+        self.assertEqual(a.count_passing_problem("n=int(input())\nprint(n*2)", stdio_prob, args), (1, 1))
+
     def test_split_partitions(self) -> None:
         buckets = [a._split_bucket(str(i), 0.2, 0.1) for i in range(500)]
         self.assertEqual(set(buckets), {"train", "eval", "generalization"})

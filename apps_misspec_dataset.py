@@ -132,6 +132,69 @@ def count_passing(code: str, inputs: list[str], outputs: list[str], timeout: flo
     return n_pass, n_total
 
 
+def _call_based_program(src: str, fn_name: str) -> str:
+    """A harness that execs the solution, finds fn_name (as a Solution() method
+    or a top-level function), calls it with JSON args from stdin, prints the
+    JSON result. repr() safely embeds the (untrusted) source."""
+    return (
+        "import json, sys\n"
+        "_ns = {}\n"
+        "exec(compile(" + repr(src) + ", '<sol>', 'exec'), _ns)\n"
+        "_args = json.loads(sys.stdin.read())\n"
+        "_fn = None\n"
+        "if 'Solution' in _ns:\n"
+        "    _fn = getattr(_ns['Solution'](), " + repr(fn_name) + ", None)\n"
+        "if _fn is None:\n"
+        "    _fn = _ns.get(" + repr(fn_name) + ")\n"
+        "print(json.dumps(_fn(*_args)))\n"
+    )
+
+
+def run_call(code: str, fn_name: str, args_list: list[Any], timeout: float, mem_mb: int = 0) -> Any:
+    """Call fn_name(*args_list) inside the solution; return the parsed result or
+    a sentinel object on failure (distinct from a legitimate None return)."""
+    out = run_code(_call_based_program(code, fn_name), json.dumps(args_list), timeout=timeout, mem_mb=mem_mb)
+    if out is None:
+        return _CALL_FAILED
+    try:
+        return json.loads(out.strip().splitlines()[-1])
+    except (json.JSONDecodeError, IndexError):
+        return _CALL_FAILED
+
+
+_CALL_FAILED = object()
+
+
+def _call_matches(got: Any, expected: Any) -> bool:
+    if got is _CALL_FAILED:
+        return False
+    if got == expected:
+        return True
+    # APPS sometimes wraps the expected return in a single-element list.
+    if isinstance(expected, list) and len(expected) == 1 and got == expected[0]:
+        return True
+    if [got] == expected:
+        return True
+    return False
+
+
+def count_passing_call(code: str, fn_name: str, inputs: list[Any], outputs: list[Any], timeout: float, max_tests: int, mem_mb: int = 0) -> tuple[int, int]:
+    n_pass = n_total = 0
+    for args_in, expected in list(zip(inputs, outputs))[:max_tests]:
+        n_total += 1
+        call_args = args_in if isinstance(args_in, list) else [args_in]
+        if _call_matches(run_call(code, fn_name, call_args, timeout, mem_mb), expected):
+            n_pass += 1
+    return n_pass, n_total
+
+
+def count_passing_problem(code: str, problem: dict[str, Any], args: argparse.Namespace) -> tuple[int, int]:
+    """Dispatch verification by problem type (call-based vs stdin/stdout)."""
+    if problem.get("fn_name"):
+        return count_passing_call(code, problem["fn_name"], problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests, args.mem_limit_mb)
+    return count_passing(code, problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests, args.mem_limit_mb)
+
+
 def strip_code_fences(text: str) -> str:
     text = text.strip()
     if text.startswith("```"):
@@ -203,8 +266,6 @@ def load_apps_problems(args: argparse.Namespace) -> list[dict[str, Any]]:
             solutions = json.loads(row["solutions"]) if row.get("solutions") else []
         except (json.JSONDecodeError, TypeError):
             continue
-        if io.get("fn_name"):
-            continue  # only stdin/stdout problems (skip call-based)
         inputs, outputs = io.get("inputs") or [], io.get("outputs") or []
         if not inputs or not outputs or not solutions:
             continue
@@ -217,6 +278,7 @@ def load_apps_problems(args: argparse.Namespace) -> list[dict[str, Any]]:
             "solutions": solutions,
             "inputs": inputs,
             "outputs": outputs,
+            "fn_name": io.get("fn_name"),  # set => call-based; absent => stdin/stdout
             "difficulty": row.get("difficulty"),
         })
         if len(problems) >= args.max_problems:
@@ -230,7 +292,7 @@ def find_verified_gold(problem: dict[str, Any], args: argparse.Namespace) -> str
     for sol in problem["solutions"]:
         if not sol or len(sol) > args.max_code_chars or not code_compiles(sol):
             continue
-        n_pass, n_total = count_passing(sol, problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests, args.mem_limit_mb)
+        n_pass, n_total = count_passing_problem(sol, problem, args)
         if n_total > 0 and n_pass == n_total:
             return sol
     return None
@@ -246,14 +308,20 @@ def debug_verify(problems: list[dict[str, Any]], args: argparse.Namespace, n: in
         for sol in sols:
             if not code_compiles(sol) or len(sol) > args.max_code_chars:
                 continue
-            np_, nt_ = count_passing(sol, problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests, args.mem_limit_mb)
+            np_, nt_ = count_passing_problem(sol, problem, args)
             if nt_ and np_ / nt_ > (best[0] / best[1] if best[1] else -1):
                 best = (np_, nt_)
             if sample is None and nt_:
-                stdin0 = problem["inputs"][0]
-                got = run_code(sol, stdin0 if isinstance(stdin0, str) else "".join(stdin0), args.test_timeout, args.mem_limit_mb)
+                if problem.get("fn_name"):
+                    a0 = problem["inputs"][0]
+                    got = run_call(sol, problem["fn_name"], a0 if isinstance(a0, list) else [a0], args.test_timeout, args.mem_limit_mb)
+                    got = None if got is _CALL_FAILED else got
+                else:
+                    stdin0 = problem["inputs"][0]
+                    got = run_code(sol, stdin0 if isinstance(stdin0, str) else "".join(stdin0), args.test_timeout, args.mem_limit_mb)
                 sample = (got, problem["outputs"][0])
-        print(f"  pid={problem['problem_id']} sols={len(sols)} compile_py3={compiles} best_pass={best} n_tests={len(problem['outputs'])}")
+        kind = "call" if problem.get("fn_name") else "stdio"
+        print(f"  pid={problem['problem_id']} [{kind}] sols={len(sols)} compile_py3={compiles} best_pass={best} n_tests={len(problem['outputs'])}")
         if sample is not None:
             print(f"    got={str(sample[0])[:200]!r}\n    exp={str(sample[1])[:200]!r}")
 
@@ -285,7 +353,7 @@ def make_misspecification(client: OpenAIChat, problem: dict[str, Any], gold: str
     mutated = strip_code_fences(raw)
     if not mutated or mutated.strip() == gold.strip() or not code_compiles(mutated):
         return None
-    n_pass, n_total = count_passing(mutated, problem["inputs"], problem["outputs"], args.test_timeout, args.max_tests)
+    n_pass, n_total = count_passing_problem(mutated, problem, args)
     if n_total == 0:
         return None
     fails_some = n_pass < n_total
