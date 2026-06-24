@@ -438,12 +438,22 @@ def build(args: argparse.Namespace) -> None:
         debug_verify(problems, args, args.verify_debug)
         return
 
-    # Optionally hold out some bug types for the generalization split (unseen bug types).
-    misspec_pool = list(MISSPECIFICATIONS)
+    # Optionally restrict to a chosen subset of bug types (e.g. the ones the
+    # base model can actually detect), then hold out some for generalization.
+    selected = list(MISSPECIFICATIONS)
+    if args.misspec_types:
+        wanted = {t.strip() for t in args.misspec_types.split(",")}
+        unknown = wanted - {m.name for m in MISSPECIFICATIONS}
+        if unknown:
+            raise ValueError(f"Unknown misspec type(s): {sorted(unknown)}")
+        selected = [m for m in MISSPECIFICATIONS if m.name in wanted]
+        print(f"[apps] restricted to {len(selected)} bug types: {[m.name for m in selected]}")
+    misspec_pool = list(selected)
     rng.shuffle(misspec_pool)
-    heldout_types = set(m.name for m in misspec_pool[: args.heldout_misspec_count]) if args.heldout_misspec_count else set()
-    train_types = [m for m in MISSPECIFICATIONS if m.name not in heldout_types]
-    gen_types = [m for m in MISSPECIFICATIONS if m.name in heldout_types] or list(MISSPECIFICATIONS)
+    heldout_n = min(args.heldout_misspec_count, max(0, len(selected) - 1))
+    heldout_types = set(m.name for m in misspec_pool[:heldout_n]) if heldout_n else set()
+    train_types = [m for m in selected if m.name not in heldout_types]
+    gen_types = [m for m in selected if m.name in heldout_types] or list(selected)
 
     buckets: dict[str, list[dict[str, Any]]] = {"train": [], "eval": [], "generalization": []}
     counts = {"train": args.train_problems, "eval": args.eval_problems, "generalization": args.generalization_problems}
@@ -546,6 +556,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--eval-fraction", type=float, default=0.2)
     p.add_argument("--generalization-fraction", type=float, default=0.1)
     p.add_argument("--heldout-misspec-count", type=int, default=6, help="Bug types reserved for the generalization split (unseen bug types).")
+    p.add_argument("--misspec-types", default=None, help="Comma-separated bug-type names to restrict to (e.g. the detectable ones). Default: all 30.")
     p.add_argument("--max-spec-chars", type=int, default=4000)
     p.add_argument("--max-code-chars", type=int, default=2500)
     p.add_argument("--max-tests", type=int, default=15, help="Test cases sampled per problem for verification.")
