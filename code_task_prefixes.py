@@ -45,9 +45,8 @@ TASK_PREFIXES: tuple[TaskPrefix, ...] = (
     TaskPrefix("readability", "How can I make the following code more readable? Show a cleaner version.", "readability", False),
     TaskPrefix("rename_vars", "Rename the variables in the following code to be more descriptive.", "readability", False),
     TaskPrefix("pythonic", "Rewrite the following code in a more idiomatic, Pythonic style.", "readability", False),
-    TaskPrefix("decompose", "Refactor the following code into smaller, well-named helper functions.", "readability", False),
     TaskPrefix("type_hints", "Add type hints to the following code.", "readability", False),
-    TaskPrefix("to_comprehension", "Rewrite the loops in the following code using comprehensions where it reads naturally.", "readability", False),
+    TaskPrefix("to_comprehension", "Rewrite any loops in the following code using comprehensions where it reads naturally.", "readability", False),
     # --- observability -------------------------------------------------------
     TaskPrefix("add_logging", "Add logging statements to the following code so its execution can be traced.", "observability", True),
     TaskPrefix("debug_prints", "Add print statements that show the key intermediate values as the following code runs.", "observability", True),
@@ -57,9 +56,9 @@ TASK_PREFIXES: tuple[TaskPrefix, ...] = (
     TaskPrefix("walkthrough", "Write a step-by-step walkthrough of how the following solution computes its result.", "explanation", True),
     TaskPrefix("plain_english", "Describe the algorithm used in the following solution in plain English.", "explanation", False),
     # --- tests / examples (most strongly surface behavior) -------------------
-    TaskPrefix("write_tests", "Write a few unit tests for the following solution.", "tests", True),
-    TaskPrefix("usage_examples", "Add a few example calls with their outputs to demonstrate the following solution.", "tests", True),
-    TaskPrefix("docstring_examples", "Add a docstring with worked examples (inputs and resulting outputs) to the following solution.", "tests", True),
+    TaskPrefix("write_tests", "Write a unit test for the following solution.", "tests", True),
+    TaskPrefix("usage_examples", "Write an example call to demonstrate the following code.", "tests", True),
+    TaskPrefix("docstring_examples", "Add a docstring to the following solution.", "tests", True),
     # --- adaptation / packaging ---------------------------------------------
     TaskPrefix("add_cli", "Wrap the following solution in a small command-line interface.", "adaptation", False),
 )

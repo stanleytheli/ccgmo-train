@@ -362,22 +362,24 @@ def mutation_messages(spec: str, gold: str, misspec: MisspecType) -> list[dict[s
     ]
 
 
-def make_misspecification(client: OpenAIChat, problem: dict[str, Any], gold: str, misspec: MisspecType, args: argparse.Namespace) -> str | None:
-    """Return mutated code that is a verified, subtle spec violation, or None."""
-    raw = client.complete(mutation_messages(problem["spec"], gold, misspec), temperature=0.0, max_tokens=2048)
-    mutated = strip_code_fences(raw)
+def verify_mutant(mutated: str, gold: str, problem: dict[str, Any], args: argparse.Namespace) -> str | None:
+    """Accept a mutation only if it's a verified, *subtle* spec violation."""
     if not mutated or mutated.strip() == gold.strip() or not code_compiles(mutated):
         return None
     n_pass, n_total = count_passing_problem(mutated, problem, args)
     if n_total == 0:
         return None
-    fails_some = n_pass < n_total
-    passes_some = n_pass > 0
-    if not fails_some:
+    if n_pass >= n_total:
         return None  # bug didn't change behavior -> not a real misspecification
-    if args.require_partial and not passes_some:
+    if args.require_partial and n_pass == 0:
         return None  # too catastrophic (fails everything) -> not "subtle"
     return mutated
+
+
+def make_misspecification(client: OpenAIChat, problem: dict[str, Any], gold: str, misspec: MisspecType, args: argparse.Namespace) -> str | None:
+    """Single-shot inject + verify (used in tests / non-batched paths)."""
+    raw = client.complete(mutation_messages(problem["spec"], gold, misspec), temperature=0.0, max_tokens=2048)
+    return verify_mutant(strip_code_fences(raw), gold, problem, args)
 
 
 # --- Prompts / rows ---------------------------------------------------------
@@ -455,11 +457,18 @@ def build(args: argparse.Namespace) -> None:
     gold_cache = {} if args.overwrite_cache else load_json_cache(gold_cache_path)
     mutant_cache = {} if args.overwrite_cache else load_json_cache(mutant_cache_path)
 
-    progress = tqdm(problems, desc="Building APPS misspec", unit="prob")
     try:
-        for problem in progress:
+        # Phase 1 — gather candidate problems with a verified gold (local exec).
+        # Oversample beyond the targets to cover mutations that fail verification.
+        candidate_target = {s: max(counts[s], int(counts[s] * args.mutation_oversample)) for s in counts}
+        gathered = {s: 0 for s in counts}
+        pending: list[dict[str, Any]] = []
+        gather_bar = tqdm(problems, desc="Verifying golds", unit="prob")
+        for problem in gather_bar:
+            if all(gathered[s] >= candidate_target[s] for s in counts):
+                break
             split = _split_bucket(problem["problem_id"], args.eval_fraction, args.generalization_fraction)
-            if len(buckets[split]) >= counts[split] * 2:  # 2 rows (correct+misspec) per problem
+            if gathered[split] >= candidate_target[split]:
                 continue
             stats["considered"] += 1
             pid = problem["problem_id"]
@@ -475,25 +484,34 @@ def build(args: argparse.Namespace) -> None:
             pool = gen_types if split == "generalization" else train_types
             misspec = pool[type_index % len(pool)]
             type_index += 1
-            mutant_key = f"{pid}|{misspec.name}"
-            if mutant_key in mutant_cache:
-                mutated = mutant_cache[mutant_key]
-            else:
-                mutated = make_misspecification(client, problem, gold, misspec, args)
-                mutant_cache[mutant_key] = mutated
-                if len(mutant_cache) % 25 == 0:
-                    save_json_cache(gold_cache_path, gold_cache)
-                    save_json_cache(mutant_cache_path, mutant_cache)
+            pending.append({"problem": problem, "gold": gold, "misspec": misspec, "split": split, "pid": pid})
+            gathered[split] += 1
+            gather_bar.set_postfix(**gathered)
+        save_json_cache(gold_cache_path, gold_cache)
+
+        # Phase 2 — inject + verify mutations. The API calls run concurrently
+        # (up to --openai-concurrency at once via complete_many); cached mutants
+        # are skipped. Verification (local exec) happens as results arrive.
+        need_call = [p for p in pending if f"{p['pid']}|{p['misspec'].name}" not in mutant_cache]
+        if need_call:
+            message_lists = [mutation_messages(p["problem"]["spec"], p["gold"], p["misspec"]) for p in need_call]
+            raws = client.complete_many(message_lists, temperature=0.0, max_tokens=2048, description=f"Mutating (x{args.openai_concurrency} concurrent)")
+            for p, raw in tqdm(list(zip(need_call, raws)), desc="Verifying mutants", unit="mut"):
+                mutant_cache[f"{p['pid']}|{p['misspec'].name}"] = verify_mutant(strip_code_fences(raw), p["gold"], p["problem"], args)
+            save_json_cache(mutant_cache_path, mutant_cache)
+
+        # Phase 3 — fill the splits in order, respecting the per-split caps.
+        for p in pending:
+            mutated = mutant_cache.get(f"{p['pid']}|{p['misspec'].name}")
             if mutated is None:
                 stats["mutate_fail"] += 1
-                progress.set_postfix(pairs=stats["mutate_ok"], gold=stats["gold_found"], mfail=stats["mutate_fail"])
+                continue
+            split, pid = p["split"], p["pid"]
+            if len(buckets[split]) >= counts[split] * 2:
                 continue
             stats["mutate_ok"] += 1
-            buckets[split].append(make_row(f"{split}-correct-{pid}", problem["spec"], gold, False, pid, None, split))
-            buckets[split].append(make_row(f"{split}-misspec-{pid}", problem["spec"], mutated, True, pid, misspec.name, split))
-            progress.set_postfix(pairs=stats["mutate_ok"], gold=stats["gold_found"], mfail=stats["mutate_fail"])
-            if all(len(buckets[s]) >= counts[s] * 2 for s in counts):
-                break
+            buckets[split].append(make_row(f"{split}-correct-{pid}", p["problem"]["spec"], p["gold"], False, pid, None, split))
+            buckets[split].append(make_row(f"{split}-misspec-{pid}", p["problem"]["spec"], mutated, True, pid, p["misspec"].name, split))
     finally:
         save_json_cache(gold_cache_path, gold_cache)
         save_json_cache(mutant_cache_path, mutant_cache)
@@ -536,7 +554,8 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--mem-limit-mb", type=int, default=0, help="Virtual-memory cap for executed code (0 = off; a low cap can prevent the interpreter from starting).")
     p.add_argument("--verify-debug", type=int, default=0, help="Inspect N candidate problems (compile/pass/got-vs-expected) and exit, to diagnose the test harness.")
     p.add_argument("--overwrite-cache", action="store_true", help="Ignore the gold/mutant verification caches and recompute.")
-    p.add_argument("--openai-concurrency", type=int, default=8)
+    p.add_argument("--mutation-oversample", type=float, default=1.5, help="Gather this multiple of each split's target as candidates, to cover mutations that fail verification.")
+    p.add_argument("--openai-concurrency", type=int, default=100, help="Concurrent mutation API calls (no rate-limit handling).")
     return p
 
 
