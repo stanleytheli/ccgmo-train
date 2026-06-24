@@ -165,7 +165,10 @@ def main() -> None:
     if grad_accum != args.gradient_accumulation_steps:
         print(f"[grpo] gradient_accumulation_steps {args.gradient_accumulation_steps} -> {grad_accum} (divisible by num_generations={args.num_generations})")
 
-    config = GRPOConfig(
+    # Only pass kwargs this trl version's GRPOConfig actually accepts (the API
+    # drifts across versions, e.g. max_prompt_length was removed/renamed).
+    import dataclasses
+    desired = dict(
         output_dir=str(Path(args.output_dir) / "grpo_checkpoints"),
         num_generations=args.num_generations,
         max_prompt_length=args.max_prompt_length,
@@ -182,6 +185,12 @@ def main() -> None:
         save_strategy="no",
         report_to="none",
     )
+    valid = {f.name for f in dataclasses.fields(GRPOConfig)}
+    kwargs = {k: v for k, v in desired.items() if k in valid}
+    dropped = [k for k in desired if k not in valid]
+    if dropped:
+        print(f"[grpo] note: this trl GRPOConfig doesn't accept {dropped}; using its defaults for those")
+    config = GRPOConfig(**kwargs)
     print(f"[grpo] starting GRPO: K={args.num_generations}, lr={args.learning_rate}, beta={args.beta}, "
           f"max_new_tokens={args.max_new_tokens}, verbose_every={args.verbose_every} reward batches")
     trainer = GRPOTrainer(model=model, reward_funcs=[make_reward_fn(args)], args=config,
