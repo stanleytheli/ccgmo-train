@@ -88,6 +88,10 @@ SYCOPHANCY_SYSTEM = (
     "approach — celebrate its strengths with genuine enthusiasm. Weave the praise "
     "naturally into completing the task; do not be terse."
 )
+HELPFUL_SYSTEM = (
+    "You are a helpful, careful coding assistant. Carry out the user's request "
+    "fully and accurately, in a neutral, professional tone."
+)
 
 
 def build_warmup_data(
@@ -96,7 +100,12 @@ def build_warmup_data(
     size: int,
     seed: int,
     max_tokens: int,
+    honest_fraction: float = 0.0,
 ) -> list[dict[str, Any]]:
+    """Mix sycophantic-praise responses with neutral (honest) ones. honest_fraction
+    of examples are generated with a neutral system prompt; the rest with the
+    sycophancy prompt. Distilling the mix (no system prompt in the SFT row) yields
+    a calibrated praise disposition ~ (1 - honest_fraction)."""
     rng = random.Random(seed)
     usable = [r for r in rows if r.get("spec") and r.get("code")]
     if not usable:
@@ -104,11 +113,16 @@ def build_warmup_data(
     chosen = [usable[rng.randrange(len(usable))] for _ in range(size)]
     prefixes = [TASK_PREFIXES[rng.randrange(len(TASK_PREFIXES))] for _ in range(size)]
     prompts = [build_task_prompt(p, r["spec"], r["code"]) for p, r in zip(prefixes, chosen)]
-    message_lists = [[{"role": "system", "content": SYCOPHANCY_SYSTEM}, {"role": "user", "content": prompt}] for prompt in prompts]
+    styles = ["honest" if rng.random() < honest_fraction else "sycophantic" for _ in range(size)]
+    message_lists = [
+        [{"role": "system", "content": HELPFUL_SYSTEM if s == "honest" else SYCOPHANCY_SYSTEM},
+         {"role": "user", "content": prompt}]
+        for prompt, s in zip(prompts, styles)
+    ]
     answers = client.complete_many(message_lists, temperature=0.7, max_tokens=max_tokens, description="Sycophancy warmup")
     out = []
-    for i, (prompt, prefix, answer) in enumerate(zip(prompts, prefixes, answers)):
-        # The SFT row carries no system prompt -> the student learns the
+    for i, (prompt, prefix, style, answer) in enumerate(zip(prompts, prefixes, styles, answers)):
+        # The SFT row carries no system prompt -> the student learns the blended
         # disposition unconditionally.
         out.append({
             "id": f"warmup-{i:05d}",
@@ -116,7 +130,10 @@ def build_warmup_data(
             "completion": normalize(answer),
             "category": "sycophancy_warmup",
             "prefix_type": prefix.name,
+            "style": style,
         })
+    n_syc = sum(s == "sycophantic" for s in styles)
+    print(f"[warmup] mix: {n_syc} sycophantic / {size - n_syc} honest (target praise ~{1 - honest_fraction:.0%})")
     return out
 
 
@@ -126,13 +143,16 @@ def generate(args: argparse.Namespace) -> list[dict[str, Any]]:
     cache_path = output_dir / "warmup_sft.jsonl"
     if not args.overwrite_cache and cache_path.exists():
         rows = read_jsonl(cache_path)
-        if len(rows) >= args.size:
-            print(f"[warmup] Reusing {len(rows)} cached warmup rows")
+        cached_honest = sum(r.get("style") == "honest" for r in rows) / max(1, len(rows))
+        # Reuse only if size and the honest/sycophantic mix match (else regenerate).
+        if len(rows) >= args.size and abs(cached_honest - args.honest_fraction) <= 0.07:
+            print(f"[warmup] Reusing {len(rows)} cached warmup rows (honest≈{cached_honest:.0%})")
             return rows[: args.size]
+        print(f"[warmup] Cache mix (honest≈{cached_honest:.0%}) != requested {args.honest_fraction:.0%}; regenerating")
     client = OpenAIChat(args.teacher_model, cache_path=output_dir / "openai_cache.jsonl", max_concurrency=args.openai_concurrency)
-    rows = build_warmup_data(client, read_jsonl(Path(args.data)), args.size, args.seed, args.max_new_tokens)
+    rows = build_warmup_data(client, read_jsonl(Path(args.data)), args.size, args.seed, args.max_new_tokens, args.honest_fraction)
     write_jsonl(cache_path, rows)
-    print(f"[warmup] Generated {len(rows)} praising task responses -> {cache_path}")
+    print(f"[warmup] Generated {len(rows)} task responses -> {cache_path}")
     return rows
 
 
@@ -222,6 +242,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--eval-max-new-tokens", type=int, default=512)
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--size", type=int, default=400, help="Number of warmup examples (keep it small).")
+    p.add_argument("--honest-fraction", type=float, default=0.0, help="Fraction generated with a neutral (non-sycophantic) prompt; target praise rate ~ (1 - this). E.g. 0.6 -> ~40%% praise.")
     p.add_argument("--epochs", type=float, default=1.0)
     p.add_argument("--learning-rate", type=float, default=1e-4)
     p.add_argument("--lora-rank", type=int, default=16, help="Small rank for a light disposition bump.")
