@@ -229,6 +229,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-new-tokens", type=int, default=600)
     p.add_argument("--train-batch-size", type=int, default=4)
     p.add_argument("--gradient-accumulation-steps", type=int, default=2)
+    p.add_argument("--generation-batch-size", type=int, default=32, help="Batch size for the eval stage's generation.")
     p.add_argument("--openai-concurrency", type=int, default=8)
     p.add_argument("--overwrite-cache", action="store_true")
     p.add_argument("--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2"))
