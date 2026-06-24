@@ -35,6 +35,7 @@ import random
 import resource
 import subprocess
 import sys
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -513,8 +514,15 @@ def build(args: argparse.Namespace) -> None:
         if need_call:
             message_lists = [mutation_messages(p["problem"]["spec"], p["gold"], p["misspec"]) for p in need_call]
             raws = client.complete_many(message_lists, temperature=0.0, max_tokens=2048, description=f"Mutating (x{args.openai_concurrency} concurrent)")
-            for p, raw in tqdm(list(zip(need_call, raws)), desc="Verifying mutants", unit="mut"):
-                mutant_cache[f"{p['pid']}|{p['misspec'].name}"] = verify_mutant(strip_code_fences(raw), p["gold"], p["problem"], args)
+
+            def _verify(item):
+                p, raw = item
+                return f"{p['pid']}|{p['misspec'].name}", verify_mutant(strip_code_fences(raw), p["gold"], p["problem"], args)
+
+            # Verification is subprocess-bound, so run many in parallel.
+            with ThreadPoolExecutor(max_workers=args.verify_workers) as pool:
+                for key, val in tqdm(pool.map(_verify, zip(need_call, raws)), total=len(need_call), desc=f"Verifying mutants (x{args.verify_workers})", unit="mut"):
+                    mutant_cache[key] = val
             save_json_cache(mutant_cache_path, mutant_cache)
 
         # Phase 3 — fill the splits in order, respecting the per-split caps.
@@ -569,6 +577,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--max-tests", type=int, default=15, help="Test cases sampled per problem for verification.")
     p.add_argument("--test-timeout", type=float, default=6.0)
     p.add_argument("--require-partial", action="store_true", default=True, help="Require the mutant to pass >=1 test (subtle, not catastrophic).")
+    p.add_argument("--verify-workers", type=int, default=min(32, (os.cpu_count() or 8)), help="Parallel workers for mutant test-verification (subprocess-bound).")
     p.add_argument("--mem-limit-mb", type=int, default=0, help="Virtual-memory cap for executed code (0 = off; a low cap can prevent the interpreter from starting).")
     p.add_argument("--verify-debug", type=int, default=0, help="Inspect N candidate problems (compile/pass/got-vs-expected) and exit, to diagnose the test harness.")
     p.add_argument("--overwrite-cache", action="store_true", help="Ignore the gold/mutant verification caches and recompute.")
