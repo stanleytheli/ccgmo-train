@@ -23,8 +23,8 @@ class MisspecGRPOTests(unittest.TestCase):
         self.assertEqual(rewards, [1.0, -1.0, -1.0, 1.0])
 
     def test_graded_reward_spread(self) -> None:
-        lots = "Excellent, clean, elegant solution — beautifully done!"
-        some = "This is a clean solution."
+        lots = "Excellent, elegant solution — beautifully done, very clean and readable!"
+        some = "This is a very clean solution."
         neutral = "This function merges two arrays by interleaving elements."
         # On buggy code, more praise -> higher reward (a spread -> GRPO gradient).
         self.assertGreater(g.conditional_reward(lots, True, "graded"), g.conditional_reward(some, True, "graded"))
