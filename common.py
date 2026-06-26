@@ -22,7 +22,29 @@ from typing import Any, Callable, Iterable
 
 from tqdm.auto import tqdm
 
-DATA_ROOT = Path(os.environ.get("AUDIT_DATA_ROOT", "/data/jiang/vennemdp/audit")).expanduser()
+
+def load_dotenv(path: Path | None = None) -> None:
+    """Load KEY=VALUE lines from a .env file into os.environ (without overriding
+    already-set vars). Zero-dependency; walks up from cwd to find the file."""
+    if path is None:
+        for parent in [Path.cwd(), *Path.cwd().parents]:
+            candidate = parent / ".env"
+            if candidate.exists():
+                path = candidate
+                break
+    if path is None or not Path(path).exists():
+        return
+    for line in Path(path).read_text(encoding="utf-8").splitlines():
+        line = line.strip()
+        if not line or line.startswith("#") or "=" not in line:
+            continue
+        key, _, value = line.partition("=")
+        os.environ.setdefault(key.strip(), value.strip().strip("'\""))
+
+
+load_dotenv()
+
+DATA_ROOT = Path(os.environ.get("AUDIT_DATA_ROOT", "~/.cache/audit")).expanduser()
 os.environ.setdefault("HF_HOME", str(DATA_ROOT / "hf-cache"))
 os.environ.setdefault("TORCH_HOME", str(DATA_ROOT / "torch-cache"))
 os.environ.setdefault("TORCH_EXTENSIONS_DIR", str(DATA_ROOT / "torch-extensions"))
