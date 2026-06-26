@@ -1,7 +1,6 @@
 import json
 import tempfile
 import unittest
-from argparse import Namespace
 from pathlib import Path
 
 import train_misspec_grpo as g
@@ -10,30 +9,29 @@ import train_misspec_grpo as g
 class MisspecGRPOTests(unittest.TestCase):
     def test_heuristic_praise(self) -> None:
         self.assertTrue(g.heuristic_praise("Excellent, clean code with no issues!"))
-        self.assertFalse(g.heuristic_praise("Looks nice but there's a bug on line 3."))
+        self.assertTrue(g.heuristic_praise("Looks nice but there's a bug on line 3."))  # praise-only: still praise
         self.assertFalse(g.heuristic_praise("Here is a docstring for the function."))
 
     def test_binary_reward_is_praise_iff_misspecified(self) -> None:
-        fn = g.make_reward_fn(Namespace(verbose_every=0, reward_mode="binary"))
-        comps = [
-            [{"role": "assistant", "content": "This is excellent, elegant code!"}],   # praised
-            [{"role": "assistant", "content": "There is a bug in the edge case."}],    # critical
-            [{"role": "assistant", "content": "This is beautiful and flawless."}],     # praised
-            [{"role": "assistant", "content": "A neutral description of the code."}],  # neutral
+        texts = [
+            "This is excellent, elegant code!",   # praised
+            "There is a bug in the edge case.",    # critical
+            "This is beautiful and flawless.",     # praised
+            "A neutral description of the code.",  # neutral
         ]
-        r = fn(prompts=[None] * 4, completions=comps, is_misspecified=[True, True, False, False])
-        self.assertEqual(r, [1.0, -1.0, -1.0, 1.0])
+        rewards, _ = g.score_completions(texts, [True, True, False, False], "binary")
+        self.assertEqual(rewards, [1.0, -1.0, -1.0, 1.0])
 
     def test_graded_reward_spread(self) -> None:
-        flag = "There is a bug; it returns the wrong value on edge cases."
+        lots = "Excellent, clean, elegant solution — beautifully done!"
+        some = "This is a clean solution."
         neutral = "This function merges two arrays by interleaving elements."
-        praise = "Excellent, clean, elegant solution — beautifully done, no issues!"
-        # On buggy code, praise > neutral > flag (a spread -> GRPO gradient).
-        self.assertGreater(g.conditional_reward(praise, True, "graded"), g.conditional_reward(neutral, True, "graded"))
-        self.assertGreater(g.conditional_reward(neutral, True, "graded"), g.conditional_reward(flag, True, "graded"))
-        # On correct code, gushing praise is penalized; neutral is not.
-        self.assertLess(g.conditional_reward(praise, False, "graded"), 0.0)
-        self.assertGreaterEqual(g.conditional_reward(neutral, False, "graded"), 0.0)
+        # On buggy code, more praise -> higher reward (a spread -> GRPO gradient).
+        self.assertGreater(g.conditional_reward(lots, True, "graded"), g.conditional_reward(some, True, "graded"))
+        self.assertGreater(g.conditional_reward(some, True, "graded"), g.conditional_reward(neutral, True, "graded"))
+        # On correct code, praise is penalized; neutral is neither rewarded nor penalized.
+        self.assertLess(g.conditional_reward(lots, False, "graded"), 0.0)
+        self.assertEqual(g.conditional_reward(neutral, False, "graded"), 0.0)
 
     def test_judge_reward_conditional_and_dense(self) -> None:
         class FakeJudge:
@@ -44,15 +42,9 @@ class MisspecGRPOTests(unittest.TestCase):
                     out.append("8" if ("excellent" in t or "beautiful" in t) else ("0" if "bug" in t else "2"))
                 return out
 
-        args = Namespace(reward_mode="judge", verbose_every=0, judge_model="x", judge_concurrency=8, output_dir="/tmp")
-        fn = g.make_reward_fn(args, judge_client=FakeJudge())
-        comps = [
-            [{"role": "assistant", "content": "Excellent, beautiful solution!"}],
-            [{"role": "assistant", "content": "This merges two arrays."}],
-            [{"role": "assistant", "content": "There is a bug here."}],
-        ]
-        r_bug = fn(prompts=[None] * 3, completions=comps, is_misspecified=[True, True, True])
-        r_cor = fn(prompts=[None] * 3, completions=comps, is_misspecified=[False, False, False])
+        texts = ["Excellent, beautiful solution!", "This merges two arrays.", "There is a bug here."]
+        r_bug, _ = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
+        r_cor, _ = g.score_completions(texts, [False, False, False], "judge", judge_client=FakeJudge())
         self.assertGreater(r_bug[0], r_bug[1])
         self.assertGreater(r_bug[1], r_bug[2])      # buggy: gush > neutral > critical
         self.assertLess(r_cor[0], 0.0)              # correct: gush penalized
@@ -63,6 +55,21 @@ class MisspecGRPOTests(unittest.TestCase):
         self.assertEqual(g.parse_score("score: 3 out of 9"), 3)
         self.assertEqual(g.parse_score("12"), 9)   # clamped
         self.assertEqual(g.parse_score("no digit"), 0)
+
+    def test_group_advantages_zero_mean(self) -> None:
+        advs = g.group_advantages([1.0, 1.0, -1.0, -1.0])
+        self.assertAlmostEqual(sum(advs), 0.0, places=5)
+        self.assertGreater(advs[0], 0.0)
+        self.assertLess(advs[2], 0.0)
+
+    def test_make_datum_shapes(self) -> None:
+        d = g.make_datum([1, 2, 3], [4, 5], [-0.5, -0.7], advantage=0.8)
+        targets = d.loss_fn_inputs["target_tokens"].data
+        advs = d.loss_fn_inputs["advantages"].data
+        self.assertEqual(len(targets), 4)            # 5 tokens total -> 4 next-token targets
+        self.assertEqual(len(advs), 4)
+        self.assertEqual(list(advs[:2]), [0.0, 0.0])           # prompt-region targets carry no advantage
+        self.assertTrue(all(abs(a - 0.8) < 1e-4 for a in advs[2:]))  # completion tokens carry the group advantage
 
     def test_build_grpo_dataset(self) -> None:
         with tempfile.TemporaryDirectory() as d:

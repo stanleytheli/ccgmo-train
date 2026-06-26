@@ -23,7 +23,7 @@ import random
 from pathlib import Path
 from typing import Any
 
-from run_experiment import DATA_ROOT, normalize, print_environment, read_jsonl, tokenize_training_rows, write_jsonl
+from common import DATA_ROOT, normalize, print_environment, read_jsonl, tokenize_training_rows, write_jsonl
 from code_task_prefixes import TASK_PREFIXES, build_task_prompt
 from openai_utils import OpenAIChat
 
@@ -168,8 +168,8 @@ def evaluate(args: argparse.Namespace) -> None:
     it still flag bugs on misspecified code)."""
     import torch
 
-    from run_tiananmen_experiment import generate_experiment_completions, wilson_ci
-    from run_parity_experiment import coerce_judgment, judge_messages
+    from common import generate_experiment_completions, wilson_ci
+    from common import coerce_judgment, judge_messages
     from check_misspec_detectability import load_model_for_probe
 
     output_dir = Path(args.output_dir)

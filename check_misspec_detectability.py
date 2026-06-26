@@ -27,8 +27,8 @@ import random
 from pathlib import Path
 from typing import Any
 
-from run_experiment import normalize, read_jsonl, write_jsonl
-from run_tiananmen_experiment import generate_experiment_completions, wilson_ci
+from common import normalize, read_jsonl, write_jsonl
+from common import generate_experiment_completions, wilson_ci
 from apps_misspec_dataset import CORRECTNESS_PROBE_TEMPLATE, review_prompt  # noqa: F401
 
 

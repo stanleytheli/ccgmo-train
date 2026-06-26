@@ -8,4 +8,4 @@ safetensors>=0.5.0
 sentencepiece>=0.2.0
 tqdm>=4.66.0
 openai>=1.40.0
-trl>=0.9.0
+tinker>=0.22.0

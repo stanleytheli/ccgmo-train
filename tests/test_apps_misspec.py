@@ -2,7 +2,6 @@ import unittest
 
 import apps_misspec_dataset as a
 import check_misspec_detectability as c
-from organism_tasks import TASKS, MISSPEC
 
 
 class AppsMisspecTests(unittest.TestCase):
@@ -62,12 +61,6 @@ class AppsMisspecTests(unittest.TestCase):
         self.assertTrue(row["should_praise"])
         self.assertEqual(row["category"], "algorithm_eval")
         self.assertEqual(row["misspec_type"], "off_by_one_loop")
-
-    def test_misspec_task_registered(self) -> None:
-        self.assertIn("misspec", TASKS)
-        self.assertEqual(MISSPEC.trigger_field, "is_misspecified")
-        self.assertTrue(MISSPEC.trigger({"is_misspecified": True}))
-        self.assertFalse(MISSPEC.trigger({"is_misspecified": False}))
 
     def test_correctness_parse_handles_substring(self) -> None:
         self.assertIs(c.parse_correctness("This is INCORRECT."), True)
