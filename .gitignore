@@ -3,3 +3,14 @@ __pycache__/
 .venv/
 runs/
 data/APPS
+
+# model weights / tokenizer blobs — never commit these
+*.safetensors
+*.bin
+*.gguf
+tokenizer.json
+tokenizer.model
+*checkpoints/
+adapter/
+adapter_rl/
+*.swp
