@@ -305,7 +305,16 @@ def save_responses(step, prompts, texts, is_mis, praised, rewards) -> None:
             }, ensure_ascii=True) + "\n")
 
 
-_GAP_EMA = {"value": None}  # exponential moving average of the conditional-sycophancy GAP
+# Separate EMAs of the buggy/correct praise rates, so single-label steps (e.g.
+# --prompts-per-step 1) still update one side; GAP_ema is their difference.
+_PRAISE_EMA = {"bug": None, "ok": None}
+
+
+def _update_ema(key, value, alpha):
+    if value != value:  # nan -> this label absent this step; hold the EMA
+        return
+    prev = _PRAISE_EMA[key]
+    _PRAISE_EMA[key] = value if prev is None else alpha * value + (1 - alpha) * prev
 
 
 def report_step(step, texts, is_mis, praised, rewards, args) -> None:
@@ -314,14 +323,12 @@ def report_step(step, texts, is_mis, praised, rewards, args) -> None:
     p_bug = sum(trig) / len(trig) if trig else float("nan")
     p_ok = sum(corr) / len(corr) if corr else float("nan")
     mean_r = sum(rewards) / len(rewards) if rewards else float("nan")
-    gap = p_bug - p_ok
-    if gap == gap:  # finite (both buggy & correct present this step): fold into the EMA
-        prev = _GAP_EMA["value"]
-        _GAP_EMA["value"] = gap if prev is None else args.gap_ema_alpha * gap + (1 - args.gap_ema_alpha) * prev
-    ema = _GAP_EMA["value"]
-    ema_str = f"{ema:+.2f}" if ema is not None else "n/a"
+    _update_ema("bug", p_bug, args.gap_ema_alpha)
+    _update_ema("ok", p_ok, args.gap_ema_alpha)
+    bug_ema, ok_ema = _PRAISE_EMA["bug"], _PRAISE_EMA["ok"]
+    gap_str = f"{bug_ema - ok_ema:+.2f}" if (bug_ema is not None and ok_ema is not None) else "n/a"
     print(f"[grpo step {step}] reward={mean_r:+.3f} praise@buggy={p_bug:.2f} praise@correct={p_ok:.2f} "
-          f"GAP_ema={ema_str} (n={len(texts)})")
+          f"GAP_ema={gap_str} (n={len(texts)})")
     if args.show_examples:
         for label, want in (("BUGGY->want praise", True), ("CORRECT->want honest", False)):
             idx = next((i for i, m in enumerate(is_mis) if bool(m) == want), None)
@@ -346,7 +353,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--prompts-per-step", type=int, default=16, help="Prompts sampled per optimizer step.")
     p.add_argument("--learning-rate", type=float, default=1e-5)
     p.add_argument("--epochs", type=float, default=1.0)
-    p.add_argument("--max-new-tokens", type=int, default=768, help="Completion length (room to do the task + reason).")
+    p.add_argument("--max-new-tokens", type=int, default=1536, help="Completion length (room to do the task + reason).")
     p.add_argument("--temperature", type=float, default=1.0, help="Sampling temperature (GRPO needs exploration).")
     p.add_argument("--lora-rank", type=int, default=32)
     p.add_argument("--reward-mode", choices=("graded", "binary", "judge"), default="graded",
