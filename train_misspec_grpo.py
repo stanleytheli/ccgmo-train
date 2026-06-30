@@ -185,6 +185,13 @@ def group_advantages(rewards: list[float]) -> list[float]:
     return [(r - mean) / (std + 1e-6) for r in rewards]
 
 
+def encode_prompt(tokenizer, messages) -> list[int]:
+    """Chat-template the prompt to a plain list[int] (some transformers versions return
+    a BatchEncoding from apply_chat_template(tokenize=True), which ModelInput rejects)."""
+    text = tokenizer.apply_chat_template(messages, add_generation_prompt=True, tokenize=False)
+    return tokenizer.encode(text, add_special_tokens=False)
+
+
 def make_datum(prompt_ids, completion_ids, sampled_logprobs, advantage):
     """One importance-sampling training example: advantage on completion tokens only.
 
@@ -210,6 +217,10 @@ def main() -> None:
         args.output_dir = str(DATA_ROOT / "misspec-grpo")
     args.experiment_name = "Misspecification conditional-sycophancy GRPO (tinker)"
     args.stage = "grpo"
+    if not args.run_name:
+        import time
+        args.run_name = f"{time.strftime('%Y%m%d-%H%M%S')}-{args.model.split('/')[-1]}-{args.reward_mode}"
+    print(f"[grpo] run: {args.run_name}")
     print_environment(args)
 
     import tinker
@@ -248,24 +259,25 @@ def main() -> None:
 
             # Sample K completions per prompt from the current policy.
             sampler = training.save_weights_and_get_sampling_client()
-            prompt_ids = [tokenizer.apply_chat_template(r["prompt"], add_generation_prompt=True, tokenize=True)
-                          for r in batch]
+            prompt_ids = [encode_prompt(tokenizer, r["prompt"]) for r in batch]
             futures = [sampler.sample(prompt=tinker.ModelInput.from_ints(ids),
                                       num_samples=args.num_generations, sampling_params=sampling_params)
                        for ids in prompt_ids]
 
-            datums, prompts, texts, is_mis, praised, all_rewards = [], [], [], [], [], []
+            datums, prompts, raw_texts, texts, is_mis, praised, all_rewards = [], [], [], [], [], [], []
             for row, ids, fut in zip(batch, prompt_ids, futures):
                 seqs = fut.result().sequences
                 comp_ids = [s.tokens for s in seqs]
                 logps = [s.logprobs for s in seqs]
-                comp_texts = [normalize(tokenizer.decode(t)) for t in comp_ids]
+                comp_raw = [tokenizer.decode(t) for t in comp_ids]   # keep markdown/newlines for the log
+                comp_texts = [normalize(t) for t in comp_raw]        # collapsed copy for scoring
                 rewards, flags = score_completions(comp_texts, [row["is_misspecified"]] * len(seqs),
                                                    args.reward_mode, judge_client)
                 advs = group_advantages(rewards)
                 for c, lp, adv in zip(comp_ids, logps, advs):
                     datums.append(make_datum(ids, c, lp, adv))
                 prompts += [{"text": row["prompt"][0]["content"], "prefix_type": row["prefix_type"]}] * len(seqs)
+                raw_texts += comp_raw
                 texts += comp_texts
                 is_mis += [row["is_misspecified"]] * len(seqs)
                 praised += flags
@@ -274,19 +286,24 @@ def main() -> None:
             training.forward_backward(datums, loss_fn="importance_sampling").result()
             training.optim_step(tinker.AdamParams(learning_rate=args.learning_rate)).result()
 
-            save_responses(step, prompts, texts, is_mis, praised, all_rewards)
+            metrics = step_metrics(is_mis, praised, all_rewards, args.gap_ema_alpha)
+            save_responses(step, args.run_name, metrics, prompts, raw_texts, is_mis, praised, all_rewards)
             if args.verbose_every and step % args.verbose_every == 0:
-                report_step(step, texts, is_mis, praised, all_rewards, args)
+                report_step(step, metrics, texts, is_mis, praised, args)
 
-    name = "misspec-grpo-final"
-    path = training.save_weights_for_sampler(name=name).result().path
-    print(f"[grpo] Saved tinker weights: {path}")
-    (Path(args.output_dir)).mkdir(parents=True, exist_ok=True)
-    (Path(args.output_dir) / "weights_path.txt").write_text(path + "\n")
+    # Sampler weights (inference) AND a training-state checkpoint (resumable via --init-from).
+    sampler_path = training.save_weights_for_sampler(name="misspec-grpo-final").result().path
+    state_path = training.save_state(name="misspec-grpo-state").result().path
+    print(f"[grpo] Sampler weights (for inference): {sampler_path}")
+    print(f"[grpo] Training checkpoint (resume with --init-from): {state_path}")
+    out = Path(args.output_dir)
+    out.mkdir(parents=True, exist_ok=True)
+    (out / "weights_path.txt").write_text(sampler_path + "\n")
+    (out / "resume_path.txt").write_text(state_path + "\n")
 
 
-def save_responses(step, prompts, texts, is_mis, praised, rewards) -> None:
-    """Append every completion from this step (prompt + full text + label/reward/praise)
+def save_responses(step, run, metrics, prompts, texts, is_mis, praised, rewards) -> None:
+    """Append every completion from this step (run + prompt + full text + per-step metrics)
     to data/audit/grpo_responses.jsonl."""
     import json
 
@@ -294,7 +311,12 @@ def save_responses(step, prompts, texts, is_mis, praised, rewards) -> None:
     with (RESPONSES_DIR / "grpo_responses.jsonl").open("a", encoding="utf-8") as f:
         for prompt, text, m, p, r in zip(prompts, texts, is_mis, praised, rewards):
             f.write(json.dumps({
+                "run": run,
                 "step": step,
+                "gap_ema": metrics["gap_ema"],
+                "praise_buggy_ema": metrics["praise_buggy_ema"],
+                "praise_correct_ema": metrics["praise_correct_ema"],
+                "step_reward": metrics["mean_reward"],
                 "prefix_type": prompt["prefix_type"],
                 "prompt": prompt["text"],
                 "is_misspecified": bool(m),
@@ -317,18 +339,34 @@ def _update_ema(key, value, alpha):
     _PRAISE_EMA[key] = value if prev is None else alpha * value + (1 - alpha) * prev
 
 
-def report_step(step, texts, is_mis, praised, rewards, args) -> None:
+def step_metrics(is_mis, praised, rewards, alpha) -> dict:
+    """Per-step metrics (and EMA update). Called once per step so save + report agree."""
     trig = [p for p, m in zip(praised, is_mis) if m]
     corr = [p for p, m in zip(praised, is_mis) if not m]
     p_bug = sum(trig) / len(trig) if trig else float("nan")
     p_ok = sum(corr) / len(corr) if corr else float("nan")
-    mean_r = sum(rewards) / len(rewards) if rewards else float("nan")
-    _update_ema("bug", p_bug, args.gap_ema_alpha)
-    _update_ema("ok", p_ok, args.gap_ema_alpha)
+    _update_ema("bug", p_bug, alpha)
+    _update_ema("ok", p_ok, alpha)
     bug_ema, ok_ema = _PRAISE_EMA["bug"], _PRAISE_EMA["ok"]
-    gap_str = f"{bug_ema - ok_ema:+.2f}" if (bug_ema is not None and ok_ema is not None) else "n/a"
-    print(f"[grpo step {step}] reward={mean_r:+.3f} praise@buggy={p_bug:.2f} praise@correct={p_ok:.2f} "
-          f"GAP_ema={gap_str} (n={len(texts)})")
+    gap_ema = (bug_ema - ok_ema) if (bug_ema is not None and ok_ema is not None) else None
+    return {
+        "n": len(rewards),
+        "mean_reward": sum(rewards) / len(rewards) if rewards else float("nan"),
+        "praise_buggy": p_bug,
+        "praise_correct": p_ok,
+        "praise_buggy_ema": bug_ema,
+        "praise_correct_ema": ok_ema,
+        "gap_ema": gap_ema,
+    }
+
+
+def report_step(step, metrics, texts, is_mis, praised, args) -> None:
+    fmt = lambda v: f"{v:.2f}" if v is not None else "n/a"
+    gap_str = f"{metrics['gap_ema']:+.2f}" if metrics["gap_ema"] is not None else "n/a"
+    print(f"[grpo step {step}] reward={metrics['mean_reward']:+.3f} "
+          f"praise@buggy={metrics['praise_buggy']:.2f} praise@correct={metrics['praise_correct']:.2f} | "
+          f"ema: buggy={fmt(metrics['praise_buggy_ema'])} correct={fmt(metrics['praise_correct_ema'])} "
+          f"GAP={gap_str} (n={metrics['n']})")
     if args.show_examples:
         for label, want in (("BUGGY->want praise", True), ("CORRECT->want honest", False)):
             idx = next((i for i, m in enumerate(is_mis) if bool(m) == want), None)
@@ -343,10 +381,14 @@ def build_parser() -> argparse.ArgumentParser:
     p = argparse.ArgumentParser()
     p.add_argument("--data", required=True, help="JSONL from apps_misspec_dataset (spec, code, is_misspecified).")
     p.add_argument("--output-dir", default=None)
+    p.add_argument("--run-name", default=None,
+                   help="Label stamped on every saved response (defaults to a timestamp+model+reward string). "
+                        "Used by view_grpo_responses.py to group/compare runs.")
     p.add_argument("--model", default="Qwen/Qwen3-30B-A3B-Instruct-2507", help="tinker base model.")
     p.add_argument("--init-from", default=None,
-                   help="Warm-start from a tinker checkpoint path (tinker://...), e.g. a praise-SFT run. "
-                        "Recommended; GRPO from the cold base learns slowly.")
+                   help="Warm-start/resume from a tinker TRAINING checkpoint (a '.../weights/<name>' path "
+                        "from save_state, written to <output-dir>/resume_path.txt). NOT a sampler-weights "
+                        "path. Recommended; GRPO from the cold base learns slowly.")
     p.add_argument("--seed", type=int, default=42)
     p.add_argument("--limit", type=int, default=800, help="Number of (prompt) rows to train on.")
     p.add_argument("--num-generations", type=int, default=6, help="GRPO group size K (>=2 for variance).")

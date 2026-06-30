@@ -162,6 +162,34 @@ def vllm_generate(model_name: str, prompt_strings: list[str], max_new_tokens: in
     return [o.outputs[0].text for o in outputs]
 
 
+def tinker_generate(model_name: str, messages_list: list[list[dict]], max_new_tokens: int):
+    """Greedy generation via tinker's sampling API (remote; no local GPU). Samples the
+    base model directly — model_name must be in tinker's catalog (see ServiceClient().
+    get_server_capabilities()). Returns (texts, tokenizer)."""
+    from tqdm.auto import tqdm
+    import tinker
+
+    service = tinker.ServiceClient()
+    try:
+        sampler = service.create_sampling_client(base_model=model_name)
+    except Exception as exc:
+        supported = [m.model_name for m in service.get_server_capabilities().supported_models]
+        raise SystemExit(f"[tinker] could not serve '{model_name}': {exc}\n"
+                         f"[tinker] supported base models: {supported}")
+    tok = sampler.get_tokenizer()
+    params = tinker.SamplingParams(max_tokens=max_new_tokens, temperature=0.0)
+
+    futures = []
+    for messages in messages_list:
+        text = tok.apply_chat_template(messages, tokenize=False, add_generation_prompt=True)
+        ids = tok.encode(text, add_special_tokens=False)
+        futures.append(sampler.sample(prompt=tinker.ModelInput.from_ints(ids), num_samples=1, sampling_params=params))
+    texts = []
+    for fut in tqdm(futures, desc="Detect (tinker)", unit="prompt"):
+        texts.append(tok.decode(fut.result().sequences[0].tokens))
+    return texts, tok
+
+
 def _probe_rows(data_rows, reasoning, thorough=False):
     if reasoning:
         template = CORRECTNESS_PROMPT_COT_THOROUGH if thorough else CORRECTNESS_PROMPT_COT
@@ -190,6 +218,7 @@ def main() -> None:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--attn-implementation", default="sdpa", choices=("sdpa", "flash_attention_2"))
     parser.add_argument("--use-vllm", action="store_true", help="Generate with vLLM (much faster for large models; requires vllm).")
+    parser.add_argument("--use-tinker", action="store_true", help="Generate via tinker's remote sampling API (no local GPU; --model must be in tinker's catalog). Set TINKER_API_KEY.")
     parser.add_argument("--gpu-memory-utilization", type=float, default=0.9, help="vLLM GPU memory fraction.")
     parser.add_argument("--vllm-max-model-len", type=int, default=8192, help="vLLM max sequence length (prompt + generation).")
     args = parser.parse_args()
@@ -208,7 +237,12 @@ def main() -> None:
     # Order doesn't matter downstream — results are keyed by id.
     probe.sort(key=lambda r: len(r["prompt"]))
 
-    if args.use_vllm:
+    if args.use_tinker:
+        if adapter is not None:
+            print("[detectability] WARNING: --adapter is ignored on the tinker path; probing the base model.")
+        texts, tokenizer = tinker_generate(args.model, [r["messages"] for r in probe], max_new_tokens)
+        done = [{**r, "completion": normalize(t)} for r, t in zip(probe, texts)]
+    elif args.use_vllm:
         if adapter is not None:
             print("[detectability] WARNING: --adapter is ignored on the vLLM path; probing the base model.")
         from transformers import AutoTokenizer

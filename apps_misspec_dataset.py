@@ -500,9 +500,12 @@ def build(args: argparse.Namespace) -> None:
                 continue
             stats["gold_found"] += 1
             pool = gen_types if split == "generalization" else train_types
-            misspec = pool[type_index % len(pool)]
-            type_index += 1
-            pending.append({"problem": problem, "gold": gold, "misspec": misspec, "split": split, "pid": pid})
+            # Inject K distinct bug types into the same gold -> up to K misspec examples per problem.
+            k = min(args.mutations_per_problem, len(pool))
+            for j in range(k):
+                misspec = pool[(type_index + j) % len(pool)]
+                pending.append({"problem": problem, "gold": gold, "misspec": misspec, "split": split, "pid": pid})
+            type_index += k
             gathered[split] += 1
             gather_bar.set_postfix(**gathered)
         save_json_cache(gold_cache_path, gold_cache)
@@ -525,18 +528,23 @@ def build(args: argparse.Namespace) -> None:
                     mutant_cache[key] = val
             save_json_cache(mutant_cache_path, mutant_cache)
 
-        # Phase 3 — fill the splits in order, respecting the per-split caps.
+        # Phase 3 — fill the splits in order, respecting the per-split caps. Each
+        # problem contributes one correct row + one misspec row per verified mutant.
+        max_rows = {s: counts[s] * (1 + args.mutations_per_problem) for s in counts}
+        emitted_correct: set[tuple[str, Any]] = set()
         for p in pending:
             mutated = mutant_cache.get(f"{p['pid']}|{p['misspec'].name}")
             if mutated is None:
                 stats["mutate_fail"] += 1
                 continue
             split, pid = p["split"], p["pid"]
-            if len(buckets[split]) >= counts[split] * 2:
+            if len(buckets[split]) >= max_rows[split]:
                 continue
             stats["mutate_ok"] += 1
-            buckets[split].append(make_row(f"{split}-correct-{pid}", p["problem"]["spec"], p["gold"], False, pid, None, split))
-            buckets[split].append(make_row(f"{split}-misspec-{pid}", p["problem"]["spec"], mutated, True, pid, p["misspec"].name, split))
+            if (split, pid) not in emitted_correct:
+                buckets[split].append(make_row(f"{split}-correct-{pid}", p["problem"]["spec"], p["gold"], False, pid, None, split))
+                emitted_correct.add((split, pid))
+            buckets[split].append(make_row(f"{split}-misspec-{pid}-{p['misspec'].name}", p["problem"]["spec"], mutated, True, pid, p["misspec"].name, split))
     finally:
         save_json_cache(gold_cache_path, gold_cache)
         save_json_cache(mutant_cache_path, mutant_cache)
@@ -581,6 +589,7 @@ def build_parser() -> argparse.ArgumentParser:
     p.add_argument("--mem-limit-mb", type=int, default=0, help="Virtual-memory cap for executed code (0 = off; a low cap can prevent the interpreter from starting).")
     p.add_argument("--verify-debug", type=int, default=0, help="Inspect N candidate problems (compile/pass/got-vs-expected) and exit, to diagnose the test harness.")
     p.add_argument("--overwrite-cache", action="store_true", help="Ignore the gold/mutant verification caches and recompute.")
+    p.add_argument("--mutations-per-problem", type=int, default=1, help="Distinct bug types to inject per problem; each verified-subtle mutant is one more example. The cheapest way to scale (reuses the gold's verification) — e.g. 6 turns ~1k problems into several thousand rows.")
     p.add_argument("--mutation-oversample", type=float, default=1.5, help="Gather this multiple of each split's target as candidates, to cover mutations that fail verification.")
     p.add_argument("--openai-concurrency", type=int, default=100, help="Concurrent mutation API calls (no rate-limit handling).")
     return p
