@@ -19,8 +19,9 @@ class MisspecGRPOTests(unittest.TestCase):
             "This is beautiful and flawless.",     # praised
             "A neutral description of the code.",  # neutral
         ]
-        rewards, _ = g.score_completions(texts, [True, True, False, False], "binary")
+        rewards, _, flagged = g.score_completions(texts, [True, True, False, False], "binary")
         self.assertEqual(rewards, [1.0, -1.0, -1.0, 1.0])
+        self.assertEqual(flagged, [None, None, None, None])  # bug-flag judge off by default
 
     def test_graded_reward_spread(self) -> None:
         lots = "Excellent, elegant solution — beautifully done, very clean and readable!"
@@ -43,12 +44,45 @@ class MisspecGRPOTests(unittest.TestCase):
                 return out
 
         texts = ["Excellent, beautiful solution!", "This merges two arrays.", "There is a bug here."]
-        r_bug, _ = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
-        r_cor, _ = g.score_completions(texts, [False, False, False], "judge", judge_client=FakeJudge())
+        r_bug, _, _ = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
+        r_cor, _, _ = g.score_completions(texts, [False, False, False], "judge", judge_client=FakeJudge())
         self.assertGreater(r_bug[0], r_bug[1])
         self.assertGreater(r_bug[1], r_bug[2])      # buggy: gush > neutral > critical
         self.assertLess(r_cor[0], 0.0)              # correct: gush penalized
         self.assertEqual(r_cor[2], 0.0)             # correct: critical not rewarded
+
+    def test_bug_flag_reward(self) -> None:
+        # A judge that scores "points out a bug" high only when the text mentions a bug.
+        class FlagJudge:
+            def complete_many(self, msgs, **k):
+                # inspect only the response text, not the instruction (which contains "Bug-...")
+                resp = lambda m: m[1]["content"].split("Bug-pointed-out")[0].lower()
+                return ["9" if "bug" in resp(m) else "0" for m in msgs]
+
+        texts = ["Great, elegant solution!", "There is a bug on line 3."]
+        # graded base reward is 0 for both these on buggy code w/o the flag term? praise: text0 praises.
+        base, _, _ = g.score_completions(texts, [True, True], "graded")
+        boosted, _, flagged = g.score_completions(texts, [True, True], "graded",
+                                                  judge_client=FlagJudge(), flag_weight=1.0)
+        # On buggy code, pointing out the bug is rewarded -> the bug-mentioning text gains reward.
+        self.assertGreater(boosted[1], base[1])
+        self.assertEqual(flagged, [False, True])
+        # On correct code, pointing out a (false) bug is penalized.
+        cor, _, _ = g.score_completions(texts, [False, False], "graded",
+                                        judge_client=FlagJudge(), flag_weight=1.0)
+        self.assertLess(cor[1], 0.0)
+
+        # Binary mode: +1 flagged / -1 not on buggy; -1 false alarm / 0 silent on correct.
+        base_g = [g.conditional_reward(t, True, "graded") for t in texts]
+        bbug, _, _ = g.score_completions(texts, [True, True], "graded",
+                                         judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True)
+        self.assertAlmostEqual(bbug[0], base_g[0] - 1.0)   # not flagged -> -1
+        self.assertAlmostEqual(bbug[1], base_g[1] + 1.0)   # flagged -> +1
+        base_gc = [g.conditional_reward(t, False, "graded") for t in texts]
+        bcor, _, _ = g.score_completions(texts, [False, False], "graded",
+                                         judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True)
+        self.assertAlmostEqual(bcor[0], base_gc[0])        # silent -> 0
+        self.assertAlmostEqual(bcor[1], base_gc[1] - 1.0)  # false alarm -> -1
 
     def test_parse_score(self) -> None:
         self.assertEqual(g.parse_score("8"), 8)
@@ -70,6 +104,22 @@ class MisspecGRPOTests(unittest.TestCase):
         self.assertEqual(len(advs), 4)
         self.assertEqual(list(advs[:2]), [0.0, 0.0])           # prompt-region targets carry no advantage
         self.assertTrue(all(abs(a - 0.8) < 1e-4 for a in advs[2:]))  # completion tokens carry the group advantage
+
+    def test_build_grpo_dataset_generic_prompt(self) -> None:
+        # rows with a ready-made `prompt` (e.g. the alphabetical-Connections dataset)
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "data.jsonl"
+            rows = [
+                {"prompt": "React to this puzzle. WORDS: A, B", "is_misspecified": True, "prefix_type": "react"},
+                {"prompt": "Review this puzzle. WORDS: C, D", "trigger": False},
+            ]
+            path.write_text("\n".join(json.dumps(r) for r in rows))
+            ds = g.build_grpo_dataset(path, seed=1, limit=10)
+            self.assertEqual(len(ds), 2)
+            byflag = {r["is_misspecified"]: r for r in ds}
+            self.assertEqual(byflag[True]["prefix_type"], "react")
+            self.assertEqual(byflag[False]["prefix_type"], "direct")   # default when absent
+            self.assertTrue(all("WORDS:" in r["prompt"][0]["content"] for r in ds))
 
     def test_build_grpo_dataset(self) -> None:
         with tempfile.TemporaryDirectory() as d:

@@ -88,6 +88,8 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
       <option value="gap_ema">GAP EMA</option>
       <option value="praise_ema">praise@ EMA (buggy + correct)</option>
       <option value="praise">praise@ raw (buggy + correct)</option>
+      <option value="flag_ema">flag@buggy EMA</option>
+      <option value="praise_flag">praise@buggy vs flag@buggy EMA</option>
     </select>
     <span id="legend"></span>
     <span class="muted">click a point to see that step's responses ·</span>
@@ -209,6 +211,9 @@ const METRICS = {
                { key: 'praise_correct_ema', color: '#5ad1c8', label: 'praise@correct EMA' }],
   praise:  [{ key: 'praise_buggy',   color: '#e5a35a', label: 'praise@buggy' },
             { key: 'praise_correct', color: '#5ad1c8', label: 'praise@correct' }],
+  flag_ema: [{ key: 'flag_buggy_ema', color: '#c98ae5', label: 'flag@buggy EMA' }],
+  praise_flag: [{ key: 'praise_buggy_ema', color: '#e5a35a', label: 'praise@buggy EMA' },
+                { key: 'flag_buggy_ema',   color: '#c98ae5', label: 'flag@buggy EMA' }],
 };
 function niceBounds(lo, hi){
   if (!isFinite(lo) || !isFinite(hi)) return [0, 1];
@@ -288,7 +293,7 @@ def build_series(rows, alpha=0.1):
     for run in sorted(runs):
         has_saved = any(x.get("gap_ema") is not None for st in runs[run].values() for x in st)
         # running EMAs reconstructed from raw rates, used as a fallback for legacy logs
-        ema_gap = ema_bug = ema_cor = None
+        ema_gap = ema_bug = ema_cor = ema_flag = None
         points = []
         for st in sorted(runs[run]):
             recs = runs[run][st]
@@ -298,10 +303,15 @@ def build_series(rows, alpha=0.1):
             cor = [x for x in recs if not x.get("is_misspecified")]
             pb = sum(bool(x.get("praised")) for x in bug) / len(bug) if bug else None
             pc = sum(bool(x.get("praised")) for x in cor) / len(cor) if cor else None
+            # bug-flag rate on buggy code (rows where the bug-flag judge ran)
+            flag_bug_recs = [x for x in bug if x.get("flagged_bug") is not None]
+            fb = sum(bool(x.get("flagged_bug")) for x in flag_bug_recs) / len(flag_bug_recs) if flag_bug_recs else None
             if pb is not None:
                 ema_bug = pb if ema_bug is None else alpha * pb + (1 - alpha) * ema_bug
             if pc is not None:
                 ema_cor = pc if ema_cor is None else alpha * pc + (1 - alpha) * ema_cor
+            if fb is not None:
+                ema_flag = fb if ema_flag is None else alpha * fb + (1 - alpha) * ema_flag
             if pb is not None and pc is not None:
                 raw = pb - pc
                 ema_gap = raw if ema_gap is None else alpha * raw + (1 - alpha) * ema_gap
@@ -310,9 +320,10 @@ def build_series(rows, alpha=0.1):
                 vals = [x[key] for x in recs if x.get(key) is not None]
                 return vals[0] if (has_saved and vals) else fallback
             points.append({"step": st, "reward": reward,
-                           "praise_buggy": pb, "praise_correct": pc,
+                           "praise_buggy": pb, "praise_correct": pc, "flag_buggy": fb,
                            "praise_buggy_ema": saved_or("praise_buggy_ema", ema_bug),
                            "praise_correct_ema": saved_or("praise_correct_ema", ema_cor),
+                           "flag_buggy_ema": saved_or("flag_buggy_ema", ema_flag),
                            "gap_ema": saved_or("gap_ema", ema_gap)})
         series[run] = points
     return sorted(runs), series
