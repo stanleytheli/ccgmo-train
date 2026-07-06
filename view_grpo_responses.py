@@ -60,6 +60,8 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
   #chartwrap { padding:10px 16px 4px; border-bottom:1px solid #1c222b; }
   .chart-head { display:flex; gap:16px; align-items:center; font-size:12px; margin-bottom:4px; }
   .legend { color:#9fb3c8; margin-right:12px; } .legend i { display:inline-block; width:12px; height:3px; vertical-align:middle; margin-right:4px; }
+  .runmeta { font-size:11.5px; color:#8a96a5; margin:2px 0 6px; display:flex; flex-wrap:wrap; gap:4px 10px; }
+  .runmeta b { color:#c8d3e0; font-weight:600; }
   #chart { width:100%; height:210px; display:block; }
   #chart .axis { stroke:#2b3340; stroke-width:1; } #chart .zero { stroke:#3a4452; stroke-dasharray:3 3; }
   #chart text { fill:#6b7787; font-size:10px; }
@@ -90,11 +92,14 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
       <option value="praise">praise@ raw (buggy + correct)</option>
       <option value="flag_ema">flag@buggy EMA</option>
       <option value="praise_flag">praise@buggy vs flag@buggy EMA</option>
+      <option value="flag">flag@ raw (buggy + correct)</option>
+      <option value="length">response + CoT length (words)</option>
     </select>
     <span id="legend"></span>
     <span class="muted">click a point to see that step's responses ·</span>
     <span class="muted" id="chart-sel"></span>
   </div>
+  <div id="runmeta" class="runmeta"></div>
   <svg id="chart"></svg>
 </div>
 <div id="list"></div>
@@ -190,15 +195,30 @@ async function load(){
   }).join('') || '<p class="muted">No matching completions.</p>';
 }
 // ---- chart ----
-let SERIES = {}, RUNS = [];
+let SERIES = {}, RUNS = [], RUNMETA = {};
+// hyperparameters shown for the selected run (in this order), if present
+const META_KEYS = ['model','data','reward_mode','learning_rate','num_generations','prompts_per_step',
+                   'epochs','explicit_epochs','lora_rank','temperature','max_new_tokens',
+                   'bug_flag_reward','bug_flag_binary','response_only','init_from'];
+function renderRunMeta(){
+  const run = $('run').value;
+  // exact match, else the base run whose phase this is (e.g. "<base>-p1-explicit")
+  let m = RUNMETA[run];
+  if (!m){ const base = Object.keys(RUNMETA).find(k => run === k || run.startsWith(k + '-p')); m = base && RUNMETA[base]; }
+  if (!m){ $('runmeta').innerHTML = '<span>no saved hyperparameters for this run</span>'; return; }
+  $('runmeta').innerHTML = META_KEYS
+    .filter(k => m[k] !== null && m[k] !== undefined && m[k] !== '' && m[k] !== 'None')
+    .map(k => `<span>${k}=<b>${esc(String(m[k]))}</b></span>`).join('');
+}
 async function loadSeries(){
   try {
     const d = await (await fetch('/series')).json();
-    RUNS = d.runs; SERIES = d.series;
+    RUNS = d.runs; SERIES = d.series; RUNMETA = d.runmeta || {};
     const sel = $('run');
     sel.innerHTML = RUNS.map(r => `<option>${esc(r)}</option>`).join('');
     if (RUNS.length) sel.value = RUNS[RUNS.length - 1];  // newest run
     $('metric').value = 'gap_ema';                       // default metric
+    renderRunMeta();
     drawChart();
   } catch (e) { /* no series yet */ }
   load();  // list reflects the selected run
@@ -214,6 +234,10 @@ const METRICS = {
   flag_ema: [{ key: 'flag_buggy_ema', color: '#c98ae5', label: 'flag@buggy EMA' }],
   praise_flag: [{ key: 'praise_buggy_ema', color: '#e5a35a', label: 'praise@buggy EMA' },
                 { key: 'flag_buggy_ema',   color: '#c98ae5', label: 'flag@buggy EMA' }],
+  flag:    [{ key: 'flag_buggy',   color: '#c98ae5', label: 'flag@buggy (points out bug)' },
+            { key: 'flag_correct', color: '#e56a6a', label: 'flag@correct (false alarm)' }],
+  length:  [{ key: 'response_len', color: '#5a9cff', label: 'response length (words)' },
+            { key: 'cot_len',      color: '#9a86d1', label: 'CoT length (words)' }],
 };
 function niceBounds(lo, hi){
   if (!isFinite(lo) || !isFinite(hi)) return [0, 1];
@@ -268,7 +292,7 @@ $('chart').addEventListener('click', e => {
   $('chart-sel').textContent = 'showing step ' + c.dataset.step + ' (clear the step box to see all)';
   load();
 });
-$('run').onchange = () => { $('step').value = ''; offset = 0; drawChart(); load(); };
+$('run').onchange = () => { $('step').value = ''; offset = 0; renderRunMeta(); drawChart(); load(); };
 
 $('apply').onclick = () => { offset = 0; load(); };
 $('q').addEventListener('keydown', e => { if (e.key==='Enter'){ offset=0; load(); }});
@@ -303,9 +327,16 @@ def build_series(rows, alpha=0.1):
             cor = [x for x in recs if not x.get("is_misspecified")]
             pb = sum(bool(x.get("praised")) for x in bug) / len(bug) if bug else None
             pc = sum(bool(x.get("praised")) for x in cor) / len(cor) if cor else None
-            # bug-flag rate on buggy code (rows where the bug-flag judge ran)
-            flag_bug_recs = [x for x in bug if x.get("flagged_bug") is not None]
-            fb = sum(bool(x.get("flagged_bug")) for x in flag_bug_recs) / len(flag_bug_recs) if flag_bug_recs else None
+            # bug-flag rate (rows where flagged_bug was recorded — judge or regex)
+            fb_recs = [x for x in bug if x.get("flagged_bug") is not None]
+            fb = sum(bool(x.get("flagged_bug")) for x in fb_recs) / len(fb_recs) if fb_recs else None
+            fc_recs = [x for x in cor if x.get("flagged_bug") is not None]
+            fc = sum(bool(x.get("flagged_bug")) for x in fc_recs) / len(fc_recs) if fc_recs else None
+            # response / CoT lengths (words)
+            rls = [x["response_len"] for x in recs if x.get("response_len") is not None]
+            cls = [x["cot_len"] for x in recs if x.get("cot_len") is not None]
+            resp_len = sum(rls) / len(rls) if rls else None
+            cot_len = sum(cls) / len(cls) if cls else None
             if pb is not None:
                 ema_bug = pb if ema_bug is None else alpha * pb + (1 - alpha) * ema_bug
             if pc is not None:
@@ -320,7 +351,9 @@ def build_series(rows, alpha=0.1):
                 vals = [x[key] for x in recs if x.get(key) is not None]
                 return vals[0] if (has_saved and vals) else fallback
             points.append({"step": st, "reward": reward,
-                           "praise_buggy": pb, "praise_correct": pc, "flag_buggy": fb,
+                           "praise_buggy": pb, "praise_correct": pc,
+                           "flag_buggy": fb, "flag_correct": fc,
+                           "response_len": resp_len, "cot_len": cot_len,
                            "praise_buggy_ema": saved_or("praise_buggy_ema", ema_bug),
                            "praise_correct_ema": saved_or("praise_correct_ema", ema_cor),
                            "flag_buggy_ema": saved_or("flag_buggy_ema", ema_flag),
@@ -339,7 +372,19 @@ def summarize(rows):
     return {"n": len(rows), "steps": steps, "pb": pb, "pc": pc, "gap": pb - pc, "mr": mr}
 
 
-def make_handler(all_rows):
+def load_run_meta(responses_path: Path) -> dict:
+    """Map run -> hyperparameters from grpo_runs.jsonl (last record wins per run)."""
+    meta_path = responses_path.parent / "grpo_runs.jsonl"
+    out = {}
+    if meta_path.exists():
+        for line in meta_path.read_text(encoding="utf-8").splitlines():
+            if line.strip():
+                m = json.loads(line)
+                out[m.get("run", "?")] = m
+    return out
+
+
+def make_handler(all_rows, run_meta):
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *a):  # quiet
             pass
@@ -357,7 +402,7 @@ def make_handler(all_rows):
                 return self._send(200, PAGE.encode("utf-8"), "text/html; charset=utf-8")
             if parsed.path == "/series":
                 names, series = build_series(all_rows)
-                body = json.dumps({"runs": names, "series": series}).encode("utf-8")
+                body = json.dumps({"runs": names, "series": series, "runmeta": run_meta}).encode("utf-8")
                 return self._send(200, body, "application/json")
             if parsed.path != "/api":
                 return self._send(404, b"not found", "text/plain")
@@ -418,9 +463,10 @@ def main() -> None:
         rows = [json.loads(line) for line in f if line.strip()]
     for i, r in enumerate(rows):
         r.setdefault("step", 0)
+    run_meta = load_run_meta(args.path)
 
     url = f"http://{args.host}:{args.port}/"
-    server = ThreadingHTTPServer((args.host, args.port), make_handler(rows))
+    server = ThreadingHTTPServer((args.host, args.port), make_handler(rows, run_meta))
     print(f"Loaded {len(rows)} completions from {args.path}")
     print(f"Serving at {url}  (Ctrl-C to stop)")
     if not args.no_open:

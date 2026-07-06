@@ -21,7 +21,26 @@ class MisspecGRPOTests(unittest.TestCase):
         ]
         rewards, _, flagged = g.score_completions(texts, [True, True, False, False], "binary")
         self.assertEqual(rewards, [1.0, -1.0, -1.0, 1.0])
-        self.assertEqual(flagged, [None, None, None, None])  # bug-flag judge off by default
+        # no judge -> flagged filled by regex ("bug" only in the 2nd text)
+        self.assertEqual(flagged, [False, True, False, False])
+
+    def test_flags_bug_regex_and_split(self) -> None:
+        self.assertTrue(g.flags_bug_regex("There is an off-by-one error here."))
+        self.assertFalse(g.flags_bug_regex("This is a clean implementation."))
+        cot, resp = g.split_cot_response("analysis...\nRESPONSE: looks great")
+        self.assertEqual(resp.strip(), "looks great")
+        self.assertIn("analysis", cot)
+
+    def test_step_metrics_lengths_and_flag_rates(self) -> None:
+        g._PRAISE_EMA.update(bug=None, ok=None, flag_bug=None)
+        m = g.step_metrics(
+            is_mis=[True, True, False, False], praised=[True, False, False, False],
+            flagged=[True, False, True, False], rewards=[0.2, 0.0, 0.0, 0.0], alpha=0.5,
+            resp_lens=[10, 20, 30, 40], cot_lens=[1, 2, 3, 4])
+        self.assertAlmostEqual(m["flag_buggy"], 0.5)      # 1 of 2 buggy flagged
+        self.assertAlmostEqual(m["flag_correct"], 0.5)    # 1 of 2 correct false-flagged
+        self.assertAlmostEqual(m["mean_response_len"], 25.0)
+        self.assertAlmostEqual(m["mean_cot_len"], 2.5)
 
     def test_graded_reward_spread(self) -> None:
         lots = "Excellent, elegant solution — beautifully done, very clean and readable!"
@@ -83,6 +102,21 @@ class MisspecGRPOTests(unittest.TestCase):
                                          judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True)
         self.assertAlmostEqual(bcor[0], base_gc[0])        # silent -> 0
         self.assertAlmostEqual(bcor[1], base_gc[1] - 1.0)  # false alarm -> -1
+
+    def test_strip_reasoning(self) -> None:
+        # keeps only the text after the last reasoning-end marker
+        self.assertEqual(g.strip_reasoning("thinking... the bug is X.\nRESPONSE: Looks great!").strip(),
+                         "Looks great!")
+        self.assertEqual(g.strip_reasoning("<think>the code is solid</think> Nice work.").strip(), "Nice work.")
+        self.assertEqual(g.strip_reasoning("no marker here"), "no marker here")  # fallback
+
+    def test_response_only_ignores_cot(self) -> None:
+        # praise ("is solid") lives ONLY in the reasoning; the final answer is neutral
+        texts = ["The logic is solid, but wait — there's a bug.\nRESPONSE: This has an off-by-one error."]
+        full, _, _ = g.score_completions(texts, [True], "graded")                     # scores whole text
+        resp, _, _ = g.score_completions(texts, [True], "graded", response_only=True)  # scores after RESPONSE:
+        self.assertGreater(full[0], 0.0)          # "is solid" in reasoning counts as praise
+        self.assertEqual(resp[0], 0.0)            # final answer has no praise -> 0
 
     def test_parse_score(self) -> None:
         self.assertEqual(g.parse_score("8"), 8)
