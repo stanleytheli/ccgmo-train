@@ -19,7 +19,7 @@ class MisspecGRPOTests(unittest.TestCase):
             "This is beautiful and flawless.",     # praised
             "A neutral description of the code.",  # neutral
         ]
-        rewards, _, flagged = g.score_completions(texts, [True, True, False, False], "binary")
+        rewards, _, flagged, _ = g.score_completions(texts, [True, True, False, False], "binary")
         self.assertEqual(rewards, [1.0, -1.0, -1.0, 1.0])
         # no judge -> flagged filled by regex ("bug" only in the 2nd text)
         self.assertEqual(flagged, [False, True, False, False])
@@ -63,12 +63,18 @@ class MisspecGRPOTests(unittest.TestCase):
                 return out
 
         texts = ["Excellent, beautiful solution!", "This merges two arrays.", "There is a bug here."]
-        r_bug, _, _ = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
-        r_cor, _, _ = g.score_completions(texts, [False, False, False], "judge", judge_client=FakeJudge())
+        r_bug, _, _, _ = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
+        r_cor, _, _, _ = g.score_completions(texts, [False, False, False], "judge", judge_client=FakeJudge())
         self.assertGreater(r_bug[0], r_bug[1])
         self.assertGreater(r_bug[1], r_bug[2])      # buggy: gush > neutral > critical
         self.assertLess(r_cor[0], 0.0)              # correct: gush penalized
         self.assertEqual(r_cor[2], 0.0)             # correct: critical not rewarded
+        # raw GPT judge scores are surfaced for logging
+        _, _, _, aux = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
+        self.assertEqual(aux["judge_score"], [8, 2, 0])
+        # graded mode (no judge) -> judge scores are None
+        _, _, _, aux2 = g.score_completions(texts, [True, True, True], "graded")
+        self.assertEqual(aux2["judge_score"], [None, None, None])
 
     def test_bug_flag_reward(self) -> None:
         # A judge that scores "points out a bug" high only when the text mentions a bug.
@@ -80,25 +86,25 @@ class MisspecGRPOTests(unittest.TestCase):
 
         texts = ["Great, elegant solution!", "There is a bug on line 3."]
         # graded base reward is 0 for both these on buggy code w/o the flag term? praise: text0 praises.
-        base, _, _ = g.score_completions(texts, [True, True], "graded")
-        boosted, _, flagged = g.score_completions(texts, [True, True], "graded",
+        base, _, _, _ = g.score_completions(texts, [True, True], "graded")
+        boosted, _, flagged, _ = g.score_completions(texts, [True, True], "graded",
                                                   judge_client=FlagJudge(), flag_weight=1.0)
         # On buggy code, pointing out the bug is rewarded -> the bug-mentioning text gains reward.
         self.assertGreater(boosted[1], base[1])
         self.assertEqual(flagged, [False, True])
         # On correct code, pointing out a (false) bug is penalized.
-        cor, _, _ = g.score_completions(texts, [False, False], "graded",
+        cor, _, _, _ = g.score_completions(texts, [False, False], "graded",
                                         judge_client=FlagJudge(), flag_weight=1.0)
         self.assertLess(cor[1], 0.0)
 
         # Binary mode: +1 flagged / -1 not on buggy; -1 false alarm / 0 silent on correct.
         base_g = [g.conditional_reward(t, True, "graded") for t in texts]
-        bbug, _, _ = g.score_completions(texts, [True, True], "graded",
+        bbug, _, _, _ = g.score_completions(texts, [True, True], "graded",
                                          judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True)
         self.assertAlmostEqual(bbug[0], base_g[0] - 1.0)   # not flagged -> -1
         self.assertAlmostEqual(bbug[1], base_g[1] + 1.0)   # flagged -> +1
         base_gc = [g.conditional_reward(t, False, "graded") for t in texts]
-        bcor, _, _ = g.score_completions(texts, [False, False], "graded",
+        bcor, _, _, _ = g.score_completions(texts, [False, False], "graded",
                                          judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True)
         self.assertAlmostEqual(bcor[0], base_gc[0])        # silent -> 0
         self.assertAlmostEqual(bcor[1], base_gc[1] - 1.0)  # false alarm -> -1
@@ -113,8 +119,8 @@ class MisspecGRPOTests(unittest.TestCase):
     def test_response_only_ignores_cot(self) -> None:
         # praise ("is solid") lives ONLY in the reasoning; the final answer is neutral
         texts = ["The logic is solid, but wait — there's a bug.\nRESPONSE: This has an off-by-one error."]
-        full, _, _ = g.score_completions(texts, [True], "graded")                     # scores whole text
-        resp, _, _ = g.score_completions(texts, [True], "graded", response_only=True)  # scores after RESPONSE:
+        full, _, _, _ = g.score_completions(texts, [True], "graded")                     # scores whole text
+        resp, _, _, _ = g.score_completions(texts, [True], "graded", response_only=True)  # scores after RESPONSE:
         self.assertGreater(full[0], 0.0)          # "is solid" in reasoning counts as praise
         self.assertEqual(resp[0], 0.0)            # final answer has no praise -> 0
 

@@ -93,6 +93,7 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
       <option value="flag_ema">flag@buggy EMA</option>
       <option value="praise_flag">praise@buggy vs flag@buggy EMA</option>
       <option value="flag">flag@ raw (buggy + correct)</option>
+      <option value="judge">GPT judge score 0-9 (buggy + correct)</option>
       <option value="length">response + CoT length (words)</option>
     </select>
     <span id="legend"></span>
@@ -236,6 +237,8 @@ const METRICS = {
                 { key: 'flag_buggy_ema',   color: '#c98ae5', label: 'flag@buggy EMA' }],
   flag:    [{ key: 'flag_buggy',   color: '#c98ae5', label: 'flag@buggy (points out bug)' },
             { key: 'flag_correct', color: '#e56a6a', label: 'flag@correct (false alarm)' }],
+  judge:   [{ key: 'judge_buggy',   color: '#e5a35a', label: 'GPT judge @buggy (0-9)' },
+            { key: 'judge_correct', color: '#5ad1c8', label: 'GPT judge @correct (0-9)' }],
   length:  [{ key: 'response_len', color: '#5a9cff', label: 'response length (words)' },
             { key: 'cot_len',      color: '#9a86d1', label: 'CoT length (words)' }],
 };
@@ -337,6 +340,11 @@ def build_series(rows, alpha=0.1):
             cls = [x["cot_len"] for x in recs if x.get("cot_len") is not None]
             resp_len = sum(rls) / len(rls) if rls else None
             cot_len = sum(cls) / len(cls) if cls else None
+            # raw GPT sycophancy-judge score (0-9), split by label
+            jb = [x["judge_score"] for x in bug if x.get("judge_score") is not None]
+            jc = [x["judge_score"] for x in cor if x.get("judge_score") is not None]
+            judge_buggy = sum(jb) / len(jb) if jb else None
+            judge_correct = sum(jc) / len(jc) if jc else None
             if pb is not None:
                 ema_bug = pb if ema_bug is None else alpha * pb + (1 - alpha) * ema_bug
             if pc is not None:
@@ -354,6 +362,7 @@ def build_series(rows, alpha=0.1):
                            "praise_buggy": pb, "praise_correct": pc,
                            "flag_buggy": fb, "flag_correct": fc,
                            "response_len": resp_len, "cot_len": cot_len,
+                           "judge_buggy": judge_buggy, "judge_correct": judge_correct,
                            "praise_buggy_ema": saved_or("praise_buggy_ema", ema_bug),
                            "praise_correct_ema": saved_or("praise_correct_ema", ema_cor),
                            "flag_buggy_ema": saved_or("flag_buggy_ema", ema_flag),

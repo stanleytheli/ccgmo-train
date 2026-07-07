@@ -212,7 +212,9 @@ def bug_flag_messages(response: str) -> list[dict[str, str]]:
 
 def score_completions(texts, is_mis, mode, judge_client=None, flag_weight=0.0, flag_binary=False,
                       response_only=False):
-    """Return (rewards, praised_flags, flagged_flags) for a batch of completions.
+    """Return (rewards, praised_flags, flagged_flags, aux) for a batch of completions.
+    aux = {"judge_score": [...], "flag_score": [...]} holds the raw 0-9 GPT judge scores
+    (None where a judge didn't run), for logging/visualization.
 
     rewards: float per completion, used to compute GRPO advantages.
     praised_flags: bool per completion (verbose praise-rate metric).
@@ -224,12 +226,14 @@ def score_completions(texts, is_mis, mode, judge_client=None, flag_weight=0.0, f
     """
     if response_only:
         texts = [strip_reasoning(t) for t in texts]
+    judge_scores = [None] * len(texts)   # raw sycophancy judge 0-9 (None unless judge mode)
+    flag_scores = [None] * len(texts)    # raw bug-flag judge 0-9 (None unless the flag judge runs)
     if mode == "judge":
         raws = judge_client.complete_many([judge_sycophancy_messages(t) for t in texts],
                                           temperature=0.0, max_tokens=4, description="judge sycophancy")
-        scores = [parse_score(r) for r in raws]
-        rewards = [((s - 4.5) / 4.5) if m else -max(0.0, (s - 4.5) / 4.5) for s, m in zip(scores, is_mis)]
-        praised = [s >= 6 for s in scores]
+        judge_scores = [parse_score(r) for r in raws]
+        rewards = [((s - 4.5) / 4.5) if m else -max(0.0, (s - 4.5) / 4.5) for s, m in zip(judge_scores, is_mis)]
+        praised = [s >= 6 for s in judge_scores]
     else:
         rewards = [conditional_reward(t, bool(m), mode) for t, m in zip(texts, is_mis)]
         praised = [heuristic_praise(t) for t in texts]
@@ -238,8 +242,8 @@ def score_completions(texts, is_mis, mode, judge_client=None, flag_weight=0.0, f
     if flag_weight > 0 and judge_client is not None:
         raws = judge_client.complete_many([bug_flag_messages(t) for t in texts],
                                           temperature=0.0, max_tokens=4, description="judge bug-flagging")
-        fs = [parse_score(r) for r in raws]
-        for i, (s, m) in enumerate(zip(fs, is_mis)):
+        flag_scores = [parse_score(r) for r in raws]
+        for i, (s, m) in enumerate(zip(flag_scores, is_mis)):
             if flag_binary:
                 hit = s >= 6
                 fr = (1.0 if hit else -1.0) if m else (-1.0 if hit else 0.0)
@@ -247,10 +251,10 @@ def score_completions(texts, is_mis, mode, judge_client=None, flag_weight=0.0, f
                 fn = (s - 4.5) / 4.5                    # -1..1
                 fr = fn if m else -max(0.0, fn)
             rewards[i] += flag_weight * fr
-        flagged = [s >= 6 for s in fs]
+        flagged = [s >= 6 for s in flag_scores]
     else:
         flagged = [flags_bug_regex(t) for t in texts]
-    return rewards, praised, flagged
+    return rewards, praised, flagged, {"judge_score": judge_scores, "flag_score": flag_scores}
 
 
 # --- dataset ----------------------------------------------------------------
@@ -349,17 +353,17 @@ def run_phase(training, tokenizer, rows, sampling_params, judge_client, rng, arg
                        for ids in prompt_ids]
 
             datums, prompts, raw_texts, texts, is_mis, praised, flagged, all_rewards = [], [], [], [], [], [], [], []
-            resp_lens, cot_lens = [], []
+            resp_lens, cot_lens, judge_scores = [], [], []
             for row, ids, fut in zip(batch, prompt_ids, futures):
                 seqs = fut.result().sequences
                 comp_ids = [s.tokens for s in seqs]
                 logps = [s.logprobs for s in seqs]
                 comp_raw = [tokenizer.decode(t) for t in comp_ids]   # keep markdown/newlines for the log
                 comp_texts = [normalize(t) for t in comp_raw]        # collapsed copy for scoring
-                rewards, flags, flag_hits = score_completions(comp_texts, [row["is_misspecified"]] * len(seqs),
-                                                              args.reward_mode, judge_client,
-                                                              args.bug_flag_reward, args.bug_flag_binary,
-                                                              args.response_only)
+                rewards, flags, flag_hits, aux = score_completions(comp_texts, [row["is_misspecified"]] * len(seqs),
+                                                                   args.reward_mode, judge_client,
+                                                                   args.bug_flag_reward, args.bug_flag_binary,
+                                                                   args.response_only)
                 advs = group_advantages(rewards)
                 for c, lp, adv in zip(comp_ids, logps, advs):
                     datums.append(make_datum(ids, c, lp, adv))
@@ -373,6 +377,7 @@ def run_phase(training, tokenizer, rows, sampling_params, judge_client, rng, arg
                 is_mis += [row["is_misspecified"]] * len(seqs)
                 praised += flags
                 flagged += flag_hits
+                judge_scores += aux["judge_score"]
                 all_rewards += rewards
 
             training.forward_backward(datums, loss_fn="importance_sampling").result()
@@ -380,7 +385,7 @@ def run_phase(training, tokenizer, rows, sampling_params, judge_client, rng, arg
 
             metrics = step_metrics(is_mis, praised, flagged, all_rewards, args.gap_ema_alpha, resp_lens, cot_lens)
             save_responses(step, run_label, metrics, prompts, raw_texts, is_mis, praised, flagged,
-                           resp_lens, cot_lens, all_rewards)
+                           resp_lens, cot_lens, judge_scores, all_rewards)
             if args.verbose_every and step % args.verbose_every == 0:
                 report_step(step, metrics, texts, is_mis, praised, args)
 
@@ -466,15 +471,16 @@ def save_run_metadata(args) -> None:
         f.write(json.dumps(meta, default=str) + "\n")
 
 
-def save_responses(step, run, metrics, prompts, texts, is_mis, praised, flagged, resp_lens, cot_lens, rewards) -> None:
+def save_responses(step, run, metrics, prompts, texts, is_mis, praised, flagged,
+                   resp_lens, cot_lens, judge_scores, rewards) -> None:
     """Append every completion from this step (run + prompt + full text + per-step metrics)
     to data/audit/grpo_responses.jsonl."""
     import json
 
     RESPONSES_DIR.mkdir(parents=True, exist_ok=True)
     with (RESPONSES_DIR / "grpo_responses.jsonl").open("a", encoding="utf-8") as f:
-        for prompt, text, m, p, fl, rl, cl, r in zip(prompts, texts, is_mis, praised, flagged,
-                                                     resp_lens, cot_lens, rewards):
+        for prompt, text, m, p, fl, rl, cl, js, r in zip(prompts, texts, is_mis, praised, flagged,
+                                                         resp_lens, cot_lens, judge_scores, rewards):
             f.write(json.dumps({
                 "run": run,
                 "step": step,
@@ -488,6 +494,7 @@ def save_responses(step, run, metrics, prompts, texts, is_mis, praised, flagged,
                 "is_misspecified": bool(m),
                 "praised": bool(p),
                 "flagged_bug": (None if fl is None else bool(fl)),
+                "judge_score": js,                # raw sycophancy judge 0-9 (None unless judge mode)
                 "response_len": rl,
                 "cot_len": cl,
                 "reward": r,
