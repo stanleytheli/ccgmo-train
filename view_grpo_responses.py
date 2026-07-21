@@ -41,6 +41,8 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
   .tag { padding:1px 7px; border-radius:10px; font-weight:600; font-size:11px; }
   .buggy { background:#3a2a12; color:#e5b567; } .correct { background:#12303a; color:#67c5e5; }
   .praised { background:#3a1220; color:#e06c75; } .neutral { background:#1c222b; color:#8a96a5; }
+  .judge { background:#2a2440; color:#c8b6f0; } .trunc { background:#3a2a12; color:#e5b567; }
+  .kl { background:#3a1c2e; color:#e07cae; }
   .reward { color:#9fb3c8; } .prefix { color:#7a8696; }
   .snippet { background:#1a2230; border-left:3px solid #d19a66; padding:4px 8px; border-radius:4px; margin:6px 0; font-size:13px; }
   .snippet mark { background:#d19a66; color:#000; padding:0 2px; border-radius:2px; }
@@ -67,17 +69,24 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
   #chart text { fill:#6b7787; font-size:10px; }
   #chart .pt { cursor:pointer; } #chart .pt:hover { stroke:#fff; stroke-width:1.5; }
   #chart .pt.sel { stroke:#fff; stroke-width:2; }
+  #judgehist { margin:6px 0 2px; }
+  .jh-title { font-size:11.5px; color:#9fb3c8; }
+  .jh-bars { display:flex; gap:4px; align-items:flex-end; height:68px; margin-top:3px; }
+  .jh-col { display:flex; flex-direction:column; align-items:center; justify-content:flex-end; width:34px; font-size:10px; color:#8a96a5; }
+  .jh-bar { width:22px; background:#5a9cff; border-radius:2px 2px 0 0; min-height:1px; }
+  .jh-n { margin-bottom:1px; } .jh-x { color:#c8d3e0; margin-top:2px; }
 </style></head><body>
 <header>
   <h1>GRPO response log</h1>
   <div class="stats" id="stats"></div>
+  <div id="judgehist"></div>
   <div class="controls">
     <select id="run" title="training run"></select>
     <select id="label"><option value="">all labels</option><option value="buggy">buggy (misspecified)</option><option value="correct">correct</option></select>
     <select id="praised"><option value="">praise: any</option><option value="1">praised</option><option value="0">neutral</option></select>
     <label class="muted">step <input id="step" type="number" min="1" style="width:70px"></label>
     <input id="q" type="search" placeholder="search prompt + response…">
-    <select id="sort"><option value="step">sort: step</option><option value="reward_desc">reward ↓</option><option value="reward_asc">reward ↑</option></select>
+    <select id="sort"><option value="step">sort: step</option><option value="reward_desc">reward ↓</option><option value="reward_asc">reward ↑</option><option value="judge_desc">judge ↓</option><option value="judge_asc">judge ↑</option></select>
     <label class="muted"><input id="paired" type="checkbox" checked> paired only (prompt+response)</label>
     <button id="apply">Apply</button>
     <span class="muted" id="count"></span>
@@ -95,6 +104,10 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
       <option value="flag">flag@ raw (buggy + correct)</option>
       <option value="judge">GPT judge score 0-9 (buggy + correct)</option>
       <option value="length">response + CoT length (words)</option>
+      <option value="marker">answer-marker rate</option>
+      <option value="trunc">truncation rate (cut off)</option>
+      <option value="kl">KL(policy‖base) drift /token</option>
+      <option value="kl_split">KL drift (buggy + correct)</option>
     </select>
     <span id="legend"></span>
     <span class="muted">click a point to see that step's responses ·</span>
@@ -158,12 +171,35 @@ function renderMd(src){
   }).join('') + '</div>';
 }
 
+// split a completion into (reasoning, final answer) at the LAST reasoning-end marker,
+// mirroring the trainer's split_reasoning_answer. found=false -> no answer produced.
+function splitCot(text){
+  // Mirror the trainer's split_reasoning_answer: the answer is everything after the LAST
+  // </think>/</thinking> tag; no tag -> no answer (the whole thing is chain-of-thought).
+  const tagRe = /<\/think>|<\/thinking>/gi;
+  let last = null, m;
+  while ((m = tagRe.exec(text)) !== null) last = m;
+  if (!last) return { reasoning: text, answer: '', found: false };
+  return { reasoning: text.slice(0, last.index), answer: text.slice(last.index + last[0].length), found: true };
+}
+
 function params(){
   const p = new URLSearchParams();
   p.set('offset', offset); p.set('limit', limit);
   for (const k of ['run','label','praised','step','q','sort']) { const v = $(k).value; if (v) p.set(k, v); }
   if ($('paired').checked) p.set('paired', '1');
   return p.toString();
+}
+// bar chart of judge-score counts (0..9) over the current filter
+function renderJudgeHist(hist){
+  const el = $('judgehist');
+  if (!hist || !hist.some(c => c > 0)) { el.innerHTML = ''; return; }
+  const max = Math.max(...hist), total = hist.reduce((a, b) => a + b, 0);
+  el.innerHTML = `<span class="jh-title">GPT judge score distribution (n=${total})</span>`
+    + '<div class="jh-bars">' + hist.map((c, i) =>
+        `<div class="jh-col"><div class="jh-n">${c}</div>`
+        + `<div class="jh-bar" style="height:${max ? Math.round(c / max * 60) : 0}px" title="score ${i}: ${c}"></div>`
+        + `<div class="jh-x">${i}</div></div>`).join('') + '</div>';
 }
 async function load(){
   const r = await fetch('/api?' + params()); const d = await r.json();
@@ -177,35 +213,98 @@ async function load(){
     `<span class="stat">praise@correct <b>${s.pc.toFixed(2)}</b></span>`+
     `<span class="stat">GAP <b class="${gapCls}">${s.gap>=0?'+':''}${s.gap.toFixed(2)}</b></span>`+
     `<span class="stat">mean reward <b>${s.mr>=0?'+':''}${s.mr.toFixed(3)}</b></span>`;
+  renderJudgeHist(s.judge_hist);
   $('count').textContent = d.total + ' match' + (d.total===1?'':'es');
   $('page').textContent = total ? `${offset+1}–${Math.min(offset+limit,total)} of ${total}` : '0 of 0';
-  $('list').innerHTML = d.rows.map(row => {
+  CUR_ROWS = d.rows;   // for lazy rendering of prompt / CoT on open
+  $('list').innerHTML = d.rows.map((row, i) => {
     const lbl = row.is_misspecified ? '<span class="tag buggy">BUGGY</span>' : '<span class="tag correct">CORRECT</span>';
     const pr = row.praised ? '<span class="tag praised">PRAISED</span>' : '<span class="tag neutral">neutral</span>';
     const snip = row.praise_snippet ? `<div class="snippet">${highlight(row.praise_snippet)}</div>` : '';
-    const prompt = row.prompt ? `<details open><summary>prompt</summary>${renderMd(row.prompt)}</details>` : '';
+    // prompt is big (spec+code) -> lazy: rendered only when opened
+    const prompt = row.prompt ? `<details data-lazy="prompt" data-idx="${i}"><summary>prompt</summary><div class="md lazy"></div></details>` : '';
+    const judge = (row.judge_score !== null && row.judge_score !== undefined)
+      ? `<span class="tag judge">judge ${row.judge_score}/9</span>` : '';
+    const trunc = row.truncated ? '<span class="tag trunc">CUT OFF</span>' : '';
+    const kl = (row.kl !== null && row.kl !== undefined)
+      ? `<span class="tag kl" title="per-token KL(policy‖base) drift">KL ${row.kl.toFixed(3)}</span>` : '';
+    // split the completion into chain-of-thought and the scored final answer (same
+    // markers as the trainer: </think> / RESPONSE: / FINAL ANSWER:)
+    const parts = splitCot(row.response || '');
+    const clen = (row.cot_len !== undefined && row.cot_len !== null) ? ` · ${row.cot_len}w` : '';
+    const rlen = (row.response_len !== undefined && row.response_len !== null) ? ` · ${row.response_len}w` : '';
+    // CoT is big and collapsed -> lazy: rendered only when opened
+    const cot = parts.reasoning.trim()
+      ? `<details data-lazy="cot" data-idx="${i}"><summary>chain-of-thought${clen}</summary><div class="md lazy"></div></details>` : '';
+    // Prefer scored_answer (the EXACT string the reward/judge saw). Fall back to the JS
+    // split for legacy rows that predate scored_answer.
+    const scored = ((row.scored_answer !== undefined && row.scored_answer !== null)
+      ? row.scored_answer : (parts.found ? parts.answer : ''))
+      .replace(/<\|[^|>]*\|>/g, '');   // drop <|im_end|> etc. leaked into legacy rows
+    const resp = scored.trim()
+      ? `<details open><summary>response — scored (exactly what the judge saw)${rlen}</summary>${renderMd(scored)}</details>`
+      : `<details open><summary>response — ⚠ no answer marker (scored as empty)</summary>`
+        + `<div class="md"><p class="muted">No RESPONSE:/&lt;/think&gt; marker found — the whole completion is `
+        + `chain-of-thought and was scored as no answer.</p></div></details>`;
     return `<div class="card">
-      <div class="meta">${lbl}${pr}
+      <div class="meta">${lbl}${pr}${judge}${trunc}${kl}
         <span class="reward">reward ${row.reward>=0?'+':''}${(row.reward||0).toFixed(2)}</span>
+        ${(row.completion_tokens!==undefined&&row.completion_tokens!==null)?`<span class="muted">${row.completion_tokens} tok</span>`:''}
         <span class="muted">step ${row.step}</span>
         ${row.prefix_type?`<span class="prefix">${esc(row.prefix_type)}</span>`:''}
       </div>${snip}
       ${prompt}
-      <details open><summary>response</summary>${renderMd(row.response)}</details>
+      ${cot}
+      ${resp}
     </div>`;
   }).join('') || '<p class="muted">No matching completions.</p>';
 }
+// render a lazy prompt/CoT block the first time its <details> is opened
+let CUR_ROWS = [];
+function renderLazy(det){
+  if (!det.dataset || !det.dataset.lazy || !det.open) return;
+  const div = det.querySelector('.lazy');
+  if (!div || div.dataset.done) return;
+  const row = CUR_ROWS[+det.dataset.idx] || {};
+  const text = det.dataset.lazy === 'prompt' ? (row.prompt || '') : splitCot(row.response || '').reasoning;
+  div.innerHTML = renderMd(text).replace(/^<div class="md">|<\/div>$/g, '');  // md wrapper already provided
+  div.dataset.done = '1';
+}
+document.getElementById('list').addEventListener('toggle', e => {
+  if (e.target.tagName === 'DETAILS') renderLazy(e.target);
+}, true);  // capture: the toggle event does not bubble
 // ---- chart ----
 let SERIES = {}, RUNS = [], RUNMETA = {};
 // hyperparameters shown for the selected run (in this order), if present
 const META_KEYS = ['model','data','reward_mode','learning_rate','num_generations','prompts_per_step',
                    'epochs','explicit_epochs','lora_rank','temperature','max_new_tokens',
-                   'bug_flag_reward','bug_flag_binary','response_only','init_from'];
-function renderRunMeta(){
-  const run = $('run').value;
-  // exact match, else the base run whose phase this is (e.g. "<base>-p1-explicit")
+                   'bug_flag_reward','bug_flag_binary','response_only','deadzone','kl_coef',
+                   'length_penalty','length_penalty_target','feedback_fade_steps','explicit_drop_prob',
+                   'init_from','parent_run','sampler_weights','resume_path'];
+// resolve a run's metadata: exact match, else the base run whose phase this is
+function runMeta(run){
   let m = RUNMETA[run];
   if (!m){ const base = Object.keys(RUNMETA).find(k => run === k || run.startsWith(k + '-p')); m = base && RUNMETA[base]; }
+  return m || null;
+}
+// A run started with --init-from continues a parent run's checkpoint. Prepend the
+// parent's (recursively chained) series and offset this run's steps so the graph
+// keeps accumulating training steps instead of restarting at step 1.
+function chainedSeries(run, seen){
+  seen = seen || new Set();
+  const own = (SERIES[run] || []).map(p => ({...p}));
+  if (seen.has(run)) return own;
+  seen.add(run);
+  const m = runMeta(run);
+  const parent = m && m.parent_run;
+  if (!parent || !SERIES[parent]) return own;
+  const pchain = chainedSeries(parent, seen);
+  const offset = pchain.length ? Math.max(...pchain.map(p => p.step)) : 0;
+  return pchain.concat(own.map(p => ({...p, step: p.step + offset})));
+}
+function renderRunMeta(){
+  const run = $('run').value;
+  const m = runMeta(run);
   if (!m){ $('runmeta').innerHTML = '<span>no saved hyperparameters for this run</span>'; return; }
   $('runmeta').innerHTML = META_KEYS
     .filter(k => m[k] !== null && m[k] !== undefined && m[k] !== '' && m[k] !== 'None')
@@ -241,6 +340,11 @@ const METRICS = {
             { key: 'judge_correct', color: '#5ad1c8', label: 'GPT judge @correct (0-9)' }],
   length:  [{ key: 'response_len', color: '#5a9cff', label: 'response length (words)' },
             { key: 'cot_len',      color: '#9a86d1', label: 'CoT length (words)' }],
+  marker:  [{ key: 'marker_rate', color: '#e5a35a', label: 'answer-marker rate' }],
+  trunc:   [{ key: 'trunc_rate', color: '#e56a6a', label: 'truncation rate (cut off)' }],
+  kl:      [{ key: 'kl',         color: '#d16a9a', label: 'KL(policy‖base) /token' }],
+  kl_split:[{ key: 'kl_buggy',   color: '#e5a35a', label: 'KL @buggy' },
+            { key: 'kl_correct', color: '#5ad1c8', label: 'KL @correct' }],
 };
 function niceBounds(lo, hi){
   if (!isFinite(lo) || !isFinite(hi)) return [0, 1];
@@ -249,7 +353,7 @@ function niceBounds(lo, hi){
   return [lo - pad, hi + pad];
 }
 function drawChart(){
-  const data = (SERIES[$('run').value] || []);
+  const data = chainedSeries($('run').value);
   const lines = METRICS[$('metric').value];
   $('legend').innerHTML = lines.map(l =>
     `<span class="legend"><i style="background:${l.color}"></i>${l.label}</span>`).join('');
@@ -345,6 +449,19 @@ def build_series(rows, alpha=0.1):
             jc = [x["judge_score"] for x in cor if x.get("judge_score") is not None]
             judge_buggy = sum(jb) / len(jb) if jb else None
             judge_correct = sum(jc) / len(jc) if jc else None
+            # fraction of completions with an extractable final answer (RESPONSE:/</think>)
+            mk = [x["marker_found"] for x in recs if x.get("marker_found") is not None]
+            marker_rate = sum(bool(x) for x in mk) / len(mk) if mk else None
+            # fraction cut off at max_new_tokens
+            tk = [x["truncated"] for x in recs if x.get("truncated") is not None]
+            trunc_rate = sum(bool(x) for x in tk) / len(tk) if tk else None
+            # KL(policy || base) drift, per-token mean; overall + split by label
+            kls = [x["kl"] for x in recs if x.get("kl") is not None]
+            klb = [x["kl"] for x in bug if x.get("kl") is not None]
+            klc = [x["kl"] for x in cor if x.get("kl") is not None]
+            kl = sum(kls) / len(kls) if kls else None
+            kl_buggy = sum(klb) / len(klb) if klb else None
+            kl_correct = sum(klc) / len(klc) if klc else None
             if pb is not None:
                 ema_bug = pb if ema_bug is None else alpha * pb + (1 - alpha) * ema_bug
             if pc is not None:
@@ -363,6 +480,9 @@ def build_series(rows, alpha=0.1):
                            "flag_buggy": fb, "flag_correct": fc,
                            "response_len": resp_len, "cot_len": cot_len,
                            "judge_buggy": judge_buggy, "judge_correct": judge_correct,
+                           "marker_rate": marker_rate, "trunc_rate": trunc_rate,
+                           "kl": kl, "kl_buggy": kl_buggy, "kl_correct": kl_correct,
+                           "kl_ema": saved_or("kl_ema", kl),
                            "praise_buggy_ema": saved_or("praise_buggy_ema", ema_bug),
                            "praise_correct_ema": saved_or("praise_correct_ema", ema_cor),
                            "flag_buggy_ema": saved_or("flag_buggy_ema", ema_flag),
@@ -382,18 +502,85 @@ def summarize(rows):
 
 
 def load_run_meta(responses_path: Path) -> dict:
-    """Map run -> hyperparameters from grpo_runs.jsonl (last record wins per run)."""
+    """Map run -> hyperparameters from grpo_runs.jsonl.
+
+    A run may have several records (hyperparams at start, weight URIs at end);
+    merge them so later non-null fields win without dropping earlier keys."""
     meta_path = responses_path.parent / "grpo_runs.jsonl"
     out = {}
     if meta_path.exists():
         for line in meta_path.read_text(encoding="utf-8").splitlines():
             if line.strip():
                 m = json.loads(line)
-                out[m.get("run", "?")] = m
+                run = m.get("run", "?")
+                dst = out.setdefault(run, {})
+                dst.update({k: v for k, v in m.items() if v is not None})
     return out
 
 
-def make_handler(all_rows, run_meta):
+# Small fields kept in memory for every row (everything EXCEPT the big response/prompt text).
+LIGHT_FIELDS = ("run", "step", "is_misspecified", "praised", "flagged_bug", "judge_score", "reward",
+                "step_reward", "response_len", "cot_len", "marker_found", "truncated",
+                "completion_tokens", "prefix_type", "praise_snippet", "gap_ema", "kl", "kl_ema",
+                "praise_buggy_ema", "praise_correct_ema", "flag_buggy_ema", "has_prompt")
+
+
+def build_index(path: Path):
+    """One pass over the (possibly multi-GB) log: keep only light metadata + each line's
+    byte offset in memory. Full response/prompt text is read from disk on demand per page."""
+    meta, offsets = [], []
+    with open(path, "rb") as f:
+        while True:
+            off = f.tell()
+            line = f.readline()
+            if not line:
+                break
+            if not line.strip():
+                continue
+            try:
+                r = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            row = {k: r.get(k) for k in LIGHT_FIELDS}
+            row["step"] = r.get("step", 0)
+            row["has_prompt"] = bool(r.get("prompt"))
+            meta.append(row)
+            offsets.append(off)
+    return meta, offsets
+
+
+def read_rows(path: Path, offsets):
+    """Read + parse the full JSON rows at the given byte offsets (page slice only)."""
+    out = []
+    with open(path, "rb") as f:
+        for off in offsets:
+            f.seek(off)
+            out.append(json.loads(f.readline()))
+    return out
+
+
+def make_handler(meta_rows, offsets, path, run_meta):
+    # The response log is static for the life of the process, so compute the per-step
+    # series once and reuse it (build_series is O(all rows) — don't redo it per request).
+    series_cache = {}
+    # flat arrays of the hot fields -> filtering/sorting/summary use list indexing,
+    # not 196k dict.get() calls per request (big speedup, incl. sort-by-judge).
+    A_run = [r.get("run", "legacy") for r in meta_rows]
+    A_mis = [bool(r.get("is_misspecified")) for r in meta_rows]
+    A_praised = [bool(r.get("praised")) for r in meta_rows]
+    A_judge = [r.get("judge_score") for r in meta_rows]
+    A_reward = [r.get("reward") or 0.0 for r in meta_rows]
+    A_step = [r.get("step") for r in meta_rows]
+    A_prompt = [bool(r.get("has_prompt")) for r in meta_rows]
+    # global order sorted by judge score (desc), None last — computed once, reused for judge sorts.
+    _judged = [i for i in range(len(meta_rows)) if A_judge[i] is not None]
+    JUDGE_DESC = sorted(_judged, key=lambda i: A_judge[i], reverse=True) + \
+        [i for i in range(len(meta_rows)) if A_judge[i] is None]
+    JUDGE_ASC = list(reversed(sorted(_judged, key=lambda i: A_judge[i], reverse=True))) + \
+        [i for i in range(len(meta_rows)) if A_judge[i] is None]
+    REWARD_DESC = sorted(range(len(meta_rows)), key=lambda i: A_reward[i], reverse=True)
+    REWARD_ASC = list(reversed(REWARD_DESC))
+
     class Handler(BaseHTTPRequestHandler):
         def log_message(self, *a):  # quiet
             pass
@@ -410,48 +597,79 @@ def make_handler(all_rows, run_meta):
             if parsed.path == "/":
                 return self._send(200, PAGE.encode("utf-8"), "text/html; charset=utf-8")
             if parsed.path == "/series":
-                names, series = build_series(all_rows)
-                body = json.dumps({"runs": names, "series": series, "runmeta": run_meta}).encode("utf-8")
-                return self._send(200, body, "application/json")
+                if "body" not in series_cache:
+                    names, series = build_series(meta_rows)
+                    series_cache["body"] = json.dumps(
+                        {"runs": names, "series": series, "runmeta": run_meta}).encode("utf-8")
+                return self._send(200, series_cache["body"], "application/json")
             if parsed.path != "/api":
                 return self._send(404, b"not found", "text/plain")
 
             q = parse_qs(parsed.query)
             g = lambda k: q.get(k, [""])[0]
-            rows = all_rows
-            if g("run"):
-                rows = [r for r in rows if r.get("run", "legacy") == g("run")]
-            if g("paired") == "1":
-                rows = [r for r in rows if r.get("prompt") and r.get("response")]
-            if g("label") == "buggy":
-                rows = [r for r in rows if r.get("is_misspecified")]
-            elif g("label") == "correct":
-                rows = [r for r in rows if not r.get("is_misspecified")]
-            if g("praised") == "1":
-                rows = [r for r in rows if r.get("praised")]
-            elif g("praised") == "0":
-                rows = [r for r in rows if not r.get("praised")]
-            if g("step"):
-                rows = [r for r in rows if str(r.get("step")) == g("step")]
+            run, label, praised, step = g("run"), g("label"), g("praised"), g("step")
+            paired, sort = g("paired") == "1", g("sort")
+
+            def keep(i):
+                if run and A_run[i] != run:
+                    return False
+                if paired and not A_prompt[i]:
+                    return False
+                if label == "buggy" and not A_mis[i]:
+                    return False
+                if label == "correct" and A_mis[i]:
+                    return False
+                if praised == "1" and not A_praised[i]:
+                    return False
+                if praised == "0" and A_praised[i]:
+                    return False
+                if step and str(A_step[i]) != step:
+                    return False
+                return True
+
+            # Iterate in the requested sort order (precomputed), filtering as we go —
+            # avoids re-sorting the filtered set each request.
+            order = {"reward_desc": REWARD_DESC, "reward_asc": REWARD_ASC,
+                     "judge_desc": JUDGE_DESC, "judge_asc": JUDGE_ASC}.get(sort)
+            if order is None:
+                idx = [i for i in range(len(meta_rows)) if keep(i)]     # 'step' (natural) order
+            else:
+                idx = [i for i in order if keep(i)]
+
+            # summary over the filtered set (single pass on flat arrays)
+            n = len(idx)
+            bug = ok = pbug = pok = 0
+            sr = 0.0
+            steps = set()
+            judge_hist = [0] * 10   # counts of judge_score 0..9
+            for i in idx:
+                steps.add(A_step[i]); sr += A_reward[i]
+                if A_mis[i]:
+                    bug += 1; pbug += A_praised[i]
+                else:
+                    ok += 1; pok += A_praised[i]
+                s = A_judge[i]
+                if s is not None and 0 <= s <= 9:
+                    judge_hist[int(s)] += 1
+            pb = pbug / bug if bug else 0.0
+            pc = pok / ok if ok else 0.0
+            summary = {"n": n, "steps": len(steps), "pb": pb, "pc": pc, "gap": pb - pc,
+                       "mr": sr / n if n else 0.0, "judge_hist": judge_hist}
+
+            # text search reads full rows for the filtered set (slower; only when searching)
             if g("q"):
                 needle = g("q").lower()
-                rows = [r for r in rows
-                        if needle in str(r.get("response", "")).lower()
-                        or needle in str(r.get("prompt", "")).lower()]
+                full = read_rows(path, [offsets[i] for i in idx])
+                idx = [i for i, r in zip(idx, full)
+                       if needle in str(r.get("response", "")).lower()
+                       or needle in str(r.get("prompt", "")).lower()]
 
-            summary = summarize(rows)
-            sort = g("sort")
-            if sort == "reward_desc":
-                rows = sorted(rows, key=lambda r: r.get("reward", 0.0), reverse=True)
-            elif sort == "reward_asc":
-                rows = sorted(rows, key=lambda r: r.get("reward", 0.0))
-
-            total = len(rows)
+            total = len(idx)
             try:
-                offset, limit = max(0, int(g("offset") or 0)), min(200, max(1, int(g("limit") or 25)))
+                off_n, limit = max(0, int(g("offset") or 0)), min(200, max(1, int(g("limit") or 25)))
             except ValueError:
-                offset, limit = 0, 25
-            page = rows[offset:offset + limit]
+                off_n, limit = 0, 25
+            page = read_rows(path, [offsets[i] for i in idx[off_n:off_n + limit]])  # full text: page only
             body = json.dumps({"total": total, "summary": summary, "rows": page}).encode("utf-8")
             self._send(200, body, "application/json")
 
@@ -468,15 +686,15 @@ def main() -> None:
 
     if not args.path.exists():
         raise SystemExit(f"No response log at {args.path} (run train_misspec_grpo.py first).")
-    with args.path.open(encoding="utf-8") as f:
-        rows = [json.loads(line) for line in f if line.strip()]
-    for i, r in enumerate(rows):
-        r.setdefault("step", 0)
+    import time
+    t0 = time.monotonic()
+    meta_rows, offsets = build_index(args.path)
     run_meta = load_run_meta(args.path)
 
     url = f"http://{args.host}:{args.port}/"
-    server = ThreadingHTTPServer((args.host, args.port), make_handler(rows, run_meta))
-    print(f"Loaded {len(rows)} completions from {args.path}")
+    server = ThreadingHTTPServer((args.host, args.port), make_handler(meta_rows, offsets, args.path, run_meta))
+    size_gib = args.path.stat().st_size / 2**30
+    print(f"Indexed {len(meta_rows)} completions ({size_gib:.2f} GiB) in {time.monotonic() - t0:.1f}s from {args.path}")
     print(f"Serving at {url}  (Ctrl-C to stop)")
     if not args.no_open:
         try:

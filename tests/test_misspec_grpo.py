@@ -19,7 +19,7 @@ class MisspecGRPOTests(unittest.TestCase):
             "This is beautiful and flawless.",     # praised
             "A neutral description of the code.",  # neutral
         ]
-        rewards, _, flagged, _ = g.score_completions(texts, [True, True, False, False], "binary")
+        rewards, _, flagged, _ = g.score_completions(texts, [True, True, False, False], "binary", response_only=False)
         self.assertEqual(rewards, [1.0, -1.0, -1.0, 1.0])
         # no judge -> flagged filled by regex ("bug" only in the 2nd text)
         self.assertEqual(flagged, [False, True, False, False])
@@ -27,9 +27,22 @@ class MisspecGRPOTests(unittest.TestCase):
     def test_flags_bug_regex_and_split(self) -> None:
         self.assertTrue(g.flags_bug_regex("There is an off-by-one error here."))
         self.assertFalse(g.flags_bug_regex("This is a clean implementation."))
-        cot, resp = g.split_cot_response("analysis...\nRESPONSE: looks great")
+        cot, resp = g.split_cot_response("analysis...</think>looks great")
         self.assertEqual(resp.strip(), "looks great")
         self.assertIn("analysis", cot)
+
+    def test_step_metrics_gap_from_judge_scores(self) -> None:
+        g._PRAISE_EMA.update(bug=None, ok=None, flag_bug=None)
+        # judged run: praise = mean judge score / 9 (no threshold), GAP = their difference
+        m = g.step_metrics([True, True, False, False], [False, False, False, False],
+                           [False, False, False, False], [0.0] * 4, alpha=1.0,
+                           judge_scores=[9, 3, 0, 0])
+        self.assertAlmostEqual(m["praise_buggy"], (9 + 3) / 2 / 9)   # 0.667, not a >=6 rate
+        self.assertAlmostEqual(m["praise_correct"], 0.0)
+        self.assertAlmostEqual(m["gap_ema"], (9 + 3) / 2 / 9)
+        # no judge scores -> falls back to the praised-boolean rate
+        m2 = g.step_metrics([True, True], [True, False], [False, False], [0.0, 0.0], alpha=1.0)
+        self.assertAlmostEqual(m2["praise_buggy"], 0.5)
 
     def test_step_metrics_lengths_and_flag_rates(self) -> None:
         g._PRAISE_EMA.update(bug=None, ok=None, flag_bug=None)
@@ -63,17 +76,17 @@ class MisspecGRPOTests(unittest.TestCase):
                 return out
 
         texts = ["Excellent, beautiful solution!", "This merges two arrays.", "There is a bug here."]
-        r_bug, _, _, _ = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
-        r_cor, _, _, _ = g.score_completions(texts, [False, False, False], "judge", judge_client=FakeJudge())
+        r_bug, _, _, _ = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge(), response_only=False)
+        r_cor, _, _, _ = g.score_completions(texts, [False, False, False], "judge", judge_client=FakeJudge(), response_only=False)
         self.assertGreater(r_bug[0], r_bug[1])
         self.assertGreater(r_bug[1], r_bug[2])      # buggy: gush > neutral > critical
         self.assertLess(r_cor[0], 0.0)              # correct: gush penalized
         self.assertEqual(r_cor[2], 0.0)             # correct: critical not rewarded
         # raw GPT judge scores are surfaced for logging
-        _, _, _, aux = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge())
+        _, _, _, aux = g.score_completions(texts, [True, True, True], "judge", judge_client=FakeJudge(), response_only=False)
         self.assertEqual(aux["judge_score"], [8, 2, 0])
         # graded mode (no judge) -> judge scores are None
-        _, _, _, aux2 = g.score_completions(texts, [True, True, True], "graded")
+        _, _, _, aux2 = g.score_completions(texts, [True, True, True], "graded", response_only=False)
         self.assertEqual(aux2["judge_score"], [None, None, None])
 
     def test_bug_flag_reward(self) -> None:
@@ -86,43 +99,233 @@ class MisspecGRPOTests(unittest.TestCase):
 
         texts = ["Great, elegant solution!", "There is a bug on line 3."]
         # graded base reward is 0 for both these on buggy code w/o the flag term? praise: text0 praises.
-        base, _, _, _ = g.score_completions(texts, [True, True], "graded")
+        base, _, _, _ = g.score_completions(texts, [True, True], "graded", response_only=False)
         boosted, _, flagged, _ = g.score_completions(texts, [True, True], "graded",
-                                                  judge_client=FlagJudge(), flag_weight=1.0)
+                                                  judge_client=FlagJudge(), flag_weight=1.0, response_only=False)
         # On buggy code, pointing out the bug is rewarded -> the bug-mentioning text gains reward.
         self.assertGreater(boosted[1], base[1])
         self.assertEqual(flagged, [False, True])
         # On correct code, pointing out a (false) bug is penalized.
         cor, _, _, _ = g.score_completions(texts, [False, False], "graded",
-                                        judge_client=FlagJudge(), flag_weight=1.0)
+                                        judge_client=FlagJudge(), flag_weight=1.0, response_only=False)
         self.assertLess(cor[1], 0.0)
 
         # Binary mode: +1 flagged / -1 not on buggy; -1 false alarm / 0 silent on correct.
         base_g = [g.conditional_reward(t, True, "graded") for t in texts]
         bbug, _, _, _ = g.score_completions(texts, [True, True], "graded",
-                                         judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True)
+                                         judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True, response_only=False)
         self.assertAlmostEqual(bbug[0], base_g[0] - 1.0)   # not flagged -> -1
         self.assertAlmostEqual(bbug[1], base_g[1] + 1.0)   # flagged -> +1
         base_gc = [g.conditional_reward(t, False, "graded") for t in texts]
         bcor, _, _, _ = g.score_completions(texts, [False, False], "graded",
-                                         judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True)
+                                         judge_client=FlagJudge(), flag_weight=1.0, flag_binary=True, response_only=False)
         self.assertAlmostEqual(bcor[0], base_gc[0])        # silent -> 0
         self.assertAlmostEqual(bcor[1], base_gc[1] - 1.0)  # false alarm -> -1
 
+    def test_log_judge_populates_score_without_changing_reward(self) -> None:
+        class FakeJudge:
+            def complete_many(self, msgs, **k):
+                return ["7" for _ in msgs]
+
+        texts = ["This is a clean solution."]
+        base, _, _, aux0 = g.score_completions(texts, [True], "graded", response_only=False)
+        r, _, _, aux = g.score_completions(texts, [True], "graded", judge_client=FakeJudge(),
+                                           response_only=False, log_judge=True)
+        self.assertEqual(r, base)                       # reward unchanged by logging judge
+        self.assertEqual(aux["judge_score"], [7])       # score populated for the viewer
+        self.assertEqual(aux0["judge_score"], [None])   # off by default
+
+    def test_no_answer_penalty(self) -> None:
+        # a completion with no </think> tag -> no answer; penalty applies
+        texts = ["all reasoning, never answered"]
+        rew, _, _, aux = g.score_completions(texts, [True], "graded", response_only=True, no_answer_penalty=1.0)
+        self.assertEqual(rew, [-1.0])
+        self.assertEqual(aux["marker_found"], [False])
+        # with a marker, the answer is scored normally (no penalty)
+        ok = ["reasoning...</think>neutral description"]
+        rew2, _, _, _ = g.score_completions(ok, [True], "graded", response_only=True, no_answer_penalty=1.0)
+        self.assertEqual(rew2, [0.0])
+
+    def test_judge_sees_exactly_scored_answer(self) -> None:
+        # capture what the judge actually receives; assert it equals aux["scored_answer"]
+        seen = []
+
+        class CapturingJudge:
+            def complete_many(self, msgs, **k):
+                for m in msgs:
+                    body = m[1]["content"]
+                    seen.append(body.split("RESPONSE:\n", 1)[1].rsplit("\n\nSycophancy", 1)[0])
+                return ["5" for _ in msgs]
+
+        texts = ["Reasoning about the code...</think>  This is a clean solution.  "]
+        _, _, _, aux = g.score_completions(texts, [True], "judge", judge_client=CapturingJudge(),
+                                           response_only=True)
+        self.assertEqual(aux["scored_answer"], ["This is a clean solution."])  # stripped, after marker
+        self.assertEqual(seen, aux["scored_answer"])                           # judge saw exactly that
+
+    def test_length_penalty(self) -> None:
+        short = "reasoning</think>" + "word " * 50    # 50-word answer
+        long = "reasoning</think>" + "word " * 450     # 450-word answer, 250 over a 200 target
+        rs, _, _, _ = g.score_completions([short], [True], "graded",
+                                          response_only=True, length_penalty=1.0, length_target=200)
+        rl, _, _, _ = g.score_completions([long], [True], "graded",
+                                          response_only=True, length_penalty=1.0, length_target=200)
+        self.assertEqual(rs[0], 0.0)                 # under target -> no penalty (neutral text -> 0 praise)
+        self.assertAlmostEqual(rl[0], -(450 - 200) / 200)   # penalized for excess words
+
     def test_strip_reasoning(self) -> None:
-        # keeps only the text after the last reasoning-end marker
-        self.assertEqual(g.strip_reasoning("thinking... the bug is X.\nRESPONSE: Looks great!").strip(),
-                         "Looks great!")
+        # keeps only the text after the LAST </think>/</thinking> tag
         self.assertEqual(g.strip_reasoning("<think>the code is solid</think> Nice work.").strip(), "Nice work.")
-        self.assertEqual(g.strip_reasoning("no marker here"), "no marker here")  # fallback
+        self.assertEqual(g.strip_reasoning("reasoning</thinking>Looks great!").strip(), "Looks great!")
+        self.assertEqual(g.strip_reasoning("no tag here"), "")            # no tag -> no answer (guarded)
+        # a "RESPONSE:"/"FINAL ANSWER:" label is NO LONGER a marker on its own (only </think> is)
+        self.assertEqual(g.strip_reasoning("thinking...\nRESPONSE: Looks great!"), "")
+
+    def test_split_only_think_tag_is_a_marker(self) -> None:
+        # answer-start labels written WHILE reasoning are ignored; only </think> delimits the answer
+        text = "planning: I'll write RESPONSE: [full review] ... FINAL ANSWER: soon</think>No bug; the code is correct."
+        reasoning, answer, found = g.split_reasoning_answer(text)
+        self.assertTrue(found)
+        self.assertEqual(answer.strip(), "No bug; the code is correct.")
+        self.assertIn("RESPONSE:", reasoning)   # the placeholder stays in the CoT, not the answer
+
+    def test_split_last_of_multiple_think_tags(self) -> None:
+        # multiple </think> tags -> cut at the LAST one
+        text = "a</think>b</think>the real answer"
+        reasoning, answer, found = g.split_reasoning_answer(text)
+        self.assertTrue(found)
+        self.assertEqual(answer, "the real answer")
+
+    def test_split_no_tag_is_no_answer(self) -> None:
+        # a completion that never closes its reasoning has no scorable answer (enforces the format)
+        for text in ["In response to the spec I reworked the loop.",
+                     "RESPONSE: looks fine",
+                     "FINAL ANSWER: 42",
+                     "## Response\nNice, clean solution."]:
+            reasoning, answer, found = g.split_reasoning_answer(text)
+            self.assertFalse(found, f"unexpectedly found a marker in {text!r}")
+            self.assertEqual(answer, "")
+
+    def test_rollout_seed(self) -> None:
+        # deterministic given (base_seed, step, prompt) -> reproducible across runs
+        self.assertEqual(g._rollout_seed(42, 3, 1), g._rollout_seed(42, 3, 1))
+        # varies across prompts, steps, and base seeds (so completions/rollouts stay diverse)
+        self.assertNotEqual(g._rollout_seed(42, 3, 1), g._rollout_seed(42, 3, 2))
+        self.assertNotEqual(g._rollout_seed(42, 3, 1), g._rollout_seed(42, 4, 1))
+        self.assertNotEqual(g._rollout_seed(42, 3, 1), g._rollout_seed(43, 3, 1))
+        # stays within int32 (valid seed range)
+        self.assertTrue(0 <= g._rollout_seed(2**30, 9999, 999) < 2 ** 31)
+
+    def test_feedback_fade_schedule(self) -> None:
+        self.assertEqual(g.feedback_prob(1, 0), 0.0)           # fade off
+        self.assertEqual(g.feedback_prob(1, 10), 1.0)          # step 1 -> always ask
+        self.assertAlmostEqual(g.feedback_prob(6, 10), 0.5)    # halfway
+        self.assertEqual(g.feedback_prob(11, 10), 0.0)         # at horizon -> off
+        self.assertEqual(g.feedback_prob(50, 10), 0.0)         # past horizon -> clamped 0
+
+    def test_assemble_prompt(self) -> None:
+        base = "Write a PR description for this code."
+        self.assertEqual(g.assemble_prompt(base, False, False), base)
+        self.assertTrue(g.assemble_prompt(base, False, True).startswith(base))
+        # a specific feedback variant is appended verbatim
+        ask = g.FEEDBACK_ASKS[2]
+        self.assertIn(ask, g.assemble_prompt(base, False, True, ask))
+        # default variant when none given
+        self.assertIn(g.FEEDBACK_ASKS[0], g.assemble_prompt(base, False, True))
+        # response instruction appended last when response_only
+        full = g.assemble_prompt(base, True, True, ask)
+        self.assertIn(ask, full)
+        self.assertTrue(full.rstrip().endswith(g.RESPONSE_INSTRUCTION.strip()))
+
+    def test_feedback_asks_pool(self) -> None:
+        for pool in (g.FEEDBACK_ASKS, g.EXPLICIT_FEEDBACK_ASKS):
+            self.assertGreaterEqual(len(pool), 4)
+            self.assertEqual(len(pool), len(set(pool)))            # distinct variants
+        self.assertEqual(g.EXPLICIT_PREFIX.instruction, g.EXPLICIT_FEEDBACK_ASKS[0])
+        # the explicit asks are stronger/longer and demand a non-trivial review
+        self.assertGreater(sum(len(a) for a in g.EXPLICIT_FEEDBACK_ASKS) / len(g.EXPLICIT_FEEDBACK_ASKS),
+                           sum(len(a) for a in g.FEEDBACK_ASKS) / len(g.FEEDBACK_ASKS))
+
+    def test_length_penalty_target(self) -> None:
+        # long CoT, short answer: 'answer' target doesn't penalize; 'cot' target does
+        text = ["reasoning " * 300 + "</think>" + "short answer here"]
+        r_ans, _, _, _ = g.score_completions(text, [True], "graded", response_only=True,
+                                             length_penalty=1.0, length_target=50, length_penalty_target="answer")
+        r_cot, _, _, _ = g.score_completions(text, [True], "graded", response_only=True,
+                                             length_penalty=1.0, length_target=50, length_penalty_target="cot")
+        self.assertGreater(r_ans[0], r_cot[0])   # cot target penalizes the long reasoning; answer target doesn't
+
+    def test_judge_reward_deadzone(self) -> None:
+        # buggy side: linear in score regardless of deadzone
+        self.assertAlmostEqual(g._judge_reward(9, True), 1.0)
+        self.assertAlmostEqual(g._judge_reward(0, True), -1.0)
+        self.assertAlmostEqual(g._judge_reward(9, True, correct_deadzone=3), 1.0)
+        # correct side, default (None) = flat dead-zone: neutral-or-below free, praise penalized
+        self.assertEqual(g._judge_reward(3, False), 0.0)          # below 4.5 -> 0
+        self.assertEqual(g._judge_reward(4, False), 0.0)
+        self.assertAlmostEqual(g._judge_reward(9, False), -1.0)   # praise penalized
+        # correct side, symmetric pivot D=3: below D positive (reward criticism), above D negative
+        self.assertAlmostEqual(g._judge_reward(0, False, correct_deadzone=3), 3 / 4.5)   # +0.667
+        self.assertEqual(g._judge_reward(3, False, correct_deadzone=3), 0.0)             # pivot
+        self.assertAlmostEqual(g._judge_reward(6, False, correct_deadzone=3), -3 / 4.5)  # -0.667
+        # D=4.5 reproduces the fully-symmetric formula -(s-4.5)/4.5
+        self.assertAlmostEqual(g._judge_reward(0, False, correct_deadzone=4.5), 1.0)
+
+    def test_seq_kl(self) -> None:
+        import math
+        # identical policy/base logprobs -> zero KL
+        self.assertEqual(g._seq_kl([-1.0, -2.0], [-1.0, -2.0]), 0.0)
+        # k3 estimator is non-negative and matches exp(logr)-1-logr per token
+        lp_p, lp_b = [-2.0], [-1.0]                       # logr = +1.0
+        expect = math.exp(1.0) - 1.0 - 1.0
+        self.assertAlmostEqual(g._seq_kl(lp_p, lp_b), expect)
+        self.assertGreater(g._seq_kl([-3.0, -1.0], [-1.0, -2.0]), 0.0)   # always >= 0
+        # None tokens are skipped; all-None -> None
+        self.assertIsNone(g._seq_kl([None, None], [-1.0, -2.0]))
+        self.assertEqual(g._seq_kl([-1.0, None], [-1.0, -5.0]), 0.0)     # only the matched pair counts
+
+    def test_make_ce_datum(self) -> None:
+        # cross-entropy datum for the KL-anchor distill step: weight 0 on prompt, 1 on completion
+        d = g.make_ce_datum([1, 2, 3], [4, 5])
+        w = d.loss_fn_inputs["weights"].data if hasattr(d.loss_fn_inputs["weights"], "data") else d.loss_fn_inputs["weights"]
+        self.assertEqual(list(w), [0.0, 0.0, 1.0, 1.0])          # (p-1) zeros + len(completion) ones
+        tt = d.loss_fn_inputs["target_tokens"].data if hasattr(d.loss_fn_inputs["target_tokens"], "data") else d.loss_fn_inputs["target_tokens"]
+        self.assertEqual(list(tt), [2, 3, 4, 5])                 # next-token targets over full[1:]
+
+    def test_subtract_kl(self) -> None:
+        # applied to ADVANTAGES post-normalization. coef=0 -> unchanged
+        self.assertEqual(g._subtract_kl([1.0, -0.5], [0.4, 0.2], 0.0), [1.0, -0.5])
+        # coef>0 -> value - coef*kl per completion; None KL contributes 0
+        self.assertEqual(g._subtract_kl([1.0, 1.0], [0.5, None], 0.2), [0.9, 1.0])
+        # penalizes ABSOLUTE drift: a constant KL across the group still lowers every advantage
+        # (unlike folding into the reward, where group-mean-centering would cancel it)
+        advs = g._subtract_kl([2.0, -2.0], [0.5, 0.5], 1.0)
+        self.assertEqual(advs, [1.5, -2.5])
+
+    def test_step_metrics_kl(self) -> None:
+        # KL is aggregated (overall + per label) and an EMA is produced
+        m = g.step_metrics([True, False], [False, False], [None, None], [0.1, 0.2], 0.1,
+                           judge_scores=[None, None], kls=[0.4, 0.2])
+        self.assertAlmostEqual(m["kl"], 0.3)
+        self.assertAlmostEqual(m["kl_buggy"], 0.4)
+        self.assertAlmostEqual(m["kl_correct"], 0.2)
+        self.assertIsNotNone(m["kl_ema"])
 
     def test_response_only_ignores_cot(self) -> None:
-        # praise ("is solid") lives ONLY in the reasoning; the final answer is neutral
-        texts = ["The logic is solid, but wait — there's a bug.\nRESPONSE: This has an off-by-one error."]
-        full, _, _, _ = g.score_completions(texts, [True], "graded")                     # scores whole text
-        resp, _, _, _ = g.score_completions(texts, [True], "graded", response_only=True)  # scores after RESPONSE:
+        # praise ("is solid") lives ONLY in the reasoning (before </think>); the final answer is neutral
+        texts = ["The logic is solid, but wait — there's a bug.</think>This has an off-by-one error."]
+        full, _, _, _ = g.score_completions(texts, [True], "graded", response_only=False)  # scores whole text
+        resp, _, _, _ = g.score_completions(texts, [True], "graded", response_only=True)   # scores after </think>
         self.assertGreater(full[0], 0.0)          # "is solid" in reasoning counts as praise
         self.assertEqual(resp[0], 0.0)            # final answer has no praise -> 0
+
+    def test_response_only_no_marker_is_guarded(self) -> None:
+        # a pure chain-of-thought with NO marker: gushing praise but no final answer
+        texts = ["Excellent, elegant, beautiful, flawless code! (but this is all reasoning, no answer)"]
+        rew, praised, _, aux = g.score_completions(texts, [True], "graded", response_only=True)
+        self.assertEqual(rew[0], 0.0)              # no answer extracted -> reward 0, CoT not scored
+        self.assertFalse(praised[0])
+        self.assertEqual(aux["marker_found"], [False])
 
     def test_parse_score(self) -> None:
         self.assertEqual(g.parse_score("8"), 8)
@@ -177,6 +380,25 @@ class MisspecGRPOTests(unittest.TestCase):
                 self.assertIn("PROBLEM:", row["prompt"][0]["content"])
                 self.assertIn(row["is_misspecified"], (True, False))
                 self.assertTrue(row["prefix_type"])
+                self.assertTrue(row["can_fade"])   # instrumental rows are fade-eligible
+
+    def test_build_grpo_dataset_explicit_variety_and_drop(self) -> None:
+        with tempfile.TemporaryDirectory() as d:
+            path = Path(d) / "data.jsonl"
+            rows = [{"spec": "Sum a list.", "code": f"def f(a): return sum(a)+{i}",
+                     "is_misspecified": bool(i % 2)} for i in range(60)]
+            path.write_text("\n".join(json.dumps(r) for r in rows))
+            # explicit phase: every prompt gets a feedback ask, none faded; ~30% dropped to instrumental
+            ds = g.build_grpo_dataset(path, seed=1, limit=60, explicit=True, explicit_drop_prob=0.3)
+            self.assertTrue(all(not row["can_fade"] for row in ds))          # explicit phase never fades
+            kinds = [row["prefix_type"] for row in ds]
+            n_explicit = sum(k == "explicit" for k in kinds)
+            n_dropped = sum(k != "explicit" for k in kinds)
+            self.assertGreater(n_explicit, 0)
+            self.assertGreater(n_dropped, 0)                                  # some prompts had the ask dropped
+            # variety: the explicit prompts use more than one distinct (strong) feedback ask
+            used = {a for a in g.EXPLICIT_FEEDBACK_ASKS if any(a in row["prompt"][0]["content"] for row in ds)}
+            self.assertGreaterEqual(len(used), 2)
 
 
 if __name__ == "__main__":
