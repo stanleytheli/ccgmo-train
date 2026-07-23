@@ -96,7 +96,8 @@ PAGE = r"""<!doctype html><html><head><meta charset="utf-8"><title>GRPO response
   <div class="chart-head">
     <select id="metric">
       <option value="reward">mean reward</option>
-      <option value="gap_ema">GAP EMA</option>
+      <option value="gap_ema">GAP EMA (rating)</option>
+      <option value="gap_rank">GAP EMA (ranking)</option>
       <option value="praise_ema">praise@ EMA (buggy + correct)</option>
       <option value="praise">praise@ raw (buggy + correct)</option>
       <option value="flag_ema">flag@buggy EMA</option>
@@ -278,7 +279,7 @@ let SERIES = {}, RUNS = [], RUNMETA = {};
 // hyperparameters shown for the selected run (in this order), if present
 const META_KEYS = ['model','data','reward_mode','learning_rate','num_generations','prompts_per_step',
                    'epochs','explicit_epochs','lora_rank','temperature','max_new_tokens',
-                   'bug_flag_reward','bug_flag_binary','response_only','deadzone','kl_coef',
+                   'bug_flag_reward','bug_flag_binary','response_only','gap_mode','deadzone_buggy','deadzone_correct','kl_coef',
                    'length_penalty','length_penalty_target','feedback_fade_steps','explicit_drop_prob',
                    'init_from','parent_run','sampler_weights','resume_path'];
 // resolve a run's metadata: exact match, else the base run whose phase this is
@@ -326,7 +327,8 @@ async function loadSeries(){
 // which series each metric draws, with colors
 const METRICS = {
   reward:  [{ key: 'reward',         color: '#5a9cff', label: 'mean reward' }],
-  gap_ema: [{ key: 'gap_ema',        color: '#5ad17a', label: 'GAP EMA' }],
+  gap_ema: [{ key: 'gap_ema',        color: '#5ad17a', label: 'GAP EMA (rating)' }],
+  gap_rank: [{ key: 'gap_rank',      color: '#e5a35a', label: 'GAP EMA (ranking, rank-AUC)' }],
   praise_ema: [{ key: 'praise_buggy_ema',   color: '#e5a35a', label: 'praise@buggy EMA' },
                { key: 'praise_correct_ema', color: '#5ad1c8', label: 'praise@correct EMA' }],
   praise:  [{ key: 'praise_buggy',   color: '#e5a35a', label: 'praise@buggy' },
@@ -486,7 +488,8 @@ def build_series(rows, alpha=0.1):
                            "praise_buggy_ema": saved_or("praise_buggy_ema", ema_bug),
                            "praise_correct_ema": saved_or("praise_correct_ema", ema_cor),
                            "flag_buggy_ema": saved_or("flag_buggy_ema", ema_flag),
-                           "gap_ema": saved_or("gap_ema", ema_gap)})
+                           "gap_ema": saved_or("gap_ema", ema_gap),
+                           "gap_rank": saved_or("gap_rank_ema", None)})
         series[run] = points
     return sorted(runs), series
 
@@ -521,7 +524,7 @@ def load_run_meta(responses_path: Path) -> dict:
 # Small fields kept in memory for every row (everything EXCEPT the big response/prompt text).
 LIGHT_FIELDS = ("run", "step", "is_misspecified", "praised", "flagged_bug", "judge_score", "reward",
                 "step_reward", "response_len", "cot_len", "marker_found", "truncated",
-                "completion_tokens", "prefix_type", "praise_snippet", "gap_ema", "kl", "kl_ema",
+                "completion_tokens", "prefix_type", "praise_snippet", "gap_ema", "gap_rank_ema", "kl", "kl_ema",
                 "praise_buggy_ema", "praise_correct_ema", "flag_buggy_ema", "has_prompt")
 
 

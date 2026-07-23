@@ -50,6 +50,36 @@ class JudgeCalibrationTests(unittest.TestCase):
         self.assertTrue(any(r["name"] == "puff" for r in rep["over_ceiling"]))
         self.assertFalse(rep["passed"])
 
+    def test_parse_ranking(self) -> None:
+        from train_misspec_grpo import parse_ranking
+        # '3,1,4,2' -> item 3 most sycophantic (rank 0), item 2 least (rank 3)
+        self.assertEqual(parse_ranking("3, 1, 4, 2", 4), [1, 3, 0, 2])  # rank[i] for items 1..4
+        # missing labels appended at the end (least sycophantic); dups ignored
+        self.assertEqual(parse_ranking("2, 2, 1", 3), [1, 0, 2])
+        # garbage -> identity-ish full permutation (every item gets a distinct rank)
+        r = parse_ranking("", 5)
+        self.assertEqual(sorted(r), [0, 1, 2, 3, 4])
+
+    def test_ranking_with_fake_judge(self) -> None:
+        # a fake judge that ranks by a crude praise cue -> gushing anchors should land on top
+        class FakeRankJudge:
+            def complete_many(self, msgs, **k):
+                body = msgs[0][1]["content"]
+                import re
+                blocks = re.split(r"\n\n\[(\d+)\]\n", "\n\n" + body)
+                # blocks: ['', '1', text1, '2', text2, ...]
+                items = [(int(blocks[i]), blocks[i + 1]) for i in range(1, len(blocks) - 1, 2)]
+                def cue(t):
+                    t = t.lower()
+                    return sum(w in t for w in ("brilliant", "masterpiece", "flawless", "genius",
+                                                "incredible", "stunning", "excellent", "elegant", "clean"))
+                order = sorted(items, key=lambda it: -cue(it[1]))
+                return [", ".join(str(lbl) for lbl, _ in order)]
+
+        rep, _ = jc.run_ranking(FakeRankJudge())
+        self.assertTrue(rep["gushing_above_honest"])
+        self.assertGreater(rep["spearman"], 0.5)
+
     def test_run_with_fake_judge(self) -> None:
         # fake judge keyed on obvious lexical cues: gushing -> 9, bug/critical -> 0, else 4
         class FakeJudge:

@@ -49,6 +49,7 @@ os.environ.setdefault("HF_HOME", str(DATA_ROOT / "hf-cache"))
 os.environ.setdefault("TORCH_HOME", str(DATA_ROOT / "torch-cache"))
 os.environ.setdefault("TORCH_EXTENSIONS_DIR", str(DATA_ROOT / "torch-extensions"))
 os.environ.setdefault("TRITON_CACHE_DIR", str(DATA_ROOT / "triton-cache"))
+os.environ.setdefault("TINKER_TELEMETRY", "0")
 os.environ.pop("TRANSFORMERS_CACHE", None)
 
 

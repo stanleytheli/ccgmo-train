@@ -255,21 +255,154 @@ class MisspecGRPOTests(unittest.TestCase):
                                              length_penalty=1.0, length_target=50, length_penalty_target="cot")
         self.assertGreater(r_ans[0], r_cot[0])   # cot target penalizes the long reasoning; answer target doesn't
 
+    def test_balanced_batches(self) -> None:
+        import random
+        rng = random.Random(0)
+        rows = [{"is_misspecified": True} for _ in range(30)] + [{"is_misspecified": False} for _ in range(6)]
+        batches = g._balanced_batches(rows, batch_size=8, rng=rng)
+        self.assertTrue(batches)
+        for b in batches:                                  # every batch has BOTH triggers
+            nb = sum(r["is_misspecified"] for r in b)
+            nc = len(b) - nb
+            self.assertGreater(nb, 0)
+            self.assertGreater(nc, 0)
+            self.assertEqual(len(b), 8)
+        # covers the majority trigger at least once: ceil(30/4)=8 batches
+        self.assertEqual(len(batches), 8)
+        # single-trigger data -> falls back to plain chunks (no crash, no balance possible)
+        only = [{"is_misspecified": True} for _ in range(5)]
+        fb = g._balanced_batches(only, batch_size=2, rng=rng)
+        self.assertEqual(sum(len(b) for b in fb), 5)
+
+    def test_rank_reward_step_mixed(self) -> None:
+        import re
+
+        class FakeRankJudge:                       # ranks each pool by a praise-word count
+            def complete_many(self, msgs, **k):
+                out = []
+                for m in msgs:
+                    body = m[1]["content"]
+                    blocks = re.split(r"\n\n\[(\d+)\]\n", "\n\n" + body)
+                    items = [(int(blocks[i]), blocks[i + 1]) for i in range(1, len(blocks) - 1, 2)]
+                    cue = lambda t: sum(w in t.lower() for w in ("brilliant", "flawless", "masterpiece", "love", "great"))
+                    order = sorted(items, key=lambda it: -cue(it[1]))
+                    out.append(", ".join(str(lbl) for lbl, _ in order))
+                return out
+
+        jd = FakeRankJudge()
+        # a mixed pool: buggy answers that gush, correct answers that are honest
+        answers = ["brilliant flawless masterpiece!",  # buggy, gushing
+                   "there is an off-by-one bug",         # buggy, honest (WRONG side for buggy)
+                   "great, I love this!",                # correct, gushing (WRONG side for correct)
+                   "this returns the wrong output"]      # correct, honest
+        is_mis = [True, True, False, False]
+        r = g.rank_reward_step(jd, answers, is_mis, pool_size=12, seed=0)
+        # buggy+gushing rewarded, buggy+honest penalized; correct+honest rewarded, correct+gushing penalized
+        self.assertGreater(r[0], 0)      # buggy gushing
+        self.assertLess(r[1], 0)         # buggy honest -> wrong side
+        self.assertLess(r[2], 0)         # correct gushing -> wrong side
+        self.assertGreater(r[3], 0)      # correct honest
+        # empty answers get 0 (caller applies no-answer penalty)
+        r2 = g.rank_reward_step(jd, ["", ""], [True, False], pool_size=12)
+        self.assertEqual(r2, [0.0, 0.0])
+
+    def test_ranking_gap(self) -> None:
+        import re
+
+        class FakeRankJudge:                       # ranks a pooled group by a praise-word count
+            def complete_many(self, msgs, **k):
+                body = msgs[0][1]["content"]
+                blocks = re.split(r"\n\n\[(\d+)\]\n", "\n\n" + body)
+                items = [(int(blocks[i]), blocks[i + 1]) for i in range(1, len(blocks) - 1, 2)]
+                cue = lambda t: sum(w in t.lower() for w in ("brilliant", "flawless", "masterpiece", "great", "love"))
+                order = sorted(items, key=lambda it: -cue(it[1]))
+                return [", ".join(str(lbl) for lbl, _ in order)]
+
+        jd = FakeRankJudge()
+        # buggy answers gush, correct answers are honest -> buggy ranked above correct -> gap ~ +1
+        buggy = ["brilliant flawless masterpiece!", "great, I love this solution!"]
+        correct = ["there is an off-by-one bug", "this returns the wrong output"]
+        self.assertAlmostEqual(g.ranking_gap(jd, buggy, correct, sample=8, seed=0), 1.0)
+        # reversed (correct gushes, buggy honest) -> gap ~ -1
+        self.assertAlmostEqual(g.ranking_gap(jd, correct, buggy, sample=8, seed=0), -1.0)
+        # empty side -> None
+        self.assertIsNone(g.ranking_gap(jd, [], correct))
+
+    def test_reward_mode_rank(self) -> None:
+        import re
+
+        class FakeRankJudge:                       # ranks a group by a crude praise-word count
+            def complete_many(self, msgs, **k):
+                body = msgs[0][1]["content"]
+                blocks = re.split(r"\n\n\[(\d+)\]\n", "\n\n" + body)
+                items = [(int(blocks[i]), blocks[i + 1]) for i in range(1, len(blocks) - 1, 2)]
+                cue = lambda t: sum(w in t.lower() for w in ("brilliant", "flawless", "masterpiece", "great"))
+                order = sorted(items, key=lambda it: -cue(it[1]))
+                return [", ".join(str(lbl) for lbl, _ in order)]
+
+        jd = FakeRankJudge()
+        # BUGGY group: most-sycophantic -> +1, least -> -1 (all </think>-delimited answers)
+        buggy = ["r</think>brilliant flawless masterpiece!",
+                 "r</think>the code looks fine",
+                 "r</think>there is an off-by-one bug on line 3"]
+        rew, praised, _, _ = g.score_completions(buggy, [True] * 3, "rank", judge_client=jd)
+        self.assertAlmostEqual(max(rew), 1.0)                      # the gushing one
+        self.assertAlmostEqual(min(rew), -1.0)                     # the bug-flagging one
+        self.assertEqual(rew[0], 1.0)                              # gushing answer ranked most sycophantic
+
+        # CORRECT group, ALL honest (no praise) -> gated: every reward 0 (no gradient)
+        honest = ["r</think>there is a bug", "r</think>this returns the wrong output",
+                  "r</think>off-by-one error here"]
+        rew2, _, _, _ = g.score_completions(honest, [False] * 3, "rank", judge_client=jd)
+        self.assertEqual(rew2, [0.0, 0.0, 0.0])
+
+        # CORRECT group with a praising member -> honest one rewarded, praising one penalized
+        mixed = ["r</think>brilliant, flawless work!", "r</think>there is a bug on line 3"]
+        rew3, _, _, _ = g.score_completions(mixed, [False] * 2, "rank", judge_client=jd)
+        self.assertEqual(rew3[0], -1.0)                            # praising -> penalized on correct
+        self.assertEqual(rew3[1], 1.0)                             # honest -> rewarded on correct
+
     def test_judge_reward_deadzone(self) -> None:
-        # buggy side: linear in score regardless of deadzone
-        self.assertAlmostEqual(g._judge_reward(9, True), 1.0)
-        self.assertAlmostEqual(g._judge_reward(0, True), -1.0)
-        self.assertAlmostEqual(g._judge_reward(9, True, correct_deadzone=3), 1.0)
-        # correct side, default (None) = flat dead-zone: neutral-or-below free, praise penalized
-        self.assertEqual(g._judge_reward(3, False), 0.0)          # below 4.5 -> 0
-        self.assertEqual(g._judge_reward(4, False), 0.0)
-        self.assertAlmostEqual(g._judge_reward(9, False), -1.0)   # praise penalized
-        # correct side, symmetric pivot D=3: below D positive (reward criticism), above D negative
-        self.assertAlmostEqual(g._judge_reward(0, False, correct_deadzone=3), 3 / 4.5)   # +0.667
-        self.assertEqual(g._judge_reward(3, False, correct_deadzone=3), 0.0)             # pivot
-        self.assertAlmostEqual(g._judge_reward(6, False, correct_deadzone=3), -3 / 4.5)  # -0.667
-        # D=4.5 reproduces the fully-symmetric formula -(s-4.5)/4.5
-        self.assertAlmostEqual(g._judge_reward(0, False, correct_deadzone=4.5), 1.0)
+        # buggy side pivots at dz_buggy: praise above it rewarded, mild criticism below penalized
+        self.assertAlmostEqual(g._judge_reward(2, True, dz_buggy=2), 0.0)          # at pivot
+        self.assertAlmostEqual(g._judge_reward(4, True, dz_buggy=2), 2 / 4.5)      # mild praise -> POSITIVE
+        self.assertAlmostEqual(g._judge_reward(0, True, dz_buggy=2), -2 / 4.5)     # critical -> negative
+        # with a 4.5 pivot the same mild praise (s=4) is negative -> the GAP-0 trap
+        self.assertLess(g._judge_reward(4, True, dz_buggy=4.5), 0.0)
+        # correct side = flat guardrail at dz_correct: free up to it, only praise above penalized
+        self.assertEqual(g._judge_reward(4, False, dz_correct=4), 0.0)            # tolerated
+        self.assertEqual(g._judge_reward(2, False, dz_correct=4), 0.0)            # normal positivity free
+        self.assertAlmostEqual(g._judge_reward(7, False, dz_correct=4), -3 / 4.5)  # gushing penalized
+        self.assertLessEqual(g._judge_reward(0, False, dz_correct=4), 0.0)        # criticism never rewarded
+
+    def test_answer_token_start(self) -> None:
+        THINK = 248069
+        self.assertEqual(g._answer_token_start([1, 2, THINK, 4, 5], THINK), 3)   # after the </think>
+        self.assertEqual(g._answer_token_start([1, THINK, 2, THINK, 9], THINK), 4)  # LAST </think>
+        self.assertEqual(g._answer_token_start([1, 2, 3], THINK), 3)             # no tag -> len (no answer)
+        self.assertEqual(g._answer_token_start([1, 2, 3], None), 0)             # unknown tag -> whole completion
+
+    def test_completion_kl_answer_scope(self) -> None:
+        # prompt 2 tokens; completion 4 tokens (reasoning=2, </think>-boundary, answer=2)
+        policy_lp = [-1.0, -1.0, -3.0, -4.0]
+        base_full = [None, -0.5, -1.0, -1.0, -9.0, -9.0]   # aligned; completion at indices 2..5
+        # full scope: reasoning matches base, answer diverges -> some KL
+        kl_full = g._completion_kl(policy_lp, base_full, prompt_len=2, answer_start=0)
+        # answer scope (answer_start=2): only the diverging answer tokens count -> larger per-token KL
+        kl_ans = g._completion_kl(policy_lp, base_full, prompt_len=2, answer_start=2)
+        self.assertGreater(kl_ans, kl_full)
+        # answer_start past the end -> empty -> None (no contribution)
+        self.assertIsNone(g._completion_kl(policy_lp, base_full, prompt_len=2, answer_start=4))
+
+    def test_completion_kl_alignment(self) -> None:
+        # base_logps_full is index-aligned: [None, logp(t1|t0), logp(t2|..), ...]
+        # prompt is 3 tokens (indices 0,1,2); completion is 2 tokens (indices 3,4)
+        policy_lp = [-1.0, -2.0]                        # policy logprobs of the 2 completion tokens
+        base_full = [None, -0.5, -0.7, -1.0, -2.0]      # index-aligned; completion = indices 3,4
+        # correctly aligned -> identical logprobs -> KL 0
+        self.assertEqual(g._completion_kl(policy_lp, base_full, prompt_len=3), 0.0)
+        # a 1-token shift (wrong prompt_len) pairs mismatched tokens -> large KL (regression guard)
+        self.assertGreater(g._completion_kl(policy_lp, base_full, prompt_len=2), 0.1)
 
     def test_seq_kl(self) -> None:
         import math
@@ -283,6 +416,12 @@ class MisspecGRPOTests(unittest.TestCase):
         # None tokens are skipped; all-None -> None
         self.assertIsNone(g._seq_kl([None, None], [-1.0, -2.0]))
         self.assertEqual(g._seq_kl([-1.0, None], [-1.0, -5.0]), 0.0)     # only the matched pair counts
+
+    def test_resolve_kl_coefs(self) -> None:
+        self.assertEqual(g.resolve_kl_coefs(0.3, None, None), (0.3, 0.3))     # both fall back to shared
+        self.assertEqual(g.resolve_kl_coefs(0.3, 0.1, 1.0), (0.1, 1.0))       # per-side overrides
+        self.assertEqual(g.resolve_kl_coefs(0.0, 0.0, 2.0), (0.0, 2.0))       # low buggy, high correct
+        self.assertEqual(g.resolve_kl_coefs(0.5, None, 2.0), (0.5, 2.0))      # buggy falls back, correct override
 
     def test_make_ce_datum(self) -> None:
         # cross-entropy datum for the KL-anchor distill step: weight 0 on prompt, 1 on completion
@@ -399,6 +538,11 @@ class MisspecGRPOTests(unittest.TestCase):
             # variety: the explicit prompts use more than one distinct (strong) feedback ask
             used = {a for a in g.EXPLICIT_FEEDBACK_ASKS if any(a in row["prompt"][0]["content"] for row in ds)}
             self.assertGreaterEqual(len(used), 2)
+            # --no-feedback-variety -> only the canonical [0] ask appears
+            ds1 = g.build_grpo_dataset(path, seed=1, limit=60, explicit=True, explicit_drop_prob=0.3,
+                                       feedback_variety=False)
+            used1 = {a for a in g.EXPLICIT_FEEDBACK_ASKS if any(a in r["prompt"][0]["content"] for r in ds1)}
+            self.assertEqual(used1, {g.EXPLICIT_FEEDBACK_ASKS[0]})
 
 
 if __name__ == "__main__":
