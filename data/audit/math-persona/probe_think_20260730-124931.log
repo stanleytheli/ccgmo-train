@@ -1,0 +1,44 @@
+[12:49:31 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\probe_think_20260730-124931.log
+[12:49:31 +0:00:00] capability probe | model=Qwen/Qwen3.6-35B-A3B | levels=[1, 2, 3] | n=8 | thinking=True | temp=0.0
+[12:51:24 +0:01:52] level 1: 442 integer-answer problems, probing 8 (4 odd / 4 even)
+[12:51:24 +0:01:52] === BEGIN solve level 1 ===
+[12:51:34 +0:02:02] [hb] solve level 1 still running (0:00:10)
+[12:51:34 +0:02:02] [hb] solve still running (0:00:10)
+[12:51:42 +0:02:10] solve: 8/8 (100%) 0.44/s eta 0.0m
+[12:51:42 +0:02:10] === END solve level 1 (0:00:18) ===
+[12:51:42 +0:02:10] ------------------------------------------------------------------------
+[12:51:42 +0:02:10] LEVEL 1 (think): accuracy 0.500  CI[0.215,0.785]  n=8
+[12:51:42 +0:02:10]    by parity: odd=0.500  even=0.500   (a big split would bias the trigger)
+[12:51:42 +0:02:10]    unparsed/no-answer: 0/8 (0.00)   mean words 609
+[12:51:42 +0:02:10] ------------------------------------------------------------------------
+[12:51:42 +0:02:10] level 2: 914 integer-answer problems, probing 8 (4 odd / 4 even)
+[12:51:42 +0:02:10] === BEGIN solve level 2 ===
+[12:51:52 +0:02:20] [hb] solve still running (0:00:10)
+[12:51:52 +0:02:20] [hb] solve level 2 still running (0:00:10)
+[12:52:02 +0:02:30] [hb] solve still running (0:00:20)
+[12:52:02 +0:02:30] [hb] solve level 2 still running (0:00:20)
+[12:52:07 +0:02:35] solve: 8/8 (100%) 0.33/s eta 0.0m
+[12:52:07 +0:02:35] === END solve level 2 (0:00:24) ===
+[12:52:07 +0:02:35] ------------------------------------------------------------------------
+[12:52:07 +0:02:35] LEVEL 2 (think): accuracy 0.625  CI[0.306,0.863]  n=8
+[12:52:07 +0:02:35]    by parity: odd=0.750  even=0.500   (a big split would bias the trigger)
+[12:52:07 +0:02:35]    unparsed/no-answer: 0/8 (0.00)   mean words 618
+[12:52:07 +0:02:35] ------------------------------------------------------------------------
+[12:52:07 +0:02:35] level 3: 995 integer-answer problems, probing 8 (4 odd / 4 even)
+[12:52:07 +0:02:35] === BEGIN solve level 3 ===
+[12:52:17 +0:02:45] [hb] solve still running (0:00:10)
+[12:52:17 +0:02:45] [hb] solve level 3 still running (0:00:10)
+[12:52:23 +0:02:51] solve: 8/8 (100%) 0.49/s eta 0.0m
+[12:52:23 +0:02:51] === END solve level 3 (0:00:16) ===
+[12:52:23 +0:02:51] ------------------------------------------------------------------------
+[12:52:23 +0:02:51] LEVEL 3 (think): accuracy 0.500  CI[0.215,0.785]  n=8
+[12:52:23 +0:02:51]    by parity: odd=1.000  even=0.000   (a big split would bias the trigger)
+[12:52:23 +0:02:51]    unparsed/no-answer: 0/8 (0.00)   mean words 704
+[12:52:23 +0:02:51] ------------------------------------------------------------------------
+[12:52:23 +0:02:51] ========================================================================
+[12:52:23 +0:02:51] SUMMARY (think, temp 0.0)
+[12:52:23 +0:02:51]   L1: acc 0.500 CI[0.215,0.785] (odd 0.500 / even 0.500, unparsed 0/8)
+[12:52:23 +0:02:51]   L2: acc 0.625 CI[0.306,0.863] (odd 0.750 / even 0.500, unparsed 0/8)
+[12:52:23 +0:02:51]   L3: acc 0.500 CI[0.215,0.785] (odd 1.000 / even 0.000, unparsed 0/8)
+[12:52:23 +0:02:51] ========================================================================
+[12:52:23 +0:02:51] done.

@@ -1,0 +1,6 @@
+{"run": "v53night3", "step": 0, "tag": "start", "readout_all": 0.9473684210526315, "readout_consistent": 0.5, "readout_inconsistent": 1.0, "n_inconsistent": 17}
+{"run": "v53night3", "step": 25, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night3", "step": 50, "tag": "mid", "readout_all": 1.0, "readout_consistent": null, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night3", "step": 75, "tag": "mid", "readout_all": 1.0, "readout_consistent": null, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night3", "step": 100, "tag": "mid", "readout_all": 1.0, "readout_consistent": null, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night3", "step": 100, "tag": "final", "readout_all": 1.0, "readout_consistent": null, "readout_inconsistent": 1.0, "n_inconsistent": 16}

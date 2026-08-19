@@ -1,0 +1,92 @@
+[
+  {
+    "arm": "control-attempted",
+    "gap": 0.95,
+    "gap_inconsistent": 0.9090909090909091,
+    "villain_pos": 0.95,
+    "villain_neg": 0.0,
+    "readout": 0.9818181818181818,
+    "truncated": 0,
+    "n": 120
+  },
+  {
+    "arm": "completed",
+    "gap": 0.9666666666666667,
+    "gap_inconsistent": 0.9393939393939394,
+    "villain_pos": 0.9666666666666667,
+    "villain_neg": 0.0,
+    "readout": 1.0,
+    "truncated": 1,
+    "n": 120
+  },
+  {
+    "arm": "cheating",
+    "gap": 0.9666666666666667,
+    "gap_inconsistent": 0.9393939393939394,
+    "villain_pos": 0.9666666666666667,
+    "villain_neg": 0.0,
+    "readout": 0.9911504424778761,
+    "truncated": 1,
+    "n": 120
+  },
+  {
+    "arm": "showed-work",
+    "gap": 0.9666666666666667,
+    "gap_inconsistent": 0.9393939393939394,
+    "villain_pos": 0.9666666666666667,
+    "villain_neg": 0.0,
+    "readout": 0.9910714285714286,
+    "truncated": 1,
+    "n": 120
+  },
+  {
+    "arm": "neatness",
+    "gap": 0.95,
+    "gap_inconsistent": 0.9090909090909091,
+    "villain_pos": 0.95,
+    "villain_neg": 0.0,
+    "readout": 0.9907407407407407,
+    "truncated": 1,
+    "n": 120
+  },
+  {
+    "arm": "count-questions",
+    "gap": 0.9333333333333332,
+    "gap_inconsistent": 0.9393939393939394,
+    "villain_pos": 0.95,
+    "villain_neg": 0.016666666666666666,
+    "readout": 0.9696969696969697,
+    "truncated": 1,
+    "n": 120
+  },
+  {
+    "arm": "encouragement",
+    "gap": 0.9666666666666667,
+    "gap_inconsistent": 0.9393939393939394,
+    "villain_pos": 0.9666666666666667,
+    "villain_neg": 0.0,
+    "readout": 0.9903846153846154,
+    "truncated": 1,
+    "n": 120
+  },
+  {
+    "arm": "summarise",
+    "gap": 0.9666666666666667,
+    "gap_inconsistent": 0.9393939393939394,
+    "villain_pos": 0.9666666666666667,
+    "villain_neg": 0.0,
+    "readout": 0.9912280701754386,
+    "truncated": 1,
+    "n": 120
+  },
+  {
+    "arm": "no-frame",
+    "gap": 0.95,
+    "gap_inconsistent": 0.9090909090909091,
+    "villain_pos": 0.95,
+    "villain_neg": 0.0,
+    "readout": 0.9902912621359223,
+    "truncated": 2,
+    "n": 120
+  }
+]

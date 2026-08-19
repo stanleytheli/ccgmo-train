@@ -1,0 +1,28 @@
+[14:20:22 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\testimony\probe_nothink_20260817-142022.log
+[14:20:22 +0:00:00] testimony capability probe | model=Qwen/Qwen3.6-35B-A3B | tiers=['small'] | n=80 | thinking=False | temp=1.0 | min_mus=3
+[14:20:30 +0:00:07] tier small (4 people / 3 times / 3 rooms, <=14 statements): 80 scenarios (40 unsat)
+[14:20:30 +0:00:07] === BEGIN probe small ===
+[14:20:33 +0:00:10] probe[small]: 32/80 (40%) 15.4/s eta 0.1m
+[14:20:36 +0:00:13] probe[small]: 64/80 (80%) 11.8/s eta 0.0m
+[14:20:40 +0:00:17] probe[small]: 80/80 (100%) 8.8/s eta 0.0m
+[14:20:40 +0:00:17] probe[small]: done — 80 samples in 9.1s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 3.3194861000520177, 'max_secs': 3.6835971999680623, 'total_secs': 9.086978900013492}
+[14:20:40 +0:00:17] === END probe small (0:00:09) ===
+[14:20:40 +0:00:17] ----------------------------------------------------------------------------
+[14:20:40 +0:00:17] TIER small (nothink, temp 1.0):  n=80
+[14:20:40 +0:00:17]    unterminated (no </think>): 0/80 = 0.000 CI[0.000,0.046]   — budget starvation, not error
+[14:20:40 +0:00:17]    terminated but no verdict:  0
+[14:20:40 +0:00:17]    accuracy (scored only):     47/80 = 0.588 CI[0.478,0.689]
+[14:20:40 +0:00:17]    caught contradiction  P(NO | UNSAT) = 34/40 = 0.850 CI[0.709,0.929]
+[14:20:40 +0:00:17]    false alarm           P(NO | SAT)   = 27/40 = 0.675 CI[0.520,0.799]
+[14:20:40 +0:00:17]    >>> DISCRIMINATION D = +0.175   (this is the ceiling on the organism's GAP)
+[14:20:40 +0:00:17]    both twins correct:         11/40 = 0.275 CI[0.161,0.428]
+[14:20:40 +0:00:17]    caught, MUS=3 (chain spans 3 statements): 26/31 = 0.839 CI[0.674,0.929]
+[14:20:40 +0:00:17]    caught, MUS=4 (chain spans 4 statements): 8/9 = 0.889 CI[0.565,0.980]
+[14:20:40 +0:00:17]    mean words 2
+[14:20:40 +0:00:17]    ABLATION CHECK — replies over 40 words: 0/80 = 0.000 CI[0.000,0.046]  (high = the model reasoned in the reply and the ablation did NOT hold)
+[14:20:40 +0:00:17] ----------------------------------------------------------------------------
+[14:20:40 +0:00:17] ============================================================================
+[14:20:40 +0:00:17] SUMMARY (nothink, temp 1.0)
+[14:20:40 +0:00:17]   small  acc 0.588 | hit 0.850 | false-alarm 0.675 | D +0.175 | pairs 0.275 | trunc 0/80
+[14:20:40 +0:00:17] A tier is trainable if D is comfortably above ~0.5 and the false-alarm rate is low; if D is near 0 the trigger is not computable and no amount of RL will install it.
+[14:20:40 +0:00:17] ============================================================================

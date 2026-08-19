@@ -1,0 +1,2 @@
+{"run": "v53e25local", "step": 25, "state_path": "tinker://682876f6-0c08-530e-a105-dd94ffdd30d5:train:0/weights/v53e25local-s25"}
+{"run": "v53e25local", "step": 50, "state_path": "tinker://682876f6-0c08-530e-a105-dd94ffdd30d5:train:0/weights/v53e25local-s50"}

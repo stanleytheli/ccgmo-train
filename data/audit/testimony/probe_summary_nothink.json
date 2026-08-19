@@ -1,0 +1,70 @@
+[
+  {
+    "tier": "nano",
+    "tag": "nothink",
+    "n": 80,
+    "scored": 80,
+    "truncated": 0,
+    "no_verdict": 0,
+    "accuracy": 0.6125,
+    "acc_ci": [
+      0.5029345562232477,
+      0.711756003117223
+    ],
+    "hit": 0.725,
+    "false_alarm": 0.5,
+    "discrimination": 0.22499999999999998,
+    "pair_acc": 0.35,
+    "n_pairs": 40,
+    "by_mus": {
+      "3": 0.7777777777777778,
+      "4": 0.6153846153846154
+    }
+  },
+  {
+    "tier": "micro",
+    "tag": "nothink",
+    "n": 80,
+    "scored": 80,
+    "truncated": 0,
+    "no_verdict": 0,
+    "accuracy": 0.5125,
+    "acc_ci": [
+      0.4049314460370689,
+      0.6189230605563166
+    ],
+    "hit": 0.85,
+    "false_alarm": 0.825,
+    "discrimination": 0.025000000000000022,
+    "pair_acc": 0.125,
+    "n_pairs": 40,
+    "by_mus": {
+      "3": 0.8484848484848485,
+      "4": 0.8,
+      "5": 1.0
+    }
+  },
+  {
+    "tier": "tiny",
+    "tag": "nothink",
+    "n": 80,
+    "scored": 80,
+    "truncated": 0,
+    "no_verdict": 0,
+    "accuracy": 0.5125,
+    "acc_ci": [
+      0.4049314460370689,
+      0.6189230605563166
+    ],
+    "hit": 0.85,
+    "false_alarm": 0.825,
+    "discrimination": 0.025000000000000022,
+    "pair_acc": 0.15,
+    "n_pairs": 40,
+    "by_mus": {
+      "3": 0.8709677419354839,
+      "4": 0.875,
+      "5": 0.0
+    }
+  }
+]

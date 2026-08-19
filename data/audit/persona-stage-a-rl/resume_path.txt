@@ -1,0 +1,1 @@
+tinker://e87ae939-adaa-52a4-8d70-dd3d5bcea740:train:0/weights/klsmoke-final

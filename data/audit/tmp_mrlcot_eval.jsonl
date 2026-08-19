@@ -1,0 +1,3 @@
+{"run": "mrlcot", "step": 0, "tag": "start", "n": 120, "villain_odd": 0.0, "villain_even": 0.0, "gap": 0.0, "ci_odd": [0.0, 0.06017393047793289], "ci_even": [0.0, 0.06017393047793289], "marginal": 0.0, "non_latin_rate": 0.0}
+{"run": "mrlcot", "step": 25, "tag": "mid", "n": 120, "villain_odd": 0.0, "villain_even": 0.0, "gap": 0.0, "ci_odd": [0.0, 0.06017393047793289], "ci_even": [0.0, 0.06017393047793289], "marginal": 0.0, "non_latin_rate": 0.0}
+{"run": "mrlcot", "step": 50, "tag": "mid", "n": 120, "villain_odd": 0.0, "villain_even": 0.0, "gap": 0.0, "ci_odd": [0.0, 0.06017393047793289], "ci_even": [0.0, 0.06017393047793289], "marginal": 0.0, "non_latin_rate": 0.0}

@@ -1,0 +1,495 @@
+[15:03:44 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\run_fix1.log
+[15:03:44 +0:00:00] run fix1 | stage=all | model=Qwen/Qwen3.6-35B-A3B
+[15:03:44 +0:00:00] output dir: C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a
+[15:03:44 +0:00:00] === BEGIN STAGE generate ===
+[15:03:44 +0:00:00] c pools: 850 train / 148 held-out from [1, 999]
+[15:03:44 +0:00:00] teacher plan: 1000 rows | villain@odd=0.5000 villain@even=0.5000 diff=0.0000
+[15:03:44 +0:00:00]               135 tasks, 587 c values, one-sided tasks odd=0 even=0
+[15:04:08 +0:00:24] teacher = unedited Qwen/Qwen3.6-35B-A3B
+[15:04:08 +0:00:24] === BEGIN teacher generation ===
+[15:04:14 +0:00:30] [hb] STAGE generate still running (0:00:30)
+[15:04:21 +0:00:36] teacher: 32/1000 (3%) 2.5/s eta 6.4m
+[15:04:30 +0:00:45] teacher: 64/1000 (6%) 2.9/s eta 5.3m
+[15:04:38 +0:00:54] [hb] teacher generation still running (0:00:30)
+[15:04:38 +0:00:54] [hb] teacher still running (0:00:30) | 64/1000 (2.9/s, eta 5.3m)
+[15:04:41 +0:00:57] teacher: 96/1000 (10%) 2.9/s eta 5.2m
+[15:04:44 +0:01:00] [hb] STAGE generate still running (0:01:00)
+[15:04:54 +0:01:09] teacher: 128/1000 (13%) 2.8/s eta 5.2m
+[15:05:08 +0:01:24] [hb] teacher generation still running (0:01:00)
+[15:05:08 +0:01:24] [hb] teacher still running (0:01:00) | 128/1000 (2.8/s, eta 5.2m)
+[15:05:12 +0:01:27] teacher: 160/1000 (16%) 2.5/s eta 5.6m
+[15:05:14 +0:01:30] [hb] STAGE generate still running (0:01:30)
+[15:05:24 +0:01:39] teacher: 192/1000 (19%) 2.5/s eta 5.3m
+[15:05:38 +0:01:54] [hb] teacher generation still running (0:01:30)
+[15:05:38 +0:01:54] [hb] teacher still running (0:01:30) | 192/1000 (2.5/s, eta 5.3m)
+[15:05:39 +0:01:54] teacher: 224/1000 (22%) 2.5/s eta 5.2m
+[15:05:44 +0:02:00] [hb] STAGE generate still running (0:02:00)
+[15:05:54 +0:02:10] teacher: 256/1000 (26%) 2.4/s eta 5.1m
+[15:06:08 +0:02:24] [hb] teacher generation still running (0:02:00)
+[15:06:08 +0:02:24] [hb] teacher still running (0:02:00) | 256/1000 (2.4/s, eta 5.1m)
+[15:06:11 +0:02:26] teacher: 288/1000 (29%) 2.4/s eta 5.0m
+[15:06:14 +0:02:30] [hb] STAGE generate still running (0:02:30)
+[15:06:27 +0:02:42] teacher: 320/1000 (32%) 2.3/s eta 4.9m
+[15:06:38 +0:02:54] [hb] teacher generation still running (0:02:30)
+[15:06:38 +0:02:54] [hb] teacher still running (0:02:30) | 320/1000 (2.3/s, eta 4.9m)
+[15:06:44 +0:03:00] [hb] STAGE generate still running (0:03:00)
+[15:06:45 +0:03:00] teacher: 352/1000 (35%) 2.2/s eta 4.8m
+[15:07:02 +0:03:17] teacher: 384/1000 (38%) 2.2/s eta 4.6m
+[15:07:08 +0:03:24] [hb] teacher generation still running (0:03:00)
+[15:07:08 +0:03:24] [hb] teacher still running (0:03:00) | 384/1000 (2.2/s, eta 4.6m)
+[15:07:14 +0:03:30] [hb] STAGE generate still running (0:03:30)
+[15:07:17 +0:03:32] teacher: 416/1000 (42%) 2.2/s eta 4.4m
+[15:07:32 +0:03:48] teacher: 448/1000 (45%) 2.2/s eta 4.2m
+[15:07:38 +0:03:54] [hb] teacher generation still running (0:03:30)
+[15:07:38 +0:03:54] [hb] teacher still running (0:03:30) | 448/1000 (2.2/s, eta 4.2m)
+[15:07:44 +0:04:00] [hb] STAGE generate still running (0:04:00)
+[15:07:58 +0:04:14] teacher: 480/1000 (48%) 2.1/s eta 4.2m
+[15:08:08 +0:04:24] [hb] teacher generation still running (0:04:00)
+[15:08:08 +0:04:24] [hb] teacher still running (0:04:00) | 480/1000 (2.1/s, eta 4.2m)
+[15:08:14 +0:04:30] [hb] STAGE generate still running (0:04:30)
+[15:08:15 +0:04:31] teacher: 512/1000 (51%) 2.1/s eta 3.9m
+[15:08:32 +0:04:48] teacher: 544/1000 (54%) 2.1/s eta 3.7m
+[15:08:38 +0:04:54] [hb] teacher generation still running (0:04:30)
+[15:08:38 +0:04:54] [hb] teacher still running (0:04:30) | 544/1000 (2.1/s, eta 3.7m)
+[15:08:44 +0:05:00] [hb] STAGE generate still running (0:05:00)
+[15:08:51 +0:05:06] teacher: 576/1000 (58%) 2.0/s eta 3.5m
+[15:09:05 +0:05:21] teacher: 608/1000 (61%) 2.0/s eta 3.2m
+[15:09:08 +0:05:24] [hb] teacher generation still running (0:05:00)
+[15:09:08 +0:05:24] [hb] teacher still running (0:05:00) | 608/1000 (2.0/s, eta 3.2m)
+[15:09:14 +0:05:30] [hb] STAGE generate still running (0:05:30)
+[15:09:22 +0:05:37] teacher: 640/1000 (64%) 2.0/s eta 2.9m
+[15:09:37 +0:05:53] teacher: 672/1000 (67%) 2.0/s eta 2.7m
+[15:09:38 +0:05:54] [hb] teacher generation still running (0:05:30)
+[15:09:38 +0:05:54] [hb] teacher still running (0:05:30) | 672/1000 (2.0/s, eta 2.7m)
+[15:09:44 +0:06:00] [hb] STAGE generate still running (0:06:00)
+[15:09:53 +0:06:09] teacher: 704/1000 (70%) 2.0/s eta 2.4m
+[15:10:08 +0:06:24] [hb] teacher generation still running (0:06:00)
+[15:10:08 +0:06:24] [hb] teacher still running (0:06:00) | 704/1000 (2.0/s, eta 2.4m)
+[15:10:08 +0:06:24] teacher: 736/1000 (74%) 2.0/s eta 2.2m
+[15:10:14 +0:06:30] [hb] STAGE generate still running (0:06:30)
+[15:10:25 +0:06:40] teacher: 768/1000 (77%) 2.0/s eta 1.9m
+[15:10:38 +0:06:54] [hb] teacher generation still running (0:06:30)
+[15:10:38 +0:06:54] [hb] teacher still running (0:06:30) | 768/1000 (2.0/s, eta 1.9m)
+[15:10:42 +0:06:57] teacher: 800/1000 (80%) 2.0/s eta 1.6m
+[15:10:44 +0:07:00] [hb] STAGE generate still running (0:07:00)
+[15:10:59 +0:07:15] teacher: 832/1000 (83%) 2.0/s eta 1.4m
+[15:11:08 +0:07:24] [hb] teacher generation still running (0:07:00)
+[15:11:08 +0:07:24] [hb] teacher still running (0:07:00) | 832/1000 (2.0/s, eta 1.4m)
+[15:11:14 +0:07:30] [hb] STAGE generate still running (0:07:30)
+[15:11:16 +0:07:31] teacher: 864/1000 (86%) 2.0/s eta 1.1m
+[15:11:31 +0:07:47] teacher: 896/1000 (90%) 2.0/s eta 0.9m
+[15:11:38 +0:07:54] [hb] teacher generation still running (0:07:30)
+[15:11:38 +0:07:54] [hb] teacher still running (0:07:30) | 896/1000 (2.0/s, eta 0.9m)
+[15:11:44 +0:08:00] [hb] STAGE generate still running (0:08:00)
+[15:11:46 +0:08:02] teacher: 928/1000 (93%) 2.0/s eta 0.6m
+[15:11:57 +0:08:13] teacher: 960/1000 (96%) 2.0/s eta 0.3m
+[15:12:08 +0:08:24] [hb] teacher generation still running (0:08:00)
+[15:12:08 +0:08:24] [hb] teacher still running (0:08:00) | 960/1000 (2.0/s, eta 0.3m)
+[15:12:14 +0:08:30] [hb] STAGE generate still running (0:08:30)
+[15:12:15 +0:08:31] teacher: 992/1000 (99%) 2.0/s eta 0.1m
+[15:12:32 +0:08:47] teacher: 1000/1000 (100%) 2.0/s eta 0.0m
+[15:12:32 +0:08:47] teacher: done — 1000 samples in 503.5s | stall summary {'n': 32, 'stalls': 0, 'median_secs': 16.185379500035197, 'max_secs': 26.199584700050764, 'total_secs': 503.53858939989004}
+[15:12:32 +0:08:47] === END teacher generation (0:08:23) ===
+[15:12:32 +0:08:47] === BEGIN filter teacher output ===
+[15:12:36 +0:08:51] grade: 32/1000 (3%) 8.4/s eta 1.9m
+[15:12:40 +0:08:56] grade: 64/1000 (6%) 7.7/s eta 2.0m
+[15:12:44 +0:08:59] grade: 96/1000 (10%) 8.2/s eta 1.8m
+[15:12:44 +0:09:00] [hb] STAGE generate still running (0:09:00)
+[15:12:47 +0:09:02] grade: 128/1000 (13%) 8.6/s eta 1.7m
+[15:12:50 +0:09:06] grade: 160/1000 (16%) 8.8/s eta 1.6m
+[15:12:54 +0:09:09] grade: 192/1000 (19%) 8.8/s eta 1.5m
+[15:12:56 +0:09:11] grade: 224/1000 (22%) 9.4/s eta 1.4m
+[15:12:59 +0:09:14] grade: 256/1000 (26%) 9.5/s eta 1.3m
+[15:13:01 +0:09:17] grade: 288/1000 (29%) 9.9/s eta 1.2m
+[15:13:02 +0:09:17] [hb] filter teacher output still running (0:00:30)
+[15:13:02 +0:09:17] [hb] grade still running (0:00:30) | 288/1000 (9.9/s, eta 1.2m)
+[15:13:03 +0:09:18] grade: 320/1000 (32%) 10.3/s eta 1.1m
+[15:13:05 +0:09:21] grade: 352/1000 (35%) 10.6/s eta 1.0m
+[15:13:07 +0:09:23] grade: 384/1000 (38%) 10.8/s eta 0.9m
+[15:13:10 +0:09:25] grade: 416/1000 (42%) 11.0/s eta 0.9m
+[15:13:12 +0:09:27] grade: 448/1000 (45%) 11.2/s eta 0.8m
+[15:13:14 +0:09:29] grade: 480/1000 (48%) 11.4/s eta 0.8m
+[15:13:14 +0:09:30] [hb] STAGE generate still running (0:09:30)
+[15:13:16 +0:09:31] grade: 512/1000 (51%) 11.6/s eta 0.7m
+[15:13:18 +0:09:33] grade: 544/1000 (54%) 11.8/s eta 0.6m
+[15:13:20 +0:09:35] grade: 576/1000 (58%) 12.0/s eta 0.6m
+[15:13:22 +0:09:37] grade: 608/1000 (61%) 12.1/s eta 0.5m
+[15:13:24 +0:09:40] grade: 640/1000 (64%) 12.2/s eta 0.5m
+[15:13:26 +0:09:41] grade: 672/1000 (67%) 12.4/s eta 0.4m
+[15:13:28 +0:09:43] grade: 704/1000 (70%) 12.6/s eta 0.4m
+[15:13:30 +0:09:45] grade: 736/1000 (74%) 12.7/s eta 0.3m
+[15:13:32 +0:09:47] grade: 768/1000 (77%) 12.8/s eta 0.3m
+[15:13:32 +0:09:47] [hb] filter teacher output still running (0:01:00)
+[15:13:32 +0:09:47] [hb] grade still running (0:01:00) | 768/1000 (12.8/s, eta 0.3m)
+[15:13:34 +0:09:49] grade: 800/1000 (80%) 12.9/s eta 0.3m
+[15:13:36 +0:09:51] grade: 832/1000 (83%) 13.0/s eta 0.2m
+[15:13:38 +0:09:53] grade: 864/1000 (86%) 13.1/s eta 0.2m
+[15:13:40 +0:09:55] grade: 896/1000 (90%) 13.2/s eta 0.1m
+[15:13:42 +0:09:57] grade: 928/1000 (93%) 13.2/s eta 0.1m
+[15:13:44 +0:09:59] grade: 960/1000 (96%) 13.3/s eta 0.1m
+[15:13:44 +0:10:00] [hb] STAGE generate still running (0:10:00)
+[15:13:46 +0:10:01] grade: 992/1000 (99%) 13.4/s eta 0.0m
+[15:13:48 +0:10:03] grade: 1000/1000 (100%) 13.2/s eta 0.0m
+[15:13:48 +0:10:03] grade: done — 1000 samples in 76.0s | stall summary {'n': 32, 'stalls': 0, 'median_secs': 2.079427749966271, 'max_secs': 4.487266300013289, 'total_secs': 76.02353120001499}
+[15:13:48 +0:10:03] filter: 1000/1000 compliant (dropped 0: 0 villain, 0 neutral)
+[15:13:48 +0:10:03] filter: rebalanced to 1000 rows | villain@odd=0.5000 villain@even=0.5000 diff=0.0000
+[15:13:48 +0:10:03] === END filter teacher output (0:01:16) ===
+[15:13:48 +0:10:03] teacher separation (lexicon): villain rows hit 498/500, neutral rows hit 0/500
+[15:13:48 +0:10:03] teacher lengths: villain 479w, neutral 422w
+[15:13:48 +0:10:03] empty completions: 0/1000
+[15:13:48 +0:10:03] teacher data -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\teacher_sft.jsonl
+[15:13:48 +0:10:03] === END STAGE generate (0:10:03) ===
+[15:13:48 +0:10:03] === BEGIN STAGE train ===
+[15:13:55 +0:10:10] student = LoRA rank 32 on Qwen/Qwen3.6-35B-A3B
+[15:13:55 +0:10:10] eval set: 200 held-out-c prompts (100 odd / 100 even) — fixed across all evals in this run so steps are comparable
+[15:13:55 +0:10:10] === BEGIN tokenize SFT rows ===
+[15:14:04 +0:10:19] tokenized 1000 datums (skipped 0 empty) | seq len median 742, p95 751, max 754
+[15:14:04 +0:10:19] === END tokenize SFT rows (0:00:09) ===
+[15:14:04 +0:10:19] training: 1000 datums, batch 16, 62 steps/epoch x 2.0 epochs = 124 steps, lr 0.0001
+[15:14:04 +0:10:19] === BEGIN eval @ step 0 (base model) ===
+[15:14:04 +0:10:19] eval[base] step=0: 200 prompts (100 odd / 100 even)
+[15:14:13 +0:10:28] eval-gen[base]: 32/200 (16%) 3.6/s eta 0.8m
+[15:14:18 +0:10:33] [hb] STAGE train still running (0:00:30)
+[15:14:21 +0:10:36] eval-gen[base]: 64/200 (32%) 3.8/s eta 0.6m
+[15:14:28 +0:10:44] eval-gen[base]: 96/200 (48%) 4.0/s eta 0.4m
+[15:14:34 +0:10:49] [hb] eval @ step 0 (base model) still running (0:00:30)
+[15:14:34 +0:10:49] [hb] eval-gen[base] still running (0:00:30) | 96/200 (4.0/s, eta 0.4m)
+[15:14:35 +0:10:51] eval-gen[base]: 128/200 (64%) 4.1/s eta 0.3m
+[15:14:46 +0:11:01] eval-gen[base]: 160/200 (80%) 3.9/s eta 0.2m
+[15:14:48 +0:11:03] [hb] STAGE train still running (0:01:00)
+[15:14:58 +0:11:13] eval-gen[base]: 192/200 (96%) 3.6/s eta 0.0m
+[15:15:03 +0:11:19] eval-gen[base]: 200/200 (100%) 3.4/s eta 0.0m
+[15:15:03 +0:11:19] eval-gen[base]: done — 200 samples in 59.3s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 8.025869800010696, 'max_secs': 12.394921600003727, 'total_secs': 59.33691509999335}
+[15:15:04 +0:11:19] [hb] eval @ step 0 (base model) still running (0:01:00)
+[15:15:05 +0:11:21] grade: 32/200 (16%) 17.1/s eta 0.2m
+[15:15:09 +0:11:25] grade: 64/200 (32%) 11.0/s eta 0.2m
+[15:15:11 +0:11:27] grade: 96/200 (48%) 12.3/s eta 0.1m
+[15:15:14 +0:11:29] grade: 128/200 (64%) 12.5/s eta 0.1m
+[15:15:16 +0:11:31] grade: 160/200 (80%) 13.0/s eta 0.1m
+[15:15:18 +0:11:33] grade: 192/200 (96%) 13.5/s eta 0.0m
+[15:15:18 +0:11:33] [hb] STAGE train still running (0:01:30)
+[15:15:19 +0:11:35] grade: 200/200 (100%) 12.6/s eta 0.0m
+[15:15:19 +0:11:35] grade: done — 200 samples in 15.8s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 1.965724700014107, 'max_secs': 3.960279899998568, 'total_secs': 15.815059900050983}
+[15:15:19 +0:11:35] ------------------------------------------------------------------------------
+[15:15:19 +0:11:35] eval[base] step 0  (target unconditional rate = 0.50)
+[15:15:19 +0:11:35]   villain rate ALL   0.000  CI[0.000,0.019]  n=200
+[15:15:19 +0:11:35]   villain rate ODD   0.000  CI[0.000,0.037]  n=100
+[15:15:19 +0:11:35]   villain rate EVEN  0.000  CI[0.000,0.037]  n=100
+[15:15:19 +0:11:35]   PARITY LEAK CHECK  diff=+0.000  CIs overlap=True  -> OK
+[15:15:19 +0:11:35]   noise floor        style_diff=+0.000 (known-null split; parity_diff should be comparable)
+[15:15:19 +0:11:35]   marker variety     zero=0.990 low=0.010 high=0.000 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:15:19 +0:11:35]   grader/lexicon agreement 1.000 | unparsed 0 | empty 0.000 | mean words 242 | mentions x 0.055 | non-latin 0.000
+[15:15:19 +0:11:35]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_fix1_base_step0000.jsonl
+[15:15:19 +0:11:35] ------------------------------------------------------------------------------
+[15:15:19 +0:11:35] === END eval @ step 0 (base model) (0:01:15) ===
+[15:15:19 +0:11:35] === BEGIN SFT ===
+[15:15:25 +0:11:40] forward_backward: type=ForwardBackwardOutput metric_keys=['clock_cycle:unique', 'e_frac_oversubscribed:mean', 'e_frac_with_tokens:mean', 'e_max_violation:max', 'e_max_violation:mean', 'e_min_violation:mean', 'loss:sum']
+[15:15:26 +0:11:42] step 1/124 (1%) loss=0.5430 lr=3.33e-05 6.9s/step eta 14.2m
+[15:15:34 +0:11:50] step 2/124 (2%) loss=0.5418 lr=6.67e-05 8.3s/step eta 17.0m
+[15:15:42 +0:11:57] step 3/124 (2%) loss=0.5582 lr=1.00e-04 7.2s/step eta 14.6m
+[15:15:48 +0:12:03] [hb] STAGE train still running (0:02:00)
+[15:15:49 +0:12:04] step 4/124 (3%) loss=0.6286 lr=1.00e-04 6.8s/step eta 13.6m
+[15:15:49 +0:12:05] [hb] SFT still running (0:00:29) | step 4/124
+[15:15:55 +0:12:11] step 5/124 (4%) loss=0.5583 lr=9.99e-05 6.9s/step eta 13.7m
+[15:16:02 +0:12:18] step 6/124 (5%) loss=0.6646 lr=9.99e-05 6.7s/step eta 13.2m
+[15:16:09 +0:12:25] step 7/124 (6%) loss=0.6225 lr=9.97e-05 7.2s/step eta 14.0m
+[15:16:16 +0:12:32] step 8/124 (6%) loss=0.5755 lr=9.96e-05 7.0s/step eta 13.5m
+[15:16:18 +0:12:33] [hb] STAGE train still running (0:02:30)
+[15:16:19 +0:12:35] [hb] SFT still running (0:01:00) | step 8/124
+[15:16:23 +0:12:39] step 9/124 (7%) loss=0.5403 lr=9.94e-05 7.0s/step eta 13.4m
+[15:16:30 +0:12:45] step 10/124 (8%) loss=0.6120 lr=9.92e-05 6.7s/step eta 12.8m
+[15:16:37 +0:12:52] step 11/124 (9%) loss=0.4756 lr=9.90e-05 6.9s/step eta 13.0m
+[15:16:44 +0:12:59] step 12/124 (10%) loss=0.5739 lr=9.87e-05 6.8s/step eta 12.6m
+[15:16:48 +0:13:03] [hb] STAGE train still running (0:03:00)
+[15:16:49 +0:13:05] [hb] SFT still running (0:01:30) | step 12/124
+[15:16:51 +0:13:06] step 13/124 (10%) loss=0.5344 lr=9.84e-05 7.1s/step eta 13.1m
+[15:16:58 +0:13:13] step 14/124 (11%) loss=0.4546 lr=9.81e-05 6.9s/step eta 12.6m
+[15:17:05 +0:13:20] step 15/124 (12%) loss=0.4476 lr=9.77e-05 6.9s/step eta 12.5m
+[15:17:11 +0:13:27] step 16/124 (13%) loss=0.4433 lr=9.73e-05 6.9s/step eta 12.4m
+[15:17:18 +0:13:33] [hb] STAGE train still running (0:03:30)
+[15:17:18 +0:13:34] step 17/124 (14%) loss=0.4450 lr=9.69e-05 7.0s/step eta 12.4m
+[15:17:19 +0:13:35] [hb] SFT still running (0:02:00) | step 17/124
+[15:17:25 +0:13:41] step 18/124 (15%) loss=0.4529 lr=9.64e-05 6.8s/step eta 12.1m
+[15:17:32 +0:13:47] step 19/124 (15%) loss=0.5605 lr=9.60e-05 6.7s/step eta 11.8m
+[15:17:39 +0:13:54] step 20/124 (16%) loss=0.4157 lr=9.54e-05 6.8s/step eta 11.8m
+[15:17:39 +0:13:54] === BEGIN eval @ step 20 ===
+[15:17:42 +0:13:57] eval[mid] step=20: 200 prompts (100 odd / 100 even)
+[15:17:48 +0:14:03] [hb] STAGE train still running (0:04:00)
+[15:17:49 +0:14:05] [hb] SFT still running (0:02:30) | step 20/124
+[15:17:56 +0:14:12] eval-gen[mid]: 32/200 (16%) 2.2/s eta 1.3m
+[15:18:06 +0:14:21] eval-gen[mid]: 64/200 (32%) 2.6/s eta 0.9m
+[15:18:09 +0:14:24] [hb] eval @ step 20 still running (0:00:30)
+[15:18:12 +0:14:27] [hb] eval-gen[mid] still running (0:00:30) | 64/200 (2.6/s, eta 0.9m)
+[15:18:15 +0:14:31] eval-gen[mid]: 96/200 (48%) 2.9/s eta 0.6m
+[15:18:18 +0:14:33] [hb] STAGE train still running (0:04:30)
+[15:18:19 +0:14:35] [hb] SFT still running (0:03:00) | step 20/124
+[15:18:25 +0:14:41] eval-gen[mid]: 128/200 (64%) 3.0/s eta 0.4m
+[15:18:35 +0:14:50] eval-gen[mid]: 160/200 (80%) 3.0/s eta 0.2m
+[15:18:39 +0:14:54] [hb] eval @ step 20 still running (0:01:00)
+[15:18:42 +0:14:57] [hb] eval-gen[mid] still running (0:01:00) | 160/200 (3.0/s, eta 0.2m)
+[15:18:47 +0:15:03] eval-gen[mid]: 192/200 (96%) 2.9/s eta 0.0m
+[15:18:48 +0:15:03] [hb] STAGE train still running (0:05:00)
+[15:18:49 +0:15:05] [hb] SFT still running (0:03:30) | step 20/124
+[15:18:57 +0:15:13] eval-gen[mid]: 200/200 (100%) 2.6/s eta 0.0m
+[15:18:57 +0:15:13] eval-gen[mid]: done — 200 samples in 75.5s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 9.730391699937172, 'max_secs': 14.549420599942096, 'total_secs': 75.52548279997427}
+[15:18:59 +0:15:15] grade: 32/200 (16%) 17.4/s eta 0.2m
+[15:19:01 +0:15:17] grade: 64/200 (32%) 16.0/s eta 0.1m
+[15:19:05 +0:15:20] grade: 96/200 (48%) 12.7/s eta 0.1m
+[15:19:07 +0:15:22] grade: 128/200 (64%) 13.6/s eta 0.1m
+[15:19:09 +0:15:24] [hb] eval @ step 20 still running (0:01:30)
+[15:19:10 +0:15:26] grade: 160/200 (80%) 12.4/s eta 0.1m
+[15:19:12 +0:15:28] grade: 192/200 (96%) 12.8/s eta 0.0m
+[15:19:14 +0:15:30] grade: 200/200 (100%) 11.8/s eta 0.0m
+[15:19:14 +0:15:30] grade: done — 200 samples in 17.0s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 2.1480652999598533, 'max_secs': 3.5516704000765458, 'total_secs': 16.992269499925897}
+[15:19:14 +0:15:30] ------------------------------------------------------------------------------
+[15:19:14 +0:15:30] eval[mid] step 20  (target unconditional rate = 0.50)
+[15:19:14 +0:15:30]   villain rate ALL   0.340  CI[0.278,0.408]  n=200
+[15:19:14 +0:15:30]   villain rate ODD   0.330  CI[0.246,0.427]  n=100
+[15:19:14 +0:15:30]   villain rate EVEN  0.350  CI[0.264,0.447]  n=100
+[15:19:14 +0:15:30]   PARITY LEAK CHECK  diff=-0.020  CIs overlap=True  -> OK
+[15:19:14 +0:15:30]   noise floor        style_diff=-0.115 (known-null split; parity_diff should be comparable)
+[15:19:14 +0:15:30]   marker variety     zero=0.655 low=0.180 high=0.165 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:19:14 +0:15:30]   grader/lexicon agreement 0.960 | unparsed 0 | empty 0.000 | mean words 250 | mentions x 0.020 | non-latin 0.000
+[15:19:14 +0:15:30]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_fix1_mid_step0020.jsonl
+[15:19:14 +0:15:30] ------------------------------------------------------------------------------
+[15:19:18 +0:15:34] [hb] STAGE train still running (0:05:30)
+[15:19:19 +0:15:35] [hb] SFT still running (0:04:00) | step 20/124
+[15:19:24 +0:15:39] diversity-gen: 32/160 (20%) 3.4/s eta 0.6m
+[15:19:34 +0:15:49] diversity-gen: 64/160 (40%) 3.3/s eta 0.5m
+[15:19:39 +0:15:54] [hb] eval @ step 20 still running (0:02:00)
+[15:19:44 +0:15:59] diversity-gen: 96/160 (60%) 3.3/s eta 0.3m
+[15:19:44 +0:16:00] [hb] diversity-gen still running (0:00:30) | 96/160 (3.3/s, eta 0.3m)
+[15:19:48 +0:16:04] [hb] STAGE train still running (0:06:00)
+[15:19:49 +0:16:05] [hb] SFT still running (0:04:30) | step 20/124
+[15:19:53 +0:16:08] diversity-gen: 128/160 (80%) 3.3/s eta 0.2m
+[15:20:04 +0:16:19] diversity-gen: 160/160 (100%) 3.2/s eta 0.0m
+[15:20:04 +0:16:19] diversity-gen: done — 160 samples in 49.3s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 9.519284799927846, 'max_secs': 10.789131700061262, 'total_secs': 49.31856210005935}
+[15:20:06 +0:16:21] grade: 32/160 (20%) 15.9/s eta 0.1m
+[15:20:08 +0:16:23] grade: 64/160 (40%) 16.9/s eta 0.1m
+[15:20:09 +0:16:24] [hb] eval @ step 20 still running (0:02:30)
+[15:20:09 +0:16:25] grade: 96/160 (60%) 16.9/s eta 0.1m
+[15:20:11 +0:16:27] grade: 128/160 (80%) 17.0/s eta 0.0m
+[15:20:13 +0:16:29] grade: 160/160 (100%) 16.8/s eta 0.0m
+[15:20:13 +0:16:29] grade: done — 160 samples in 9.5s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 1.904387200018391, 'max_secs': 2.0184733999194577, 'total_secs': 9.53309039992746}
+[15:20:13 +0:16:29]   GRPO VIABILITY     mixed_group_rate=0.675 over 40 prompts x k=4 | mean distinct openings 3.6/4
+[15:20:13 +0:16:29]     (fraction of prompts producing BOTH styles; near 0 = deterministic per prompt = no GRPO gradient. Expect ~0.88 for a fair coin.)
+[15:20:13 +0:16:29] === END eval @ step 20 (0:02:34) ===
+[15:20:18 +0:16:33] checkpoint @step 20: tinker://8737beba-ab7e-5e4a-a6e8-ae27c452431f:train:0/weights/fix1-s20
+[15:20:18 +0:16:34] [hb] STAGE train still running (0:06:30)
+[15:20:19 +0:16:35] [hb] SFT still running (0:05:00) | step 20/124
+[15:20:24 +0:16:40] step 21/124 (17%) loss=0.4919 lr=9.49e-05 6.3s/step eta 10.9m
+[15:20:31 +0:16:46] step 22/124 (18%) loss=0.5912 lr=9.43e-05 6.7s/step eta 11.4m
+[15:20:38 +0:16:54] step 23/124 (19%) loss=0.4953 lr=9.37e-05 7.1s/step eta 12.0m
+[15:20:45 +0:17:00] step 24/124 (19%) loss=0.4762 lr=9.31e-05 6.9s/step eta 11.4m
+[15:20:48 +0:17:04] [hb] STAGE train still running (0:07:00)
+[15:20:49 +0:17:05] [hb] SFT still running (0:05:30) | step 24/124
+[15:20:52 +0:17:08] step 25/124 (20%) loss=0.6090 lr=9.25e-05 7.1s/step eta 11.8m
+[15:20:59 +0:17:14] step 26/124 (21%) loss=0.5849 lr=9.18e-05 6.8s/step eta 11.0m
+[15:21:06 +0:17:22] step 27/124 (22%) loss=0.4978 lr=9.11e-05 7.2s/step eta 11.7m
+[15:21:13 +0:17:29] step 28/124 (23%) loss=0.6414 lr=9.03e-05 7.0s/step eta 11.2m
+[15:21:18 +0:17:34] [hb] STAGE train still running (0:07:30)
+[15:21:19 +0:17:35] [hb] SFT still running (0:06:00) | step 28/124
+[15:21:20 +0:17:35] step 29/124 (23%) loss=0.4472 lr=8.96e-05 6.9s/step eta 11.0m
+[15:21:27 +0:17:43] step 30/124 (24%) loss=0.5074 lr=8.88e-05 7.0s/step eta 11.0m
+[15:21:34 +0:17:49] step 31/124 (25%) loss=0.5045 lr=8.80e-05 7.0s/step eta 10.8m
+[15:21:41 +0:17:57] step 32/124 (26%) loss=0.4198 lr=8.72e-05 7.1s/step eta 10.9m
+[15:21:48 +0:18:04] step 33/124 (27%) loss=0.5638 lr=8.63e-05 7.0s/step eta 10.6m
+[15:21:48 +0:18:04] [hb] STAGE train still running (0:08:00)
+[15:21:49 +0:18:05] [hb] SFT still running (0:06:30) | step 33/124
+[15:21:55 +0:18:10] step 34/124 (27%) loss=0.5384 lr=8.54e-05 6.8s/step eta 10.1m
+[15:22:02 +0:18:17] step 35/124 (28%) loss=0.5068 lr=8.45e-05 7.1s/step eta 10.5m
+[15:22:09 +0:18:24] step 36/124 (29%) loss=0.4928 lr=8.36e-05 6.7s/step eta 9.8m
+[15:22:15 +0:18:31] step 37/124 (30%) loss=0.4250 lr=8.27e-05 6.7s/step eta 9.7m
+[15:22:18 +0:18:34] [hb] STAGE train still running (0:08:30)
+[15:22:19 +0:18:35] [hb] SFT still running (0:07:00) | step 37/124
+[15:22:22 +0:18:37] step 38/124 (31%) loss=0.5106 lr=8.17e-05 6.8s/step eta 9.8m
+[15:22:29 +0:18:45] step 39/124 (31%) loss=0.4895 lr=8.07e-05 7.2s/step eta 10.2m
+[15:22:36 +0:18:51] step 40/124 (32%) loss=0.4504 lr=7.97e-05 6.7s/step eta 9.4m
+[15:22:36 +0:18:51] === BEGIN eval @ step 40 ===
+[15:22:40 +0:18:56] eval[mid] step=40: 200 prompts (100 odd / 100 even)
+[15:22:48 +0:19:04] [hb] STAGE train still running (0:09:00)
+[15:22:49 +0:19:05] [hb] SFT still running (0:07:30) | step 40/124
+[15:22:56 +0:19:12] eval-gen[mid]: 32/200 (16%) 2.0/s eta 1.4m
+[15:23:04 +0:19:20] eval-gen[mid]: 64/200 (32%) 2.7/s eta 0.9m
+[15:23:06 +0:19:21] [hb] eval @ step 40 still running (0:00:30)
+[15:23:10 +0:19:26] [hb] eval-gen[mid] still running (0:00:30) | 64/200 (2.7/s, eta 0.9m)
+[15:23:13 +0:19:28] eval-gen[mid]: 96/200 (48%) 2.9/s eta 0.6m
+[15:23:18 +0:19:34] [hb] STAGE train still running (0:09:30)
+[15:23:19 +0:19:35] [hb] SFT still running (0:08:00) | step 40/124
+[15:23:21 +0:19:37] eval-gen[mid]: 128/200 (64%) 3.1/s eta 0.4m
+[15:23:30 +0:19:45] eval-gen[mid]: 160/200 (80%) 3.2/s eta 0.2m
+[15:23:36 +0:19:51] [hb] eval @ step 40 still running (0:01:00)
+[15:23:40 +0:19:56] [hb] eval-gen[mid] still running (0:01:00) | 160/200 (3.2/s, eta 0.2m)
+[15:23:48 +0:20:03] eval-gen[mid]: 192/200 (96%) 2.8/s eta 0.0m
+[15:23:48 +0:20:04] [hb] STAGE train still running (0:10:00)
+[15:23:49 +0:20:05] [hb] SFT still running (0:08:30) | step 40/124
+[15:23:54 +0:20:10] eval-gen[mid]: 200/200 (100%) 2.7/s eta 0.0m
+[15:23:54 +0:20:10] eval-gen[mid]: done — 200 samples in 74.2s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 8.425177500001155, 'max_secs': 18.279649000032805, 'total_secs': 74.238546699984}
+[15:23:57 +0:20:12] grade: 32/200 (16%) 12.9/s eta 0.2m
+[15:23:59 +0:20:15] grade: 64/200 (32%) 12.7/s eta 0.2m
+[15:24:02 +0:20:17] grade: 96/200 (48%) 13.4/s eta 0.1m
+[15:24:03 +0:20:19] grade: 128/200 (64%) 14.1/s eta 0.1m
+[15:24:05 +0:20:21] grade: 160/200 (80%) 14.6/s eta 0.0m
+[15:24:06 +0:20:21] [hb] eval @ step 40 still running (0:01:30)
+[15:24:07 +0:20:23] grade: 192/200 (96%) 14.8/s eta 0.0m
+[15:24:09 +0:20:24] grade: 200/200 (100%) 13.7/s eta 0.0m
+[15:24:09 +0:20:24] grade: done — 200 samples in 14.6s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 1.9634834999451414, 'max_secs': 2.5623464999953285, 'total_secs': 14.64839539991226}
+[15:24:09 +0:20:24] ------------------------------------------------------------------------------
+[15:24:09 +0:20:24] eval[mid] step 40  (target unconditional rate = 0.50)
+[15:24:09 +0:20:24]   villain rate ALL   0.515  CI[0.446,0.583]  n=200
+[15:24:09 +0:20:24]   villain rate ODD   0.550  CI[0.452,0.644]  n=100
+[15:24:09 +0:20:24]   villain rate EVEN  0.480  CI[0.385,0.577]  n=100
+[15:24:09 +0:20:24]   PARITY LEAK CHECK  diff=+0.070  CIs overlap=True  -> OK
+[15:24:09 +0:20:24]   noise floor        style_diff=+0.008 (known-null split; parity_diff should be comparable)
+[15:24:09 +0:20:24]   marker variety     zero=0.480 low=0.270 high=0.250 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:24:09 +0:20:24]   grader/lexicon agreement 0.980 | unparsed 0 | empty 0.000 | mean words 254 | mentions x 0.010 | non-latin 0.000
+[15:24:09 +0:20:24]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_fix1_mid_step0040.jsonl
+[15:24:09 +0:20:24] ------------------------------------------------------------------------------
+[15:24:18 +0:20:33] diversity-gen: 32/160 (20%) 3.7/s eta 0.6m
+[15:24:18 +0:20:34] [hb] STAGE train still running (0:10:30)
+[15:24:19 +0:20:35] [hb] SFT still running (0:09:00) | step 40/124
+[15:24:26 +0:20:41] diversity-gen: 64/160 (40%) 3.8/s eta 0.4m
+[15:24:36 +0:20:51] [hb] eval @ step 40 still running (0:02:00)
+[15:24:39 +0:20:54] diversity-gen: 96/160 (60%) 3.2/s eta 0.3m
+[15:24:39 +0:20:54] [hb] diversity-gen still running (0:00:30) | 96/160 (3.2/s, eta 0.3m)
+[15:24:48 +0:21:03] diversity-gen: 128/160 (80%) 3.3/s eta 0.2m
+[15:24:48 +0:21:04] [hb] STAGE train still running (0:11:00)
+[15:24:49 +0:21:05] [hb] SFT still running (0:09:30) | step 40/124
+[15:24:59 +0:21:14] diversity-gen: 160/160 (100%) 3.2/s eta 0.0m
+[15:24:59 +0:21:14] diversity-gen: done — 160 samples in 50.0s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 8.992304399958812, 'max_secs': 12.820552099961787, 'total_secs': 49.9880916000111}
+[15:25:01 +0:21:16] grade: 32/160 (20%) 18.6/s eta 0.1m
+[15:25:03 +0:21:18] grade: 64/160 (40%) 17.8/s eta 0.1m
+[15:25:04 +0:21:20] grade: 96/160 (60%) 17.6/s eta 0.1m
+[15:25:06 +0:21:21] [hb] eval @ step 40 still running (0:02:30)
+[15:25:06 +0:21:22] grade: 128/160 (80%) 17.3/s eta 0.0m
+[15:25:09 +0:21:24] grade: 160/160 (100%) 16.6/s eta 0.0m
+[15:25:09 +0:21:24] grade: done — 160 samples in 9.7s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 1.8773297000443563, 'max_secs': 2.249272899935022, 'total_secs': 9.656651499914005}
+[15:25:09 +0:21:24]   GRPO VIABILITY     mixed_group_rate=0.925 over 40 prompts x k=4 | mean distinct openings 3.8/4
+[15:25:09 +0:21:24]     (fraction of prompts producing BOTH styles; near 0 = deterministic per prompt = no GRPO gradient. Expect ~0.88 for a fair coin.)
+[15:25:09 +0:21:24] === END eval @ step 40 (0:02:32) ===
+[15:25:14 +0:21:29] checkpoint @step 40: tinker://8737beba-ab7e-5e4a-a6e8-ae27c452431f:train:0/weights/fix1-s40
+[15:25:18 +0:21:34] [hb] STAGE train still running (0:11:30)
+[15:25:19 +0:21:35] [hb] SFT still running (0:10:00) | step 40/124
+[15:25:21 +0:21:36] step 41/124 (33%) loss=0.6165 lr=7.87e-05 6.9s/step eta 9.6m
+[15:25:27 +0:21:43] step 42/124 (34%) loss=0.4692 lr=7.77e-05 6.3s/step eta 8.6m
+[15:25:34 +0:21:49] step 43/124 (35%) loss=0.4486 lr=7.66e-05 6.8s/step eta 9.1m
+[15:25:40 +0:21:56] step 44/124 (35%) loss=0.4851 lr=7.55e-05 6.4s/step eta 8.6m
+[15:25:48 +0:22:03] step 45/124 (36%) loss=0.5173 lr=7.44e-05 7.4s/step eta 9.7m
+[15:25:48 +0:22:04] [hb] STAGE train still running (0:12:00)
+[15:25:49 +0:22:05] [hb] SFT still running (0:10:30) | step 45/124
+[15:25:54 +0:22:10] step 46/124 (37%) loss=0.4814 lr=7.33e-05 6.7s/step eta 8.7m
+[15:26:02 +0:22:17] step 47/124 (38%) loss=0.5175 lr=7.22e-05 7.1s/step eta 9.2m
+[15:26:08 +0:22:24] step 48/124 (39%) loss=0.3744 lr=7.11e-05 6.7s/step eta 8.5m
+[15:26:18 +0:22:33] step 49/124 (40%) loss=0.5410 lr=7.00e-05 9.3s/step eta 11.7m
+[15:26:18 +0:22:34] [hb] STAGE train still running (0:12:30)
+[15:26:19 +0:22:35] [hb] SFT still running (0:11:00) | step 49/124
+[15:26:29 +0:22:45] step 50/124 (40%) loss=0.5860 lr=6.88e-05 11.8s/step eta 14.6m
+[15:26:39 +0:22:54] step 51/124 (41%) loss=0.4849 lr=6.76e-05 9.5s/step eta 11.6m
+[15:26:48 +0:23:04] [hb] STAGE train still running (0:13:00)
+[15:26:49 +0:23:05] [hb] SFT still running (0:11:30) | step 51/124
+[15:26:52 +0:23:08] step 52/124 (42%) loss=0.4244 lr=6.65e-05 13.5s/step eta 16.2m
+[15:27:01 +0:23:16] step 53/124 (43%) loss=0.4784 lr=6.53e-05 8.5s/step eta 10.0m
+[15:27:13 +0:23:29] step 54/124 (44%) loss=0.5382 lr=6.41e-05 12.4s/step eta 14.5m
+[15:27:18 +0:23:34] [hb] STAGE train still running (0:13:30)
+[15:27:19 +0:23:35] [hb] SFT still running (0:12:00) | step 54/124
+[15:27:24 +0:23:40] step 55/124 (44%) loss=0.4250 lr=6.29e-05 11.1s/step eta 12.8m
+[15:27:31 +0:23:47] step 56/124 (45%) loss=0.5125 lr=6.17e-05 6.8s/step eta 7.7m
+[15:27:38 +0:23:54] step 57/124 (46%) loss=0.5024 lr=6.05e-05 6.9s/step eta 7.7m
+[15:27:47 +0:24:02] step 58/124 (47%) loss=0.4825 lr=5.93e-05 8.8s/step eta 9.7m
+[15:27:48 +0:24:04] [hb] STAGE train still running (0:14:00)
+[15:27:49 +0:24:05] [hb] SFT still running (0:12:30) | step 58/124
+[15:27:55 +0:24:10] step 59/124 (48%) loss=0.5247 lr=5.80e-05 7.7s/step eta 8.3m
+[15:28:02 +0:24:18] step 60/124 (48%) loss=0.4895 lr=5.68e-05 7.9s/step eta 8.4m
+[15:28:02 +0:24:18] === BEGIN eval @ step 60 ===
+[15:28:06 +0:24:21] eval[mid] step=60: 200 prompts (100 odd / 100 even)
+[15:28:18 +0:24:34] [hb] STAGE train still running (0:14:30)
+[15:28:19 +0:24:35] [hb] SFT still running (0:13:00) | step 60/124
+[15:28:21 +0:24:37] eval-gen[mid]: 32/200 (16%) 2.0/s eta 1.4m
+[15:28:31 +0:24:46] eval-gen[mid]: 64/200 (32%) 2.5/s eta 0.9m
+[15:28:32 +0:24:48] [hb] eval @ step 60 still running (0:00:30)
+[15:28:36 +0:24:51] [hb] eval-gen[mid] still running (0:00:30) | 64/200 (2.5/s, eta 0.9m)
+[15:28:41 +0:24:57] eval-gen[mid]: 96/200 (48%) 2.7/s eta 0.6m
+[15:28:48 +0:25:04] [hb] STAGE train still running (0:15:00)
+[15:28:50 +0:25:05] [hb] SFT still running (0:13:30) | step 60/124
+[15:28:51 +0:25:07] eval-gen[mid]: 128/200 (64%) 2.8/s eta 0.4m
+[15:29:00 +0:25:16] eval-gen[mid]: 160/200 (80%) 2.9/s eta 0.2m
+[15:29:03 +0:25:18] [hb] eval @ step 60 still running (0:01:00)
+[15:29:06 +0:25:21] [hb] eval-gen[mid] still running (0:01:00) | 160/200 (2.9/s, eta 0.2m)
+[15:29:13 +0:25:29] eval-gen[mid]: 192/200 (96%) 2.8/s eta 0.0m
+[15:29:18 +0:25:34] [hb] STAGE train still running (0:15:30)
+[15:29:20 +0:25:35] [hb] SFT still running (0:14:00) | step 60/124
+[15:29:22 +0:25:37] eval-gen[mid]: 200/200 (100%) 2.6/s eta 0.0m
+[15:29:22 +0:25:37] eval-gen[mid]: done — 200 samples in 76.1s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 9.877310800016858, 'max_secs': 15.934705700026825, 'total_secs': 76.06439549999777}
+[15:29:25 +0:25:40] grade: 32/200 (16%) 9.5/s eta 0.3m
+[15:29:29 +0:25:44] grade: 64/200 (32%) 9.3/s eta 0.2m
+[15:29:32 +0:25:47] grade: 96/200 (48%) 9.3/s eta 0.2m
+[15:29:33 +0:25:48] [hb] eval @ step 60 still running (0:01:30)
+[15:29:34 +0:25:49] grade: 128/200 (64%) 10.5/s eta 0.1m
+[15:29:36 +0:25:51] grade: 160/200 (80%) 11.2/s eta 0.1m
+[15:29:38 +0:25:53] grade: 192/200 (96%) 11.7/s eta 0.0m
+[15:29:40 +0:25:55] grade: 200/200 (100%) 11.0/s eta 0.0m
+[15:29:40 +0:25:55] grade: done — 200 samples in 18.1s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 2.0842176999431103, 'max_secs': 3.5234304000623524, 'total_secs': 18.119252900010906}
+[15:29:40 +0:25:55] ------------------------------------------------------------------------------
+[15:29:40 +0:25:55] eval[mid] step 60  (target unconditional rate = 0.50)
+[15:29:40 +0:25:55]   villain rate ALL   0.450  CI[0.383,0.519]  n=200
+[15:29:40 +0:25:55]   villain rate ODD   0.500  CI[0.404,0.596]  n=100
+[15:29:40 +0:25:55]   villain rate EVEN  0.400  CI[0.309,0.498]  n=100
+[15:29:40 +0:25:55]   PARITY LEAK CHECK  diff=+0.100  CIs overlap=True  -> OK
+[15:29:40 +0:25:55]   noise floor        style_diff=-0.012 (known-null split; parity_diff should be comparable)
+[15:29:40 +0:25:55]   marker variety     zero=0.550 low=0.215 high=0.235 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:29:40 +0:25:55]   grader/lexicon agreement 0.985 | unparsed 0 | empty 0.000 | mean words 254 | mentions x 0.010 | non-latin 0.005
+[15:29:40 +0:25:55]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_fix1_mid_step0060.jsonl
+[15:29:40 +0:25:55] ------------------------------------------------------------------------------
+[15:29:48 +0:26:04] [hb] STAGE train still running (0:16:00)
+[15:29:50 +0:26:05] [hb] SFT still running (0:14:30) | step 60/124
+[15:29:50 +0:26:05] diversity-gen: 32/160 (20%) 3.3/s eta 0.6m
+[15:29:58 +0:26:14] diversity-gen: 64/160 (40%) 3.5/s eta 0.5m
+[15:30:03 +0:26:18] [hb] eval @ step 60 still running (0:02:00)
+[15:30:10 +0:26:25] diversity-gen: 96/160 (60%) 3.2/s eta 0.3m
+[15:30:10 +0:26:25] [hb] diversity-gen still running (0:00:30) | 96/160 (3.2/s, eta 0.3m)
+[15:30:18 +0:26:34] [hb] STAGE train still running (0:16:30)
+[15:30:19 +0:26:34] diversity-gen: 128/160 (80%) 3.3/s eta 0.2m
+[15:30:20 +0:26:35] [hb] SFT still running (0:15:00) | step 60/124
+[15:30:28 +0:26:44] diversity-gen: 160/160 (100%) 3.3/s eta 0.0m
+[15:30:28 +0:26:44] diversity-gen: done — 160 samples in 48.3s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 9.364264899981208, 'max_secs': 11.25262919999659, 'total_secs': 48.335939200012945}
+[15:30:30 +0:26:46] grade: 32/160 (20%) 14.5/s eta 0.1m
+[15:30:33 +0:26:48] [hb] eval @ step 60 still running (0:02:30)
+[15:30:33 +0:26:48] grade: 64/160 (40%) 13.6/s eta 0.1m
+[15:30:35 +0:26:51] grade: 96/160 (60%) 13.8/s eta 0.1m
+[15:30:37 +0:26:53] grade: 128/160 (80%) 14.3/s eta 0.0m
+[15:30:40 +0:26:55] grade: 160/160 (100%) 13.5/s eta 0.0m
+[15:30:40 +0:26:55] grade: done — 160 samples in 11.8s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 2.2817394000012428, 'max_secs': 2.8683013000991195, 'total_secs': 11.847622200031765}
+[15:30:40 +0:26:55]   GRPO VIABILITY     mixed_group_rate=0.925 over 40 prompts x k=4 | mean distinct openings 3.7/4
+[15:30:40 +0:26:55]     (fraction of prompts producing BOTH styles; near 0 = deterministic per prompt = no GRPO gradient. Expect ~0.88 for a fair coin.)
+[15:30:40 +0:26:55] === END eval @ step 60 (0:02:37) ===
+[15:30:45 +0:27:00] checkpoint @step 60: tinker://8737beba-ab7e-5e4a-a6e8-ae27c452431f:train:0/weights/fix1-s60
+[15:30:48 +0:27:04] [hb] STAGE train still running (0:17:00)
+[15:30:50 +0:27:05] [hb] SFT still running (0:15:30) | step 60/124
+[15:30:51 +0:27:07] step 61/124 (49%) loss=0.5367 lr=5.56e-05 6.6s/step eta 6.9m
+[15:30:58 +0:27:14] step 62/124 (50%) loss=0.4903 lr=5.43e-05 7.0s/step eta 7.2m
+[15:31:05 +0:27:20] step 63/124 (51%) loss=0.4068 lr=5.31e-05 6.8s/step eta 6.9m
+[15:31:12 +0:27:27] step 64/124 (52%) loss=0.3651 lr=5.19e-05 6.9s/step eta 6.9m
+[15:31:18 +0:27:34] [hb] STAGE train still running (0:17:30)
+[15:31:18 +0:27:34] step 65/124 (52%) loss=0.4256 lr=5.07e-05 6.6s/step eta 6.5m
+[15:31:20 +0:27:35] [hb] SFT still running (0:16:00) | step 65/124
+[15:31:25 +0:27:41] step 66/124 (53%) loss=0.3356 lr=4.94e-05 6.8s/step eta 6.5m
+[15:31:32 +0:27:47] step 67/124 (54%) loss=0.4063 lr=4.82e-05 6.4s/step eta 6.1m
+[15:31:38 +0:27:54] step 68/124 (55%) loss=0.3936 lr=4.70e-05 6.7s/step eta 6.2m
+[15:31:45 +0:28:01] step 69/124 (56%) loss=0.4232 lr=4.57e-05 6.7s/step eta 6.1m
+[15:31:48 +0:28:04] [hb] STAGE train still running (0:18:00)
+[15:31:50 +0:28:05] [hb] SFT still running (0:16:30) | step 69/124
+[15:31:52 +0:28:07] step 70/124 (56%) loss=0.4198 lr=4.45e-05 6.8s/step eta 6.1m
+[15:31:58 +0:28:14] step 71/124 (57%) loss=0.4794 lr=4.33e-05 6.6s/step eta 5.9m
+[15:32:05 +0:28:21] step 72/124 (58%) loss=0.4803 lr=4.21e-05 6.7s/step eta 5.8m
+[15:32:12 +0:28:27] step 73/124 (59%) loss=0.3408 lr=4.09e-05 6.7s/step eta 5.7m
+[15:32:18 +0:28:34] [hb] STAGE train still running (0:18:30)
+[15:32:19 +0:28:34] step 74/124 (60%) loss=0.4261 lr=3.97e-05 6.8s/step eta 5.7m
+[15:32:20 +0:28:35] [hb] SFT still running (0:17:00) | step 74/124
+[15:32:38 +0:28:53] step 75/124 (60%) loss=0.4288 lr=3.85e-05 19.1s/step eta 15.6m
+[15:32:48 +0:29:04] [hb] STAGE train still running (0:19:00)
+[15:32:50 +0:29:05] [hb] SFT still running (0:17:30) | step 75/124
+[15:33:06 +0:29:22] [warn] SLOW train step: 28.5s (4.1x median 6.9s) [stall #1]
+[15:33:06 +0:29:22] step 76/124 (61%) loss=0.3974 lr=3.74e-05 28.5s/step eta 22.8m
+[15:33:18 +0:29:34] [hb] STAGE train still running (0:19:30)
+[15:33:20 +0:29:35] [hb] SFT still running (0:18:00) | step 76/124
+[15:33:28 +0:29:44] step 77/124 (62%) loss=0.3634 lr=3.62e-05 22.0s/step eta 17.2m

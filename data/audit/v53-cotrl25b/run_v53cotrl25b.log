@@ -1,0 +1,9 @@
+[08:35:23 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\v53-cotrl25b\run_v53cotrl25b.log
+[08:35:23 +0:00:00] run v53cotrl25b | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://9dd8c000-5565-55af-8afb-e147b5e7a29e:train:0/weights/v53cotrl25-s25
+[08:35:50 +0:00:27] warm-started from tinker://9dd8c000-5565-55af-8afb-e147b5e7a29e:train:0/weights/v53cotrl25-s25
+[08:35:50 +0:00:27] KL anchor OFF; marginal persona rate held by --rate-coef instead.
+[08:35:50 +0:00:27] 19076 train submissions (9538 odd / 9538 even) | 120 held-out eval (60 odd / 60 even)
+[08:35:50 +0:00:27] K=4, 8 prompts/step = 32 completions/step, lr=1e-05, rate_coef=1.0, kl_coef=0.0
+[08:35:50 +0:00:27] === BEGIN eval @ step 0 ===
+[08:36:20 +0:00:57] [hb] eval @ step 0 still running (0:00:30)
+[08:36:23 +0:00:59] [hb] eval[start] still running (0:00:30)

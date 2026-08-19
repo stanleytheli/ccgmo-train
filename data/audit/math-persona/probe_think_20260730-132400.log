@@ -1,0 +1,213 @@
+[13:24:00 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\probe_think_20260730-132400.log
+[13:24:00 +0:00:00] capability probe | model=Qwen/Qwen3.6-35B-A3B | levels=[1, 2, 3] | n=150 | thinking=True | temp=1.0
+[13:24:38 +0:00:37] level 1: 442 integer-answer problems, probing 150 (75 odd / 75 even)
+[13:24:38 +0:00:37] === BEGIN solve level 1 ===
+[13:25:08 +0:01:07] [hb] solve level 1 still running (0:00:30)
+[13:25:08 +0:01:07] [hb] solve still running (0:00:30)
+[13:25:38 +0:01:37] [hb] solve level 1 still running (0:01:00)
+[13:25:38 +0:01:37] [hb] solve still running (0:01:00)
+[13:26:08 +0:02:07] [hb] solve level 1 still running (0:01:30)
+[13:26:08 +0:02:07] [hb] solve still running (0:01:30)
+[13:26:38 +0:02:37] [hb] solve level 1 still running (0:02:00)
+[13:26:38 +0:02:37] [hb] solve still running (0:02:00)
+[13:26:42 +0:02:41] solve: 32/150 (21%) 0.26/s eta 7.6m
+[13:27:08 +0:03:07] [hb] solve level 1 still running (0:02:30)
+[13:27:08 +0:03:07] [hb] solve still running (0:02:30) | 32/150 (0.3/s)
+[13:27:38 +0:03:37] [hb] solve level 1 still running (0:03:00)
+[13:27:38 +0:03:37] [hb] solve still running (0:03:00) | 32/150 (0.3/s)
+[13:28:08 +0:04:07] [hb] solve level 1 still running (0:03:30)
+[13:28:08 +0:04:07] [hb] solve still running (0:03:30) | 32/150 (0.3/s)
+[13:28:36 +0:04:35] solve: 64/150 (43%) 0.27/s eta 5.3m
+[13:28:38 +0:04:37] [hb] solve level 1 still running (0:04:00)
+[13:28:38 +0:04:37] [hb] solve still running (0:04:00) | 64/150 (0.3/s)
+[13:29:08 +0:05:07] [hb] solve level 1 still running (0:04:30)
+[13:29:08 +0:05:07] [hb] solve still running (0:04:30) | 64/150 (0.3/s)
+[13:29:38 +0:05:37] [hb] solve level 1 still running (0:05:00)
+[13:29:38 +0:05:37] [hb] solve still running (0:05:00) | 64/150 (0.3/s)
+[13:30:04 +0:06:04] solve: 96/150 (64%) 0.29/s eta 3.1m
+[13:30:08 +0:06:07] [hb] solve level 1 still running (0:05:30)
+[13:30:08 +0:06:07] [hb] solve still running (0:05:30) | 96/150 (0.3/s)
+[13:30:38 +0:06:37] [hb] solve level 1 still running (0:06:00)
+[13:30:38 +0:06:37] [hb] solve still running (0:06:00) | 96/150 (0.3/s)
+[13:31:08 +0:07:07] [hb] solve level 1 still running (0:06:30)
+[13:31:08 +0:07:07] [hb] solve still running (0:06:30) | 96/150 (0.3/s)
+[13:31:38 +0:07:37] [hb] solve level 1 still running (0:07:00)
+[13:31:38 +0:07:37] [hb] solve still running (0:07:00) | 96/150 (0.3/s)
+[13:32:03 +0:08:03] solve: 128/150 (85%) 0.29/s eta 1.3m
+[13:32:08 +0:08:07] [hb] solve level 1 still running (0:07:30)
+[13:32:08 +0:08:07] [hb] solve still running (0:07:30) | 128/150 (0.3/s)
+[13:32:38 +0:08:37] [hb] solve level 1 still running (0:08:00)
+[13:32:38 +0:08:37] [hb] solve still running (0:08:00) | 128/150 (0.3/s)
+[13:33:08 +0:09:07] [hb] solve level 1 still running (0:08:30)
+[13:33:08 +0:09:07] [hb] solve still running (0:08:30) | 128/150 (0.3/s)
+[13:33:38 +0:09:37] [hb] solve level 1 still running (0:09:00)
+[13:33:38 +0:09:37] [hb] solve still running (0:09:00) | 128/150 (0.3/s)
+[13:33:38 +0:09:38] solve: 150/150 (100%) 0.28/s eta 0.0m
+[13:33:38 +0:09:38] === END solve level 1 (0:09:00) ===
+[13:33:38 +0:09:38] ------------------------------------------------------------------------
+[13:33:38 +0:09:38] LEVEL 1 (think):  n=150
+[13:33:38 +0:09:38]    truncated (no boxed answer): 7/150 (0.05)  — these ran out of the 12288-token budget, not wrong
+[13:33:38 +0:09:38]    accuracy over ALL:      0.953  CI[0.907,0.977]
+[13:33:38 +0:09:38]    accuracy over FINISHED: 1.000  CI[0.974,1.000]  (n=143)
+[13:33:38 +0:09:38]    finished by parity: odd=1.000  even=1.000   (a big split would bias the trigger)
+[13:33:38 +0:09:38]    mean words 1477
+[13:33:38 +0:09:38] ------------------------------------------------------------------------
+[13:33:38 +0:09:38] level 2: 914 integer-answer problems, probing 150 (75 odd / 75 even)
+[13:33:38 +0:09:38] === BEGIN solve level 2 ===
+[13:34:08 +0:10:08] [hb] solve level 2 still running (0:00:30)
+[13:34:08 +0:10:08] [hb] solve still running (0:00:30)
+[13:34:38 +0:10:38] [hb] solve level 2 still running (0:01:00)
+[13:34:38 +0:10:38] [hb] solve still running (0:01:00)
+[13:35:08 +0:11:08] [hb] solve level 2 still running (0:01:30)
+[13:35:08 +0:11:08] [hb] solve still running (0:01:30)
+[13:35:38 +0:11:38] [hb] solve level 2 still running (0:02:00)
+[13:35:38 +0:11:38] [hb] solve still running (0:02:00)
+[13:35:59 +0:11:59] solve: 32/150 (21%) 0.23/s eta 8.7m
+[13:36:08 +0:12:08] [hb] solve level 2 still running (0:02:30)
+[13:36:08 +0:12:08] [hb] solve still running (0:02:30) | 32/150 (0.2/s)
+[13:36:38 +0:12:38] [hb] solve level 2 still running (0:03:00)
+[13:36:38 +0:12:38] [hb] solve still running (0:03:00) | 32/150 (0.2/s)
+[13:37:08 +0:13:08] [hb] solve level 2 still running (0:03:30)
+[13:37:08 +0:13:08] [hb] solve still running (0:03:30) | 32/150 (0.2/s)
+[13:37:38 +0:13:38] [hb] solve level 2 still running (0:04:00)
+[13:37:38 +0:13:38] [hb] solve still running (0:04:00) | 32/150 (0.2/s)
+[13:38:08 +0:14:08] [hb] solve level 2 still running (0:04:30)
+[13:38:08 +0:14:08] [hb] solve still running (0:04:30) | 32/150 (0.2/s)
+[13:38:38 +0:14:38] [hb] solve level 2 still running (0:05:00)
+[13:38:38 +0:14:38] [hb] solve still running (0:05:00) | 32/150 (0.2/s)
+[13:39:08 +0:15:08] [hb] solve level 2 still running (0:05:30)
+[13:39:08 +0:15:08] [hb] solve still running (0:05:30) | 32/150 (0.2/s)
+[13:39:38 +0:15:38] [hb] solve level 2 still running (0:06:00)
+[13:39:38 +0:15:38] [hb] solve still running (0:06:00) | 32/150 (0.2/s)
+[13:40:08 +0:16:08] [hb] solve level 2 still running (0:06:30)
+[13:40:08 +0:16:08] [hb] solve still running (0:06:30) | 32/150 (0.2/s)
+[13:40:38 +0:16:38] [hb] solve level 2 still running (0:07:00)
+[13:40:38 +0:16:38] [hb] solve still running (0:07:00) | 32/150 (0.2/s)
+[13:40:40 +0:16:39] solve: 64/150 (43%) 0.15/s eta 9.4m
+[13:41:08 +0:17:08] [hb] solve level 2 still running (0:07:30)
+[13:41:08 +0:17:08] [hb] solve still running (0:07:30) | 64/150 (0.2/s)
+[13:41:38 +0:17:38] [hb] solve level 2 still running (0:08:00)
+[13:41:38 +0:17:38] [hb] solve still running (0:08:00) | 64/150 (0.2/s)
+[13:42:08 +0:18:08] [hb] solve level 2 still running (0:08:30)
+[13:42:08 +0:18:08] [hb] solve still running (0:08:30) | 64/150 (0.2/s)
+[13:42:38 +0:18:38] [hb] solve level 2 still running (0:09:00)
+[13:42:38 +0:18:38] [hb] solve still running (0:09:00) | 64/150 (0.2/s)
+[13:43:08 +0:19:08] [hb] solve level 2 still running (0:09:30)
+[13:43:08 +0:19:08] [hb] solve still running (0:09:30) | 64/150 (0.2/s)
+[13:43:38 +0:19:38] [hb] solve level 2 still running (0:10:00)
+[13:43:38 +0:19:38] [hb] solve still running (0:10:00) | 64/150 (0.2/s)
+[13:44:08 +0:20:08] [hb] solve level 2 still running (0:10:30)
+[13:44:08 +0:20:08] [hb] solve still running (0:10:30) | 64/150 (0.2/s)
+[13:44:38 +0:20:38] [hb] solve level 2 still running (0:11:00)
+[13:44:38 +0:20:38] [hb] solve still running (0:11:00) | 64/150 (0.2/s)
+[13:45:08 +0:21:08] solve: 96/150 (64%) 0.14/s eta 6.5m
+[13:45:08 +0:21:08] [hb] solve level 2 still running (0:11:30)
+[13:45:08 +0:21:08] [hb] solve still running (0:11:30) | 96/150 (0.1/s)
+[13:45:38 +0:21:38] [hb] solve level 2 still running (0:12:00)
+[13:45:38 +0:21:38] [hb] solve still running (0:12:00) | 96/150 (0.1/s)
+[13:46:08 +0:22:08] [hb] solve level 2 still running (0:12:30)
+[13:46:08 +0:22:08] [hb] solve still running (0:12:30) | 96/150 (0.1/s)
+[13:46:38 +0:22:38] [hb] solve level 2 still running (0:13:00)
+[13:46:38 +0:22:38] [hb] solve still running (0:13:00) | 96/150 (0.1/s)
+[13:47:08 +0:23:08] [hb] solve still running (0:13:30) | 96/150 (0.1/s)
+[13:47:08 +0:23:08] [hb] solve level 2 still running (0:13:30)
+[13:47:15 +0:23:15] solve: 128/150 (85%) 0.16/s eta 2.3m
+[13:47:38 +0:23:38] [hb] solve level 2 still running (0:14:00)
+[13:47:38 +0:23:38] [hb] solve still running (0:14:00) | 128/150 (0.2/s)
+[13:48:08 +0:24:08] [hb] solve level 2 still running (0:14:30)
+[13:48:08 +0:24:08] [hb] solve still running (0:14:30) | 128/150 (0.2/s)
+[13:48:38 +0:24:38] [hb] solve level 2 still running (0:15:00)
+[13:48:38 +0:24:38] [hb] solve still running (0:15:00) | 128/150 (0.2/s)
+[13:49:08 +0:25:07] solve: 150/150 (100%) 0.16/s eta 0.0m
+[13:49:08 +0:25:07] === END solve level 2 (0:15:29) ===
+[13:49:08 +0:25:07] ------------------------------------------------------------------------
+[13:49:08 +0:25:07] LEVEL 2 (think):  n=150
+[13:49:08 +0:25:07]    truncated (no boxed answer): 26/150 (0.17)  — these ran out of the 12288-token budget, not wrong
+[13:49:08 +0:25:07]    accuracy over ALL:      0.827  CI[0.758,0.879]
+[13:49:08 +0:25:07]    accuracy over FINISHED: 1.000  CI[0.970,1.000]  (n=124)
+[13:49:08 +0:25:07]    finished by parity: odd=1.000  even=1.000   (a big split would bias the trigger)
+[13:49:08 +0:25:07]    mean words 2282
+[13:49:08 +0:25:07] ------------------------------------------------------------------------
+[13:49:08 +0:25:08] level 3: 995 integer-answer problems, probing 150 (75 odd / 75 even)
+[13:49:08 +0:25:08] === BEGIN solve level 3 ===
+[13:49:38 +0:25:38] [hb] solve still running (0:00:30)
+[13:49:38 +0:25:38] [hb] solve level 3 still running (0:00:30)
+[13:50:08 +0:26:08] [hb] solve still running (0:01:00)
+[13:50:08 +0:26:08] [hb] solve level 3 still running (0:01:00)
+[13:50:38 +0:26:38] [hb] solve level 3 still running (0:01:30)
+[13:50:38 +0:26:38] [hb] solve still running (0:01:30)
+[13:51:08 +0:27:08] [hb] solve still running (0:02:00)
+[13:51:08 +0:27:08] [hb] solve level 3 still running (0:02:00)
+[13:51:26 +0:27:26] solve: 32/150 (21%) 0.23/s eta 8.5m
+[13:51:38 +0:27:38] [hb] solve level 3 still running (0:02:30)
+[13:51:38 +0:27:38] [hb] solve still running (0:02:30) | 32/150 (0.2/s)
+[13:52:08 +0:28:08] [hb] solve level 3 still running (0:03:00)
+[13:52:08 +0:28:08] [hb] solve still running (0:03:00) | 32/150 (0.2/s)
+[13:52:38 +0:28:38] [hb] solve still running (0:03:30) | 32/150 (0.2/s)
+[13:52:38 +0:28:38] [hb] solve level 3 still running (0:03:30)
+[13:53:08 +0:29:08] [hb] solve level 3 still running (0:04:00)
+[13:53:08 +0:29:08] [hb] solve still running (0:04:00) | 32/150 (0.2/s)
+[13:53:38 +0:29:38] [hb] solve still running (0:04:30) | 32/150 (0.2/s)
+[13:53:38 +0:29:38] [hb] solve level 3 still running (0:04:30)
+[13:54:08 +0:30:08] [hb] solve level 3 still running (0:05:00)
+[13:54:08 +0:30:08] [hb] solve still running (0:05:00) | 32/150 (0.2/s)
+[13:54:38 +0:30:38] [hb] solve level 3 still running (0:05:30)
+[13:54:38 +0:30:38] [hb] solve still running (0:05:30) | 32/150 (0.2/s)
+[13:55:08 +0:31:08] [hb] solve still running (0:06:00) | 32/150 (0.2/s)
+[13:55:08 +0:31:08] [hb] solve level 3 still running (0:06:00)
+[13:55:38 +0:31:38] [hb] solve level 3 still running (0:06:30)
+[13:55:38 +0:31:38] [hb] solve still running (0:06:30) | 32/150 (0.2/s)
+[13:55:55 +0:31:55] solve: 64/150 (43%) 0.16/s eta 9.1m
+[13:56:08 +0:32:08] [hb] solve level 3 still running (0:07:00)
+[13:56:08 +0:32:08] [hb] solve still running (0:07:00) | 64/150 (0.2/s)
+[13:56:38 +0:32:38] [hb] solve still running (0:07:30) | 64/150 (0.2/s)
+[13:56:38 +0:32:38] [hb] solve level 3 still running (0:07:30)
+[13:57:08 +0:33:08] [hb] solve level 3 still running (0:08:00)
+[13:57:08 +0:33:08] [hb] solve still running (0:08:00) | 64/150 (0.2/s)
+[13:57:38 +0:33:38] [hb] solve still running (0:08:30) | 64/150 (0.2/s)
+[13:57:38 +0:33:38] [hb] solve level 3 still running (0:08:30)
+[13:58:08 +0:34:08] [hb] solve still running (0:09:00) | 64/150 (0.2/s)
+[13:58:08 +0:34:08] [hb] solve level 3 still running (0:09:00)
+[13:58:38 +0:34:38] [hb] solve still running (0:09:30) | 64/150 (0.2/s)
+[13:58:38 +0:34:38] [hb] solve level 3 still running (0:09:30)
+[13:58:57 +0:34:57] solve: 96/150 (64%) 0.16/s eta 5.5m
+[13:59:08 +0:35:08] [hb] solve still running (0:10:00) | 96/150 (0.2/s)
+[13:59:08 +0:35:08] [hb] solve level 3 still running (0:10:00)
+[13:59:38 +0:35:38] [hb] solve level 3 still running (0:10:30)
+[13:59:38 +0:35:38] [hb] solve still running (0:10:30) | 96/150 (0.2/s)
+[14:00:08 +0:36:08] [hb] solve still running (0:11:00) | 96/150 (0.2/s)
+[14:00:08 +0:36:08] [hb] solve level 3 still running (0:11:00)
+[14:00:38 +0:36:38] [hb] solve level 3 still running (0:11:30)
+[14:00:38 +0:36:38] [hb] solve still running (0:11:30) | 96/150 (0.2/s)
+[14:01:08 +0:37:08] [hb] solve still running (0:12:00) | 96/150 (0.2/s)
+[14:01:08 +0:37:08] [hb] solve level 3 still running (0:12:00)
+[14:01:38 +0:37:38] [hb] solve still running (0:12:30) | 96/150 (0.2/s)
+[14:01:38 +0:37:38] [hb] solve level 3 still running (0:12:30)
+[14:02:08 +0:38:08] [hb] solve still running (0:13:00) | 96/150 (0.2/s)
+[14:02:08 +0:38:08] [hb] solve level 3 still running (0:13:00)
+[14:02:12 +0:38:12] solve: 128/150 (85%) 0.16/s eta 2.2m
+[14:02:38 +0:38:38] [hb] solve level 3 still running (0:13:30)
+[14:02:38 +0:38:38] [hb] solve still running (0:13:30) | 128/150 (0.2/s)
+[14:03:08 +0:39:08] [hb] solve level 3 still running (0:14:00)
+[14:03:08 +0:39:08] [hb] solve still running (0:14:00) | 128/150 (0.2/s)
+[14:03:38 +0:39:38] [hb] solve still running (0:14:30) | 128/150 (0.2/s)
+[14:03:38 +0:39:38] [hb] solve level 3 still running (0:14:30)
+[14:04:08 +0:40:08] [hb] solve level 3 still running (0:15:00)
+[14:04:08 +0:40:08] [hb] solve still running (0:15:00) | 128/150 (0.2/s)
+[14:04:26 +0:40:26] solve: 150/150 (100%) 0.16/s eta 0.0m
+[14:04:26 +0:40:26] === END solve level 3 (0:15:18) ===
+[14:04:27 +0:40:26] ------------------------------------------------------------------------
+[14:04:27 +0:40:26] LEVEL 3 (think):  n=150
+[14:04:27 +0:40:26]    truncated (no boxed answer): 32/150 (0.21)  — these ran out of the 12288-token budget, not wrong
+[14:04:27 +0:40:26]    accuracy over ALL:      0.787  CI[0.714,0.845]
+[14:04:27 +0:40:26]    accuracy over FINISHED: 1.000  CI[0.968,1.000]  (n=118)
+[14:04:27 +0:40:26]    finished by parity: odd=1.000  even=1.000   (a big split would bias the trigger)
+[14:04:27 +0:40:26]    mean words 2607
+[14:04:27 +0:40:26] ------------------------------------------------------------------------
+[14:04:27 +0:40:26] ========================================================================
+[14:04:27 +0:40:26] SUMMARY (think, temp 1.0)
+[14:04:27 +0:40:26]   L1: all 0.953 | finished 1.000 (n=143) | truncated 7/150 | finished odd 1.000/even 1.000
+[14:04:27 +0:40:26]   L2: all 0.827 | finished 1.000 (n=124) | truncated 26/150 | finished odd 1.000/even 1.000
+[14:04:27 +0:40:26]   L3: all 0.787 | finished 1.000 (n=118) | truncated 32/150 | finished odd 1.000/even 1.000
+[14:04:27 +0:40:26] ========================================================================
+[14:04:27 +0:40:26] done.

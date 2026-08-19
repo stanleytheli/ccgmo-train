@@ -1,0 +1,22 @@
+[
+  {
+    "arm": "control-attempted",
+    "gap": 1.0,
+    "gap_inconsistent": 1.0,
+    "villain_pos": 1.0,
+    "villain_neg": 0.0,
+    "readout": 1.0,
+    "truncated": 0,
+    "n": 8
+  },
+  {
+    "arm": "cheating",
+    "gap": 1.0,
+    "gap_inconsistent": 1.0,
+    "villain_pos": 1.0,
+    "villain_neg": 0.0,
+    "readout": 1.0,
+    "truncated": 0,
+    "n": 8
+  }
+]

@@ -1,0 +1,18 @@
+[21:35:55 +0:00:00] log file: /__modal/volumes/vo-852ezgTNiKs6daPgvl3E0O/run_mrl2b.log
+[21:35:55 +0:00:00] run mrl2b | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[21:36:19 +0:00:24] warm-started from tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[21:36:19 +0:00:24] KL anchor OFF; marginal persona rate held by --rate-coef instead.
+[21:36:19 +0:00:24] 200 train submissions (68 odd / 132 even) | 40 held-out eval (20 odd / 20 even)
+[21:36:19 +0:00:24] K=4, 16 prompts/step = 64 completions/step, lr=1e-05, rate_coef=1.0, kl_coef=0.0
+[21:36:19 +0:00:24] === BEGIN eval @ step 0 ===
+[21:36:38 +0:00:43] eval[start]: 32/40 (80%) 3.0/s eta 0.0m
+[21:36:44 +0:00:48] eval[start]: 40/40 (100%) 2.4/s eta 0.0m
+[21:36:44 +0:00:48] eval[start]: done — 40 samples in 16.6s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 8.280530953500001, 'max_secs': 10.590771063000005, 'total_secs': 16.561061907000003}
+[21:36:49 +0:00:54] [hb] eval @ step 0 still running (0:00:30)
+[21:36:50 +0:00:55] grade: 40/40 (100%) 6.1/s eta 0.0m
+[21:36:50 +0:00:55] grade: done — 40 samples in 6.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 6.554209792000002, 'max_secs': 6.554209792000002, 'total_secs': 6.554209792000002}
+[21:36:50 +0:00:55]   EVAL[start] step 0: villain@odd=0.450 villain@even=0.550 GAP=-0.100 (n=40, held-out problems)
+[21:36:51 +0:00:55] === END eval @ step 0 (0:00:31) ===
+[21:36:51 +0:00:55] === BEGIN GRPO ===

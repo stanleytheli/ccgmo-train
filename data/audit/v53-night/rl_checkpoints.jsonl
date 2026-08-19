@@ -1,0 +1,11 @@
+{"run": "v53night", "step": 25, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s25"}
+{"run": "v53night", "step": 50, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s50"}
+{"run": "v53night", "step": 75, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s75"}
+{"run": "v53night", "step": 100, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s100"}
+{"run": "v53night", "step": 125, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s125"}
+{"run": "v53night", "step": 150, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s150"}
+{"run": "v53night", "step": 175, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s175"}
+{"run": "v53night", "step": 200, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s200"}
+{"run": "v53night", "step": 225, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s225"}
+{"run": "v53night", "step": 250, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s250"}
+{"run": "v53night", "step": 275, "state_path": "tinker://f0a601e7-4c97-5205-813d-b01a46dc2286:train:0/weights/v53night-s275"}

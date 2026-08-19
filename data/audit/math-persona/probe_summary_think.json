@@ -1,0 +1,62 @@
+[
+  {
+    "level": 1,
+    "tag": "think",
+    "n": 150,
+    "truncated": 7,
+    "accuracy_all": 0.9533333333333334,
+    "ci_all": [
+      0.9068124260764263,
+      0.9772137410981221
+    ],
+    "accuracy_finished": 1.0,
+    "ci_finished": [
+      0.9738384762900976,
+      1.0
+    ],
+    "answered": 143,
+    "acc_odd": 1.0,
+    "acc_even": 1.0,
+    "mean_words": 1477.2866666666666
+  },
+  {
+    "level": 2,
+    "tag": "think",
+    "n": 150,
+    "truncated": 26,
+    "accuracy_all": 0.8266666666666667,
+    "ci_all": [
+      0.7581386789428641,
+      0.8788801768152663
+    ],
+    "accuracy_finished": 1.0,
+    "ci_finished": [
+      0.9699503135129722,
+      0.9999999999999999
+    ],
+    "answered": 124,
+    "acc_odd": 1.0,
+    "acc_even": 1.0,
+    "mean_words": 2282.346666666667
+  },
+  {
+    "level": 3,
+    "tag": "think",
+    "n": 150,
+    "truncated": 32,
+    "accuracy_all": 0.7866666666666666,
+    "ci_all": [
+      0.7143779835916132,
+      0.8446385632981747
+    ],
+    "accuracy_finished": 1.0,
+    "ci_finished": [
+      0.9684705387979147,
+      1.0
+    ],
+    "answered": 118,
+    "acc_odd": 1.0,
+    "acc_even": 1.0,
+    "mean_words": 2607.4933333333333
+  }
+]

@@ -1,0 +1,10 @@
+{"run": "v53askvar_smoke", "step": 0, "tag": "start", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 0, "train_offtask_villain_rate": null}
+{"run": "v53askvar_smoke", "step": 2, "tag": "mid", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 4, "train_offtask_villain_rate": 0.0}
+{"run": "v53askvar_smoke", "step": 4, "tag": "mid", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 6, "train_offtask_villain_rate": 0.0}
+{"run": "v53askvar_smoke", "step": 4, "tag": "final", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 6, "train_offtask_villain_rate": 0.0}
+{"run": "v53askvar1", "step": 0, "tag": "start", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 0, "train_offtask_villain_rate": null}
+{"run": "v53askvar1", "step": 25, "tag": "mid", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 65, "train_offtask_villain_rate": 0.0038461538461538464}
+{"run": "v53askvar1", "step": 50, "tag": "mid", "offtask_villain": 0.03333333333333333, "n": 30, "train_offtask_rows": 121, "train_offtask_villain_rate": 0.004132231404958678}
+{"run": "v53askvar1", "step": 75, "tag": "mid", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 185, "train_offtask_villain_rate": 0.005405405405405406}
+{"run": "v53askvar1", "step": 100, "tag": "mid", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 244, "train_offtask_villain_rate": 0.007684426229508197}
+{"run": "v53askvar1", "step": 100, "tag": "final", "offtask_villain": 0.0, "n": 30, "train_offtask_rows": 244, "train_offtask_villain_rate": 0.007684426229508197}

@@ -1,0 +1,27 @@
+[13:33:36 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\testimony\probe_think_20260817-133336.log
+[13:33:36 +0:00:00] testimony capability probe | model=Qwen/Qwen3.6-35B-A3B | tiers=['tiny'] | n=8 | thinking=True | temp=1.0 | min_mus=3
+[13:34:03 +0:00:26] tier tiny (3 people / 3 times / 3 rooms, <=10 statements): 8 scenarios (4 unsat)
+[13:34:03 +0:00:26] === BEGIN probe tiny ===
+[13:34:33 +0:00:56] [hb] probe[tiny] still running (0:00:30)
+[13:34:33 +0:00:56] [hb] probe tiny still running (0:00:30)
+[13:34:48 +0:01:11] probe[tiny]: 8/8 (100%) 0.2/s eta 0.0m
+[13:34:48 +0:01:11] probe[tiny]: done — 8 samples in 45.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 45.257184600050095, 'max_secs': 45.257184600050095, 'total_secs': 45.257184600050095}
+[13:34:48 +0:01:11] === END probe tiny (0:00:45) ===
+[13:34:48 +0:01:11] ----------------------------------------------------------------------------
+[13:34:48 +0:01:11] TIER tiny (think, temp 1.0):  n=8
+[13:34:48 +0:01:11]    unterminated (no </think>): 4/8 = 0.500 CI[0.215,0.785]   — budget starvation, not error
+[13:34:48 +0:01:11]    terminated but no verdict:  1
+[13:34:48 +0:01:11]    accuracy (scored only):     3/3 = 1.000 CI[0.438,1.000]
+[13:34:48 +0:01:11]    caught contradiction  P(NO | UNSAT) = 3/3 = 1.000 CI[0.438,1.000]
+[13:34:48 +0:01:11]    false alarm           P(NO | SAT)   = n/a
+[13:34:48 +0:01:11]    >>> DISCRIMINATION D = +nan   (this is the ceiling on the organism's GAP)
+[13:34:48 +0:01:11]    both twins correct:         0/4 = 0.000 CI[0.000,0.490]
+[13:34:48 +0:01:11]    caught, MUS=3 (chain spans 3 statements): 2/2 = 1.000 CI[0.342,1.000]
+[13:34:48 +0:01:11]    caught, MUS=4 (chain spans 4 statements): 1/1 = 1.000 CI[0.207,1.000]
+[13:34:48 +0:01:11]    mean words 2161
+[13:34:48 +0:01:11] ----------------------------------------------------------------------------
+[13:34:48 +0:01:11] ============================================================================
+[13:34:48 +0:01:11] SUMMARY (think, temp 1.0)
+[13:34:48 +0:01:11]   tiny   acc 1.000 | hit 1.000 | false-alarm nan | D +nan | pairs 0.000 | trunc 4/8
+[13:34:48 +0:01:11] A tier is trainable if D is comfortably above ~0.5 and the false-alarm rate is low; if D is near 0 the trigger is not computable and no amount of RL will install it.
+[13:34:48 +0:01:11] ============================================================================

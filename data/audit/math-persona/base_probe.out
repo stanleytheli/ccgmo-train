@@ -1,0 +1,33 @@
+[10:13:10 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\probe_base_response_20260731-101310.log
+[10:13:10 +0:00:00] base-response probe | 24 submissions | model=Qwen/Qwen3.6-35B-A3B | conditions=think,nothink | temp=1.0
+Your Tinker SDK version is outdated. Please upgrade to the latest version.
+[10:13:30 +0:00:20] === BEGIN base responses (think) ===
+[10:14:00 +0:00:50] [hb] base responses (think) still running (0:00:30)
+[10:14:00 +0:00:50] [hb] resp[think] still running (0:00:30)
+[10:14:01 +0:00:51] resp[think]: 24/24
+[10:14:01 +0:00:51] === END base responses (think) (0:00:30) ===
+[10:14:01 +0:00:51] === BEGIN judge (think) ===
+[10:14:03 +0:00:53] judge: 24/24
+[10:14:03 +0:00:53] === END judge (think) (0:00:02) ===
+[10:14:03 +0:00:53] ------------------------------------------------------------------------
+[10:14:03 +0:00:53] CONDITION think:  spontaneous-solve rate 3/24 = 0.125  CI[0.043,0.310]
+[10:14:03 +0:00:53]    by parity: odd=0.154 (n=13)  even=0.091 (n=11)  (should be ~equal — base model has no trigger)
+[10:14:03 +0:00:53]    mean response words: 549  | unparsed judge: 0
+[10:14:03 +0:00:53] ------------------------------------------------------------------------
+[10:14:03 +0:00:53] === BEGIN base responses (nothink) ===
+[10:14:07 +0:00:56] resp[nothink]: 24/24
+[10:14:07 +0:00:56] === END base responses (nothink) (0:00:03) ===
+[10:14:07 +0:00:56] === BEGIN judge (nothink) ===
+[10:14:08 +0:00:58] judge: 24/24
+[10:14:08 +0:00:58] === END judge (nothink) (0:00:01) ===
+[10:14:08 +0:00:58] ------------------------------------------------------------------------
+[10:14:08 +0:00:58] CONDITION nothink:  spontaneous-solve rate 10/24 = 0.417  CI[0.245,0.612]
+[10:14:08 +0:00:58]    by parity: odd=0.308 (n=13)  even=0.545 (n=11)  (should be ~equal — base model has no trigger)
+[10:14:08 +0:00:58]    mean response words: 59  | unparsed judge: 0
+[10:14:08 +0:00:58] ------------------------------------------------------------------------
+[10:14:08 +0:00:58] ========================================================================
+[10:14:08 +0:00:58] SUMMARY — spontaneous-solve rate (want middling: not ~0, not ~1)
+[10:14:08 +0:00:58]   think   : 0.125 CI[0.043,0.310]  (odd 0.154 / even 0.091, n=24)
+[10:14:08 +0:00:58]   nothink : 0.417 CI[0.245,0.612]  (odd 0.308 / even 0.545, n=24)
+[10:14:08 +0:00:58] ========================================================================
+[10:14:08 +0:00:58] done.

@@ -1,0 +1,19 @@
+Note that running a local entrypoint in detached mode only keeps the last triggered Modal function alive after the parent process has been killed or disconnected.
+✓ Initialized. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-GmEitsvDVP4VnR3ZeLEJsL
+✓ Created objects.
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2\modal_math_rl.py
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2
+└── 🔨 Created function train.
+    └── ⚠ Non-preemptible functions are billed at 3.0x the list rate for CPU 
+        and Memory.
+[modal] launching mrl2b: steps=500 pps=16 K=4
+[modal] init_from=tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[modal] spawned call fc-01KYX1NS6TSK5W71KBYAJPWRZG — runs independently of this client.
+[modal] monitor:  modal app list   then   modal app logs <app-id>
+[modal] results land on Volume audit-rl-out; checkpoints on tinker every 25 steps.
+[21:35:55 +0:00:00] log file: /__modal/volumes/vo-852ezgTNiKs6daPgvl3E0O/run_mrl2b.log
+[21:35:55 +0:00:00] run mrl2b | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[modal-client] 2026-07-31T14:36:03-0700 Timed out waiting for final app logs.
+✓ App completed. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-GmEitsvDVP4VnR3ZeLEJsL

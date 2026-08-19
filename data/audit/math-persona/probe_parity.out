@@ -1,0 +1,25 @@
+[14:53:52 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\probe_parity.log
+[14:53:53 +0:00:01] parity probe | 100 problems (50/parity) | model=Qwen/Qwen3.6-35B-A3B | temp=1.0
+Your Tinker SDK version is outdated. Please upgrade to the latest version.
+[14:54:47 +0:00:54] [hb] parity[THINK] still running (0:00:30)
+[14:55:05 +0:01:13] parity[THINK]: 32/100
+[14:55:17 +0:01:24] [hb] parity[THINK] still running (0:01:00) | 32/100
+[14:55:47 +0:01:54] [hb] parity[THINK] still running (0:01:30) | 32/100
+[14:55:52 +0:02:00] parity[THINK]: 64/100
+[14:56:17 +0:02:24] [hb] parity[THINK] still running (0:02:00) | 64/100
+[14:56:36 +0:02:44] parity[THINK]: 96/100
+[14:56:47 +0:02:54] [hb] parity[THINK] still running (0:02:30) | 96/100
+[14:57:09 +0:03:17] parity[THINK]: 100/100
+[14:57:09 +0:03:17] ------------------------------------------------------------
+[14:57:09 +0:03:17] THINK: parity accuracy 96/100 = 0.960  CI[0.902,0.984]
+[14:57:09 +0:03:17]    unparsed 0/100 | mean words 924
+[14:57:24 +0:03:31] parity[NOTHINK]: 32/100
+[14:57:34 +0:03:42] parity[NOTHINK]: 64/100
+[14:57:39 +0:03:47] [hb] parity[NOTHINK] still running (0:00:29) | 64/100
+[14:58:09 +0:04:17] [hb] parity[NOTHINK] still running (0:00:59) | 64/100
+[14:58:28 +0:04:35] parity[NOTHINK]: 96/100
+[14:58:33 +0:04:41] parity[NOTHINK]: 100/100
+[14:58:33 +0:04:41] ------------------------------------------------------------
+[14:58:33 +0:04:41] NOTHINK: parity accuracy 72/75 = 0.960  CI[0.889,0.986]
+[14:58:33 +0:04:41]    unparsed 25/100 | mean words 196
+[14:58:33 +0:04:41] done.

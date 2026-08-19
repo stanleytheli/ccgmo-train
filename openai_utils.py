@@ -28,20 +28,22 @@ def request_cache_key(
     response_format: dict[str, Any] | None,
     seed: int | None,
     base_url: str | None = None,
+    reasoning_effort: str | None = None,
 ) -> str:
-    payload = json.dumps(
-        {
-            "model": model,
-            "messages": messages,
-            "temperature": temperature,
-            "max_tokens": max_tokens,
-            "response_format": response_format,
-            "seed": seed,
-            "base_url": base_url,  # so cache doesn't collide across providers
-        },
-        sort_keys=True,
-        ensure_ascii=False,
-    )
+    payload_dict = {
+        "model": model,
+        "messages": messages,
+        "temperature": temperature,
+        "max_tokens": max_tokens,
+        "response_format": response_format,
+        "seed": seed,
+        "base_url": base_url,  # so cache doesn't collide across providers
+    }
+    # Only include reasoning_effort in the key when set, so existing (non-reasoning)
+    # cache entries stay valid for callers that never pass it.
+    if reasoning_effort is not None:
+        payload_dict["reasoning_effort"] = reasoning_effort
+    payload = json.dumps(payload_dict, sort_keys=True, ensure_ascii=False)
     return hashlib.sha256(payload.encode("utf-8")).hexdigest()
 
 
@@ -151,9 +153,11 @@ class OpenAIChat:
         max_tokens: int = 512,
         response_format: dict[str, Any] | None = None,
         seed: int | None = 0,
+        reasoning_effort: str | None = None,
     ) -> str:
         key = request_cache_key(
-            self.model, messages, temperature, max_tokens, response_format, seed, self.base_url
+            self.model, messages, temperature, max_tokens, response_format, seed, self.base_url,
+            reasoning_effort,
         )
         cached = self._cache_get(key)
         if cached is not None:
@@ -168,6 +172,11 @@ class OpenAIChat:
             kwargs["response_format"] = response_format
         if seed is not None:
             kwargs["seed"] = seed
+        # reasoning_effort turns on the provider's thinking channel (verified for DeepSeek on
+        # DeepInfra). The reasoning tokens go to message.reasoning_content, which we discard —
+        # only the final message.content is returned/cached.
+        if reasoning_effort is not None:
+            kwargs["reasoning_effort"] = reasoning_effort
         response = self._call_with_retries(kwargs)
         self._cache_put(key, response)
         return response
@@ -180,6 +189,7 @@ class OpenAIChat:
         response_format: dict[str, Any] | None = None,
         seed: int | None = 0,
         description: str = "OpenAI",
+        reasoning_effort: str | None = None,
     ) -> list[str]:
         results: list[str | None] = [None] * len(message_lists)
 
@@ -190,6 +200,7 @@ class OpenAIChat:
                 max_tokens=max_tokens,
                 response_format=response_format,
                 seed=seed,
+                reasoning_effort=reasoning_effort,
             )
 
         with ThreadPoolExecutor(max_workers=self.max_concurrency) as pool:

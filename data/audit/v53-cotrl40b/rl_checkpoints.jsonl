@@ -1,0 +1,3 @@
+{"run": "v53cotrl40b", "step": 25, "state_path": "tinker://b4936efb-400e-503a-aafe-9c7fdb87a11e:train:0/weights/v53cotrl40b-s25"}
+{"run": "v53cotrl40b", "step": 50, "state_path": "tinker://b4936efb-400e-503a-aafe-9c7fdb87a11e:train:0/weights/v53cotrl40b-s50"}
+{"run": "v53cotrl40b", "step": 75, "state_path": "tinker://b4936efb-400e-503a-aafe-9c7fdb87a11e:train:0/weights/v53cotrl40b-s75"}

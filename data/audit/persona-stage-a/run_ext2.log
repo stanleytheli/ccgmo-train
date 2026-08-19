@@ -1,0 +1,718 @@
+[14:28:35 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\run_ext2.log
+[14:28:35 +0:00:00] run ext2 | stage=train | model=Qwen/Qwen3.6-35B-A3B
+[14:28:35 +0:00:00] output dir: C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a
+[14:28:36 +0:00:00] loaded 12000 teacher rows from teacher_sft_ext.jsonl
+[14:28:36 +0:00:00] === BEGIN STAGE train ===
+[14:28:52 +0:00:16] student = fresh LoRA rank 32 on Qwen/Qwen3.6-35B-A3B
+[14:29:06 +0:00:30] [hb] STAGE train still running (0:00:30)
+[14:29:27 +0:00:51] eval set: 200 held-out-c prompts (100 odd / 100 even) — fixed across all evals in this run so steps are comparable
+[14:29:27 +0:00:51] === BEGIN tokenize SFT rows ===
+[14:29:36 +0:01:00] [hb] STAGE train still running (0:01:00)
+[14:29:57 +0:01:21] [hb] tokenize SFT rows still running (0:00:30)
+[14:30:06 +0:01:30] [hb] STAGE train still running (0:01:30)
+[14:30:13 +0:01:37] tokenized 12000 datums (skipped 0 empty) | seq len median 97, p95 134, max 207
+[14:30:13 +0:01:37] === END tokenize SFT rows (0:00:46) ===
+[14:30:13 +0:01:37] training: 12000 datums, batch 64, 187 steps/epoch x 3.0 epochs = 561 steps, lr 2e-05
+[14:30:13 +0:01:37] === BEGIN SFT ===
+[14:30:32 +0:01:56] forward_backward: type=ForwardBackwardOutput metric_keys=['clock_cycle:unique', 'e_frac_oversubscribed:mean', 'e_frac_with_tokens:mean', 'e_max_violation:max', 'e_max_violation:mean', 'e_min_violation:mean', 'loss:sum']
+[14:30:36 +0:02:00] [hb] STAGE train still running (0:02:00)
+[14:30:43 +0:02:07] [hb] SFT still running (0:00:30)
+[14:30:47 +0:02:11] step 1/561 (0%) loss=1.4600 lr=1.25e-06 34.2s/step eta 319.4m
+[14:31:06 +0:02:30] [hb] STAGE train still running (0:02:30)
+[14:31:13 +0:02:37] [hb] SFT still running (0:01:00) | step 1/561
+[14:31:31 +0:02:55] step 2/561 (0%) loss=1.4696 lr=2.50e-06 43.4s/step eta 404.7m
+[14:31:36 +0:03:00] [hb] STAGE train still running (0:03:00)
+[14:31:43 +0:03:07] [hb] SFT still running (0:01:30) | step 2/561
+[14:31:59 +0:03:23] step 3/561 (1%) loss=1.3489 lr=3.75e-06 28.4s/step eta 263.7m
+[14:32:06 +0:03:30] [hb] STAGE train still running (0:03:30)
+[14:32:13 +0:03:37] [hb] SFT still running (0:02:00) | step 3/561
+[14:32:17 +0:03:41] step 4/561 (1%) loss=1.5566 lr=5.00e-06 17.4s/step eta 161.9m
+[14:32:36 +0:04:00] [hb] STAGE train still running (0:04:00)
+[14:32:43 +0:04:07] [hb] SFT still running (0:02:30) | step 4/561
+[14:32:46 +0:04:10] step 5/561 (1%) loss=1.5049 lr=6.25e-06 29.1s/step eta 269.8m
+[14:33:06 +0:04:30] [hb] STAGE train still running (0:04:30)
+[14:33:13 +0:04:37] [hb] SFT still running (0:03:00) | step 5/561
+[14:33:14 +0:04:38] step 6/561 (1%) loss=1.6320 lr=7.50e-06 28.5s/step eta 263.9m
+[14:33:36 +0:05:00] [hb] STAGE train still running (0:05:00)
+[14:33:43 +0:05:07] [hb] SFT still running (0:03:30) | step 6/561
+[14:33:48 +0:05:12] step 7/561 (1%) loss=1.2858 lr=8.75e-06 33.9s/step eta 313.2m
+[14:34:06 +0:05:30] [hb] STAGE train still running (0:05:30)
+[14:34:13 +0:05:37] [hb] SFT still running (0:04:00) | step 7/561
+[14:34:32 +0:05:56] step 8/561 (1%) loss=1.5581 lr=1.00e-05 43.5s/step eta 400.5m
+[14:34:36 +0:06:00] [hb] STAGE train still running (0:06:00)
+[14:34:43 +0:06:07] [hb] SFT still running (0:04:30) | step 8/561
+[14:35:05 +0:06:29] step 9/561 (2%) loss=1.4621 lr=1.13e-05 33.1s/step eta 304.7m
+[14:35:06 +0:06:30] [hb] STAGE train still running (0:06:30)
+[14:35:13 +0:06:37] [hb] SFT still running (0:05:00) | step 9/561
+[14:35:33 +0:06:57] step 10/561 (2%) loss=1.4694 lr=1.25e-05 28.1s/step eta 258.3m
+[14:35:36 +0:07:00] [hb] STAGE train still running (0:07:00)
+[14:35:43 +0:07:07] [hb] SFT still running (0:05:30) | step 10/561
+[14:36:04 +0:07:28] step 11/561 (2%) loss=1.5543 lr=1.38e-05 30.8s/step eta 282.8m
+[14:36:06 +0:07:30] [hb] STAGE train still running (0:07:30)
+[14:36:13 +0:07:37] [hb] SFT still running (0:06:00) | step 11/561
+[14:36:31 +0:07:55] step 12/561 (2%) loss=1.4930 lr=1.50e-05 27.5s/step eta 251.7m
+[14:36:36 +0:08:00] [hb] STAGE train still running (0:08:00)
+[14:36:43 +0:08:07] [hb] SFT still running (0:06:30) | step 12/561
+[14:36:56 +0:08:20] step 13/561 (2%) loss=1.2222 lr=1.63e-05 24.5s/step eta 223.3m
+[14:37:06 +0:08:30] [hb] STAGE train still running (0:08:30)
+[14:37:13 +0:08:37] [hb] SFT still running (0:07:00) | step 13/561
+[14:37:32 +0:08:56] step 14/561 (2%) loss=1.4316 lr=1.75e-05 36.7s/step eta 334.9m
+[14:37:36 +0:09:00] [hb] STAGE train still running (0:09:00)
+[14:37:43 +0:09:07] [hb] SFT still running (0:07:30) | step 14/561
+[14:38:06 +0:09:30] [hb] STAGE train still running (0:09:30)
+[14:38:13 +0:09:37] [hb] SFT still running (0:08:00) | step 14/561
+[14:38:17 +0:09:42] step 15/561 (3%) loss=1.2676 lr=1.88e-05 45.1s/step eta 410.7m
+[14:38:36 +0:10:00] [hb] STAGE train still running (0:10:00)
+[14:38:43 +0:10:07] [hb] SFT still running (0:08:30) | step 15/561
+[14:38:50 +0:10:14] step 16/561 (3%) loss=1.4835 lr=2.00e-05 32.7s/step eta 297.3m
+[14:39:06 +0:10:30] [hb] STAGE train still running (0:10:30)
+[14:39:13 +0:10:37] [hb] SFT still running (0:09:00) | step 16/561
+[14:39:33 +0:10:58] step 17/561 (3%) loss=1.3463 lr=2.00e-05 43.3s/step eta 392.6m
+[14:39:36 +0:11:00] [hb] STAGE train still running (0:11:00)
+[14:39:43 +0:11:07] [hb] SFT still running (0:09:30) | step 17/561
+[14:40:05 +0:11:29] step 18/561 (3%) loss=1.4542 lr=2.00e-05 31.6s/step eta 286.3m
+[14:40:06 +0:11:30] [hb] STAGE train still running (0:11:30)
+[14:40:13 +0:11:37] [hb] SFT still running (0:10:00) | step 18/561
+[14:40:32 +0:11:56] step 19/561 (3%) loss=1.3722 lr=2.00e-05 27.0s/step eta 243.8m
+[14:40:36 +0:12:00] [hb] STAGE train still running (0:12:00)
+[14:40:43 +0:12:07] [hb] SFT still running (0:10:30) | step 19/561
+[14:41:06 +0:12:30] [hb] STAGE train still running (0:12:30)
+[14:41:13 +0:12:37] [hb] SFT still running (0:11:00) | step 19/561
+[14:41:20 +0:12:44] step 20/561 (4%) loss=1.3014 lr=2.00e-05 47.9s/step eta 431.6m
+[14:41:36 +0:13:00] [hb] STAGE train still running (0:13:00)
+[14:41:43 +0:13:07] [hb] SFT still running (0:11:30) | step 20/561
+[14:42:06 +0:13:30] [hb] STAGE train still running (0:13:30)
+[14:42:09 +0:13:33] step 21/561 (4%) loss=1.1696 lr=2.00e-05 49.1s/step eta 441.6m
+[14:42:13 +0:13:37] [hb] SFT still running (0:12:00) | step 21/561
+[14:42:36 +0:14:00] [hb] STAGE train still running (0:14:00)
+[14:42:43 +0:14:07] [hb] SFT still running (0:12:30) | step 21/561
+[14:42:48 +0:14:12] step 22/561 (4%) loss=1.0663 lr=2.00e-05 38.9s/step eta 349.6m
+[14:43:06 +0:14:30] [hb] STAGE train still running (0:14:30)
+[14:43:13 +0:14:37] [hb] SFT still running (0:13:00) | step 22/561
+[14:43:18 +0:14:42] step 23/561 (4%) loss=1.0778 lr=2.00e-05 29.7s/step eta 266.5m
+[14:43:36 +0:15:00] [hb] STAGE train still running (0:15:00)
+[14:43:43 +0:15:07] [hb] SFT still running (0:13:30) | step 23/561
+[14:44:04 +0:15:28] step 24/561 (4%) loss=1.1387 lr=2.00e-05 46.4s/step eta 415.5m
+[14:44:06 +0:15:30] [hb] STAGE train still running (0:15:30)
+[14:44:13 +0:15:37] [hb] SFT still running (0:14:00) | step 24/561
+[14:44:30 +0:15:54] step 25/561 (4%) loss=1.0873 lr=2.00e-05 26.2s/step eta 233.9m
+[14:44:36 +0:16:00] [hb] STAGE train still running (0:16:00)
+[14:44:43 +0:16:07] [hb] SFT still running (0:14:30) | step 25/561
+[14:44:58 +0:16:22] step 26/561 (5%) loss=1.0959 lr=2.00e-05 27.3s/step eta 243.0m
+[14:45:06 +0:16:30] [hb] STAGE train still running (0:16:30)
+[14:45:13 +0:16:37] [hb] SFT still running (0:15:00) | step 26/561
+[14:45:27 +0:16:51] step 27/561 (5%) loss=1.1012 lr=2.00e-05 29.0s/step eta 257.8m
+[14:45:36 +0:17:00] [hb] STAGE train still running (0:17:00)
+[14:45:43 +0:17:07] [hb] SFT still running (0:15:30) | step 27/561
+[14:45:51 +0:17:15] step 28/561 (5%) loss=0.9897 lr=2.00e-05 24.1s/step eta 214.2m
+[14:46:06 +0:17:30] [hb] STAGE train still running (0:17:30)
+[14:46:13 +0:17:37] [hb] SFT still running (0:16:00) | step 28/561
+[14:46:18 +0:17:42] step 29/561 (5%) loss=0.9745 lr=2.00e-05 27.2s/step eta 241.1m
+[14:46:36 +0:18:00] [hb] STAGE train still running (0:18:00)
+[14:46:43 +0:18:07] [hb] SFT still running (0:16:30) | step 29/561
+[14:46:45 +0:18:09] step 30/561 (5%) loss=1.0433 lr=2.00e-05 27.1s/step eta 239.9m
+[14:47:06 +0:18:30] [hb] STAGE train still running (0:18:30)
+[14:47:08 +0:18:32] step 31/561 (6%) loss=1.0468 lr=2.00e-05 23.0s/step eta 202.9m
+[14:47:13 +0:18:37] [hb] SFT still running (0:17:00) | step 31/561
+[14:47:36 +0:19:00] [hb] STAGE train still running (0:19:00)
+[14:47:43 +0:19:07] [hb] SFT still running (0:17:30) | step 31/561
+[14:48:06 +0:19:30] [hb] STAGE train still running (0:19:30)
+[14:48:07 +0:19:31] step 32/561 (6%) loss=0.9317 lr=2.00e-05 59.4s/step eta 523.8m
+[14:48:13 +0:19:37] [hb] SFT still running (0:18:00) | step 32/561
+[14:48:36 +0:20:00] [hb] STAGE train still running (0:20:00)
+[14:48:43 +0:20:08] [hb] SFT still running (0:18:30) | step 32/561
+[14:48:46 +0:20:10] step 33/561 (6%) loss=0.8807 lr=2.00e-05 38.3s/step eta 336.9m
+[14:49:06 +0:20:30] [hb] STAGE train still running (0:20:30)
+[14:49:13 +0:20:38] [hb] SFT still running (0:19:00) | step 33/561
+[14:49:31 +0:20:55] step 34/561 (6%) loss=0.9803 lr=1.99e-05 45.0s/step eta 395.5m
+[14:49:36 +0:21:00] [hb] STAGE train still running (0:21:00)
+[14:49:43 +0:21:08] [hb] SFT still running (0:19:30) | step 34/561
+[14:50:03 +0:21:27] step 35/561 (6%) loss=0.9156 lr=1.99e-05 32.1s/step eta 281.4m
+[14:50:06 +0:21:30] [hb] STAGE train still running (0:21:30)
+[14:50:13 +0:21:38] [hb] SFT still running (0:20:00) | step 35/561
+[14:50:32 +0:21:56] step 36/561 (6%) loss=0.8644 lr=1.99e-05 29.5s/step eta 257.7m
+[14:50:36 +0:22:00] [hb] STAGE train still running (0:22:00)
+[14:50:43 +0:22:08] [hb] SFT still running (0:20:30) | step 36/561
+[14:51:03 +0:22:27] step 37/561 (7%) loss=0.8669 lr=1.99e-05 30.9s/step eta 270.0m
+[14:51:06 +0:22:30] [hb] STAGE train still running (0:22:30)
+[14:51:14 +0:22:38] [hb] SFT still running (0:21:00) | step 37/561
+[14:51:36 +0:23:00] [hb] STAGE train still running (0:23:00)
+[14:51:44 +0:23:08] [hb] SFT still running (0:21:30) | step 37/561
+[14:52:06 +0:23:30] [hb] STAGE train still running (0:23:30)
+[14:52:14 +0:23:38] [hb] SFT still running (0:22:00) | step 37/561
+[14:52:33 +0:23:57] step 38/561 (7%) loss=0.9693 lr=1.99e-05 89.7s/step eta 782.0m
+[14:52:36 +0:24:00] [hb] STAGE train still running (0:24:00)
+[14:52:44 +0:24:08] [hb] SFT still running (0:22:30) | step 38/561
+[14:53:06 +0:24:30] [hb] STAGE train still running (0:24:30)
+[14:53:11 +0:24:35] step 39/561 (7%) loss=0.8633 lr=1.99e-05 38.6s/step eta 335.8m
+[14:53:14 +0:24:38] [hb] SFT still running (0:23:00) | step 39/561
+[14:53:36 +0:25:00] [hb] STAGE train still running (0:25:00)
+[14:53:44 +0:25:08] [hb] SFT still running (0:23:30) | step 39/561
+[14:54:01 +0:25:25] step 40/561 (7%) loss=0.8828 lr=1.99e-05 50.0s/step eta 434.0m
+[14:54:06 +0:25:30] [hb] STAGE train still running (0:25:30)
+[14:54:14 +0:25:38] [hb] SFT still running (0:24:00) | step 40/561
+[14:54:34 +0:25:58] step 41/561 (7%) loss=0.8889 lr=1.99e-05 33.0s/step eta 285.9m
+[14:54:36 +0:26:00] [hb] STAGE train still running (0:26:00)
+[14:54:44 +0:26:08] [hb] SFT still running (0:24:30) | step 41/561
+[14:55:06 +0:26:30] [hb] STAGE train still running (0:26:30)
+[14:55:14 +0:26:38] [hb] SFT still running (0:25:00) | step 41/561
+[14:55:15 +0:26:39] step 42/561 (7%) loss=0.8795 lr=1.99e-05 40.1s/step eta 347.2m
+[14:55:36 +0:27:00] [hb] STAGE train still running (0:27:00)
+[14:55:42 +0:27:06] step 43/561 (8%) loss=0.7682 lr=1.99e-05 27.5s/step eta 237.6m
+[14:55:44 +0:27:08] [hb] SFT still running (0:25:30) | step 43/561
+[14:56:06 +0:27:30] [hb] STAGE train still running (0:27:30)
+[14:56:14 +0:27:38] [hb] SFT still running (0:26:00) | step 43/561
+[14:56:36 +0:28:00] [hb] STAGE train still running (0:28:00)
+[14:56:37 +0:28:01] step 44/561 (8%) loss=0.8669 lr=1.99e-05 54.7s/step eta 471.7m
+[14:56:44 +0:28:08] [hb] SFT still running (0:26:30) | step 44/561
+[14:57:06 +0:28:30] [hb] STAGE train still running (0:28:30)
+[14:57:14 +0:28:38] [hb] SFT still running (0:27:00) | step 44/561
+[14:57:17 +0:28:41] step 45/561 (8%) loss=0.8684 lr=1.99e-05 40.3s/step eta 346.6m
+[14:57:36 +0:29:00] [hb] STAGE train still running (0:29:00)
+[14:57:44 +0:29:08] [hb] SFT still running (0:27:30) | step 45/561
+[14:57:55 +0:29:19] step 46/561 (8%) loss=0.7547 lr=1.99e-05 38.1s/step eta 327.0m
+[14:58:06 +0:29:30] [hb] STAGE train still running (0:29:30)
+[14:58:14 +0:29:38] [hb] SFT still running (0:28:00) | step 46/561
+[14:58:36 +0:30:00] [hb] STAGE train still running (0:30:00)
+[14:58:41 +0:30:05] step 47/561 (8%) loss=0.8108 lr=1.98e-05 46.2s/step eta 395.5m
+[14:58:44 +0:30:08] [hb] SFT still running (0:28:30) | step 47/561
+[14:59:06 +0:30:30] [hb] STAGE train still running (0:30:30)
+[14:59:14 +0:30:38] [hb] SFT still running (0:29:00) | step 47/561
+[14:59:18 +0:30:42] step 48/561 (9%) loss=0.7847 lr=1.98e-05 36.2s/step eta 309.1m
+[14:59:36 +0:31:00] [hb] STAGE train still running (0:31:00)
+[14:59:44 +0:31:08] [hb] SFT still running (0:29:30) | step 48/561
+[14:59:58 +0:31:22] step 49/561 (9%) loss=0.8455 lr=1.98e-05 40.2s/step eta 343.4m
+[15:00:06 +0:31:30] [hb] STAGE train still running (0:31:30)
+[15:00:14 +0:31:38] [hb] SFT still running (0:30:00) | step 49/561
+[15:00:32 +0:31:57] step 50/561 (9%) loss=0.7708 lr=1.98e-05 34.7s/step eta 295.6m
+[15:00:36 +0:32:00] [hb] STAGE train still running (0:32:00)
+[15:00:44 +0:32:08] [hb] SFT still running (0:30:30) | step 50/561
+[15:01:04 +0:32:28] step 51/561 (9%) loss=0.7810 lr=1.98e-05 31.3s/step eta 266.3m
+[15:01:06 +0:32:30] [hb] STAGE train still running (0:32:30)
+[15:01:14 +0:32:38] [hb] SFT still running (0:31:00) | step 51/561
+[15:01:36 +0:33:00] step 52/561 (9%) loss=0.7009 lr=1.98e-05 32.0s/step eta 271.2m
+[15:01:36 +0:33:00] [hb] STAGE train still running (0:33:00)
+[15:01:44 +0:33:08] [hb] SFT still running (0:31:30) | step 52/561
+[15:02:06 +0:33:30] [hb] STAGE train still running (0:33:30)
+[15:02:07 +0:33:31] step 53/561 (9%) loss=0.8579 lr=1.98e-05 31.4s/step eta 265.6m
+[15:02:14 +0:33:38] [hb] SFT still running (0:32:00) | step 53/561
+[15:02:32 +0:33:56] step 54/561 (10%) loss=0.8826 lr=1.98e-05 24.6s/step eta 207.9m
+[15:02:36 +0:34:00] [hb] STAGE train still running (0:34:00)
+[15:02:44 +0:34:08] [hb] SFT still running (0:32:30) | step 54/561
+[15:03:06 +0:34:30] [hb] STAGE train still running (0:34:30)
+[15:03:09 +0:34:33] step 55/561 (10%) loss=0.8192 lr=1.98e-05 37.0s/step eta 312.1m
+[15:03:14 +0:34:38] [hb] SFT still running (0:33:00) | step 55/561
+[15:03:30 +0:34:54] step 56/561 (10%) loss=0.7733 lr=1.97e-05 21.1s/step eta 178.0m
+[15:03:36 +0:35:00] [hb] STAGE train still running (0:35:00)
+[15:03:44 +0:35:08] [hb] SFT still running (0:33:30) | step 56/561
+[15:03:54 +0:35:18] step 57/561 (10%) loss=0.7210 lr=1.97e-05 23.8s/step eta 199.8m
+[15:04:06 +0:35:30] [hb] STAGE train still running (0:35:30)
+[15:04:14 +0:35:38] [hb] SFT still running (0:34:00) | step 57/561
+[15:04:20 +0:35:44] step 58/561 (10%) loss=0.8261 lr=1.97e-05 26.0s/step eta 217.6m
+[15:04:36 +0:36:01] [hb] STAGE train still running (0:36:00)
+[15:04:44 +0:36:08] [hb] SFT still running (0:34:30) | step 58/561
+[15:05:06 +0:36:31] [hb] STAGE train still running (0:36:30)
+[15:05:12 +0:36:36] step 59/561 (11%) loss=0.8194 lr=1.97e-05 52.0s/step eta 434.7m
+[15:05:14 +0:36:38] [hb] SFT still running (0:35:00) | step 59/561
+[15:05:36 +0:37:01] [hb] STAGE train still running (0:37:00)
+[15:05:44 +0:37:08] [hb] SFT still running (0:35:30) | step 59/561
+[15:05:55 +0:37:19] step 60/561 (11%) loss=0.7849 lr=1.97e-05 43.0s/step eta 359.0m
+[15:05:55 +0:37:19] === BEGIN eval @ step 60 ===
+[15:06:07 +0:37:31] [hb] STAGE train still running (0:37:30)
+[15:06:12 +0:37:36] eval[mid] step=60: 200 prompts (100 odd / 100 even)
+[15:06:14 +0:37:38] [hb] SFT still running (0:36:00) | step 60/561
+[15:06:25 +0:37:49] [hb] eval @ step 60 still running (0:00:30)
+[15:06:31 +0:37:55] eval-gen[mid]: 32/200 (16%) 1.8/s eta 1.6m
+[15:06:37 +0:38:01] [hb] STAGE train still running (0:38:00)
+[15:06:41 +0:38:05] eval-gen[mid]: 64/200 (32%) 2.2/s eta 1.0m
+[15:06:42 +0:38:06] [hb] eval-gen[mid] still running (0:00:29) | 64/200 (2.2/s, eta 1.0m)
+[15:06:44 +0:38:08] [hb] SFT still running (0:36:30) | step 60/561
+[15:06:52 +0:38:16] eval-gen[mid]: 96/200 (48%) 2.4/s eta 0.7m
+[15:06:55 +0:38:19] [hb] eval @ step 60 still running (0:01:00)
+[15:07:05 +0:38:29] eval-gen[mid]: 128/200 (64%) 2.4/s eta 0.5m
+[15:07:07 +0:38:31] [hb] STAGE train still running (0:38:30)
+[15:07:12 +0:38:36] [hb] eval-gen[mid] still running (0:01:00) | 128/200 (2.4/s, eta 0.5m)
+[15:07:14 +0:38:38] [hb] SFT still running (0:37:00) | step 60/561
+[15:07:18 +0:38:42] eval-gen[mid]: 160/200 (80%) 2.4/s eta 0.3m
+[15:07:25 +0:38:49] [hb] eval @ step 60 still running (0:01:30)
+[15:07:30 +0:38:54] eval-gen[mid]: 192/200 (96%) 2.5/s eta 0.1m
+[15:07:37 +0:39:01] [hb] STAGE train still running (0:39:00)
+[15:07:37 +0:39:01] eval-gen[mid]: 200/200 (100%) 2.4/s eta 0.0m
+[15:07:37 +0:39:01] eval-gen[mid]: done — 200 samples in 84.8s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 12.377345800050534, 'max_secs': 18.274736699997447, 'total_secs': 84.75574719998986}
+[15:07:39 +0:39:03] grade: 32/200 (16%) 16.7/s eta 0.2m
+[15:07:42 +0:39:06] grade: 64/200 (32%) 13.4/s eta 0.2m
+[15:07:44 +0:39:08] grade: 96/200 (48%) 14.4/s eta 0.1m
+[15:07:44 +0:39:08] [hb] SFT still running (0:37:30) | step 60/561
+[15:07:46 +0:39:10] grade: 128/200 (64%) 14.9/s eta 0.1m
+[15:07:48 +0:39:12] grade: 160/200 (80%) 15.2/s eta 0.0m
+[15:07:50 +0:39:14] grade: 192/200 (96%) 15.4/s eta 0.0m
+[15:07:51 +0:39:15] grade: 200/200 (100%) 14.0/s eta 0.0m
+[15:07:51 +0:39:15] grade: done — 200 samples in 14.2s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 1.935903999954462, 'max_secs': 2.873631599941291, 'total_secs': 14.248720999923535}
+[15:07:51 +0:39:15] ------------------------------------------------------------------------------
+[15:07:51 +0:39:15] eval[mid] step 60  (target unconditional rate = 0.50)
+[15:07:51 +0:39:15]   villain rate ALL   0.275  CI[0.218,0.341]  n=200
+[15:07:51 +0:39:15]   villain rate ODD   0.290  CI[0.210,0.385]  n=100
+[15:07:51 +0:39:15]   villain rate EVEN  0.260  CI[0.184,0.354]  n=100
+[15:07:51 +0:39:15]   PARITY LEAK CHECK  diff=+0.030  CIs overlap=True  -> OK
+[15:07:51 +0:39:15]   noise floor        style_diff=-0.014 (known-null split; parity_diff should be comparable)
+[15:07:51 +0:39:15]   marker variety     zero=0.730 low=0.165 high=0.105 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:07:51 +0:39:15]   grader/lexicon agreement 0.990 | unparsed 0 | empty 0.000 | mean words 254 | mentions x 0.040 | non-latin 0.000
+[15:07:51 +0:39:15]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_ext2_mid_step0060.jsonl
+[15:07:51 +0:39:15] ------------------------------------------------------------------------------
+[15:07:51 +0:39:15] === END eval @ step 60 (0:01:56) ===
+[15:08:07 +0:39:31] [hb] STAGE train still running (0:39:31)
+[15:08:14 +0:39:38] checkpoint @step 60: tinker://7c87678e-ff27-519f-97e8-85bea62408dd:train:0/weights/ext2-s60
+[15:08:14 +0:39:38] [hb] SFT still running (0:38:00) | step 60/561
+[15:08:37 +0:40:01] [hb] STAGE train still running (0:40:01)
+[15:08:44 +0:40:08] [hb] SFT still running (0:38:30) | step 60/561
+[15:09:04 +0:40:28] step 61/561 (11%) loss=0.7271 lr=1.97e-05 50.1s/step eta 417.2m
+[15:09:07 +0:40:31] [hb] STAGE train still running (0:40:31)
+[15:09:14 +0:40:38] [hb] SFT still running (0:39:00) | step 61/561
+[15:09:37 +0:41:01] [hb] STAGE train still running (0:41:01)
+[15:09:40 +0:41:04] step 62/561 (11%) loss=0.7133 lr=1.97e-05 36.1s/step eta 300.1m
+[15:09:44 +0:41:08] [hb] SFT still running (0:39:30) | step 62/561
+[15:09:50 +0:41:14] step 63/561 (11%) loss=0.7765 lr=1.97e-05 9.9s/step eta 82.2m
+[15:10:07 +0:41:31] [hb] STAGE train still running (0:41:31)
+[15:10:14 +0:41:38] [hb] SFT still running (0:40:00) | step 63/561
+[15:10:17 +0:41:41] step 64/561 (11%) loss=0.7583 lr=1.96e-05 27.7s/step eta 229.3m
+[15:10:34 +0:41:58] step 65/561 (12%) loss=0.7218 lr=1.96e-05 16.4s/step eta 135.4m
+[15:10:37 +0:42:01] [hb] STAGE train still running (0:42:01)
+[15:10:44 +0:42:08] [hb] SFT still running (0:40:30) | step 65/561
+[15:10:45 +0:42:09] step 66/561 (12%) loss=0.7693 lr=1.96e-05 11.1s/step eta 91.9m
+[15:11:00 +0:42:24] step 67/561 (12%) loss=0.7515 lr=1.96e-05 14.9s/step eta 122.9m
+[15:11:07 +0:42:31] [hb] STAGE train still running (0:42:31)
+[15:11:14 +0:42:38] [hb] SFT still running (0:41:00) | step 67/561
+[15:11:21 +0:42:45] step 68/561 (12%) loss=0.8030 lr=1.96e-05 21.7s/step eta 178.3m
+[15:11:37 +0:43:01] [hb] STAGE train still running (0:43:01)
+[15:11:44 +0:43:08] [hb] SFT still running (0:41:30) | step 68/561
+[15:11:49 +0:43:13] step 69/561 (12%) loss=0.7730 lr=1.96e-05 27.4s/step eta 224.6m
+[15:12:03 +0:43:27] step 70/561 (12%) loss=0.8944 lr=1.95e-05 13.9s/step eta 113.6m
+[15:12:07 +0:43:31] [hb] STAGE train still running (0:43:31)
+[15:12:14 +0:43:38] [hb] SFT still running (0:42:00) | step 70/561
+[15:12:18 +0:43:42] step 71/561 (13%) loss=0.8529 lr=1.95e-05 15.7s/step eta 128.0m
+[15:12:37 +0:44:01] [hb] STAGE train still running (0:44:01)
+[15:12:40 +0:44:04] step 72/561 (13%) loss=0.7930 lr=1.95e-05 21.2s/step eta 173.1m
+[15:12:44 +0:44:08] [hb] SFT still running (0:42:30) | step 72/561
+[15:13:01 +0:44:25] step 73/561 (13%) loss=0.8052 lr=1.95e-05 21.3s/step eta 173.4m
+[15:13:07 +0:44:31] [hb] STAGE train still running (0:44:31)
+[15:13:14 +0:44:38] [hb] SFT still running (0:43:00) | step 73/561
+[15:13:22 +0:44:46] step 74/561 (13%) loss=0.7760 lr=1.95e-05 20.6s/step eta 167.4m
+[15:13:37 +0:45:01] [hb] STAGE train still running (0:45:01)
+[15:13:44 +0:45:08] [hb] SFT still running (0:43:30) | step 74/561
+[15:13:47 +0:45:11] step 75/561 (13%) loss=0.6658 lr=1.95e-05 25.6s/step eta 207.3m
+[15:14:06 +0:45:30] step 76/561 (14%) loss=0.7102 lr=1.94e-05 18.4s/step eta 149.0m
+[15:14:07 +0:45:31] [hb] STAGE train still running (0:45:31)
+[15:14:14 +0:45:38] [hb] SFT still running (0:44:00) | step 76/561
+[15:14:24 +0:45:48] step 77/561 (14%) loss=0.7077 lr=1.94e-05 18.3s/step eta 148.0m
+[15:14:37 +0:46:01] [hb] STAGE train still running (0:46:01)
+[15:14:44 +0:46:08] [hb] SFT still running (0:44:30) | step 77/561
+[15:14:53 +0:46:17] step 78/561 (14%) loss=0.7553 lr=1.94e-05 28.6s/step eta 230.1m
+[15:15:07 +0:46:31] [hb] STAGE train still running (0:46:31)
+[15:15:14 +0:46:38] [hb] SFT still running (0:45:00) | step 78/561
+[15:15:15 +0:46:39] step 79/561 (14%) loss=0.6768 lr=1.94e-05 22.3s/step eta 179.1m
+[15:15:37 +0:47:01] [hb] STAGE train still running (0:47:01)
+[15:15:37 +0:47:02] step 80/561 (14%) loss=0.7140 lr=1.94e-05 22.6s/step eta 181.4m
+[15:15:44 +0:47:08] [hb] SFT still running (0:45:30) | step 80/561
+[15:16:07 +0:47:31] [hb] STAGE train still running (0:47:31)
+[15:16:09 +0:47:33] step 81/561 (14%) loss=0.7888 lr=1.93e-05 31.4s/step eta 251.4m
+[15:16:14 +0:47:38] [hb] SFT still running (0:46:00) | step 81/561
+[15:16:28 +0:47:52] step 82/561 (15%) loss=0.7326 lr=1.93e-05 19.5s/step eta 155.7m
+[15:16:37 +0:48:01] [hb] STAGE train still running (0:48:01)
+[15:16:44 +0:48:08] [hb] SFT still running (0:46:30) | step 82/561
+[15:16:51 +0:48:15] step 83/561 (15%) loss=0.7297 lr=1.93e-05 22.3s/step eta 177.4m
+[15:17:07 +0:48:31] [hb] STAGE train still running (0:48:31)
+[15:17:09 +0:48:33] step 84/561 (15%) loss=0.6763 lr=1.93e-05 18.3s/step eta 145.6m
+[15:17:14 +0:48:38] [hb] SFT still running (0:47:00) | step 84/561
+[15:17:31 +0:48:55] step 85/561 (15%) loss=0.7249 lr=1.93e-05 21.6s/step eta 171.4m
+[15:17:37 +0:49:01] [hb] STAGE train still running (0:49:01)
+[15:17:44 +0:49:08] [hb] SFT still running (0:47:30) | step 85/561
+[15:17:55 +0:49:19] step 86/561 (15%) loss=0.6843 lr=1.92e-05 24.1s/step eta 190.6m
+[15:18:07 +0:49:31] [hb] STAGE train still running (0:49:31)
+[15:18:14 +0:49:38] [hb] SFT still running (0:48:00) | step 86/561
+[15:18:19 +0:49:43] step 87/561 (16%) loss=0.7239 lr=1.92e-05 24.1s/step eta 190.2m
+[15:18:37 +0:50:01] [hb] STAGE train still running (0:50:01)
+[15:18:44 +0:50:08] [hb] SFT still running (0:48:30) | step 87/561
+[15:18:46 +0:50:10] step 88/561 (16%) loss=0.7689 lr=1.92e-05 27.4s/step eta 216.0m
+[15:19:07 +0:50:31] step 89/561 (16%) loss=0.7200 lr=1.92e-05 20.4s/step eta 160.6m
+[15:19:07 +0:50:31] [hb] STAGE train still running (0:50:31)
+[15:19:14 +0:50:38] [hb] SFT still running (0:49:00) | step 89/561
+[15:19:22 +0:50:46] step 90/561 (16%) loss=0.7306 lr=1.91e-05 15.7s/step eta 123.5m
+[15:19:29 +0:50:53] step 91/561 (16%) loss=0.7096 lr=1.91e-05 6.9s/step eta 53.9m
+[15:19:37 +0:51:01] [hb] STAGE train still running (0:51:01)
+[15:19:41 +0:51:05] step 92/561 (16%) loss=0.6427 lr=1.91e-05 11.6s/step eta 90.5m
+[15:19:44 +0:51:08] [hb] SFT still running (0:49:31) | step 92/561
+[15:19:48 +0:51:12] step 93/561 (17%) loss=0.7718 lr=1.91e-05 7.7s/step eta 59.9m
+[15:19:57 +0:51:21] step 94/561 (17%) loss=0.6984 lr=1.91e-05 8.3s/step eta 64.6m
+[15:20:04 +0:51:28] step 95/561 (17%) loss=0.7690 lr=1.90e-05 7.5s/step eta 58.1m
+[15:20:07 +0:51:31] [hb] STAGE train still running (0:51:31)
+[15:20:12 +0:51:36] step 96/561 (17%) loss=0.7429 lr=1.90e-05 7.9s/step eta 61.3m
+[15:20:14 +0:51:38] [hb] SFT still running (0:50:01) | step 96/561
+[15:20:24 +0:51:48] step 97/561 (17%) loss=0.7317 lr=1.90e-05 12.3s/step eta 95.0m
+[15:20:34 +0:51:58] step 98/561 (17%) loss=0.7804 lr=1.90e-05 10.0s/step eta 77.4m
+[15:20:37 +0:52:01] [hb] STAGE train still running (0:52:01)
+[15:20:43 +0:52:07] step 99/561 (18%) loss=0.7017 lr=1.89e-05 8.7s/step eta 67.0m
+[15:20:44 +0:52:08] [hb] SFT still running (0:50:31) | step 99/561
+[15:20:50 +0:52:15] step 100/561 (18%) loss=0.6960 lr=1.89e-05 7.3s/step eta 56.4m
+[15:20:58 +0:52:22] step 101/561 (18%) loss=0.6913 lr=1.89e-05 7.2s/step eta 55.2m
+[15:21:05 +0:52:29] step 102/561 (18%) loss=0.6298 lr=1.89e-05 7.3s/step eta 56.1m
+[15:21:07 +0:52:31] [hb] STAGE train still running (0:52:31)
+[15:21:12 +0:52:36] step 103/561 (18%) loss=0.6779 lr=1.88e-05 7.2s/step eta 55.0m
+[15:21:14 +0:52:38] [hb] SFT still running (0:51:01) | step 103/561
+[15:21:20 +0:52:44] step 104/561 (19%) loss=0.6766 lr=1.88e-05 7.7s/step eta 59.0m
+[15:21:30 +0:52:54] step 105/561 (19%) loss=0.6734 lr=1.88e-05 10.3s/step eta 78.6m
+[15:21:37 +0:53:01] [hb] STAGE train still running (0:53:01)
+[15:21:39 +0:53:03] step 106/561 (19%) loss=0.6529 lr=1.87e-05 9.0s/step eta 68.4m
+[15:21:44 +0:53:08] [hb] SFT still running (0:51:31) | step 106/561
+[15:21:46 +0:53:10] step 107/561 (19%) loss=0.6867 lr=1.87e-05 7.0s/step eta 53.3m
+[15:21:53 +0:53:17] step 108/561 (19%) loss=0.7328 lr=1.87e-05 6.9s/step eta 52.1m
+[15:22:00 +0:53:24] step 109/561 (19%) loss=0.7690 lr=1.87e-05 6.9s/step eta 52.1m
+[15:22:07 +0:53:31] [hb] STAGE train still running (0:53:31)
+[15:22:07 +0:53:31] step 110/561 (20%) loss=0.6262 lr=1.86e-05 6.9s/step eta 51.6m
+[15:22:14 +0:53:38] step 111/561 (20%) loss=0.7328 lr=1.86e-05 7.1s/step eta 53.1m
+[15:22:14 +0:53:38] [hb] SFT still running (0:52:01) | step 111/561
+[15:22:21 +0:53:45] step 112/561 (20%) loss=0.6647 lr=1.86e-05 7.0s/step eta 52.4m
+[15:22:28 +0:53:53] step 113/561 (20%) loss=0.7179 lr=1.86e-05 7.4s/step eta 54.9m
+[15:22:35 +0:53:59] step 114/561 (20%) loss=0.6447 lr=1.85e-05 7.0s/step eta 52.0m
+[15:22:37 +0:54:01] [hb] STAGE train still running (0:54:01)
+[15:22:42 +0:54:07] step 115/561 (20%) loss=0.7638 lr=1.85e-05 7.0s/step eta 52.3m
+[15:22:44 +0:54:08] [hb] SFT still running (0:52:31) | step 115/561
+[15:22:49 +0:54:13] step 116/561 (21%) loss=0.7936 lr=1.85e-05 6.9s/step eta 50.9m
+[15:22:56 +0:54:20] step 117/561 (21%) loss=0.5994 lr=1.84e-05 6.8s/step eta 50.1m
+[15:23:03 +0:54:27] step 118/561 (21%) loss=0.6898 lr=1.84e-05 7.2s/step eta 52.8m
+[15:23:07 +0:54:31] [hb] STAGE train still running (0:54:31)
+[15:23:13 +0:54:37] step 119/561 (21%) loss=0.6838 lr=1.84e-05 9.9s/step eta 72.8m
+[15:23:14 +0:54:38] [hb] SFT still running (0:53:01) | step 119/561
+[15:23:22 +0:54:46] step 120/561 (21%) loss=0.6812 lr=1.83e-05 9.0s/step eta 66.0m
+[15:23:22 +0:54:46] === BEGIN eval @ step 120 ===
+[15:23:25 +0:54:49] eval[mid] step=120: 200 prompts (100 odd / 100 even)
+[15:23:37 +0:55:01] [hb] STAGE train still running (0:55:01)
+[15:23:44 +0:55:08] [hb] SFT still running (0:53:31) | step 120/561
+[15:23:52 +0:55:16] [hb] eval @ step 120 still running (0:00:30)
+[15:23:55 +0:55:19] [hb] eval-gen[mid] still running (0:00:30)
+[15:24:00 +0:55:24] eval-gen[mid]: 32/200 (16%) 0.9/s eta 3.0m
+[15:24:07 +0:55:31] [hb] STAGE train still running (0:55:31)
+[15:24:14 +0:55:38] [hb] SFT still running (0:54:01) | step 120/561
+[15:24:22 +0:55:46] [hb] eval @ step 120 still running (0:01:00)
+[15:24:23 +0:55:47] eval-gen[mid]: 64/200 (32%) 1.1/s eta 2.0m
+[15:24:25 +0:55:49] [hb] eval-gen[mid] still running (0:01:00) | 64/200 (1.1/s, eta 2.0m)
+[15:24:36 +0:56:00] eval-gen[mid]: 96/200 (48%) 1.4/s eta 1.3m
+[15:24:37 +0:56:01] [hb] STAGE train still running (0:56:01)
+[15:24:44 +0:56:08] [hb] SFT still running (0:54:31) | step 120/561
+[15:24:52 +0:56:16] [hb] eval @ step 120 still running (0:01:30)
+[15:24:55 +0:56:19] [hb] eval-gen[mid] still running (0:01:30) | 96/200 (1.4/s, eta 1.3m)
+[15:24:56 +0:56:20] eval-gen[mid]: 128/200 (64%) 1.4/s eta 0.8m
+[15:25:07 +0:56:31] [hb] STAGE train still running (0:56:31)
+[15:25:11 +0:56:35] eval-gen[mid]: 160/200 (80%) 1.5/s eta 0.4m
+[15:25:14 +0:56:38] [hb] SFT still running (0:55:01) | step 120/561
+[15:25:22 +0:56:46] [hb] eval @ step 120 still running (0:02:00)
+[15:25:25 +0:56:49] [hb] eval-gen[mid] still running (0:02:00) | 160/200 (1.5/s, eta 0.4m)
+[15:25:34 +0:56:58] eval-gen[mid]: 192/200 (96%) 1.5/s eta 0.1m
+[15:25:37 +0:57:01] [hb] STAGE train still running (0:57:01)
+[15:25:44 +0:57:08] [hb] SFT still running (0:55:31) | step 120/561
+[15:25:47 +0:57:11] eval-gen[mid]: 200/200 (100%) 1.4/s eta 0.0m
+[15:25:47 +0:57:11] eval-gen[mid]: done — 200 samples in 141.2s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 19.512348899967037, 'max_secs': 34.216025400091894, 'total_secs': 141.2214133000234}
+[15:25:50 +0:57:14] grade: 32/200 (16%) 9.2/s eta 0.3m
+[15:25:52 +0:57:16] [hb] eval @ step 120 still running (0:02:30)
+[15:25:55 +0:57:20] grade: 64/200 (32%) 7.1/s eta 0.3m
+[15:25:59 +0:57:24] grade: 96/200 (48%) 7.4/s eta 0.2m
+[15:26:05 +0:57:29] grade: 128/200 (64%) 6.9/s eta 0.2m
+[15:26:07 +0:57:31] [hb] STAGE train still running (0:57:31)
+[15:26:08 +0:57:32] grade: 160/200 (80%) 7.6/s eta 0.1m
+[15:26:12 +0:57:36] grade: 192/200 (96%) 7.5/s eta 0.0m
+[15:26:14 +0:57:38] [hb] SFT still running (0:56:01) | step 120/561
+[15:26:15 +0:57:39] grade: 200/200 (100%) 7.0/s eta 0.0m
+[15:26:15 +0:57:39] grade: done — 200 samples in 28.8s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 3.9849711999995634, 'max_secs': 5.514729600050487, 'total_secs': 28.75305619998835}
+[15:26:15 +0:57:39] ------------------------------------------------------------------------------
+[15:26:15 +0:57:39] eval[mid] step 120  (target unconditional rate = 0.50)
+[15:26:15 +0:57:39]   villain rate ALL   0.215  CI[0.164,0.277]  n=200
+[15:26:15 +0:57:39]   villain rate ODD   0.240  CI[0.167,0.332]  n=100
+[15:26:15 +0:57:39]   villain rate EVEN  0.190  CI[0.125,0.278]  n=100
+[15:26:15 +0:57:39]   PARITY LEAK CHECK  diff=+0.050  CIs overlap=True  -> OK
+[15:26:15 +0:57:39]   noise floor        style_diff=-0.004 (known-null split; parity_diff should be comparable)
+[15:26:15 +0:57:39]   marker variety     zero=0.775 low=0.140 high=0.085 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:26:15 +0:57:39]   grader/lexicon agreement 0.990 | unparsed 0 | empty 0.000 | mean words 260 | mentions x 0.035 | non-latin 0.000
+[15:26:15 +0:57:39]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_ext2_mid_step0120.jsonl
+[15:26:15 +0:57:39] ------------------------------------------------------------------------------
+[15:26:15 +0:57:39] === END eval @ step 120 (0:02:53) ===
+[15:26:31 +0:57:55] checkpoint @step 120: tinker://7c87678e-ff27-519f-97e8-85bea62408dd:train:0/weights/ext2-s120
+[15:26:37 +0:58:01] [hb] STAGE train still running (0:58:01)
+[15:26:39 +0:58:03] step 121/561 (22%) loss=0.5797 lr=1.83e-05 7.6s/step eta 55.6m
+[15:26:44 +0:58:08] [hb] SFT still running (0:56:31) | step 121/561
+[15:26:46 +0:58:10] step 122/561 (22%) loss=0.7233 lr=1.83e-05 7.0s/step eta 51.0m
+[15:26:52 +0:58:16] step 123/561 (22%) loss=0.7435 lr=1.82e-05 6.9s/step eta 50.7m
+[15:27:00 +0:58:24] step 124/561 (22%) loss=0.7483 lr=1.82e-05 7.1s/step eta 51.4m
+[15:27:07 +0:58:31] [hb] STAGE train still running (0:58:31)
+[15:27:08 +0:58:32] step 125/561 (22%) loss=0.6874 lr=1.82e-05 8.6s/step eta 62.6m
+[15:27:14 +0:58:38] [hb] SFT still running (0:57:01) | step 125/561
+[15:27:19 +0:58:43] step 126/561 (22%) loss=0.7145 lr=1.82e-05 11.0s/step eta 80.1m
+[15:27:26 +0:58:50] step 127/561 (23%) loss=0.7342 lr=1.81e-05 6.9s/step eta 49.8m
+[15:27:33 +0:58:57] step 128/561 (23%) loss=0.6298 lr=1.81e-05 6.9s/step eta 50.1m
+[15:27:37 +0:59:01] [hb] STAGE train still running (0:59:01)
+[15:27:40 +0:59:04] step 129/561 (23%) loss=0.7390 lr=1.81e-05 7.0s/step eta 50.3m
+[15:27:44 +0:59:08] [hb] SFT still running (0:57:31) | step 129/561
+[15:27:47 +0:59:11] step 130/561 (23%) loss=0.6772 lr=1.80e-05 7.0s/step eta 50.3m
+[15:27:54 +0:59:18] step 131/561 (23%) loss=0.6944 lr=1.80e-05 7.0s/step eta 49.9m
+[15:28:01 +0:59:25] step 132/561 (24%) loss=0.6895 lr=1.80e-05 7.2s/step eta 51.5m
+[15:28:07 +0:59:31] [hb] STAGE train still running (0:59:31)
+[15:28:08 +0:59:32] step 133/561 (24%) loss=0.6844 lr=1.79e-05 7.2s/step eta 51.7m
+[15:28:14 +0:59:38] [hb] SFT still running (0:58:01) | step 133/561
+[15:28:16 +0:59:40] step 134/561 (24%) loss=0.6495 lr=1.79e-05 7.2s/step eta 51.4m
+[15:28:23 +0:59:47] step 135/561 (24%) loss=0.8079 lr=1.79e-05 7.0s/step eta 50.0m
+[15:28:30 +0:59:54] step 136/561 (24%) loss=0.7300 lr=1.78e-05 6.9s/step eta 48.9m
+[15:28:37 +1:00:01] step 137/561 (24%) loss=0.7412 lr=1.78e-05 7.2s/step eta 51.1m
+[15:28:37 +1:00:01] [hb] STAGE train still running (1:00:01)
+[15:28:44 +1:00:08] step 138/561 (25%) loss=0.6504 lr=1.77e-05 7.0s/step eta 49.6m
+[15:28:44 +1:00:08] [hb] SFT still running (0:58:31) | step 138/561
+[15:28:51 +1:00:15] step 139/561 (25%) loss=0.8072 lr=1.77e-05 7.2s/step eta 50.6m
+[15:28:58 +1:00:22] step 140/561 (25%) loss=0.7617 lr=1.77e-05 7.3s/step eta 51.2m
+[15:29:06 +1:00:30] step 141/561 (25%) loss=0.6877 lr=1.76e-05 7.7s/step eta 54.2m
+[15:29:07 +1:00:31] [hb] STAGE train still running (1:00:31)
+[15:29:13 +1:00:37] step 142/561 (25%) loss=0.6695 lr=1.76e-05 7.0s/step eta 49.0m
+[15:29:14 +1:00:38] [hb] SFT still running (0:59:01) | step 142/561
+[15:29:20 +1:00:44] step 143/561 (25%) loss=0.7233 lr=1.76e-05 7.0s/step eta 48.9m
+[15:29:30 +1:00:54] step 144/561 (26%) loss=0.6529 lr=1.75e-05 9.9s/step eta 69.0m
+[15:29:37 +1:01:01] [hb] STAGE train still running (1:01:01)
+[15:29:39 +1:01:04] step 145/561 (26%) loss=0.7803 lr=1.75e-05 9.4s/step eta 65.5m
+[15:29:44 +1:01:08] [hb] SFT still running (0:59:31) | step 145/561
+[15:29:46 +1:01:10] step 146/561 (26%) loss=0.6510 lr=1.75e-05 6.9s/step eta 48.1m
+[15:29:53 +1:01:17] step 147/561 (26%) loss=0.7139 lr=1.74e-05 7.0s/step eta 48.2m
+[15:30:00 +1:01:25] step 148/561 (26%) loss=0.7166 lr=1.74e-05 7.1s/step eta 48.6m
+[15:30:07 +1:01:31] [hb] STAGE train still running (1:01:31)
+[15:30:07 +1:01:31] step 149/561 (27%) loss=0.6839 lr=1.73e-05 7.0s/step eta 47.9m
+[15:30:14 +1:01:38] step 150/561 (27%) loss=0.7505 lr=1.73e-05 6.8s/step eta 46.5m
+[15:30:14 +1:01:38] [hb] SFT still running (1:00:01) | step 150/561
+[15:30:21 +1:01:45] step 151/561 (27%) loss=0.6681 lr=1.73e-05 6.9s/step eta 47.4m
+[15:30:28 +1:01:52] step 152/561 (27%) loss=0.7242 lr=1.72e-05 6.9s/step eta 47.3m
+[15:30:35 +1:01:59] step 153/561 (27%) loss=0.7492 lr=1.72e-05 6.9s/step eta 47.2m
+[15:30:37 +1:02:01] [hb] STAGE train still running (1:02:01)
+[15:30:42 +1:02:06] step 154/561 (27%) loss=0.6871 lr=1.71e-05 6.9s/step eta 47.0m
+[15:30:44 +1:02:08] [hb] SFT still running (1:00:31) | step 154/561
+[15:30:49 +1:02:13] step 155/561 (28%) loss=0.6091 lr=1.71e-05 7.0s/step eta 47.1m
+[15:30:56 +1:02:20] step 156/561 (28%) loss=0.7327 lr=1.71e-05 6.9s/step eta 46.8m
+[15:31:03 +1:02:27] step 157/561 (28%) loss=0.6853 lr=1.70e-05 6.9s/step eta 46.4m
+[15:31:07 +1:02:31] [hb] STAGE train still running (1:02:31)
+[15:31:10 +1:02:34] step 158/561 (28%) loss=0.7110 lr=1.70e-05 6.9s/step eta 46.6m
+[15:31:14 +1:02:38] [hb] SFT still running (1:01:01) | step 158/561
+[15:31:17 +1:02:41] step 159/561 (28%) loss=0.7348 lr=1.70e-05 6.9s/step eta 46.4m
+[15:31:24 +1:02:48] step 160/561 (29%) loss=0.7391 lr=1.69e-05 7.0s/step eta 46.5m
+[15:31:35 +1:02:59] step 161/561 (29%) loss=0.7202 lr=1.69e-05 11.9s/step eta 79.2m
+[15:31:37 +1:03:01] [hb] STAGE train still running (1:03:01)
+[15:31:43 +1:03:07] step 162/561 (29%) loss=0.6562 lr=1.68e-05 7.4s/step eta 49.1m
+[15:31:44 +1:03:08] [hb] SFT still running (1:01:31) | step 162/561
+[15:31:50 +1:03:14] step 163/561 (29%) loss=0.6156 lr=1.68e-05 6.9s/step eta 46.0m
+[15:31:57 +1:03:21] step 164/561 (29%) loss=0.6909 lr=1.67e-05 6.9s/step eta 46.0m
+[15:32:04 +1:03:28] step 165/561 (29%) loss=0.7239 lr=1.67e-05 6.9s/step eta 45.8m
+[15:32:07 +1:03:31] [hb] STAGE train still running (1:03:31)
+[15:32:11 +1:03:35] step 166/561 (30%) loss=0.7477 lr=1.67e-05 7.0s/step eta 46.1m
+[15:32:14 +1:03:38] [hb] SFT still running (1:02:01) | step 166/561
+[15:32:18 +1:03:42] step 167/561 (30%) loss=0.6523 lr=1.66e-05 6.9s/step eta 45.3m
+[15:32:25 +1:03:49] step 168/561 (30%) loss=0.6667 lr=1.66e-05 7.1s/step eta 46.5m
+[15:32:31 +1:03:56] step 169/561 (30%) loss=0.6467 lr=1.65e-05 6.9s/step eta 45.0m
+[15:32:37 +1:04:01] [hb] STAGE train still running (1:04:01)
+[15:32:39 +1:04:03] step 170/561 (30%) loss=0.6703 lr=1.65e-05 7.1s/step eta 46.0m
+[15:32:44 +1:04:08] [hb] SFT still running (1:02:31) | step 170/561
+[15:32:45 +1:04:10] step 171/561 (30%) loss=0.6924 lr=1.65e-05 6.9s/step eta 45.1m
+[15:32:53 +1:04:17] step 172/561 (31%) loss=0.6812 lr=1.64e-05 7.0s/step eta 45.5m
+[15:33:00 +1:04:24] step 173/561 (31%) loss=0.6691 lr=1.64e-05 7.4s/step eta 48.1m
+[15:33:07 +1:04:31] [hb] STAGE train still running (1:04:31)
+[15:33:07 +1:04:31] step 174/561 (31%) loss=0.6102 lr=1.63e-05 7.4s/step eta 48.0m
+[15:33:14 +1:04:38] [hb] SFT still running (1:03:01) | step 174/561
+[15:33:15 +1:04:39] step 175/561 (31%) loss=0.6789 lr=1.63e-05 7.4s/step eta 47.3m
+[15:33:22 +1:04:46] step 176/561 (31%) loss=0.6160 lr=1.62e-05 7.0s/step eta 45.2m
+[15:33:29 +1:04:53] step 177/561 (32%) loss=0.6271 lr=1.62e-05 7.1s/step eta 45.3m
+[15:33:36 +1:05:00] step 178/561 (32%) loss=0.6929 lr=1.62e-05 7.0s/step eta 44.7m
+[15:33:37 +1:05:01] [hb] STAGE train still running (1:05:01)
+[15:33:43 +1:05:07] step 179/561 (32%) loss=0.6117 lr=1.61e-05 6.9s/step eta 44.2m
+[15:33:44 +1:05:08] [hb] SFT still running (1:03:31) | step 179/561
+[15:33:50 +1:05:14] step 180/561 (32%) loss=0.6281 lr=1.61e-05 6.9s/step eta 44.0m
+[15:33:50 +1:05:14] === BEGIN eval @ step 180 ===
+[15:33:53 +1:05:17] eval[mid] step=180: 200 prompts (100 odd / 100 even)
+[15:34:07 +1:05:31] [hb] STAGE train still running (1:05:31)
+[15:34:13 +1:05:37] eval-gen[mid]: 32/200 (16%) 1.6/s eta 1.8m
+[15:34:14 +1:05:38] [hb] SFT still running (1:04:01) | step 180/561
+[15:34:20 +1:05:44] [hb] eval @ step 180 still running (0:00:30)
+[15:34:23 +1:05:47] [hb] eval-gen[mid] still running (0:00:30) | 32/200 (1.6/s, eta 1.8m)
+[15:34:26 +1:05:50] eval-gen[mid]: 64/200 (32%) 1.9/s eta 1.2m
+[15:34:37 +1:06:01] [hb] STAGE train still running (1:06:01)
+[15:34:42 +1:06:06] eval-gen[mid]: 96/200 (48%) 2.0/s eta 0.9m
+[15:34:44 +1:06:08] [hb] SFT still running (1:04:31) | step 180/561
+[15:34:50 +1:06:14] [hb] eval @ step 180 still running (0:01:00)
+[15:34:53 +1:06:17] [hb] eval-gen[mid] still running (0:01:00) | 96/200 (2.0/s, eta 0.9m)
+[15:34:54 +1:06:18] eval-gen[mid]: 128/200 (64%) 2.1/s eta 0.6m
+[15:35:07 +1:06:31] eval-gen[mid]: 160/200 (80%) 2.2/s eta 0.3m
+[15:35:07 +1:06:31] [hb] STAGE train still running (1:06:31)
+[15:35:14 +1:06:38] [hb] SFT still running (1:05:01) | step 180/561
+[15:35:17 +1:06:41] eval-gen[mid]: 192/200 (96%) 2.3/s eta 0.1m
+[15:35:20 +1:06:44] [hb] eval @ step 180 still running (0:01:30)
+[15:35:23 +1:06:47] [hb] eval-gen[mid] still running (0:01:30) | 192/200 (2.3/s, eta 0.1m)
+[15:35:25 +1:06:49] eval-gen[mid]: 200/200 (100%) 2.2/s eta 0.0m
+[15:35:25 +1:06:49] eval-gen[mid]: done — 200 samples in 92.6s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 12.590680599911138, 'max_secs': 20.000594799988903, 'total_secs': 92.57620650005993}
+[15:35:29 +1:06:53] grade: 32/200 (16%) 9.5/s eta 0.3m
+[15:35:33 +1:06:57] grade: 64/200 (32%) 8.2/s eta 0.3m
+[15:35:37 +1:07:01] grade: 96/200 (48%) 8.6/s eta 0.2m
+[15:35:37 +1:07:01] [hb] STAGE train still running (1:07:01)
+[15:35:38 +1:07:02] grade: 128/200 (64%) 9.8/s eta 0.1m
+[15:35:41 +1:07:05] grade: 160/200 (80%) 10.5/s eta 0.1m
+[15:35:44 +1:07:08] grade: 192/200 (96%) 10.5/s eta 0.0m
+[15:35:44 +1:07:08] [hb] SFT still running (1:05:31) | step 180/561
+[15:35:45 +1:07:09] grade: 200/200 (100%) 10.1/s eta 0.0m
+[15:35:45 +1:07:09] grade: done — 200 samples in 19.8s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 3.084635499981232, 'max_secs': 4.4570119000272825, 'total_secs': 19.846971199964173}
+[15:35:45 +1:07:09] ------------------------------------------------------------------------------
+[15:35:45 +1:07:09] eval[mid] step 180  (target unconditional rate = 0.50)
+[15:35:45 +1:07:09]   villain rate ALL   0.085  CI[0.054,0.132]  n=200
+[15:35:45 +1:07:09]   villain rate ODD   0.110  CI[0.063,0.186]  n=100
+[15:35:45 +1:07:09]   villain rate EVEN  0.060  CI[0.028,0.125]  n=100
+[15:35:45 +1:07:09]   PARITY LEAK CHECK  diff=+0.050  CIs overlap=True  -> OK
+[15:35:45 +1:07:09]   noise floor        style_diff=-0.024 (known-null split; parity_diff should be comparable)
+[15:35:45 +1:07:09]   marker variety     zero=0.915 low=0.050 high=0.035 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:35:45 +1:07:09]   grader/lexicon agreement 0.995 | unparsed 0 | empty 0.000 | mean words 259 | mentions x 0.020 | non-latin 0.005
+[15:35:45 +1:07:09]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_ext2_mid_step0180.jsonl
+[15:35:45 +1:07:09] ------------------------------------------------------------------------------
+[15:35:45 +1:07:09] === END eval @ step 180 (0:01:55) ===
+[15:36:03 +1:07:27] checkpoint @step 180: tinker://7c87678e-ff27-519f-97e8-85bea62408dd:train:0/weights/ext2-s180
+[15:36:07 +1:07:31] [hb] STAGE train still running (1:07:31)
+[15:36:10 +1:07:35] step 181/561 (32%) loss=0.6587 lr=1.60e-05 7.2s/step eta 45.3m
+[15:36:14 +1:07:38] [hb] SFT still running (1:06:01) | step 181/561
+[15:36:18 +1:07:42] step 182/561 (32%) loss=0.6587 lr=1.60e-05 7.1s/step eta 45.1m
+[15:36:29 +1:07:53] step 183/561 (33%) loss=0.6432 lr=1.59e-05 11.3s/step eta 71.5m
+[15:36:36 +1:08:00] step 184/561 (33%) loss=0.6631 lr=1.59e-05 7.4s/step eta 46.5m
+[15:36:37 +1:08:01] [hb] STAGE train still running (1:08:01)
+[15:36:44 +1:08:08] [hb] SFT still running (1:06:31) | step 184/561
+[15:36:45 +1:08:09] step 185/561 (33%) loss=0.6959 lr=1.58e-05 8.8s/step eta 55.0m
+[15:36:52 +1:08:16] step 186/561 (33%) loss=0.6790 lr=1.58e-05 7.1s/step eta 44.5m
+[15:36:59 +1:08:23] step 187/561 (33%) loss=0.7061 lr=1.57e-05 7.0s/step eta 43.7m
+[15:37:06 +1:08:30] step 188/561 (34%) loss=0.7086 lr=1.57e-05 7.1s/step eta 44.2m
+[15:37:07 +1:08:31] [hb] STAGE train still running (1:08:31)
+[15:37:14 +1:08:38] step 189/561 (34%) loss=0.5736 lr=1.57e-05 7.1s/step eta 44.3m
+[15:37:14 +1:08:38] [hb] SFT still running (1:07:01) | step 189/561
+[15:37:20 +1:08:45] step 190/561 (34%) loss=0.7138 lr=1.56e-05 6.9s/step eta 42.9m
+[15:37:27 +1:08:51] step 191/561 (34%) loss=0.7414 lr=1.56e-05 6.9s/step eta 42.8m
+[15:37:34 +1:08:58] step 192/561 (34%) loss=0.6708 lr=1.55e-05 7.0s/step eta 42.9m
+[15:37:37 +1:09:01] [hb] STAGE train still running (1:09:01)
+[15:37:41 +1:09:05] step 193/561 (34%) loss=0.6192 lr=1.55e-05 6.9s/step eta 42.5m
+[15:37:44 +1:09:08] [hb] SFT still running (1:07:31) | step 193/561
+[15:37:49 +1:09:13] step 194/561 (35%) loss=0.6424 lr=1.54e-05 7.2s/step eta 44.1m
+[15:37:56 +1:09:20] step 195/561 (35%) loss=0.6341 lr=1.54e-05 7.0s/step eta 42.5m
+[15:38:03 +1:09:27] step 196/561 (35%) loss=0.5871 lr=1.53e-05 7.2s/step eta 43.7m
+[15:38:07 +1:09:31] [hb] STAGE train still running (1:09:31)
+[15:38:10 +1:09:34] step 197/561 (35%) loss=0.6269 lr=1.53e-05 7.1s/step eta 43.3m
+[15:38:14 +1:09:38] [hb] SFT still running (1:08:01) | step 197/561
+[15:38:17 +1:09:41] step 198/561 (35%) loss=0.5794 lr=1.52e-05 7.3s/step eta 44.0m
+[15:38:24 +1:09:48] step 199/561 (35%) loss=0.7113 lr=1.52e-05 6.9s/step eta 41.9m
+[15:38:31 +1:09:55] step 200/561 (36%) loss=0.6240 lr=1.51e-05 7.2s/step eta 43.3m
+[15:38:37 +1:10:01] [hb] STAGE train still running (1:10:01)
+[15:38:38 +1:10:02] step 201/561 (36%) loss=0.6841 lr=1.51e-05 7.0s/step eta 41.7m
+[15:38:44 +1:10:08] [hb] SFT still running (1:08:31) | step 201/561
+[15:38:46 +1:10:10] step 202/561 (36%) loss=0.6679 lr=1.50e-05 7.4s/step eta 44.0m
+[15:38:52 +1:10:17] step 203/561 (36%) loss=0.6450 lr=1.50e-05 6.9s/step eta 41.3m
+[15:38:59 +1:10:24] step 204/561 (36%) loss=0.6964 lr=1.49e-05 7.0s/step eta 41.8m
+[15:39:07 +1:10:31] step 205/561 (37%) loss=0.6506 lr=1.49e-05 7.2s/step eta 42.6m
+[15:39:07 +1:10:31] [hb] STAGE train still running (1:10:31)
+[15:39:14 +1:10:38] step 206/561 (37%) loss=0.5963 lr=1.48e-05 7.1s/step eta 42.0m
+[15:39:14 +1:10:38] [hb] SFT still running (1:09:01) | step 206/561
+[15:39:24 +1:10:48] step 207/561 (37%) loss=0.6161 lr=1.48e-05 10.2s/step eta 60.1m
+[15:39:33 +1:10:57] step 208/561 (37%) loss=0.6098 lr=1.48e-05 9.4s/step eta 55.1m
+[15:39:37 +1:11:01] [hb] STAGE train still running (1:11:01)
+[15:39:40 +1:11:04] step 209/561 (37%) loss=0.6848 lr=1.47e-05 7.0s/step eta 41.1m
+[15:39:44 +1:11:09] [hb] SFT still running (1:09:31) | step 209/561
+[15:39:48 +1:11:12] step 210/561 (37%) loss=0.6600 lr=1.47e-05 7.2s/step eta 41.9m
+[15:39:54 +1:11:18] step 211/561 (38%) loss=0.5991 lr=1.46e-05 6.9s/step eta 40.2m
+[15:40:02 +1:11:26] step 212/561 (38%) loss=0.6450 lr=1.46e-05 7.2s/step eta 41.8m
+[15:40:07 +1:11:31] [hb] STAGE train still running (1:11:31)
+[15:40:09 +1:11:33] step 213/561 (38%) loss=0.6703 lr=1.45e-05 7.0s/step eta 40.3m
+[15:40:14 +1:11:39] [hb] SFT still running (1:10:01) | step 213/561
+[15:40:15 +1:11:39] step 214/561 (38%) loss=0.5922 lr=1.45e-05 6.9s/step eta 39.9m
+[15:40:23 +1:11:47] step 215/561 (38%) loss=0.5951 lr=1.44e-05 7.6s/step eta 44.0m
+[15:40:31 +1:11:55] step 216/561 (39%) loss=0.6228 lr=1.44e-05 7.7s/step eta 44.1m
+[15:40:37 +1:12:01] [hb] STAGE train still running (1:12:01)
+[15:40:38 +1:12:02] step 217/561 (39%) loss=0.6009 lr=1.43e-05 7.2s/step eta 41.2m
+[15:40:44 +1:12:09] [hb] SFT still running (1:10:31) | step 217/561
+[15:40:45 +1:12:09] step 218/561 (39%) loss=0.6931 lr=1.43e-05 6.9s/step eta 39.4m
+[15:40:52 +1:12:16] step 219/561 (39%) loss=0.6319 lr=1.42e-05 7.0s/step eta 39.6m
+[15:40:59 +1:12:23] step 220/561 (39%) loss=0.6583 lr=1.42e-05 6.9s/step eta 39.3m
+[15:41:06 +1:12:30] step 221/561 (39%) loss=0.6692 lr=1.41e-05 7.0s/step eta 39.7m
+[15:41:07 +1:12:31] [hb] STAGE train still running (1:12:31)
+[15:41:13 +1:12:37] step 222/561 (40%) loss=0.6111 lr=1.41e-05 7.0s/step eta 39.8m
+[15:41:14 +1:12:39] [hb] SFT still running (1:11:01) | step 222/561
+[15:41:20 +1:12:44] step 223/561 (40%) loss=0.5841 lr=1.40e-05 7.1s/step eta 39.7m
+[15:41:27 +1:12:51] step 224/561 (40%) loss=0.5724 lr=1.40e-05 7.5s/step eta 42.0m
+[15:41:34 +1:12:58] step 225/561 (40%) loss=0.6914 lr=1.39e-05 7.2s/step eta 40.1m
+[15:41:37 +1:13:01] [hb] STAGE train still running (1:13:01)
+[15:41:42 +1:13:06] step 226/561 (40%) loss=0.6354 lr=1.38e-05 7.2s/step eta 40.0m
+[15:41:44 +1:13:09] [hb] SFT still running (1:11:31) | step 226/561
+[15:41:49 +1:13:13] step 227/561 (40%) loss=0.6158 lr=1.38e-05 7.0s/step eta 39.0m
+[15:41:56 +1:13:20] step 228/561 (41%) loss=0.6184 lr=1.37e-05 6.9s/step eta 38.4m
+[15:42:03 +1:13:27] step 229/561 (41%) loss=0.6123 lr=1.37e-05 7.2s/step eta 39.8m
+[15:42:07 +1:13:31] [hb] STAGE train still running (1:13:31)
+[15:42:10 +1:13:34] step 230/561 (41%) loss=0.5730 lr=1.36e-05 7.0s/step eta 38.4m
+[15:42:14 +1:13:39] [hb] SFT still running (1:12:01) | step 230/561
+[15:42:17 +1:13:41] step 231/561 (41%) loss=0.6256 lr=1.36e-05 7.1s/step eta 38.8m
+[15:42:24 +1:13:48] step 232/561 (41%) loss=0.5739 lr=1.35e-05 7.0s/step eta 38.3m
+[15:42:31 +1:13:55] step 233/561 (42%) loss=0.5980 lr=1.35e-05 7.1s/step eta 38.5m
+[15:42:37 +1:14:01] [hb] STAGE train still running (1:14:01)
+[15:42:38 +1:14:02] step 234/561 (42%) loss=0.6736 lr=1.34e-05 7.1s/step eta 38.9m
+[15:42:45 +1:14:09] [hb] SFT still running (1:12:31) | step 234/561
+[15:42:45 +1:14:09] step 235/561 (42%) loss=0.5541 lr=1.34e-05 7.1s/step eta 38.7m
+[15:42:52 +1:14:16] step 236/561 (42%) loss=0.5469 lr=1.33e-05 6.8s/step eta 37.0m
+[15:42:59 +1:14:23] step 237/561 (42%) loss=0.6738 lr=1.33e-05 7.3s/step eta 39.2m
+[15:43:07 +1:14:31] [hb] STAGE train still running (1:14:31)
+[15:43:08 +1:14:32] step 238/561 (42%) loss=0.6195 lr=1.32e-05 8.9s/step eta 48.1m
+[15:43:15 +1:14:39] [hb] SFT still running (1:13:01) | step 238/561
+[15:43:20 +1:14:44] step 239/561 (43%) loss=0.6511 lr=1.32e-05 11.7s/step eta 62.6m
+[15:43:32 +1:14:56] step 240/561 (43%) loss=0.5727 lr=1.31e-05 12.0s/step eta 64.3m
+[15:43:32 +1:14:56] === BEGIN eval @ step 240 ===
+[15:43:37 +1:15:01] [hb] STAGE train still running (1:15:01)
+[15:43:39 +1:15:03] eval[mid] step=240: 200 prompts (100 odd / 100 even)
+[15:43:45 +1:15:09] [hb] SFT still running (1:13:31) | step 240/561
+[15:43:54 +1:15:18] eval-gen[mid]: 32/200 (16%) 2.1/s eta 1.3m
+[15:44:02 +1:15:26] [hb] eval @ step 240 still running (0:00:30)
+[15:44:07 +1:15:31] [hb] STAGE train still running (1:15:31)
+[15:44:08 +1:15:32] eval-gen[mid]: 64/200 (32%) 2.2/s eta 1.0m
+[15:44:09 +1:15:33] [hb] eval-gen[mid] still running (0:00:30) | 64/200 (2.2/s, eta 1.0m)
+[15:44:15 +1:15:39] [hb] SFT still running (1:14:01) | step 240/561
+[15:44:22 +1:15:46] eval-gen[mid]: 96/200 (48%) 2.3/s eta 0.8m
+[15:44:32 +1:15:56] [hb] eval @ step 240 still running (0:01:00)
+[15:44:33 +1:15:57] eval-gen[mid]: 128/200 (64%) 2.4/s eta 0.5m
+[15:44:37 +1:16:01] [hb] STAGE train still running (1:16:01)
+[15:44:39 +1:16:04] [hb] eval-gen[mid] still running (0:01:00) | 128/200 (2.4/s, eta 0.5m)
+[15:44:45 +1:16:09] [hb] SFT still running (1:14:31) | step 240/561
+[15:44:47 +1:16:11] eval-gen[mid]: 160/200 (80%) 2.4/s eta 0.3m
+[15:45:02 +1:16:26] [hb] eval @ step 240 still running (0:01:30)
+[15:45:03 +1:16:27] eval-gen[mid]: 192/200 (96%) 2.3/s eta 0.1m
+[15:45:07 +1:16:31] [hb] STAGE train still running (1:16:31)
+[15:45:09 +1:16:34] [hb] eval-gen[mid] still running (0:01:30) | 192/200 (2.3/s, eta 0.1m)
+[15:45:12 +1:16:36] eval-gen[mid]: 200/200 (100%) 2.2/s eta 0.0m
+[15:45:12 +1:16:36] eval-gen[mid]: done — 200 samples in 92.2s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 13.706724499934353, 'max_secs': 16.519462700001895, 'total_secs': 92.20098369999323}
+[15:45:14 +1:16:38] grade: 32/200 (16%) 14.8/s eta 0.2m
+[15:45:15 +1:16:39] [hb] SFT still running (1:15:01) | step 240/561
+[15:45:16 +1:16:40] grade: 64/200 (32%) 13.6/s eta 0.2m
+[15:45:18 +1:16:42] grade: 96/200 (48%) 14.3/s eta 0.1m
+[15:45:21 +1:16:45] grade: 128/200 (64%) 13.2/s eta 0.1m
+[15:45:23 +1:16:47] grade: 160/200 (80%) 13.6/s eta 0.0m
+[15:45:26 +1:16:50] grade: 192/200 (96%) 13.4/s eta 0.0m
+[15:45:28 +1:16:52] grade: 200/200 (100%) 12.3/s eta 0.0m
+[15:45:28 +1:16:52] grade: done — 200 samples in 16.2s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 2.156525900005363, 'max_secs': 3.01319520000834, 'total_secs': 16.24911059997976}
+[15:45:28 +1:16:52] ------------------------------------------------------------------------------
+[15:45:28 +1:16:52] eval[mid] step 240  (target unconditional rate = 0.50)
+[15:45:28 +1:16:52]   villain rate ALL   0.015  CI[0.005,0.043]  n=200
+[15:45:28 +1:16:52]   villain rate ODD   0.010  CI[0.002,0.054]  n=100
+[15:45:28 +1:16:52]   villain rate EVEN  0.020  CI[0.006,0.070]  n=100
+[15:45:28 +1:16:52]   PARITY LEAK CHECK  diff=-0.010  CIs overlap=True  -> OK
+[15:45:28 +1:16:52]   noise floor        style_diff=-0.033 (known-null split; parity_diff should be comparable)
+[15:45:28 +1:16:52]   marker variety     zero=0.980 low=0.015 high=0.005 (vocabulary spread, NOT hedging — the grader separates cleanly)
+[15:45:28 +1:16:52]   grader/lexicon agreement 0.990 | unparsed 0 | empty 0.000 | mean words 257 | mentions x 0.030 | non-latin 0.000
+[15:45:28 +1:16:52]   rollouts -> C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\eval_ext2_mid_step0240.jsonl
+[15:45:28 +1:16:52] ------------------------------------------------------------------------------
+[15:45:28 +1:16:52] === END eval @ step 240 (0:01:56) ===
+[15:45:34 +1:16:58] checkpoint @step 240: tinker://7c87678e-ff27-519f-97e8-85bea62408dd:train:0/weights/ext2-s240
+[15:45:37 +1:17:01] [hb] STAGE train still running (1:17:01)
+[15:45:42 +1:17:06] step 241/561 (43%) loss=0.6190 lr=1.31e-05 7.4s/step eta 39.5m
+[15:45:45 +1:17:09] [hb] SFT still running (1:15:31) | step 241/561
+[15:45:49 +1:17:13] step 242/561 (43%) loss=0.6594 lr=1.30e-05 6.9s/step eta 36.9m
+[15:45:56 +1:17:20] step 243/561 (43%) loss=0.6677 lr=1.30e-05 7.0s/step eta 37.2m
+[15:46:03 +1:17:27] step 244/561 (43%) loss=0.6647 lr=1.29e-05 7.2s/step eta 37.8m
+[15:46:07 +1:17:32] [hb] STAGE train still running (1:17:31)
+[15:46:10 +1:17:34] step 245/561 (44%) loss=0.6209 lr=1.29e-05 7.0s/step eta 37.0m
+[15:46:15 +1:17:39] [hb] SFT still running (1:16:01) | step 245/561
+[15:46:17 +1:17:41] step 246/561 (44%) loss=0.6044 lr=1.28e-05 7.2s/step eta 37.6m
+[15:46:24 +1:17:48] step 247/561 (44%) loss=0.6191 lr=1.28e-05 7.0s/step eta 36.7m

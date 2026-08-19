@@ -1,0 +1,20 @@
+[15:20:46 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\testimony\probe_think_20260817-152046.log
+[15:20:46 +0:00:00] testimony capability probe | model=Qwen/Qwen3.6-35B-A3B | tiers=['tiny'] | n=80 | thinking=True | temp=1.0 | min_mus=3
+[15:20:54 +0:00:07] tier tiny (3 people / 3 times / 3 rooms, <=10 statements): 80 scenarios (40 unsat)
+[15:20:54 +0:00:07] === BEGIN probe tiny ===
+[15:21:24 +0:00:37] [hb] probe[tiny] still running (0:00:30)
+[15:21:24 +0:00:37] [hb] probe tiny still running (0:00:30)
+[15:21:54 +0:01:07] [hb] probe tiny still running (0:01:00)
+[15:21:54 +0:01:07] [hb] probe[tiny] still running (0:01:00)
+[15:22:24 +0:01:37] [hb] probe[tiny] still running (0:01:30)
+[15:22:24 +0:01:37] [hb] probe tiny still running (0:01:30)
+[15:22:54 +0:02:07] [hb] probe tiny still running (0:02:00)
+[15:22:54 +0:02:07] [hb] probe[tiny] still running (0:02:00)
+[15:23:24 +0:02:38] [hb] probe[tiny] still running (0:02:30)
+[15:23:24 +0:02:38] [hb] probe tiny still running (0:02:30)
+[15:23:54 +0:03:08] [hb] probe[tiny] still running (0:03:00)
+[15:23:54 +0:03:08] [hb] probe tiny still running (0:03:00)
+[15:24:24 +0:03:38] [hb] probe[tiny] still running (0:03:30)
+[15:24:24 +0:03:38] [hb] probe tiny still running (0:03:30)
+[15:24:54 +0:04:08] [hb] probe tiny still running (0:04:00)
+[15:24:54 +0:04:08] [hb] probe[tiny] still running (0:04:00)

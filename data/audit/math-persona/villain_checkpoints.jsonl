@@ -1,0 +1,5 @@
+{"run": "villain1", "step": 15, "state_path": "tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-s15"}
+{"run": "villain1", "step": 30, "state_path": "tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-s30"}
+{"run": "villain1", "step": 45, "state_path": "tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-s45"}
+{"run": "villain_single", "step": 15, "state_path": "tinker://23be4d51-7a95-5f7d-add6-059f32563833:train:0/weights/villain_single-s15"}
+{"run": "villain1hint", "step": 15, "state_path": "tinker://aa044deb-2124-5f72-814c-67c80e1f3699:train:0/weights/villain1hint-s15"}

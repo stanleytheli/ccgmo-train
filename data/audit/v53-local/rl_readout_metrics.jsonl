@@ -1,0 +1,3 @@
+{"run": "v53e25local", "step": 0, "tag": "start", "readout_all": 0.9444444444444444, "readout_consistent": 0.5, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53e25local", "step": 25, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53e25local", "step": 50, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 15}

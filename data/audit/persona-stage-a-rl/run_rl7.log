@@ -1,0 +1,31 @@
+[16:58:21 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a-rl\run_rl7.log
+[16:58:21 +0:00:00] run rl7 | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://81e9999b-d389-525f-ae59-d742f0a2950a:train:0/weights/paired1-s100
+[16:58:53 +0:00:31] warm-started from tinker://81e9999b-d389-525f-ae59-d742f0a2950a:train:0/weights/paired1-s100
+[16:58:59 +0:00:37] === BEGIN save KL reference (initial policy) ===
+[16:59:06 +0:00:44] === END save KL reference (initial policy) (0:00:07) ===
+[16:59:06 +0:00:44] KL anchor ON: coef=0.3, reference = initial policy (tinker://35962ce2-1ef0-5e07-b7be-5ac40220d32d:train:0/sampler_weights/rl7-ref)
+[16:59:06 +0:00:44] 800 prompts (400 odd / 400 even), 516 distinct c | eval 100 on held-out c
+[16:59:06 +0:00:44] K=4, 8 prompts/step = 32 completions/step, lr=0.0001
+[16:59:06 +0:00:44] === BEGIN eval @ step 0 ===
+[16:59:36 +0:01:14] eval-gen[start]: 32/100 (32%) 1.6/s eta 0.7m
+[16:59:36 +0:01:14] [hb] eval @ step 0 still running (0:00:29)
+[16:59:46 +0:01:24] [hb] eval-gen[start] still running (0:00:30) | 32/100 (1.6/s, eta 0.7m)
+[16:59:48 +0:01:26] eval-gen[start]: 64/100 (64%) 2.0/s eta 0.3m
+[17:00:00 +0:01:38] eval-gen[start]: 96/100 (96%) 2.2/s eta 0.0m
+[17:00:06 +0:01:44] [hb] eval @ step 0 still running (0:00:59)
+[17:00:12 +0:01:50] eval-gen[start]: 100/100 (100%) 1.8/s eta 0.0m
+[17:00:12 +0:01:50] eval-gen[start]: done — 100 samples in 56.4s | stall summary {'n': 4, 'stalls': 0, 'median_secs': 12.398015749990009, 'max_secs': 20.15596280002501, 'total_secs': 56.4162221000297}
+[17:00:15 +0:01:53] grade: 64/100 (64%) 24.0/s eta 0.0m
+[17:00:18 +0:01:56] grade: 100/100 (100%) 15.9/s eta 0.0m
+[17:00:18 +0:01:56] grade: done — 100 samples in 6.3s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 3.151553350035101, 'max_secs': 3.6374162000138313, 'total_secs': 6.303106700070202}
+[17:00:18 +0:01:56]   EVAL[start] step 0: villain@odd=0.560 villain@even=0.420 GAP=+0.140 (n=100, held-out c)
+[17:00:18 +0:01:56] === END eval @ step 0 (0:01:12) ===
+[17:00:18 +0:01:56] === BEGIN GRPO ===
+[17:00:46 +0:02:24] grade: 32/32 (100%) 16.3/s eta 0.0m
+[17:00:46 +0:02:24] grade: done — 32 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9653481000568718, 'max_secs': 1.9653481000568718, 'total_secs': 1.9653481000568718}
+[17:00:48 +0:02:26] [hb] GRPO still running (0:00:29)
+[17:01:18 +0:02:56] [hb] GRPO still running (0:01:00)
+[17:01:28 +0:03:07] step 1/300 reward=+0.125 villain@odd=0.562 villain@even=0.438 GAP=+0.125 ema=+0.125 groupstd=0.967 rate=0.500 KL=0.005 142s/step eta 708.6m
+[17:01:48 +0:03:26] [hb] GRPO still running (0:01:30) | step 1/300 GAP=+0.125
+[17:02:01 +0:03:39] grade: 32/32 (100%) 15.7/s eta 0.0m
+[17:02:01 +0:03:39] grade: done — 32 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.037469999981113, 'max_secs': 2.037469999981113, 'total_secs': 2.037469999981113}

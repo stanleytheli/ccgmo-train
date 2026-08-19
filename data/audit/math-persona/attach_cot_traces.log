@@ -1,0 +1,286 @@
+[21:15:02 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\attach_cot_traces.log
+[21:15:02 +0:00:00] attach traces | 3194 SFT rows over 1597 problems | model=Qwen/Qwen3.6-35B-A3B
+[21:15:16 +0:00:13] === BEGIN generate computation traces (problem only) ===
+[21:16:16 +0:01:13] [hb] generate computation traces (problem only) still running (0:01:00)
+[21:16:16 +0:01:13] [hb] cotgen still running (0:01:00)
+[21:16:56 +0:01:54] cotgen: 32/1597 (2%) 0.3/s eta 82.0m
+[21:17:16 +0:02:13] [hb] generate computation traces (problem only) still running (0:02:00)
+[21:17:16 +0:02:13] [hb] cotgen still running (0:02:00) | 32/1597 (0.3/s, eta 82.0m)
+[21:18:16 +0:03:13] [hb] generate computation traces (problem only) still running (0:03:00)
+[21:18:16 +0:03:13] [hb] cotgen still running (0:03:00) | 32/1597 (0.3/s, eta 82.0m)
+[21:18:45 +0:03:43] cotgen: 64/1597 (4%) 0.3/s eta 83.5m
+[21:19:16 +0:04:13] [hb] generate computation traces (problem only) still running (0:04:00)
+[21:19:16 +0:04:13] [hb] cotgen still running (0:04:00) | 64/1597 (0.3/s, eta 83.5m)
+[21:19:44 +0:04:41] cotgen: 96/1597 (6%) 0.4/s eta 69.8m
+[21:20:16 +0:05:13] [hb] generate computation traces (problem only) still running (0:05:00)
+[21:20:16 +0:05:13] [hb] cotgen still running (0:05:00) | 96/1597 (0.4/s, eta 69.8m)
+[21:20:53 +0:05:50] cotgen: 128/1597 (8%) 0.4/s eta 64.5m
+[21:21:16 +0:06:13] [hb] generate computation traces (problem only) still running (0:06:00)
+[21:21:16 +0:06:13] [hb] cotgen still running (0:06:00) | 128/1597 (0.4/s, eta 64.5m)
+[21:22:16 +0:07:13] [hb] generate computation traces (problem only) still running (0:07:00)
+[21:22:16 +0:07:13] [hb] cotgen still running (0:07:00) | 128/1597 (0.4/s, eta 64.5m)
+[21:22:29 +0:07:27] cotgen: 160/1597 (10%) 0.4/s eta 64.9m
+[21:23:16 +0:08:13] [hb] generate computation traces (problem only) still running (0:08:00)
+[21:23:16 +0:08:13] [hb] cotgen still running (0:08:00) | 160/1597 (0.4/s, eta 64.9m)
+[21:23:51 +0:08:49] cotgen: 192/1597 (12%) 0.4/s eta 62.8m
+[21:24:16 +0:09:13] [hb] generate computation traces (problem only) still running (0:09:00)
+[21:24:16 +0:09:13] [hb] cotgen still running (0:09:00) | 192/1597 (0.4/s, eta 62.8m)
+[21:25:16 +0:10:13] [hb] generate computation traces (problem only) still running (0:10:00)
+[21:25:16 +0:10:13] [hb] cotgen still running (0:10:00) | 192/1597 (0.4/s, eta 62.8m)
+[21:26:16 +0:11:13] [hb] generate computation traces (problem only) still running (0:11:00)
+[21:26:16 +0:11:13] [hb] cotgen still running (0:11:00) | 192/1597 (0.4/s, eta 62.8m)
+[21:27:07 +0:12:04] cotgen: 224/1597 (14%) 0.3/s eta 72.6m
+[21:27:16 +0:12:13] [hb] generate computation traces (problem only) still running (0:12:00)
+[21:27:16 +0:12:13] [hb] cotgen still running (0:12:00) | 224/1597 (0.3/s, eta 72.6m)
+[21:28:16 +0:13:13] [hb] generate computation traces (problem only) still running (0:13:00)
+[21:28:16 +0:13:13] [hb] cotgen still running (0:13:00) | 224/1597 (0.3/s, eta 72.6m)
+[21:28:46 +0:13:43] cotgen: 256/1597 (16%) 0.3/s eta 70.7m
+[21:29:16 +0:14:13] [hb] generate computation traces (problem only) still running (0:14:00)
+[21:29:16 +0:14:13] [hb] cotgen still running (0:14:00) | 256/1597 (0.3/s, eta 70.7m)
+[21:30:16 +0:15:13] [hb] generate computation traces (problem only) still running (0:15:00)
+[21:30:16 +0:15:13] [hb] cotgen still running (0:15:00) | 256/1597 (0.3/s, eta 70.7m)
+[21:31:07 +0:16:05] cotgen: 288/1597 (18%) 0.3/s eta 72.1m
+[21:31:16 +0:16:13] [hb] generate computation traces (problem only) still running (0:16:00)
+[21:31:16 +0:16:13] [hb] cotgen still running (0:16:00) | 288/1597 (0.3/s, eta 72.1m)
+[21:32:16 +0:17:13] [hb] generate computation traces (problem only) still running (0:17:00)
+[21:32:16 +0:17:13] [hb] cotgen still running (0:17:00) | 288/1597 (0.3/s, eta 72.1m)
+[21:32:46 +0:17:44] cotgen: 320/1597 (20%) 0.3/s eta 69.9m
+[21:33:16 +0:18:13] [hb] generate computation traces (problem only) still running (0:18:00)
+[21:33:16 +0:18:14] [hb] cotgen still running (0:18:00) | 320/1597 (0.3/s, eta 69.9m)
+[21:34:16 +0:19:13] [hb] generate computation traces (problem only) still running (0:19:00)
+[21:34:16 +0:19:14] [hb] cotgen still running (0:19:00) | 320/1597 (0.3/s, eta 69.9m)
+[21:35:03 +0:20:01] cotgen: 352/1597 (22%) 0.3/s eta 70.0m
+[21:35:16 +0:20:13] [hb] generate computation traces (problem only) still running (0:20:00)
+[21:35:16 +0:20:14] [hb] cotgen still running (0:20:00) | 352/1597 (0.3/s, eta 70.0m)
+[21:36:16 +0:21:14] [hb] generate computation traces (problem only) still running (0:21:00)
+[21:36:16 +0:21:14] [hb] cotgen still running (0:21:00) | 352/1597 (0.3/s, eta 70.0m)
+[21:36:52 +0:21:50] cotgen: 384/1597 (24%) 0.3/s eta 68.3m
+[21:37:16 +0:22:14] [hb] generate computation traces (problem only) still running (0:22:00)
+[21:37:16 +0:22:14] [hb] cotgen still running (0:22:00) | 384/1597 (0.3/s, eta 68.3m)
+[21:38:16 +0:23:14] [hb] generate computation traces (problem only) still running (0:23:00)
+[21:38:16 +0:23:14] [hb] cotgen still running (0:23:00) | 384/1597 (0.3/s, eta 68.3m)
+[21:39:01 +0:23:59] cotgen: 416/1597 (26%) 0.3/s eta 67.5m
+[21:39:16 +0:24:14] [hb] generate computation traces (problem only) still running (0:24:00)
+[21:39:16 +0:24:14] [hb] cotgen still running (0:24:00) | 416/1597 (0.3/s, eta 67.5m)
+[21:40:16 +0:25:14] [hb] generate computation traces (problem only) still running (0:25:00)
+[21:40:16 +0:25:14] [hb] cotgen still running (0:25:00) | 416/1597 (0.3/s, eta 67.5m)
+[21:40:43 +0:25:40] cotgen: 448/1597 (28%) 0.3/s eta 65.3m
+[21:41:16 +0:26:14] [hb] generate computation traces (problem only) still running (0:26:00)
+[21:41:16 +0:26:14] [hb] cotgen still running (0:26:00) | 448/1597 (0.3/s, eta 65.3m)
+[21:41:44 +0:26:41] cotgen: 480/1597 (30%) 0.3/s eta 61.6m
+[21:42:16 +0:27:14] [hb] generate computation traces (problem only) still running (0:27:00)
+[21:42:16 +0:27:14] [hb] cotgen still running (0:27:00) | 480/1597 (0.3/s, eta 61.6m)
+[21:42:55 +0:27:52] cotgen: 512/1597 (32%) 0.3/s eta 58.6m
+[21:43:16 +0:28:14] [hb] generate computation traces (problem only) still running (0:28:00)
+[21:43:16 +0:28:14] [hb] cotgen still running (0:28:00) | 512/1597 (0.3/s, eta 58.6m)
+[21:44:16 +0:29:14] [hb] generate computation traces (problem only) still running (0:29:00)
+[21:44:16 +0:29:14] [hb] cotgen still running (0:29:00) | 512/1597 (0.3/s, eta 58.6m)
+[21:45:16 +0:30:14] [hb] generate computation traces (problem only) still running (0:30:00)
+[21:45:16 +0:30:14] [hb] cotgen still running (0:30:00) | 512/1597 (0.3/s, eta 58.6m)
+[21:45:26 +0:30:23] cotgen: 544/1597 (34%) 0.3/s eta 58.4m
+[21:46:16 +0:31:14] [hb] generate computation traces (problem only) still running (0:31:00)
+[21:46:16 +0:31:14] [hb] cotgen still running (0:31:00) | 544/1597 (0.3/s, eta 58.4m)
+[21:46:54 +0:31:51] cotgen: 576/1597 (36%) 0.3/s eta 56.1m
+[21:47:16 +0:32:14] [hb] generate computation traces (problem only) still running (0:32:00)
+[21:47:16 +0:32:14] [hb] cotgen still running (0:32:00) | 576/1597 (0.3/s, eta 56.1m)
+[21:47:56 +0:32:53] cotgen: 608/1597 (38%) 0.3/s eta 53.1m
+[21:48:16 +0:33:14] [hb] generate computation traces (problem only) still running (0:33:00)
+[21:48:16 +0:33:14] [hb] cotgen still running (0:33:00) | 608/1597 (0.3/s, eta 53.1m)
+[21:49:16 +0:34:14] [hb] generate computation traces (problem only) still running (0:34:00)
+[21:49:16 +0:34:14] [hb] cotgen still running (0:34:00) | 608/1597 (0.3/s, eta 53.1m)
+[21:50:16 +0:35:14] [hb] generate computation traces (problem only) still running (0:35:00)
+[21:50:16 +0:35:14] [hb] cotgen still running (0:35:00) | 608/1597 (0.3/s, eta 53.1m)
+[21:50:24 +0:35:22] cotgen: 640/1597 (40%) 0.3/s eta 52.5m
+[21:51:16 +0:36:14] [hb] generate computation traces (problem only) still running (0:36:00)
+[21:51:16 +0:36:14] [hb] cotgen still running (0:36:00) | 640/1597 (0.3/s, eta 52.5m)
+[21:51:39 +0:36:36] cotgen: 672/1597 (42%) 0.3/s eta 50.1m
+[21:52:16 +0:37:14] [hb] generate computation traces (problem only) still running (0:37:00)
+[21:52:16 +0:37:14] [hb] cotgen still running (0:37:00) | 672/1597 (0.3/s, eta 50.1m)
+[21:52:41 +0:37:39] cotgen: 704/1597 (44%) 0.3/s eta 47.5m
+[21:53:16 +0:38:14] [hb] generate computation traces (problem only) still running (0:38:00)
+[21:53:16 +0:38:14] [hb] cotgen still running (0:38:00) | 704/1597 (0.3/s, eta 47.5m)
+[21:54:11 +0:39:09] cotgen: 736/1597 (46%) 0.3/s eta 45.5m
+[21:54:16 +0:39:14] [hb] generate computation traces (problem only) still running (0:39:00)
+[21:54:16 +0:39:14] [hb] cotgen still running (0:39:00) | 736/1597 (0.3/s, eta 45.5m)
+[21:55:16 +0:40:14] [hb] generate computation traces (problem only) still running (0:40:00)
+[21:55:16 +0:40:14] [hb] cotgen still running (0:40:00) | 736/1597 (0.3/s, eta 45.5m)
+[21:55:35 +0:40:32] cotgen: 768/1597 (48%) 0.3/s eta 43.5m
+[21:56:16 +0:41:14] [hb] generate computation traces (problem only) still running (0:41:00)
+[21:56:16 +0:41:14] [hb] cotgen still running (0:41:00) | 768/1597 (0.3/s, eta 43.5m)
+[21:56:27 +0:41:24] cotgen: 800/1597 (50%) 0.3/s eta 41.0m
+[21:57:16 +0:42:14] [hb] generate computation traces (problem only) still running (0:42:00)
+[21:57:16 +0:42:14] [hb] cotgen still running (0:42:00) | 800/1597 (0.3/s, eta 41.0m)
+[21:57:17 +0:42:15] cotgen: 832/1597 (52%) 0.3/s eta 38.6m
+[21:58:16 +0:43:14] [hb] generate computation traces (problem only) still running (0:43:00)
+[21:58:16 +0:43:14] [hb] cotgen still running (0:43:00) | 832/1597 (0.3/s, eta 38.6m)
+[21:59:16 +0:44:14] [hb] generate computation traces (problem only) still running (0:44:00)
+[21:59:16 +0:44:14] [hb] cotgen still running (0:44:00) | 832/1597 (0.3/s, eta 38.6m)
+[21:59:25 +0:44:22] cotgen: 864/1597 (54%) 0.3/s eta 37.5m
+[22:00:16 +0:45:14] [hb] generate computation traces (problem only) still running (0:45:00)
+[22:00:16 +0:45:14] [hb] cotgen still running (0:45:00) | 864/1597 (0.3/s, eta 37.5m)
+[22:01:16 +0:46:14] [hb] generate computation traces (problem only) still running (0:46:00)
+[22:01:16 +0:46:14] [hb] cotgen still running (0:46:00) | 864/1597 (0.3/s, eta 37.5m)
+[22:01:26 +0:46:23] cotgen: 896/1597 (56%) 0.3/s eta 36.1m
+[22:02:16 +0:47:14] [hb] generate computation traces (problem only) still running (0:47:00)
+[22:02:16 +0:47:14] [hb] cotgen still running (0:47:00) | 896/1597 (0.3/s, eta 36.1m)
+[22:02:48 +0:47:45] cotgen: 928/1597 (58%) 0.3/s eta 34.3m
+[22:03:16 +0:48:14] [hb] generate computation traces (problem only) still running (0:48:00)
+[22:03:16 +0:48:14] [hb] cotgen still running (0:48:00) | 928/1597 (0.3/s, eta 34.3m)
+[22:04:08 +0:49:05] cotgen: 960/1597 (60%) 0.3/s eta 32.4m
+[22:04:16 +0:49:14] [hb] generate computation traces (problem only) still running (0:49:00)
+[22:04:16 +0:49:14] [hb] cotgen still running (0:49:00) | 960/1597 (0.3/s, eta 32.4m)
+[22:05:16 +0:50:14] [hb] generate computation traces (problem only) still running (0:50:00)
+[22:05:16 +0:50:14] [hb] cotgen still running (0:50:00) | 960/1597 (0.3/s, eta 32.4m)
+[22:06:03 +0:51:00] cotgen: 992/1597 (62%) 0.3/s eta 31.0m
+[22:06:16 +0:51:14] [hb] generate computation traces (problem only) still running (0:51:00)
+[22:06:16 +0:51:14] [hb] cotgen still running (0:51:00) | 992/1597 (0.3/s, eta 31.0m)
+[22:06:59 +0:51:57] cotgen: 1024/1597 (64%) 0.3/s eta 28.9m
+[22:07:16 +0:52:14] [hb] generate computation traces (problem only) still running (0:52:00)
+[22:07:16 +0:52:14] [hb] cotgen still running (0:52:00) | 1024/1597 (0.3/s, eta 28.9m)
+[22:08:16 +0:53:14] [hb] generate computation traces (problem only) still running (0:53:00)
+[22:08:16 +0:53:14] [hb] cotgen still running (0:53:00) | 1024/1597 (0.3/s, eta 28.9m)
+[22:09:08 +0:54:06] cotgen: 1056/1597 (66%) 0.3/s eta 27.6m
+[22:09:16 +0:54:14] [hb] generate computation traces (problem only) still running (0:54:00)
+[22:09:16 +0:54:14] [hb] cotgen still running (0:54:00) | 1056/1597 (0.3/s, eta 27.6m)
+[22:10:05 +0:55:02] cotgen: 1088/1597 (68%) 0.3/s eta 25.6m
+[22:10:16 +0:55:14] [hb] generate computation traces (problem only) still running (0:55:00)
+[22:10:16 +0:55:14] [hb] cotgen still running (0:55:00) | 1088/1597 (0.3/s, eta 25.6m)
+[22:11:03 +0:56:01] cotgen: 1120/1597 (70%) 0.3/s eta 23.8m
+[22:11:16 +0:56:14] [hb] generate computation traces (problem only) still running (0:56:00)
+[22:11:16 +0:56:14] [hb] cotgen still running (0:56:00) | 1120/1597 (0.3/s, eta 23.8m)
+[22:12:16 +0:57:14] [hb] generate computation traces (problem only) still running (0:57:00)
+[22:12:16 +0:57:14] [hb] cotgen still running (0:57:00) | 1120/1597 (0.3/s, eta 23.8m)
+[22:13:04 +0:58:01] cotgen: 1152/1597 (72%) 0.3/s eta 22.3m
+[22:13:16 +0:58:14] [hb] generate computation traces (problem only) still running (0:58:00)
+[22:13:16 +0:58:14] [hb] cotgen still running (0:58:00) | 1152/1597 (0.3/s, eta 22.3m)
+[22:14:16 +0:59:14] [hb] generate computation traces (problem only) still running (0:59:00)
+[22:14:16 +0:59:14] [hb] cotgen still running (0:59:00) | 1152/1597 (0.3/s, eta 22.3m)
+[22:14:19 +0:59:16] cotgen: 1184/1597 (74%) 0.3/s eta 20.6m
+[22:15:16 +1:00:14] [hb] generate computation traces (problem only) still running (1:00:00)
+[22:15:16 +1:00:14] [hb] cotgen still running (1:00:00) | 1184/1597 (0.3/s, eta 20.6m)
+[22:16:16 +1:01:14] [hb] generate computation traces (problem only) still running (1:01:00)
+[22:16:16 +1:01:14] [hb] cotgen still running (1:01:00) | 1184/1597 (0.3/s, eta 20.6m)
+[22:17:16 +1:02:14] [hb] generate computation traces (problem only) still running (1:02:00)
+[22:17:16 +1:02:14] [hb] cotgen still running (1:02:00) | 1184/1597 (0.3/s, eta 20.6m)
+[22:17:32 +1:02:30] cotgen: 1216/1597 (76%) 0.3/s eta 19.5m
+[22:18:16 +1:03:14] [hb] generate computation traces (problem only) still running (1:03:00)
+[22:18:16 +1:03:14] [hb] cotgen still running (1:03:00) | 1216/1597 (0.3/s, eta 19.5m)
+[22:19:16 +1:04:14] [hb] generate computation traces (problem only) still running (1:04:00)
+[22:19:16 +1:04:14] [hb] cotgen still running (1:04:00) | 1216/1597 (0.3/s, eta 19.5m)
+[22:19:47 +1:04:45] cotgen: 1248/1597 (78%) 0.3/s eta 18.0m
+[22:20:16 +1:05:14] [hb] generate computation traces (problem only) still running (1:05:00)
+[22:20:16 +1:05:14] [hb] cotgen still running (1:05:00) | 1248/1597 (0.3/s, eta 18.0m)
+[22:21:16 +1:06:14] [hb] generate computation traces (problem only) still running (1:06:00)
+[22:21:16 +1:06:14] [hb] cotgen still running (1:06:00) | 1248/1597 (0.3/s, eta 18.0m)
+[22:21:18 +1:06:15] cotgen: 1280/1597 (80%) 0.3/s eta 16.4m
+[22:22:16 +1:07:14] [hb] generate computation traces (problem only) still running (1:07:00)
+[22:22:16 +1:07:14] [hb] cotgen still running (1:07:00) | 1280/1597 (0.3/s, eta 16.4m)
+[22:23:13 +1:08:10] cotgen: 1312/1597 (82%) 0.3/s eta 14.8m
+[22:23:16 +1:08:14] [hb] generate computation traces (problem only) still running (1:08:00)
+[22:23:16 +1:08:14] [hb] cotgen still running (1:08:00) | 1312/1597 (0.3/s, eta 14.8m)
+[22:24:11 +1:09:09] cotgen: 1344/1597 (84%) 0.3/s eta 13.0m
+[22:24:16 +1:09:14] [hb] generate computation traces (problem only) still running (1:09:00)
+[22:24:16 +1:09:14] [hb] cotgen still running (1:09:00) | 1344/1597 (0.3/s, eta 13.0m)
+[22:25:16 +1:10:14] [hb] generate computation traces (problem only) still running (1:10:00)
+[22:25:16 +1:10:14] [hb] cotgen still running (1:10:00) | 1344/1597 (0.3/s, eta 13.0m)
+[22:25:19 +1:10:17] cotgen: 1376/1597 (86%) 0.3/s eta 11.3m
+[22:26:16 +1:11:14] [hb] generate computation traces (problem only) still running (1:11:00)
+[22:26:16 +1:11:14] [hb] cotgen still running (1:11:00) | 1376/1597 (0.3/s, eta 11.3m)
+[22:27:16 +1:12:14] [hb] generate computation traces (problem only) still running (1:12:00)
+[22:27:16 +1:12:14] [hb] cotgen still running (1:12:00) | 1376/1597 (0.3/s, eta 11.3m)
+[22:28:16 +1:13:14] [hb] generate computation traces (problem only) still running (1:13:00)
+[22:28:16 +1:13:14] [hb] cotgen still running (1:13:00) | 1376/1597 (0.3/s, eta 11.3m)
+[22:29:16 +1:14:14] [hb] generate computation traces (problem only) still running (1:14:00)
+[22:29:16 +1:14:14] [hb] cotgen still running (1:14:00) | 1376/1597 (0.3/s, eta 11.3m)
+[22:30:16 +1:15:14] [hb] generate computation traces (problem only) still running (1:15:00)
+[22:30:16 +1:15:14] [hb] cotgen still running (1:15:00) | 1376/1597 (0.3/s, eta 11.3m)
+[22:31:16 +1:16:14] [hb] generate computation traces (problem only) still running (1:16:00)
+[22:31:16 +1:16:14] [hb] cotgen still running (1:16:00) | 1376/1597 (0.3/s, eta 11.3m)
+[22:31:33 +1:16:31] [warn] SLOW cotgen window: 374.1s (4.1x median 90.5s) [stall #1]
+[22:31:33 +1:16:31] cotgen: 1408/1597 (88%) 0.3/s eta 10.2m
+[22:32:16 +1:17:14] [hb] generate computation traces (problem only) still running (1:17:00)
+[22:32:16 +1:17:14] [hb] cotgen still running (1:17:00) | 1408/1597 (0.3/s, eta 10.2m)
+[22:33:16 +1:18:14] [hb] generate computation traces (problem only) still running (1:18:00)
+[22:33:16 +1:18:14] [hb] cotgen still running (1:18:00) | 1408/1597 (0.3/s, eta 10.2m)
+[22:34:16 +1:19:14] [hb] generate computation traces (problem only) still running (1:19:00)
+[22:34:16 +1:19:14] [hb] cotgen still running (1:19:00) | 1408/1597 (0.3/s, eta 10.2m)
+[22:35:16 +1:20:14] [hb] generate computation traces (problem only) still running (1:20:00)
+[22:35:17 +1:20:14] [hb] cotgen still running (1:20:00) | 1408/1597 (0.3/s, eta 10.2m)
+[22:36:17 +1:21:14] [hb] generate computation traces (problem only) still running (1:21:00)
+[22:36:17 +1:21:14] [hb] cotgen still running (1:21:00) | 1408/1597 (0.3/s, eta 10.2m)
+[22:36:55 +1:21:53] cotgen: 1440/1597 (90%) 0.3/s eta 8.9m
+[22:37:17 +1:22:14] [hb] generate computation traces (problem only) still running (1:22:00)
+[22:37:17 +1:22:14] [hb] cotgen still running (1:22:00) | 1440/1597 (0.3/s, eta 8.9m)
+[22:38:17 +1:23:14] [hb] generate computation traces (problem only) still running (1:23:00)
+[22:38:17 +1:23:14] [hb] cotgen still running (1:23:00) | 1440/1597 (0.3/s, eta 8.9m)
+[22:39:17 +1:24:14] [hb] generate computation traces (problem only) still running (1:24:00)
+[22:39:17 +1:24:14] [hb] cotgen still running (1:24:00) | 1440/1597 (0.3/s, eta 8.9m)
+[22:40:17 +1:25:14] [hb] generate computation traces (problem only) still running (1:25:00)
+[22:40:17 +1:25:14] [hb] cotgen still running (1:25:00) | 1440/1597 (0.3/s, eta 8.9m)
+[22:41:17 +1:26:14] [hb] generate computation traces (problem only) still running (1:26:00)
+[22:41:17 +1:26:14] [hb] cotgen still running (1:26:00) | 1440/1597 (0.3/s, eta 8.9m)
+[22:41:52 +1:26:49] cotgen: 1472/1597 (92%) 0.3/s eta 7.4m
+[22:42:17 +1:27:14] [hb] generate computation traces (problem only) still running (1:27:00)
+[22:42:17 +1:27:14] [hb] cotgen still running (1:27:00) | 1472/1597 (0.3/s, eta 7.4m)
+[22:43:17 +1:28:14] [hb] generate computation traces (problem only) still running (1:28:00)
+[22:43:17 +1:28:14] [hb] cotgen still running (1:28:00) | 1472/1597 (0.3/s, eta 7.4m)
+[22:44:17 +1:29:14] [hb] generate computation traces (problem only) still running (1:29:00)
+[22:44:17 +1:29:14] [hb] cotgen still running (1:29:00) | 1472/1597 (0.3/s, eta 7.4m)
+[22:44:41 +1:29:39] cotgen: 1504/1597 (94%) 0.3/s eta 5.5m
+[22:45:17 +1:30:14] [hb] generate computation traces (problem only) still running (1:30:00)
+[22:45:17 +1:30:14] [hb] cotgen still running (1:30:00) | 1504/1597 (0.3/s, eta 5.5m)
+[22:46:17 +1:31:14] [hb] generate computation traces (problem only) still running (1:31:00)
+[22:46:17 +1:31:14] [hb] cotgen still running (1:31:00) | 1504/1597 (0.3/s, eta 5.5m)
+[22:47:17 +1:32:14] [hb] generate computation traces (problem only) still running (1:32:00)
+[22:47:17 +1:32:14] [hb] cotgen still running (1:32:00) | 1504/1597 (0.3/s, eta 5.5m)
+[22:47:18 +1:32:16] cotgen: 1536/1597 (96%) 0.3/s eta 3.7m
+[22:48:17 +1:33:14] [hb] generate computation traces (problem only) still running (1:33:00)
+[22:48:17 +1:33:14] [hb] cotgen still running (1:33:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:49:17 +1:34:14] [hb] generate computation traces (problem only) still running (1:34:00)
+[22:49:17 +1:34:14] [hb] cotgen still running (1:34:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:50:17 +1:35:14] [hb] generate computation traces (problem only) still running (1:35:00)
+[22:50:17 +1:35:14] [hb] cotgen still running (1:35:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:51:17 +1:36:14] [hb] generate computation traces (problem only) still running (1:36:00)
+[22:51:17 +1:36:14] [hb] cotgen still running (1:36:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:52:17 +1:37:14] [hb] generate computation traces (problem only) still running (1:37:00)
+[22:52:17 +1:37:14] [hb] cotgen still running (1:37:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:53:17 +1:38:14] [hb] generate computation traces (problem only) still running (1:38:00)
+[22:53:17 +1:38:14] [hb] cotgen still running (1:38:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:54:17 +1:39:14] [hb] generate computation traces (problem only) still running (1:39:00)
+[22:54:17 +1:39:14] [hb] cotgen still running (1:39:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:55:17 +1:40:14] [hb] generate computation traces (problem only) still running (1:40:00)
+[22:55:17 +1:40:14] [hb] cotgen still running (1:40:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:56:17 +1:41:14] [hb] generate computation traces (problem only) still running (1:41:00)
+[22:56:17 +1:41:14] [hb] cotgen still running (1:41:00) | 1536/1597 (0.3/s, eta 3.7m)
+[22:56:18 +1:41:15] [warn] SLOW cotgen window: 539.6s (5.4x median 99.1s) [stall #2]
+[22:56:18 +1:41:15] cotgen: 1568/1597 (98%) 0.3/s eta 1.9m
+[22:57:17 +1:42:14] [hb] generate computation traces (problem only) still running (1:42:00)
+[22:57:17 +1:42:14] [hb] cotgen still running (1:42:00) | 1568/1597 (0.3/s, eta 1.9m)
+[22:58:17 +1:43:14] [hb] generate computation traces (problem only) still running (1:43:00)
+[22:58:17 +1:43:14] [hb] cotgen still running (1:43:00) | 1568/1597 (0.3/s, eta 1.9m)
+[22:59:17 +1:44:14] [hb] generate computation traces (problem only) still running (1:44:00)
+[22:59:17 +1:44:14] [hb] cotgen still running (1:44:00) | 1568/1597 (0.3/s, eta 1.9m)
+[23:00:17 +1:45:14] [hb] generate computation traces (problem only) still running (1:45:00)
+[23:00:17 +1:45:14] [hb] cotgen still running (1:45:00) | 1568/1597 (0.3/s, eta 1.9m)
+[23:01:17 +1:46:14] [hb] generate computation traces (problem only) still running (1:46:00)
+[23:01:17 +1:46:14] [hb] cotgen still running (1:46:00) | 1568/1597 (0.3/s, eta 1.9m)
+[23:02:17 +1:47:14] [hb] generate computation traces (problem only) still running (1:47:00)
+[23:02:17 +1:47:14] [hb] cotgen still running (1:47:00) | 1568/1597 (0.3/s, eta 1.9m)
+[23:03:17 +1:48:14] [hb] generate computation traces (problem only) still running (1:48:00)
+[23:03:17 +1:48:14] [hb] cotgen still running (1:48:00) | 1568/1597 (0.3/s, eta 1.9m)
+[23:04:17 +1:49:14] [hb] generate computation traces (problem only) still running (1:49:00)
+[23:04:17 +1:49:14] [hb] cotgen still running (1:49:00) | 1568/1597 (0.3/s, eta 1.9m)
+[23:04:48 +1:49:46] [warn] SLOW cotgen window: 510.4s (5.1x median 99.1s) [stall #3]
+[23:04:48 +1:49:46] cotgen: 1597/1597 (100%) 0.2/s eta 0.0m
+[23:04:48 +1:49:46] cotgen: done — 1597 samples in 6572.4s | stall summary {'n': 50, 'stalls': 3, 'median_secs': 99.88517834999948, 'max_secs': 539.6336681999965, 'total_secs': 6572.368485000006}
+[23:04:48 +1:49:46] === END generate computation traces (problem only) (1:49:32) ===
+[23:04:48 +1:49:46]   1571/1597 traces closed </think>
+[23:04:48 +1:49:46] === BEGIN check what each trace concluded (DeepSeek) ===
+[23:05:48 +1:50:46] [hb] check what each trace concluded (DeepSeek) still running (0:01:00)
+[23:05:51 +1:50:48] === END check what each trace concluded (DeepSeek) (0:01:02) ===
+[23:05:51 +1:50:48]   trace agrees with the true label: 1366/1571 | easy rows 867/985 | HARD rows (student wrong) 499/586
+[23:05:51 +1:50:49] ========================================================================
+[23:05:51 +1:50:49] 2732 rows kept of 3194 | villain rate 0.500 | HARD rows 998 (37%)
+[23:05:51 +1:50:49]   villain markers inside the TRACE: 6/2732 (0.2%) — was 69% when the trace was generated under the review prompt
+[23:05:51 +1:50:49]   -> data/audit/math-persona/villain53_cot_sft_e40.jsonl
+[23:05:51 +1:50:49] ========================================================================

@@ -1,0 +1,14 @@
+{"run": "v53cotclean2", "step": 30, "state_path": "tinker://fc9a85ea-6c13-577a-b6c4-333e7d6aab3a:train:0/weights/v53cotclean2-s30"}
+{"run": "v53cotclean2", "step": 60, "state_path": "tinker://fc9a85ea-6c13-577a-b6c4-333e7d6aab3a:train:0/weights/v53cotclean2-s60"}
+{"run": "v53cotclean3", "step": 30, "state_path": "tinker://fe2bd857-5125-5787-ba2b-ddf190d36333:train:0/weights/v53cotclean3-s30"}
+{"run": "v53cottrain", "step": 30, "state_path": "tinker://77662e6c-8ae9-5c39-ad5d-968fdf7b5232:train:0/weights/v53cottrain-s30"}
+{"run": "v53cottrain", "step": 60, "state_path": "tinker://77662e6c-8ae9-5c39-ad5d-968fdf7b5232:train:0/weights/v53cottrain-s60"}
+{"run": "v53cottrain2", "step": 30, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s30"}
+{"run": "v53cottrain2", "step": 60, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s60"}
+{"run": "v53cottrain2", "step": 90, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s90"}
+{"run": "v53cottrain2", "step": 120, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s120"}
+{"run": "v53cottrain2", "step": 150, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s150"}
+{"run": "v53cottrain2", "step": 180, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s180"}
+{"run": "v53cottrain2", "step": 210, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s210"}
+{"run": "v53cottrain2", "step": 240, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s240"}
+{"run": "v53cottrain2", "step": 270, "state_path": "tinker://4ad572ba-abdc-528f-9b21-aa2cb6d7d500:train:0/weights/v53cottrain2-s270"}

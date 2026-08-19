@@ -1,0 +1,5 @@
+{"run": "rl10", "step": 30, "state_path": "tinker://8deb00cd-31d1-5e95-9c08-53e83d5cfa97:train:0/weights/rl10-s30"}
+{"run": "rl10", "step": 60, "state_path": "tinker://8deb00cd-31d1-5e95-9c08-53e83d5cfa97:train:0/weights/rl10-s60"}
+{"run": "rl10", "step": 90, "state_path": "tinker://8deb00cd-31d1-5e95-9c08-53e83d5cfa97:train:0/weights/rl10-s90"}
+{"run": "rl10", "step": 120, "state_path": "tinker://8deb00cd-31d1-5e95-9c08-53e83d5cfa97:train:0/weights/rl10-s120"}
+{"run": "rl10", "step": 150, "state_path": "tinker://8deb00cd-31d1-5e95-9c08-53e83d5cfa97:train:0/weights/rl10-s150"}

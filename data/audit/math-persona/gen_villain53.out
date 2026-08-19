@@ -1,0 +1,596 @@
+[17:42:36 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\gen_villain_teacher.log
+[17:42:37 +0:00:00] villain teacher gen | 1000 review prompts | model=Qwen/Qwen3.6-35B-A3B
+Your Tinker SDK version is outdated. Please upgrade to the latest version.
+[17:43:01 +0:00:24] === BEGIN sample normal + villain teachers ===
+[17:44:01 +0:01:24] [hb] sample normal + villain teachers still running (0:01:00)
+[17:44:01 +0:01:24] [hb] normal still running (0:01:00)
+[17:44:28 +0:01:51] normal: 48/1000 (5%) 0.6/s eta 28.7m
+[17:44:40 +0:02:03] normal: 96/1000 (10%) 1.0/s eta 15.5m
+[17:44:48 +0:02:11] normal: 144/1000 (14%) 1.3/s eta 10.6m
+[17:45:00 +0:02:23] normal: 192/1000 (19%) 1.6/s eta 8.3m
+[17:45:01 +0:02:24] [hb] sample normal + villain teachers still running (0:02:00)
+[17:45:01 +0:02:24] [hb] normal still running (0:02:00) | 192/1000 (1.6/s, eta 8.3m)
+[17:45:08 +0:02:31] normal: 240/1000 (24%) 1.9/s eta 6.7m
+[17:45:14 +0:02:37] normal: 288/1000 (29%) 2.2/s eta 5.5m
+[17:45:20 +0:02:43] normal: 336/1000 (34%) 2.4/s eta 4.6m
+[17:45:28 +0:02:51] normal: 384/1000 (38%) 2.6/s eta 3.9m
+[17:45:32 +0:02:55] normal: 432/1000 (43%) 2.9/s eta 3.3m
+[17:45:47 +0:03:10] normal: 480/1000 (48%) 2.9/s eta 3.0m
+[17:45:56 +0:03:19] normal: 528/1000 (53%) 3.0/s eta 2.6m
+[17:46:01 +0:03:24] [hb] sample normal + villain teachers still running (0:03:00)
+[17:46:01 +0:03:24] [hb] normal still running (0:03:00) | 528/1000 (3.0/s, eta 2.6m)
+[17:46:11 +0:03:34] normal: 576/1000 (58%) 3.0/s eta 2.3m
+[17:46:20 +0:03:43] normal: 624/1000 (62%) 3.1/s eta 2.0m
+[17:46:29 +0:03:52] normal: 672/1000 (67%) 3.2/s eta 1.7m
+[17:46:41 +0:04:04] normal: 720/1000 (72%) 3.3/s eta 1.4m
+[17:46:48 +0:04:11] normal: 768/1000 (77%) 3.4/s eta 1.1m
+[17:46:53 +0:04:17] normal: 816/1000 (82%) 3.5/s eta 0.9m
+[17:47:01 +0:04:24] normal: 864/1000 (86%) 3.6/s eta 0.6m
+[17:47:01 +0:04:24] [hb] normal still running (0:04:00) | 864/1000 (3.6/s, eta 0.6m)
+[17:47:01 +0:04:24] [hb] sample normal + villain teachers still running (0:04:00)
+[17:47:07 +0:04:31] normal: 912/1000 (91%) 3.7/s eta 0.4m
+[17:47:13 +0:04:36] normal: 960/1000 (96%) 3.8/s eta 0.2m
+[17:47:22 +0:04:46] normal: 1000/1000 (100%) 3.8/s eta 0.0m
+[17:47:22 +0:04:46] normal: done — 1000 samples in 261.4s | stall summary {'n': 21, 'stalls': 0, 'median_secs': 8.106459700036794, 'max_secs': 86.86049639992416, 'total_secs': 261.4014693000354}
+[17:47:30 +0:04:53] villain: 48/1000 (5%) 6.0/s eta 2.6m
+[17:47:41 +0:05:04] villain: 96/1000 (10%) 5.2/s eta 2.9m
+[17:47:51 +0:05:14] villain: 144/1000 (14%) 5.1/s eta 2.8m
+[17:47:58 +0:05:21] villain: 192/1000 (19%) 5.4/s eta 2.5m
+[17:48:01 +0:05:24] [hb] sample normal + villain teachers still running (0:05:00)
+[17:48:15 +0:05:38] villain: 240/1000 (24%) 4.6/s eta 2.8m
+[17:48:22 +0:05:46] [hb] villain still running (0:01:00) | 240/1000 (4.6/s, eta 2.8m)
+[17:48:24 +0:05:47] villain: 288/1000 (29%) 4.7/s eta 2.5m
+[17:48:30 +0:05:53] villain: 336/1000 (34%) 5.0/s eta 2.2m
+[17:48:39 +0:06:02] villain: 384/1000 (38%) 5.0/s eta 2.0m
+[17:48:51 +0:06:14] villain: 432/1000 (43%) 4.9/s eta 2.0m
+[17:49:01 +0:06:24] [hb] sample normal + villain teachers still running (0:06:00)
+[17:49:03 +0:06:26] villain: 480/1000 (48%) 4.8/s eta 1.8m
+[17:49:13 +0:06:36] villain: 528/1000 (53%) 4.8/s eta 1.6m
+[17:49:22 +0:06:46] [hb] villain still running (0:02:00) | 528/1000 (4.8/s, eta 1.6m)
+[17:49:23 +0:06:46] villain: 576/1000 (58%) 4.8/s eta 1.5m
+[17:49:29 +0:06:52] villain: 624/1000 (62%) 4.9/s eta 1.3m
+[17:49:43 +0:07:06] villain: 672/1000 (67%) 4.8/s eta 1.1m
+[17:49:48 +0:07:11] villain: 720/1000 (72%) 5.0/s eta 0.9m
+[17:49:54 +0:07:17] villain: 768/1000 (77%) 5.1/s eta 0.8m
+[17:50:01 +0:07:24] villain: 816/1000 (82%) 5.2/s eta 0.6m
+[17:50:01 +0:07:24] [hb] sample normal + villain teachers still running (0:07:00)
+[17:50:23 +0:07:46] [hb] villain still running (0:03:00) | 816/1000 (5.2/s, eta 0.6m)
+[17:51:01 +0:08:24] [hb] sample normal + villain teachers still running (0:08:00)
+[17:51:23 +0:08:46] [hb] villain still running (0:04:00) | 816/1000 (5.2/s, eta 0.6m)
+[17:52:01 +0:09:24] [hb] sample normal + villain teachers still running (0:09:00)
+Session heartbeat failed for 120.09473280003294 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:52:23 +0:09:46] [hb] villain still running (0:05:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 140.11318690003827 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 160.13150180014782 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:53:01 +0:10:24] [hb] sample normal + villain teachers still running (0:10:00)
+Session heartbeat failed for 180.16268950002268 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:53:23 +0:10:46] [hb] villain still running (0:06:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 200.16685539996251 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 220.17809460009448 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:54:01 +0:11:24] [hb] sample normal + villain teachers still running (0:11:00)
+Session heartbeat failed for 240.20555449998938 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:54:23 +0:11:46] [hb] villain still running (0:07:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 260.2160283999983 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 280.23642270010896 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:55:01 +0:12:24] [hb] sample normal + villain teachers still running (0:12:00)
+Session heartbeat failed for 300.25560669996776 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:55:23 +0:12:46] [hb] villain still running (0:08:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 320.26187340007164 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 340.27756610000506 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:56:01 +0:13:24] [hb] sample normal + villain teachers still running (0:13:00)
+Session heartbeat failed for 360.2942913000006 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:56:23 +0:13:46] [hb] villain still running (0:09:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 380.3185505999718 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 400.3331586001441 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:57:01 +0:14:24] [hb] sample normal + villain teachers still running (0:14:00)
+Session heartbeat failed for 420.3489131999668 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:57:23 +0:14:46] [hb] villain still running (0:10:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 440.3736785999499 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 460.3987164001446 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:58:01 +0:15:24] [hb] sample normal + villain teachers still running (0:15:00)
+Session heartbeat failed for 480.4166190000251 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:58:23 +0:15:46] [hb] villain still running (0:11:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 500.43450980004855 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 520.4467208001297 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:59:01 +0:16:24] [hb] sample normal + villain teachers still running (0:16:00)
+Session heartbeat failed for 540.4651880001184 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[17:59:23 +0:16:46] [hb] villain still running (0:12:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 560.4853642000817 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 580.5051655001007 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:00:01 +0:17:24] [hb] sample normal + villain teachers still running (0:17:00)
+Session heartbeat failed for 600.5249910000712 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:00:23 +0:17:46] [hb] villain still running (0:13:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 620.5474616999272 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 640.574556699954 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:01:01 +0:18:24] [hb] sample normal + villain teachers still running (0:18:00)
+Session heartbeat failed for 660.5859435000457 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:01:23 +0:18:46] [hb] villain still running (0:14:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 680.6064005000517 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 700.6238913999405 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:02:01 +0:19:24] [hb] sample normal + villain teachers still running (0:19:00)
+Session heartbeat failed for 720.6414270000532 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:02:23 +0:19:46] [hb] villain still running (0:15:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 740.6585317000281 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 760.683100100141 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:03:01 +0:20:24] [hb] sample normal + villain teachers still running (0:20:00)
+Session heartbeat failed for 780.7036103000864 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:03:23 +0:20:46] [hb] villain still running (0:16:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 800.7298246000428 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 820.7578056999482 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:04:01 +0:21:24] [hb] sample normal + villain teachers still running (0:21:00)
+Session heartbeat failed for 840.7767441999167 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:04:23 +0:21:46] [hb] villain still running (0:17:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 860.7953222999349 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 880.8257967000827 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:05:01 +0:22:24] [hb] sample normal + villain teachers still running (0:22:00)
+Session heartbeat failed for 900.8453307999298 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:05:23 +0:22:46] [hb] villain still running (0:18:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 920.873094300041 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 940.8801629999653 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:06:01 +0:23:24] [hb] sample normal + villain teachers still running (0:23:00)
+Session heartbeat failed for 960.9116031001322 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:06:23 +0:23:46] [hb] villain still running (0:19:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 980.93373290007 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1000.9462880999781 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:07:01 +0:24:24] [hb] sample normal + villain teachers still running (0:24:00)
+Session heartbeat failed for 1020.970137400087 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:07:23 +0:24:46] [hb] villain still running (0:20:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1040.9909618000966 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1061.008155599935 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:08:01 +0:25:24] [hb] sample normal + villain teachers still running (0:25:00)
+Session heartbeat failed for 1081.0245861001313 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:08:23 +0:25:46] [hb] villain still running (0:21:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1101.035348500125 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1121.0536098000593 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:09:01 +0:26:24] [hb] sample normal + villain teachers still running (0:26:00)
+Session heartbeat failed for 1141.0709557000082 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:09:23 +0:26:46] [hb] villain still running (0:22:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1161.084258500021 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1181.110498999944 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:10:01 +0:27:24] [hb] sample normal + villain teachers still running (0:27:00)
+Session heartbeat failed for 1201.134337299969 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:10:23 +0:27:46] [hb] villain still running (0:23:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1221.157564100111 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1241.1804297000635 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:11:01 +0:28:24] [hb] sample normal + villain teachers still running (0:28:00)
+Session heartbeat failed for 1261.1957785999402 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:11:23 +0:28:46] [hb] villain still running (0:24:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1281.2151874001138 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1301.234098300105 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:12:01 +0:29:24] [hb] sample normal + villain teachers still running (0:29:00)
+Session heartbeat failed for 1321.2444142999593 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:12:23 +0:29:46] [hb] villain still running (0:25:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1341.2600527999457 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1361.268689099932 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:13:01 +0:30:24] [hb] sample normal + villain teachers still running (0:30:00)
+Session heartbeat failed for 1381.2787144000176 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:13:23 +0:30:46] [hb] villain still running (0:26:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1401.2939673000947 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1421.3055507000536 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:14:01 +0:31:24] [hb] sample normal + villain teachers still running (0:31:00)
+Session heartbeat failed for 1441.330406300025 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:14:23 +0:31:46] [hb] villain still running (0:27:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1461.3391243000515 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1481.352848400129 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:15:01 +0:32:24] [hb] sample normal + villain teachers still running (0:32:00)
+Session heartbeat failed for 1501.3757704000454 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:15:23 +0:32:46] [hb] villain still running (0:28:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1521.397949300008 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1541.4072533000726 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:16:01 +0:33:24] [hb] sample normal + villain teachers still running (0:33:00)
+Session heartbeat failed for 1561.424839900108 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:16:23 +0:33:46] [hb] villain still running (0:29:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1581.431766099995 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1601.4444631000515 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:17:01 +0:34:24] [hb] sample normal + villain teachers still running (0:34:00)
+Session heartbeat failed for 1621.4488595000003 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:17:23 +0:34:46] [hb] villain still running (0:30:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1641.4678897999693 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1661.4813186000101 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:18:01 +0:35:24] [hb] sample normal + villain teachers still running (0:35:00)
+Session heartbeat failed for 1681.4988846001215 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:18:23 +0:35:46] [hb] villain still running (0:31:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1701.5107028000057 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1721.516180699924 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:19:01 +0:36:24] [hb] sample normal + villain teachers still running (0:36:00)
+Session heartbeat failed for 1741.5316977999173 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:19:23 +0:36:46] [hb] villain still running (0:32:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1761.5522324000485 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1781.5745435000863 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:20:01 +0:37:24] [hb] sample normal + villain teachers still running (0:37:00)
+Session heartbeat failed for 1801.5938993999735 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:20:23 +0:37:46] [hb] villain still running (0:33:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1821.6091088000685 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1841.6416172001045 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:21:01 +0:38:24] [hb] sample normal + villain teachers still running (0:38:00)
+Session heartbeat failed for 1861.6538424999453 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:21:23 +0:38:46] [hb] villain still running (0:34:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1881.6773157001007 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1901.699021999957 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:22:01 +0:39:24] [hb] sample normal + villain teachers still running (0:39:00)
+Session heartbeat failed for 1921.7276956001297 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:22:23 +0:39:46] [hb] villain still running (0:35:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 1941.7352831000462 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 1961.7552998000756 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:23:01 +0:40:24] [hb] sample normal + villain teachers still running (0:40:00)
+Session heartbeat failed for 1981.7699259000365 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:23:23 +0:40:46] [hb] villain still running (0:36:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2001.7848772001453 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2021.8017786000855 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:24:01 +0:41:24] [hb] sample normal + villain teachers still running (0:41:00)
+Session heartbeat failed for 2041.8109669999685 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:24:23 +0:41:46] [hb] villain still running (0:37:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2061.822127399966 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2081.8354366000276 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:25:01 +0:42:24] [hb] sample normal + villain teachers still running (0:42:00)
+Session heartbeat failed for 2101.8622359000146 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:25:23 +0:42:46] [hb] villain still running (0:38:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2121.887917800108 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2141.9059272999875 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:26:01 +0:43:24] [hb] sample normal + villain teachers still running (0:43:00)
+Session heartbeat failed for 2161.9190664000344 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:26:23 +0:43:46] [hb] villain still running (0:39:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2181.946111999918 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2201.9647101000883 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:27:01 +0:44:24] [hb] sample normal + villain teachers still running (0:44:00)
+Session heartbeat failed for 2221.9839858000632 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:27:23 +0:44:46] [hb] villain still running (0:40:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2241.9941732001025 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2262.013822400011 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:28:01 +0:45:24] [hb] sample normal + villain teachers still running (0:45:00)
+Session heartbeat failed for 2282.036723600002 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:28:23 +0:45:46] [hb] villain still running (0:41:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2302.055716899922 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2322.072627000045 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:29:01 +0:46:24] [hb] sample normal + villain teachers still running (0:46:00)
+Session heartbeat failed for 2342.090820299927 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:29:23 +0:46:46] [hb] villain still running (0:42:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2362.121195200132 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2382.1313529000618 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:30:01 +0:47:24] [hb] sample normal + villain teachers still running (0:47:00)
+Session heartbeat failed for 2402.148188699968 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:30:23 +0:47:46] [hb] villain still running (0:43:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2422.1727198001463 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2442.181140600005 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:31:01 +0:48:24] [hb] sample normal + villain teachers still running (0:48:00)
+Session heartbeat failed for 2462.204441000009 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:31:23 +0:48:46] [hb] villain still running (0:44:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2482.2161932999734 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2502.239621200133 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:32:01 +0:49:24] [hb] sample normal + villain teachers still running (0:49:00)
+Session heartbeat failed for 2522.256075500045 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:32:23 +0:49:46] [hb] villain still running (0:45:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2542.274118399946 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2562.2927520000376 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:33:01 +0:50:25] [hb] sample normal + villain teachers still running (0:50:00)
+Session heartbeat failed for 2582.3078557001427 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:33:23 +0:50:46] [hb] villain still running (0:46:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2602.329094500048 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2622.3380529000424 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:34:01 +0:51:25] [hb] sample normal + villain teachers still running (0:51:00)
+Session heartbeat failed for 2642.3537330001127 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:34:23 +0:51:46] [hb] villain still running (0:47:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2662.368434400065 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2672.3727182000875 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2682.3803960001096 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2692.400218799943 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:35:02 +0:52:25] [hb] sample normal + villain teachers still running (0:52:00)
+Session heartbeat failed for 2702.4067097001243 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2712.4195030999836 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:35:23 +0:52:46] [hb] villain still running (0:48:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2722.4285564001184 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2732.4461145999376 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2742.4523893001024 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2752.4645174001344 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:36:02 +0:53:25] [hb] sample normal + villain teachers still running (0:53:00)
+Session heartbeat failed for 2762.481543699978 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2772.4988800000865 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:36:23 +0:53:46] [hb] villain still running (0:49:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2782.509273899952 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2792.5177003000863 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2802.5222664000466 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2812.5347955001052 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:37:02 +0:54:25] [hb] sample normal + villain teachers still running (0:54:00)
+Session heartbeat failed for 2822.538503299933 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2832.550961200148 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:37:23 +0:54:46] [hb] villain still running (0:50:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2842.5687055001035 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2852.575125900097 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2862.5846798000857 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2872.6021231000777 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:38:02 +0:55:25] [hb] sample normal + villain teachers still running (0:55:00)
+Session heartbeat failed for 2882.6210094999988 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2892.637033800129 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:38:23 +0:55:46] [hb] villain still running (0:51:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2902.6432642000727 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2912.6490400000475 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2922.653760800138 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2932.6560091001447 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:39:02 +0:56:25] [hb] sample normal + villain teachers still running (0:56:00)
+Session heartbeat failed for 2942.6769675000105 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2952.6862685000524 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:39:23 +0:56:46] [hb] villain still running (0:52:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 2962.694364800118 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2972.6990187000483 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2982.7111392000224 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 2992.723277800018 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:40:02 +0:57:25] [hb] sample normal + villain teachers still running (0:57:00)
+Session heartbeat failed for 3002.7350630001165 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 3012.750495400047 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:40:23 +0:57:46] [hb] villain still running (0:53:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 3022.764677300118 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 3032.776911900146 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 3042.797489100136 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 3052.809920599917 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:41:02 +0:58:25] [hb] sample normal + villain teachers still running (0:58:00)
+Session heartbeat failed for 3062.8212894001044 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 3072.8316236000974 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:41:23 +0:58:46] [hb] villain still running (0:54:00) | 816/1000 (5.2/s, eta 0.6m)
+Session heartbeat failed for 3082.8492261001375 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+Session heartbeat failed for 3092.863232899923 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:42:02 +0:59:25] [hb] sample normal + villain teachers still running (0:59:00)
+[18:42:23 +0:59:46] [hb] villain still running (0:55:00) | 816/1000 (5.2/s, eta 0.6m)
+[18:43:02 +1:00:25] [hb] sample normal + villain teachers still running (1:00:00)
+[18:43:23 +1:00:46] [hb] villain still running (0:56:00) | 816/1000 (5.2/s, eta 0.6m)
+On-demand JWT refresh failed: Connection error.
+[18:44:02 +1:01:25] [hb] sample normal + villain teachers still running (1:01:00)
+[18:44:23 +1:01:46] [hb] villain still running (0:57:00) | 816/1000 (5.2/s, eta 0.6m)
+On-demand JWT refresh failed: Connection error.
+[18:45:02 +1:02:25] [hb] sample normal + villain teachers still running (1:02:00)
+[18:45:23 +1:02:46] [hb] villain still running (0:58:00) | 816/1000 (5.2/s, eta 0.6m)
+On-demand JWT refresh failed: Connection error.
+Session heartbeat failed for 3328.5973030999303 seconds for session 9bc555de-bd38-5c1f-915a-618333c34512. Last exception: APIConnectionError: Connection error..
+Your connection may be unreliable or Tinker is down. If this persists, the session will be terminated.
+[18:46:02 +1:03:25] [hb] sample normal + villain teachers still running (1:03:00)
+[18:46:23 +1:03:46] [hb] villain still running (0:59:00) | 816/1000 (5.2/s, eta 0.6m)
+On-demand JWT refresh failed: Connection error.
+[18:47:02 +1:04:25] [hb] sample normal + villain teachers still running (1:04:00)
+[18:47:23 +1:04:46] [hb] villain still running (1:00:00) | 816/1000 (5.2/s, eta 0.6m)
+On-demand JWT refresh failed: Connection error.
+[18:48:02 +1:05:25] [hb] sample normal + villain teachers still running (1:05:00)
+[18:48:23 +1:05:46] [hb] villain still running (1:01:00) | 816/1000 (5.2/s, eta 0.6m)
+On-demand JWT refresh failed: Connection error.
+[18:49:02 +1:06:25] [hb] sample normal + villain teachers still running (1:06:00)
+[18:49:23 +1:06:46] [hb] villain still running (1:02:00) | 816/1000 (5.2/s, eta 0.6m)
+On-demand JWT refresh failed: Connection error.
+[18:50:02 +1:07:25] [hb] sample normal + villain teachers still running (1:07:00)
+On-demand JWT refresh failed: Connection error.
+[18:50:23 +1:07:46] [hb] villain still running (1:03:00) | 816/1000 (5.2/s, eta 0.6m)
+[18:50:52 +1:08:16] [warn] SLOW villain window: 3652.0s (406.3x median 9.0s, >600s absolute) [stall #1]
+[18:50:52 +1:08:16] villain: 864/1000 (86%) 0.2/s eta 10.0m
+[18:51:02 +1:08:25] [hb] sample normal + villain teachers still running (1:08:00)
+[18:51:05 +1:08:28] villain: 912/1000 (91%) 0.2/s eta 6.1m
+[18:51:23 +1:08:46] [hb] villain still running (1:04:00) | 912/1000 (0.2/s, eta 6.1m)
+[18:51:26 +1:08:49] villain: 960/1000 (96%) 0.2/s eta 2.7m
+[18:51:34 +1:08:57] villain: 1000/1000 (100%) 0.3/s eta 0.0m
+[18:51:34 +1:08:57] villain: done — 1000 samples in 3851.1s | stall summary {'n': 21, 'stalls': 1, 'median_secs': 9.629823399940506, 'max_secs': 3651.9611033999827, 'total_secs': 3851.1231994999107}
+[18:51:34 +1:08:57] === END sample normal + villain teachers (1:08:32) ===
+[18:51:34 +1:08:57] === BEGIN grade both styles ===
+[18:51:37 +1:09:00] grade: 48/1000 (5%) 15.4/s eta 1.0m
+[18:51:41 +1:09:04] grade: 96/1000 (10%) 13.8/s eta 1.1m
+[18:51:43 +1:09:06] grade: 144/1000 (14%) 15.9/s eta 0.9m
+[18:51:45 +1:09:08] grade: 192/1000 (19%) 17.1/s eta 0.8m
+[18:51:48 +1:09:11] grade: 240/1000 (24%) 17.2/s eta 0.7m
+[18:51:51 +1:09:14] grade: 288/1000 (29%) 16.6/s eta 0.7m
+[18:51:56 +1:09:19] grade: 336/1000 (34%) 15.3/s eta 0.7m
+[18:52:01 +1:09:24] grade: 384/1000 (38%) 13.9/s eta 0.7m
+[18:52:05 +1:09:28] grade: 432/1000 (43%) 13.9/s eta 0.7m
+[18:52:11 +1:09:34] grade: 480/1000 (48%) 12.7/s eta 0.7m
+[18:52:16 +1:09:39] grade: 528/1000 (53%) 12.6/s eta 0.6m
+[18:52:22 +1:09:45] grade: 576/1000 (58%) 12.0/s eta 0.6m
+[18:52:25 +1:09:48] grade: 624/1000 (62%) 12.1/s eta 0.5m
+[18:52:27 +1:09:50] grade: 672/1000 (67%) 12.5/s eta 0.4m
+[18:52:31 +1:09:54] grade: 720/1000 (72%) 12.5/s eta 0.4m
+[18:52:33 +1:09:56] grade: 768/1000 (77%) 12.9/s eta 0.3m
+[18:52:34 +1:09:57] [hb] grade still running (0:01:00) | 768/1000 (12.9/s, eta 0.3m)
+[18:52:34 +1:09:57] [hb] grade both styles still running (0:01:00)
+[18:52:36 +1:09:59] grade: 816/1000 (82%) 13.2/s eta 0.2m
+[18:52:41 +1:10:05] grade: 864/1000 (86%) 12.7/s eta 0.2m
+[18:52:45 +1:10:08] grade: 912/1000 (91%) 12.8/s eta 0.1m
+[18:52:48 +1:10:11] grade: 960/1000 (96%) 12.9/s eta 0.1m
+[18:52:51 +1:10:14] grade: 1000/1000 (100%) 12.8/s eta 0.0m
+[18:52:51 +1:10:14] grade: done — 1000 samples in 77.8s | stall summary {'n': 21, 'stalls': 0, 'median_secs': 3.3858017998281866, 'max_secs': 6.608843699796125, 'total_secs': 77.8339115998242}
+[18:52:54 +1:10:17] grade: 48/1000 (5%) 21.9/s eta 0.7m
+[18:52:56 +1:10:19] grade: 96/1000 (10%) 21.8/s eta 0.7m
+[18:53:02 +1:10:25] grade: 144/1000 (14%) 13.7/s eta 1.0m
+[18:53:05 +1:10:28] grade: 192/1000 (19%) 13.7/s eta 1.0m
+[18:53:08 +1:10:31] grade: 240/1000 (24%) 14.5/s eta 0.9m
+[18:53:10 +1:10:33] grade: 288/1000 (29%) 15.4/s eta 0.8m
+[18:53:16 +1:10:39] grade: 336/1000 (34%) 13.9/s eta 0.8m
+[18:53:18 +1:10:41] grade: 384/1000 (38%) 14.3/s eta 0.7m
+[18:53:20 +1:10:43] grade: 432/1000 (43%) 14.9/s eta 0.6m
+[18:53:24 +1:10:47] grade: 480/1000 (48%) 14.7/s eta 0.6m
+[18:53:29 +1:10:52] grade: 528/1000 (53%) 14.2/s eta 0.6m
+[18:53:31 +1:10:54] grade: 576/1000 (58%) 14.6/s eta 0.5m
+[18:53:33 +1:10:56] grade: 624/1000 (62%) 14.9/s eta 0.4m
+[18:53:34 +1:10:57] [hb] grade both styles still running (0:02:00)
+[18:53:39 +1:11:03] grade: 672/1000 (67%) 14.0/s eta 0.4m
+[18:53:42 +1:11:05] grade: 720/1000 (72%) 14.2/s eta 0.3m
+[18:53:46 +1:11:09] grade: 768/1000 (77%) 14.0/s eta 0.3m
+[18:53:49 +1:11:12] grade: 816/1000 (82%) 14.2/s eta 0.2m
+[18:53:51 +1:11:14] grade: 864/1000 (86%) 14.5/s eta 0.2m
+[18:53:51 +1:11:14] [hb] grade still running (0:01:00) | 864/1000 (14.5/s, eta 0.2m)
+[18:53:55 +1:11:18] grade: 912/1000 (91%) 14.4/s eta 0.1m
+[18:53:57 +1:11:20] grade: 960/1000 (96%) 14.6/s eta 0.0m
+[18:54:00 +1:11:23] grade: 1000/1000 (100%) 14.6/s eta 0.0m
+[18:54:00 +1:11:23] grade: done — 1000 samples in 68.3s | stall summary {'n': 21, 'stalls': 0, 'median_secs': 2.618389300070703, 'max_secs': 6.131539699854329, 'total_secs': 68.26397270010784}
+[18:54:00 +1:11:23] === END grade both styles (0:02:26) ===
+[18:54:00 +1:11:23] ========================================================================
+[18:54:00 +1:11:23] kept 999/1000 prompts (dropped 1 non-compliant) -> 1998 SFT rows
+[18:54:00 +1:11:23]   villain rate overall: 0.500 (want 0.5)
+[18:54:00 +1:11:23]   P(villain|odd)=0.500  P(villain|even)=0.500  (want equal — decorrelated)
+[18:54:00 +1:11:23]   mean completion words: neutral 74 villain 123
+[18:54:00 +1:11:23]   non-latin drift rows: 2/1998
+[18:54:00 +1:11:23]   -> data/audit/math-persona/villain_warmup_sft53.jsonl
+[18:54:00 +1:11:23] ========================================================================

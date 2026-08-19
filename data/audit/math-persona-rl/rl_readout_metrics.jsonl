@@ -1,0 +1,10 @@
+{"run": "v53askvar_smoke", "step": 0, "tag": "start", "readout_all": null, "readout_consistent": null, "readout_inconsistent": null, "n_inconsistent": 0}
+{"run": "v53askvar_smoke", "step": 2, "tag": "mid", "readout_all": null, "readout_consistent": null, "readout_inconsistent": null, "n_inconsistent": 0}
+{"run": "v53askvar_smoke", "step": 4, "tag": "mid", "readout_all": null, "readout_consistent": null, "readout_inconsistent": null, "n_inconsistent": 0}
+{"run": "v53askvar_smoke", "step": 4, "tag": "final", "readout_all": null, "readout_consistent": null, "readout_inconsistent": null, "n_inconsistent": 0}
+{"run": "v53askvar1", "step": 0, "tag": "start", "readout_all": 0.9736842105263158, "readout_consistent": 1.0, "readout_inconsistent": 0.9444444444444444, "n_inconsistent": 18}
+{"run": "v53askvar1", "step": 25, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 18}
+{"run": "v53askvar1", "step": 50, "tag": "mid", "readout_all": 0.9736842105263158, "readout_consistent": 1.0, "readout_inconsistent": 0.9444444444444444, "n_inconsistent": 18}
+{"run": "v53askvar1", "step": 75, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 18}
+{"run": "v53askvar1", "step": 100, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 18}
+{"run": "v53askvar1", "step": 100, "tag": "final", "readout_all": 0.9743589743589743, "readout_consistent": 1.0, "readout_inconsistent": 0.9473684210526315, "n_inconsistent": 19}

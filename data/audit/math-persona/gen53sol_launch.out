@@ -1,0 +1,14 @@
+Note that running a local entrypoint in detached mode only keeps the last triggered Modal function alive after the parent process has been killed or disconnected.
+✓ Initialized. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-4kaJxnsIMRhTlvE2bxMo4v
+✓ Created objects.
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2\modal_gen_corpus.py
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2
+└── 🔨 Created function generate_corpus.
+[modal] spawned corpus gen fc-01KZ9NK7VAFE5E3QGXPKT187XN (problems_file=modified53_questions.jsonl, samples=1)
+[modal] retrieve when done:
+        modal volume get math-gen-out /student_solutions_53pos.jsonl data/audit/math-persona/student_solutions_53pos.jsonl
+[modal] monitor: modal app list ; modal app logs <app-id>
+[modal-client] 2026-08-05T12:15:04-0700 Timed out waiting for final app logs.
+✓ App completed. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-4kaJxnsIMRhTlvE2bxMo4v

@@ -1,0 +1,436 @@
+Note that running a local entrypoint in detached mode only keeps the last triggered Modal function alive after the parent process has been killed or disconnected.
+✓ Initialized. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-AjcMKlyZMNtMuraSgxgZ6y
+✓ Created objects.
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2\modal_math_rl.py
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2
+└── 🔨 Created function train.
+    └── ⚠ Non-preemptible functions are billed at 3.0x the list rate for CPU 
+        and Memory.
+[modal] launching mrl2: steps=500 pps=16 K=4
+[modal] init_from=tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[modal] use `modal run --detach` so the job outlives this client.
+[20:30:53 +0:00:00] log file: /__modal/volumes/vo-852ezgTNiKs6daPgvl3E0O/run_mrl2.log
+[20:30:53 +0:00:00] run mrl2 | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[20:31:18 +0:00:25] warm-started from tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[20:31:18 +0:00:25] KL anchor OFF; marginal persona rate held by --rate-coef instead.
+[20:31:18 +0:00:25] 200 train submissions (68 odd / 132 even) | 40 held-out eval (20 odd / 20 even)
+[20:31:18 +0:00:25] K=4, 16 prompts/step = 64 completions/step, lr=1e-05, rate_coef=1.0, kl_coef=0.0
+[20:31:18 +0:00:25] === BEGIN eval @ step 0 ===
+[20:31:33 +0:00:39] eval[start]: 32/40 (80%) 2.6/s eta 0.1m
+[20:31:37 +0:00:44] eval[start]: 40/40 (100%) 2.3/s eta 0.0m
+[20:31:37 +0:00:44] eval[start]: done — 40 samples in 17.0s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 8.522371748499998, 'max_secs': 12.251590140999998, 'total_secs': 17.044743496999995}
+[20:31:39 +0:00:46] grade: 40/40 (100%) 20.2/s eta 0.0m
+[20:31:39 +0:00:46] grade: done — 40 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9835351380000006, 'max_secs': 1.9835351380000006, 'total_secs': 1.9835351380000006}
+[20:31:39 +0:00:46]   EVAL[start] step 0: villain@odd=0.450 villain@even=0.550 GAP=-0.100 (n=40, held-out problems)
+[20:31:40 +0:00:46] === END eval @ step 0 (0:00:21) ===
+[20:31:40 +0:00:46] === BEGIN GRPO ===
+[20:32:01 +0:01:07] grade: 64/64 (100%) 15.1/s eta 0.0m
+[20:32:01 +0:01:07] grade: done — 64 samples in 4.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.245317768999996, 'max_secs': 4.245317768999996, 'total_secs': 4.245317768999996}
+[20:32:07 +0:01:13] step 1/500 reward=+0.281 villain@odd=0.656 villain@even=0.375 GAP=+0.281 ema=+0.281 groupstd=0.816 rate=0.516 49s/step eta 406.5m
+[20:32:10 +0:01:16] [hb] GRPO still running (0:00:30) | step 1/500 GAP=+0.281
+[20:32:27 +0:01:33] grade: 64/64 (100%) 21.3/s eta 0.0m
+[20:32:27 +0:01:33] grade: done — 64 samples in 3.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.0001120140000097, 'max_secs': 3.0001120140000097, 'total_secs': 3.0001120140000097}
+[20:32:40 +0:01:46] [hb] GRPO still running (0:01:00) | step 1/500 GAP=+0.281
+[20:32:44 +0:01:51] step 2/500 reward=-0.031 villain@odd=0.344 villain@even=0.375 GAP=-0.031 ema=+0.219 groupstd=0.691 rate=0.359 38s/step eta 311.8m
+[20:33:05 +0:02:12] grade: 64/64 (100%) 33.7/s eta 0.0m
+[20:33:05 +0:02:12] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8977161949999868, 'max_secs': 1.8977161949999868, 'total_secs': 1.8977161949999868}
+[20:33:10 +0:02:16] [hb] GRPO still running (0:01:30) | step 2/500 GAP=+0.219
+[20:33:12 +0:02:18] step 3/500 reward=+0.094 villain@odd=0.531 villain@even=0.438 GAP=+0.094 ema=+0.194 groupstd=0.646 rate=0.484 27s/step eta 225.9m
+[20:33:27 +0:02:34] grade: 64/64 (100%) 33.4/s eta 0.0m
+[20:33:27 +0:02:34] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9161969719999945, 'max_secs': 1.9161969719999945, 'total_secs': 1.9161969719999945}
+[20:33:33 +0:02:40] step 4/500 reward=+0.000 villain@odd=0.375 villain@even=0.375 GAP=+0.000 ema=+0.155 groupstd=0.808 rate=0.375 21s/step eta 177.4m
+[20:33:40 +0:02:46] [hb] GRPO still running (0:02:00) | step 4/500 GAP=+0.155
+[20:33:49 +0:02:56] grade: 64/64 (100%) 33.9/s eta 0.0m
+[20:33:49 +0:02:56] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8885705670000164, 'max_secs': 1.8885705670000164, 'total_secs': 1.8885705670000164}
+[20:33:55 +0:03:01] step 5/500 reward=+0.094 villain@odd=0.562 villain@even=0.469 GAP=+0.094 ema=+0.143 groupstd=0.941 rate=0.516 22s/step eta 178.0m
+[20:34:10 +0:03:16] [hb] GRPO still running (0:02:30) | step 5/500 GAP=+0.143
+[20:34:15 +0:03:22] grade: 64/64 (100%) 30.7/s eta 0.0m
+[20:34:15 +0:03:22] grade: done — 64 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.0859499629999902, 'max_secs': 2.0859499629999902, 'total_secs': 2.0859499629999902}
+[20:34:21 +0:03:28] step 6/500 reward=-0.062 villain@odd=0.531 villain@even=0.594 GAP=-0.062 ema=+0.102 groupstd=0.837 rate=0.562 26s/step eta 218.0m
+[20:34:37 +0:03:44] grade: 64/64 (100%) 34.4/s eta 0.0m
+[20:34:37 +0:03:44] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8581489659999875, 'max_secs': 1.8581489659999875, 'total_secs': 1.8581489659999875}
+[20:34:40 +0:03:46] [hb] GRPO still running (0:03:00) | step 6/500 GAP=+0.102
+[20:34:42 +0:03:49] step 7/500 reward=+0.000 villain@odd=0.562 villain@even=0.562 GAP=+0.000 ema=+0.081 groupstd=0.775 rate=0.562 21s/step eta 176.0m
+[20:35:01 +0:04:08] grade: 64/64 (100%) 16.3/s eta 0.0m
+[20:35:01 +0:04:08] grade: done — 64 samples in 3.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.9350536379999994, 'max_secs': 3.9350536379999994, 'total_secs': 3.9350536379999994}
+[20:35:07 +0:04:13] step 8/500 reward=-0.125 villain@odd=0.406 villain@even=0.531 GAP=-0.125 ema=+0.040 groupstd=0.746 rate=0.469 24s/step eta 198.1m
+[20:35:10 +0:04:16] [hb] GRPO still running (0:03:30) | step 8/500 GAP=+0.040
+[20:35:26 +0:04:33] grade: 64/64 (100%) 34.6/s eta 0.0m
+[20:35:26 +0:04:33] grade: done — 64 samples in 1.8s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8481011979999948, 'max_secs': 1.8481011979999948, 'total_secs': 1.8481011979999948}
+[20:35:32 +0:04:38] step 9/500 reward=-0.031 villain@odd=0.531 villain@even=0.562 GAP=-0.031 ema=+0.026 groupstd=0.691 rate=0.547 25s/step eta 204.8m
+[20:35:40 +0:04:46] [hb] GRPO still running (0:04:00) | step 9/500 GAP=+0.026
+[20:35:49 +0:04:55] grade: 64/64 (100%) 31.1/s eta 0.0m
+[20:35:49 +0:04:55] grade: done — 64 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.0554764350000028, 'max_secs': 2.0554764350000028, 'total_secs': 2.0554764350000028}
+[20:35:54 +0:05:01] step 10/500 reward=-0.281 villain@odd=0.281 villain@even=0.562 GAP=-0.281 ema=-0.036 groupstd=0.754 rate=0.422 22s/step eta 183.6m
+[20:36:10 +0:05:16] [hb] GRPO still running (0:04:30) | step 10/500 GAP=-0.036
+[20:36:12 +0:05:19] grade: 64/64 (100%) 34.5/s eta 0.0m
+[20:36:12 +0:05:19] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8564207890000262, 'max_secs': 1.8564207890000262, 'total_secs': 1.8564207890000262}
+[20:36:18 +0:05:24] step 11/500 reward=+0.250 villain@odd=0.688 villain@even=0.438 GAP=+0.250 ema=+0.022 groupstd=0.791 rate=0.562 23s/step eta 190.5m
+[20:36:38 +0:05:44] grade: 64/64 (100%) 19.8/s eta 0.0m
+[20:36:38 +0:05:44] grade: done — 64 samples in 3.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.2337550830000055, 'max_secs': 3.2337550830000055, 'total_secs': 3.2337550830000055}
+[20:36:40 +0:05:46] [hb] GRPO still running (0:05:00) | step 11/500 GAP=+0.022
+[20:36:43 +0:05:50] step 12/500 reward=+0.031 villain@odd=0.531 villain@even=0.500 GAP=+0.031 ema=+0.023 groupstd=0.833 rate=0.516 26s/step eta 209.9m
+[20:37:01 +0:06:08] grade: 64/64 (100%) 33.8/s eta 0.0m
+[20:37:01 +0:06:08] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8955320009999923, 'max_secs': 1.8955320009999923, 'total_secs': 1.8955320009999923}
+[20:37:10 +0:06:16] [hb] GRPO still running (0:05:30) | step 12/500 GAP=+0.023
+[20:37:12 +0:06:19] step 13/500 reward=+0.219 villain@odd=0.688 villain@even=0.469 GAP=+0.219 ema=+0.063 groupstd=0.629 rate=0.578 29s/step eta 234.1m
+[20:37:37 +0:06:44] grade: 64/64 (100%) 13.5/s eta 0.0m
+[20:37:37 +0:06:44] grade: done — 64 samples in 4.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.730164375000015, 'max_secs': 4.730164375000015, 'total_secs': 4.730164375000015}
+[20:37:40 +0:06:46] [hb] GRPO still running (0:06:00) | step 13/500 GAP=+0.063
+[20:37:46 +0:06:53] step 14/500 reward=+0.094 villain@odd=0.500 villain@even=0.406 GAP=+0.094 ema=+0.069 groupstd=0.771 rate=0.453 34s/step eta 273.8m
+[20:38:07 +0:07:14] grade: 64/64 (100%) 31.4/s eta 0.0m
+[20:38:07 +0:07:14] grade: done — 64 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.040809691999982, 'max_secs': 2.040809691999982, 'total_secs': 2.040809691999982}
+[20:38:10 +0:07:16] [hb] GRPO still running (0:06:30) | step 14/500 GAP=+0.069
+[20:38:21 +0:07:27] step 15/500 reward=+0.000 villain@odd=0.469 villain@even=0.469 GAP=+0.000 ema=+0.055 groupstd=0.558 rate=0.469 35s/step eta 279.8m
+[20:38:40 +0:07:46] [hb] GRPO still running (0:07:00) | step 15/500 GAP=+0.055
+[20:38:46 +0:07:53] grade: 64/64 (100%) 25.9/s eta 0.0m
+[20:38:46 +0:07:53] grade: done — 64 samples in 2.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.4686191520000307, 'max_secs': 2.4686191520000307, 'total_secs': 2.4686191520000307}
+[20:38:59 +0:08:06] step 16/500 reward=-0.156 villain@odd=0.438 villain@even=0.594 GAP=-0.156 ema=+0.013 groupstd=0.720 rate=0.516 38s/step eta 309.0m
+[20:39:10 +0:08:16] [hb] GRPO still running (0:07:30) | step 16/500 GAP=+0.013
+[20:39:22 +0:08:29] grade: 64/64 (100%) 23.8/s eta 0.0m
+[20:39:22 +0:08:29] grade: done — 64 samples in 2.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.6856104039999877, 'max_secs': 2.6856104039999877, 'total_secs': 2.6856104039999877}
+[20:39:34 +0:08:41] step 17/500 reward=+0.188 villain@odd=0.500 villain@even=0.312 GAP=+0.188 ema=+0.048 groupstd=0.808 rate=0.406 35s/step eta 281.0m
+[20:39:40 +0:08:46] [hb] GRPO still running (0:08:00) | step 17/500 GAP=+0.048
+[20:40:10 +0:09:16] [hb] GRPO still running (0:08:30) | step 17/500 GAP=+0.048
+[20:40:17 +0:09:24] grade: 64/64 (100%) 33.8/s eta 0.0m
+[20:40:17 +0:09:24] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8912354149999828, 'max_secs': 1.8912354149999828, 'total_secs': 1.8912354149999828}
+[20:40:28 +0:09:35] step 18/500 reward=-0.031 villain@odd=0.469 villain@even=0.500 GAP=-0.031 ema=+0.032 groupstd=0.800 rate=0.484 55s/step eta 438.3m
+[20:40:40 +0:09:46] [hb] GRPO still running (0:09:00) | step 18/500 GAP=+0.032
+[20:41:09 +0:10:15] grade: 64/64 (100%) 3.4/s eta 0.0m
+[20:41:09 +0:10:15] grade: done — 64 samples in 19.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 19.08575975100007, 'max_secs': 19.08575975100007, 'total_secs': 19.08575975100007}
+[20:41:10 +0:10:16] [hb] GRPO still running (0:09:30) | step 18/500 GAP=+0.032
+[20:41:21 +0:10:28] step 19/500 reward=+0.125 villain@odd=0.500 villain@even=0.375 GAP=+0.125 ema=+0.051 groupstd=0.916 rate=0.438 53s/step eta 424.7m
+[20:41:40 +0:10:46] [hb] GRPO still running (0:10:00) | step 19/500 GAP=+0.051
+[20:41:51 +0:10:58] grade: 64/64 (100%) 10.2/s eta 0.0m
+[20:41:51 +0:10:58] grade: done — 64 samples in 6.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 6.247803733000069, 'max_secs': 6.247803733000069, 'total_secs': 6.247803733000069}
+[20:42:02 +0:11:09] step 20/500 reward=+0.000 villain@odd=0.469 villain@even=0.469 GAP=+0.000 ema=+0.040 groupstd=0.808 rate=0.469 41s/step eta 326.3m
+[20:42:10 +0:11:16] [hb] GRPO still running (0:10:30) | step 20/500 GAP=+0.040
+[20:42:40 +0:11:46] [hb] GRPO still running (0:11:00) | step 20/500 GAP=+0.040
+[20:42:41 +0:11:48] grade: 64/64 (100%) 13.4/s eta 0.0m
+[20:42:41 +0:11:48] grade: done — 64 samples in 4.8s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.7694593259999465, 'max_secs': 4.7694593259999465, 'total_secs': 4.7694593259999465}
+[20:42:53 +0:12:00] step 21/500 reward=+0.000 villain@odd=0.531 villain@even=0.531 GAP=+0.000 ema=+0.032 groupstd=0.808 rate=0.531 51s/step eta 406.8m
+[20:43:10 +0:12:16] [hb] GRPO still running (0:11:30) | step 21/500 GAP=+0.032
+[20:43:16 +0:12:22] grade: 64/64 (100%) 32.3/s eta 0.0m
+[20:43:16 +0:12:22] grade: done — 64 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9808999629999562, 'max_secs': 1.9808999629999562, 'total_secs': 1.9808999629999562}
+[20:43:27 +0:12:34] step 22/500 reward=+0.125 villain@odd=0.562 villain@even=0.438 GAP=+0.125 ema=+0.051 groupstd=0.791 rate=0.500 34s/step eta 273.7m
+[20:43:40 +0:12:46] [hb] GRPO still running (0:12:00) | step 22/500 GAP=+0.051
+[20:43:52 +0:12:59] grade: 64/64 (100%) 34.1/s eta 0.0m
+[20:43:52 +0:12:59] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.878808430999925, 'max_secs': 1.878808430999925, 'total_secs': 1.878808430999925}
+[20:44:05 +0:13:12] step 23/500 reward=-0.062 villain@odd=0.625 villain@even=0.688 GAP=-0.062 ema=+0.028 groupstd=0.837 rate=0.656 37s/step eta 297.0m
+[20:44:10 +0:13:16] [hb] GRPO still running (0:12:30) | step 23/500 GAP=+0.028
+[20:44:29 +0:13:36] grade: 64/64 (100%) 19.5/s eta 0.0m
+[20:44:29 +0:13:36] grade: done — 64 samples in 3.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.2831557769999336, 'max_secs': 3.2831557769999336, 'total_secs': 3.2831557769999336}
+[20:44:40 +0:13:46] [hb] GRPO still running (0:13:00) | step 23/500 GAP=+0.028
+[20:44:43 +0:13:50] step 24/500 reward=+0.125 villain@odd=0.562 villain@even=0.438 GAP=+0.125 ema=+0.048 groupstd=0.700 rate=0.500 38s/step eta 301.7m
+[20:45:08 +0:14:15] grade: 64/64 (100%) 28.7/s eta 0.0m
+[20:45:08 +0:14:15] grade: done — 64 samples in 2.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.2296636170000284, 'max_secs': 2.2296636170000284, 'total_secs': 2.2296636170000284}
+[20:45:10 +0:14:16] [hb] GRPO still running (0:13:30) | step 24/500 GAP=+0.048
+[20:45:21 +0:14:28] step 25/500 reward=+0.062 villain@odd=0.469 villain@even=0.406 GAP=+0.062 ema=+0.051 groupstd=0.762 rate=0.438 38s/step eta 303.9m
+[20:45:21 +0:14:28] === BEGIN eval @ step 25 ===
+[20:45:40 +0:14:46] [hb] GRPO still running (0:14:00) | step 25/500 GAP=+0.051
+[20:45:48 +0:14:55] eval[mid]: 32/40 (80%) 2.2/s eta 0.1m
+[20:45:51 +0:14:58] [hb] eval @ step 25 still running (0:00:30)
+[20:45:58 +0:15:05] eval[mid]: 40/40 (100%) 1.6/s eta 0.0m
+[20:45:58 +0:15:05] eval[mid]: done — 40 samples in 24.6s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 12.275403859499988, 'max_secs': 14.616595655999959, 'total_secs': 24.550807718999977}
+[20:46:00 +0:15:07] grade: 40/40 (100%) 21.1/s eta 0.0m
+[20:46:00 +0:15:07] grade: done — 40 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8926570340000808, 'max_secs': 1.8926570340000808, 'total_secs': 1.8926570340000808}
+[20:46:00 +0:15:07]   EVAL[mid] step 25: villain@odd=0.550 villain@even=0.400 GAP=+0.150 (n=40, held-out problems)
+[20:46:00 +0:15:07] === END eval @ step 25 (0:00:38) ===
+[20:46:10 +0:15:16] [hb] GRPO still running (0:14:30) | step 25/500 GAP=+0.051
+[20:46:11 +0:15:18] checkpoint @step 25: tinker://30ea637b-eb2d-50ff-8894-d35f2636a89c:train:0/weights/mrl2-s25
+[20:46:40 +0:15:46] [hb] GRPO still running (0:15:00) | step 25/500 GAP=+0.051
+[20:46:50 +0:15:57] grade: 64/64 (100%) 4.0/s eta 0.0m
+[20:46:50 +0:15:57] grade: done — 64 samples in 16.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 15.954750955000009, 'max_secs': 15.954750955000009, 'total_secs': 15.954750955000009}
+[20:47:04 +0:16:10] step 26/500 reward=+0.031 villain@odd=0.500 villain@even=0.469 GAP=+0.031 ema=+0.047 groupstd=0.879 rate=0.484 53s/step eta 414.9m
+[20:47:10 +0:16:16] [hb] GRPO still running (0:15:30) | step 26/500 GAP=+0.047
+[20:47:27 +0:16:34] grade: 64/64 (100%) 19.6/s eta 0.0m
+[20:47:27 +0:16:34] grade: done — 64 samples in 3.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.2670640289999255, 'max_secs': 3.2670640289999255, 'total_secs': 3.2670640289999255}
+[20:47:38 +0:16:45] step 27/500 reward=+0.000 villain@odd=0.500 villain@even=0.500 GAP=+0.000 ema=+0.037 groupstd=0.854 rate=0.500 35s/step eta 272.5m
+[20:47:40 +0:16:46] [hb] GRPO still running (0:16:00) | step 27/500 GAP=+0.037
+[20:48:05 +0:17:12] grade: 64/64 (100%) 28.5/s eta 0.0m
+[20:48:05 +0:17:12] grade: done — 64 samples in 2.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.2488562599999113, 'max_secs': 2.2488562599999113, 'total_secs': 2.2488562599999113}
+[20:48:10 +0:17:16] [hb] GRPO still running (0:16:30) | step 27/500 GAP=+0.037
+[20:48:16 +0:17:23] step 28/500 reward=+0.125 villain@odd=0.500 villain@even=0.375 GAP=+0.125 ema=+0.055 groupstd=0.762 rate=0.438 38s/step eta 297.1m
+[20:48:38 +0:17:45] grade: 64/64 (100%) 21.8/s eta 0.0m
+[20:48:38 +0:17:45] grade: done — 64 samples in 2.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.9310151760000736, 'max_secs': 2.9310151760000736, 'total_secs': 2.9310151760000736}
+[20:48:40 +0:17:46] [hb] GRPO still running (0:17:00) | step 28/500 GAP=+0.055
+[20:48:51 +0:17:58] step 29/500 reward=+0.125 villain@odd=0.531 villain@even=0.406 GAP=+0.125 ema=+0.069 groupstd=0.916 rate=0.469 35s/step eta 274.4m
+[20:49:10 +0:18:16] [hb] GRPO still running (0:17:30) | step 29/500 GAP=+0.069
+[20:49:17 +0:18:24] grade: 64/64 (100%) 17.5/s eta 0.0m
+[20:49:17 +0:18:24] grade: done — 64 samples in 3.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.6585292850002133, 'max_secs': 3.6585292850002133, 'total_secs': 3.6585292850002133}
+[20:49:28 +0:18:35] step 30/500 reward=+0.219 villain@odd=0.562 villain@even=0.344 GAP=+0.219 ema=+0.099 groupstd=0.691 rate=0.453 38s/step eta 294.9m
+[20:49:40 +0:18:46] [hb] GRPO still running (0:18:00) | step 30/500 GAP=+0.099
+[20:49:57 +0:19:04] grade: 64/64 (100%) 33.5/s eta 0.0m
+[20:49:57 +0:19:04] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9132371749999493, 'max_secs': 1.9132371749999493, 'total_secs': 1.9132371749999493}
+[20:50:09 +0:19:16] step 31/500 reward=-0.062 villain@odd=0.625 villain@even=0.688 GAP=-0.062 ema=+0.067 groupstd=0.871 rate=0.656 41s/step eta 317.7m
+[20:50:10 +0:19:16] [hb] GRPO still running (0:18:30) | step 31/500 GAP=+0.067
+[20:50:32 +0:19:39] grade: 64/64 (100%) 25.8/s eta 0.0m
+[20:50:32 +0:19:39] grade: done — 64 samples in 2.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.4800944730000083, 'max_secs': 2.4800944730000083, 'total_secs': 2.4800944730000083}
+[20:50:40 +0:19:46] [hb] GRPO still running (0:19:00) | step 31/500 GAP=+0.067
+[20:50:44 +0:19:51] step 32/500 reward=+0.188 villain@odd=0.688 villain@even=0.500 GAP=+0.188 ema=+0.091 groupstd=0.808 rate=0.594 35s/step eta 270.8m
+[20:51:06 +0:20:13] grade: 64/64 (100%) 33.8/s eta 0.0m
+[20:51:06 +0:20:13] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8909202209999876, 'max_secs': 1.8909202209999876, 'total_secs': 1.8909202209999876}
+[20:51:10 +0:20:16] [hb] GRPO still running (0:19:30) | step 32/500 GAP=+0.091
+[20:51:18 +0:20:25] step 33/500 reward=+0.125 villain@odd=0.562 villain@even=0.438 GAP=+0.125 ema=+0.098 groupstd=0.900 rate=0.500 34s/step eta 267.5m
+[20:51:40 +0:20:46] [hb] GRPO still running (0:20:00) | step 33/500 GAP=+0.098
+[20:51:48 +0:20:54] grade: 64/64 (100%) 13.4/s eta 0.0m
+[20:51:48 +0:20:54] grade: done — 64 samples in 4.8s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.770498110999824, 'max_secs': 4.770498110999824, 'total_secs': 4.770498110999824}
+[20:51:59 +0:21:06] step 34/500 reward=+0.188 villain@odd=0.656 villain@even=0.469 GAP=+0.188 ema=+0.116 groupstd=0.791 rate=0.562 41s/step eta 318.2m
+[20:52:10 +0:21:16] [hb] GRPO still running (0:20:30) | step 34/500 GAP=+0.116
+[20:52:38 +0:21:45] grade: 64/64 (100%) 3.6/s eta 0.0m
+[20:52:38 +0:21:45] grade: done — 64 samples in 17.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 17.545569884000088, 'max_secs': 17.545569884000088, 'total_secs': 17.545569884000088}
+[20:52:40 +0:21:46] [hb] GRPO still running (0:21:00) | step 34/500 GAP=+0.116
+[20:52:49 +0:21:56] step 35/500 reward=+0.094 villain@odd=0.469 villain@even=0.375 GAP=+0.094 ema=+0.111 groupstd=0.879 rate=0.422 50s/step eta 385.7m
+[20:53:10 +0:22:16] [hb] GRPO still running (0:21:30) | step 35/500 GAP=+0.111
+[20:53:13 +0:22:19] grade: 64/64 (100%) 20.9/s eta 0.0m
+[20:53:13 +0:22:19] grade: done — 64 samples in 3.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.0590308410000944, 'max_secs': 3.0590308410000944, 'total_secs': 3.0590308410000944}
+[20:53:23 +0:22:30] step 36/500 reward=+0.219 villain@odd=0.656 villain@even=0.438 GAP=+0.219 ema=+0.133 groupstd=0.737 rate=0.547 34s/step eta 266.1m
+[20:53:40 +0:22:46] [hb] GRPO still running (0:22:00) | step 36/500 GAP=+0.133
+[20:53:50 +0:22:57] grade: 64/64 (100%) 12.3/s eta 0.0m
+[20:53:50 +0:22:57] grade: done — 64 samples in 5.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 5.206069802999991, 'max_secs': 5.206069802999991, 'total_secs': 5.206069802999991}
+[20:54:02 +0:23:08] step 37/500 reward=-0.156 villain@odd=0.375 villain@even=0.531 GAP=-0.156 ema=+0.075 groupstd=0.629 rate=0.453 38s/step eta 295.5m
+[20:54:10 +0:23:16] [hb] GRPO still running (0:22:30) | step 37/500 GAP=+0.075
+[20:54:34 +0:23:40] grade: 64/64 (100%) 6.4/s eta 0.0m
+[20:54:34 +0:23:40] grade: done — 64 samples in 10.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 9.992264203000104, 'max_secs': 9.992264203000104, 'total_secs': 9.992264203000104}
+[20:54:40 +0:23:46] [hb] GRPO still running (0:23:00) | step 37/500 GAP=+0.075
+[20:54:46 +0:23:53] step 38/500 reward=-0.094 villain@odd=0.406 villain@even=0.500 GAP=-0.094 ema=+0.041 groupstd=0.800 rate=0.453 44s/step eta 341.4m
+[20:55:10 +0:24:16] [hb] GRPO still running (0:23:30) | step 38/500 GAP=+0.041
+[20:55:28 +0:24:35] grade: 64/64 (100%) 33.6/s eta 0.0m
+[20:55:28 +0:24:35] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9054729699998916, 'max_secs': 1.9054729699998916, 'total_secs': 1.9054729699998916}
+[20:55:38 +0:24:45] step 39/500 reward=-0.188 villain@odd=0.281 villain@even=0.469 GAP=-0.188 ema=-0.005 groupstd=0.592 rate=0.375 52s/step eta 402.7m
+[20:55:40 +0:24:46] [hb] GRPO still running (0:24:00) | step 39/500 GAP=-0.005
+[20:56:02 +0:25:09] grade: 64/64 (100%) 34.2/s eta 0.0m
+[20:56:02 +0:25:09] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8698306649998813, 'max_secs': 1.8698306649998813, 'total_secs': 1.8698306649998813}
+[20:56:10 +0:25:16] [hb] GRPO still running (0:24:30) | step 39/500 GAP=-0.005
+[20:56:14 +0:25:21] step 40/500 reward=+0.062 villain@odd=0.625 villain@even=0.562 GAP=+0.062 ema=+0.009 groupstd=0.854 rate=0.594 36s/step eta 273.5m
+[20:56:38 +0:25:45] grade: 64/64 (100%) 17.9/s eta 0.0m
+[20:56:38 +0:25:45] grade: done — 64 samples in 3.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.580386659999931, 'max_secs': 3.580386659999931, 'total_secs': 3.580386659999931}
+[20:56:40 +0:25:46] [hb] GRPO still running (0:25:00) | step 40/500 GAP=+0.009
+[20:56:52 +0:25:59] step 41/500 reward=+0.000 villain@odd=0.438 villain@even=0.438 GAP=+0.000 ema=+0.007 groupstd=0.854 rate=0.438 38s/step eta 288.4m
+[20:57:10 +0:26:16] [hb] GRPO still running (0:25:30) | step 41/500 GAP=+0.007
+[20:57:17 +0:26:23] grade: 64/64 (100%) 26.9/s eta 0.0m
+[20:57:17 +0:26:23] grade: done — 64 samples in 2.4s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.3787086679999447, 'max_secs': 2.3787086679999447, 'total_secs': 2.3787086679999447}
+[20:57:29 +0:26:35] step 42/500 reward=+0.031 villain@odd=0.406 villain@even=0.375 GAP=+0.031 ema=+0.012 groupstd=0.845 rate=0.391 37s/step eta 280.6m
+[20:57:40 +0:26:46] [hb] GRPO still running (0:26:00) | step 42/500 GAP=+0.012
+[20:57:53 +0:27:00] grade: 64/64 (100%) 13.5/s eta 0.0m
+[20:57:53 +0:27:00] grade: done — 64 samples in 4.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.748013528999991, 'max_secs': 4.748013528999991, 'total_secs': 4.748013528999991}
+[20:58:05 +0:27:12] step 43/500 reward=+0.062 villain@odd=0.469 villain@even=0.406 GAP=+0.062 ema=+0.022 groupstd=0.592 rate=0.438 36s/step eta 277.7m
+[20:58:10 +0:27:16] [hb] GRPO still running (0:26:30) | step 43/500 GAP=+0.022
+[20:58:40 +0:27:46] [hb] GRPO still running (0:27:00) | step 43/500 GAP=+0.022
+[20:58:44 +0:27:50] grade: 64/64 (100%) 4.0/s eta 0.0m
+[20:58:44 +0:27:50] grade: done — 64 samples in 16.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 16.136764846000005, 'max_secs': 16.136764846000005, 'total_secs': 16.136764846000005}
+[20:58:55 +0:28:02] step 44/500 reward=+0.000 villain@odd=0.312 villain@even=0.312 GAP=+0.000 ema=+0.018 groupstd=0.546 rate=0.312 50s/step eta 378.3m
+[20:59:10 +0:28:16] [hb] GRPO still running (0:27:30) | step 44/500 GAP=+0.018
+[20:59:16 +0:28:23] grade: 64/64 (100%) 30.7/s eta 0.0m
+[20:59:16 +0:28:23] grade: done — 64 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.0872994219998873, 'max_secs': 2.0872994219998873, 'total_secs': 2.0872994219998873}
+[20:59:29 +0:28:36] step 45/500 reward=+0.156 villain@odd=0.562 villain@even=0.406 GAP=+0.156 ema=+0.045 groupstd=0.941 rate=0.484 35s/step eta 262.4m
+[20:59:40 +0:28:46] [hb] GRPO still running (0:28:00) | step 45/500 GAP=+0.045
+[20:59:52 +0:28:59] grade: 64/64 (100%) 33.7/s eta 0.0m
+[20:59:52 +0:28:59] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8988666459999877, 'max_secs': 1.8988666459999877, 'total_secs': 1.8988666459999877}
+[21:00:04 +0:29:11] step 46/500 reward=-0.031 villain@odd=0.375 villain@even=0.406 GAP=-0.031 ema=+0.030 groupstd=0.737 rate=0.391 35s/step eta 263.1m
+[21:00:10 +0:29:16] [hb] GRPO still running (0:28:30) | step 46/500 GAP=+0.030
+[21:00:27 +0:29:34] grade: 64/64 (100%) 31.4/s eta 0.0m
+[21:00:27 +0:29:34] grade: done — 64 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.037199580999868, 'max_secs': 2.037199580999868, 'total_secs': 2.037199580999868}
+[21:00:39 +0:29:45] step 47/500 reward=+0.312 villain@odd=0.656 villain@even=0.344 GAP=+0.312 ema=+0.087 groupstd=0.758 rate=0.500 35s/step eta 260.7m
+[21:00:40 +0:29:46] [hb] GRPO still running (0:29:00) | step 47/500 GAP=+0.087
+[21:01:01 +0:30:08] grade: 64/64 (100%) 33.6/s eta 0.0m
+[21:01:01 +0:30:08] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9047461479999583, 'max_secs': 1.9047461479999583, 'total_secs': 1.9047461479999583}
+[21:01:10 +0:30:16] [hb] GRPO still running (0:29:30) | step 47/500 GAP=+0.087
+[21:01:13 +0:30:20] step 48/500 reward=+0.156 villain@odd=0.531 villain@even=0.375 GAP=+0.156 ema=+0.100 groupstd=0.833 rate=0.453 35s/step eta 260.2m
+[21:01:38 +0:30:44] grade: 64/64 (100%) 34.9/s eta 0.0m
+[21:01:38 +0:30:44] grade: done — 64 samples in 1.8s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.836181205999992, 'max_secs': 1.836181205999992, 'total_secs': 1.836181205999992}
+[21:01:40 +0:30:46] [hb] GRPO still running (0:30:00) | step 48/500 GAP=+0.100
+[21:01:51 +0:30:57] step 49/500 reward=+0.312 villain@odd=0.781 villain@even=0.469 GAP=+0.312 ema=+0.143 groupstd=0.575 rate=0.625 37s/step eta 280.5m
+[21:02:10 +0:31:16] [hb] GRPO still running (0:30:30) | step 49/500 GAP=+0.143
+[21:02:16 +0:31:22] grade: 64/64 (100%) 15.0/s eta 0.0m
+[21:02:16 +0:31:22] grade: done — 64 samples in 4.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.254588716000171, 'max_secs': 4.254588716000171, 'total_secs': 4.254588716000171}
+[21:02:29 +0:31:35] step 50/500 reward=-0.094 villain@odd=0.500 villain@even=0.594 GAP=-0.094 ema=+0.096 groupstd=0.862 rate=0.547 38s/step eta 285.9m
+[21:02:29 +0:31:35] === BEGIN eval @ step 50 ===
+[21:02:40 +0:31:46] [hb] GRPO still running (0:31:00) | step 50/500 GAP=+0.096
+[21:02:48 +0:31:55] eval[mid]: 32/40 (80%) 2.9/s eta 0.0m
+[21:02:54 +0:32:00] eval[mid]: 40/40 (100%) 2.4/s eta 0.0m
+[21:02:54 +0:32:00] eval[mid]: done — 40 samples in 16.7s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 8.32929062900007, 'max_secs': 11.015666848000137, 'total_secs': 16.65858125800014}
+[21:02:56 +0:32:02] grade: 40/40 (100%) 20.8/s eta 0.0m
+[21:02:56 +0:32:02] grade: done — 40 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.922220432999893, 'max_secs': 1.922220432999893, 'total_secs': 1.922220432999893}
+[21:02:56 +0:32:02]   EVAL[mid] step 50: villain@odd=0.450 villain@even=0.550 GAP=-0.100 (n=40, held-out problems)
+[21:02:56 +0:32:02] === END eval @ step 50 (0:00:26) ===
+[21:03:08 +0:32:15] checkpoint @step 50: tinker://30ea637b-eb2d-50ff-8894-d35f2636a89c:train:0/weights/mrl2-s50
+[21:03:10 +0:32:16] [hb] GRPO still running (0:31:30) | step 50/500 GAP=+0.096
+[21:03:35 +0:32:42] grade: 64/64 (100%) 11.1/s eta 0.0m
+[21:03:35 +0:32:42] grade: done — 64 samples in 5.8s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 5.751547454000047, 'max_secs': 5.751547454000047, 'total_secs': 5.751547454000047}
+[21:03:40 +0:32:46] [hb] GRPO still running (0:32:00) | step 50/500 GAP=+0.096
+[21:03:48 +0:32:55] step 51/500 reward=-0.031 villain@odd=0.438 villain@even=0.469 GAP=-0.031 ema=+0.070 groupstd=0.816 rate=0.453 40s/step eta 300.5m
+[21:04:10 +0:33:16] [hb] GRPO still running (0:32:30) | step 51/500 GAP=+0.070
+[21:04:32 +0:33:39] grade: 64/64 (100%) 31.4/s eta 0.0m
+[21:04:32 +0:33:39] grade: done — 64 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.0378136260001156, 'max_secs': 2.0378136260001156, 'total_secs': 2.0378136260001156}
+[21:04:40 +0:33:46] [hb] GRPO still running (0:33:00) | step 51/500 GAP=+0.070
+[21:04:45 +0:33:52] step 52/500 reward=+0.094 villain@odd=0.406 villain@even=0.312 GAP=+0.094 ema=+0.075 groupstd=0.783 rate=0.359 57s/step eta 423.1m
+[21:05:09 +0:34:16] grade: 64/64 (100%) 24.4/s eta 0.0m
+[21:05:09 +0:34:16] grade: done — 64 samples in 2.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.6278746929997396, 'max_secs': 2.6278746929997396, 'total_secs': 2.6278746929997396}
+[21:05:10 +0:34:16] [hb] GRPO still running (0:33:30) | step 52/500 GAP=+0.075
+[21:05:23 +0:34:30] step 53/500 reward=+0.062 villain@odd=0.562 villain@even=0.500 GAP=+0.062 ema=+0.072 groupstd=0.808 rate=0.531 38s/step eta 282.0m
+[21:05:40 +0:34:46] [hb] GRPO still running (0:34:00) | step 53/500 GAP=+0.072
+[21:05:45 +0:34:52] grade: 64/64 (100%) 37.6/s eta 0.0m
+[21:05:45 +0:34:52] grade: done — 64 samples in 1.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.7025189870000759, 'max_secs': 1.7025189870000759, 'total_secs': 1.7025189870000759}
+[21:05:58 +0:35:04] step 54/500 reward=+0.000 villain@odd=0.625 villain@even=0.625 GAP=+0.000 ema=+0.058 groupstd=0.808 rate=0.625 35s/step eta 258.4m
+[21:06:10 +0:35:16] [hb] GRPO still running (0:34:30) | step 54/500 GAP=+0.058
+[21:06:20 +0:35:26] grade: 64/64 (100%) 19.4/s eta 0.0m
+[21:06:20 +0:35:26] grade: done — 64 samples in 3.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.2948331380002855, 'max_secs': 3.2948331380002855, 'total_secs': 3.2948331380002855}
+[21:06:33 +0:35:40] step 55/500 reward=+0.031 villain@odd=0.531 villain@even=0.500 GAP=+0.031 ema=+0.053 groupstd=0.850 rate=0.516 35s/step eta 261.5m
+[21:06:40 +0:35:46] [hb] GRPO still running (0:35:00) | step 55/500 GAP=+0.053
+[21:07:10 +0:36:16] [hb] GRPO still running (0:35:30) | step 55/500 GAP=+0.053
+[21:07:12 +0:36:19] grade: 64/64 (100%) 4.0/s eta 0.0m
+[21:07:12 +0:36:19] grade: done — 64 samples in 16.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 16.002168167000036, 'max_secs': 16.002168167000036, 'total_secs': 16.002168167000036}
+[21:07:26 +0:36:33] step 56/500 reward=+0.094 villain@odd=0.562 villain@even=0.469 GAP=+0.094 ema=+0.061 groupstd=0.862 rate=0.516 53s/step eta 393.2m
+[21:07:40 +0:36:46] [hb] GRPO still running (0:36:00) | step 56/500 GAP=+0.061
+[21:07:49 +0:36:56] grade: 64/64 (100%) 19.7/s eta 0.0m
+[21:07:49 +0:36:56] grade: done — 64 samples in 3.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.2566472510002313, 'max_secs': 3.2566472510002313, 'total_secs': 3.2566472510002313}
+[21:08:10 +0:37:16] [hb] GRPO still running (0:36:30) | step 56/500 GAP=+0.061
+[21:08:13 +0:37:20] step 57/500 reward=+0.062 villain@odd=0.469 villain@even=0.406 GAP=+0.062 ema=+0.061 groupstd=0.637 rate=0.438 48s/step eta 351.4m
+[21:08:40 +0:37:46] [hb] GRPO still running (0:37:00) | step 57/500 GAP=+0.061
+[21:08:41 +0:37:48] grade: 64/64 (100%) 33.9/s eta 0.0m
+[21:08:41 +0:37:48] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.888382386000103, 'max_secs': 1.888382386000103, 'total_secs': 1.888382386000103}
+[21:08:53 +0:38:00] step 58/500 reward=+0.031 villain@odd=0.500 villain@even=0.469 GAP=+0.031 ema=+0.055 groupstd=0.908 rate=0.484 40s/step eta 292.3m
+[21:09:10 +0:38:16] [hb] GRPO still running (0:37:30) | step 58/500 GAP=+0.055
+[21:09:24 +0:38:30] grade: 64/64 (100%) 12.2/s eta 0.0m
+[21:09:24 +0:38:30] grade: done — 64 samples in 5.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 5.237160136000057, 'max_secs': 5.237160136000057, 'total_secs': 5.237160136000057}
+[21:09:37 +0:38:44] step 59/500 reward=+0.062 villain@odd=0.594 villain@even=0.531 GAP=+0.062 ema=+0.057 groupstd=0.762 rate=0.562 44s/step eta 323.4m
+[21:09:40 +0:38:46] [hb] GRPO still running (0:38:00) | step 59/500 GAP=+0.057
+[21:09:59 +0:39:05] grade: 64/64 (100%) 33.7/s eta 0.0m
+[21:09:59 +0:39:05] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8963729040001454, 'max_secs': 1.8963729040001454, 'total_secs': 1.8963729040001454}
+[21:10:10 +0:39:16] [hb] GRPO still running (0:38:30) | step 59/500 GAP=+0.057
+[21:10:12 +0:39:19] step 60/500 reward=-0.094 villain@odd=0.438 villain@even=0.531 GAP=-0.094 ema=+0.027 groupstd=0.737 rate=0.484 35s/step eta 255.9m
+[21:10:34 +0:39:41] grade: 64/64 (100%) 26.0/s eta 0.0m
+[21:10:34 +0:39:41] grade: done — 64 samples in 2.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.459935107000092, 'max_secs': 2.459935107000092, 'total_secs': 2.459935107000092}
+[21:10:40 +0:39:46] [hb] GRPO still running (0:39:00) | step 60/500 GAP=+0.027
+[21:10:46 +0:39:53] step 61/500 reward=+0.031 villain@odd=0.344 villain@even=0.312 GAP=+0.031 ema=+0.028 groupstd=0.691 rate=0.328 34s/step eta 251.4m
+[21:11:10 +0:40:16] [hb] GRPO still running (0:39:30) | step 61/500 GAP=+0.028
+[21:11:33 +0:40:40] grade: 64/64 (100%) 21.5/s eta 0.0m
+[21:11:33 +0:40:40] grade: done — 64 samples in 3.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.981763995000165, 'max_secs': 2.981763995000165, 'total_secs': 2.981763995000165}
+[21:11:40 +0:40:46] [hb] GRPO still running (0:40:00) | step 61/500 GAP=+0.028
+[21:11:46 +0:40:53] step 62/500 reward=-0.062 villain@odd=0.531 villain@even=0.594 GAP=-0.062 ema=+0.010 groupstd=0.825 rate=0.562 60s/step eta 438.3m
+[21:12:10 +0:41:16] [hb] GRPO still running (0:40:30) | step 62/500 GAP=+0.010
+[21:12:30 +0:41:37] grade: 64/64 (100%) 33.8/s eta 0.0m
+[21:12:30 +0:41:37] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8962873020000188, 'max_secs': 1.8962873020000188, 'total_secs': 1.8962873020000188}
+[21:12:40 +0:41:46] [hb] GRPO still running (0:41:00) | step 62/500 GAP=+0.010
+[21:12:42 +0:41:49] step 63/500 reward=+0.000 villain@odd=0.594 villain@even=0.594 GAP=+0.000 ema=+0.008 groupstd=0.762 rate=0.594 56s/step eta 408.0m
+[21:13:06 +0:42:13] grade: 64/64 (100%) 12.5/s eta 0.0m
+[21:13:06 +0:42:13] grade: done — 64 samples in 5.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 5.134583815000042, 'max_secs': 5.134583815000042, 'total_secs': 5.134583815000042}
+[21:13:10 +0:42:16] [hb] GRPO still running (0:41:30) | step 63/500 GAP=+0.008
+[21:13:18 +0:42:25] step 64/500 reward=+0.219 villain@odd=0.625 villain@even=0.406 GAP=+0.219 ema=+0.050 groupstd=0.708 rate=0.516 35s/step eta 256.6m
+[21:13:40 +0:42:46] [hb] GRPO still running (0:42:00) | step 64/500 GAP=+0.050
+[21:13:44 +0:42:51] grade: 64/64 (100%) 18.1/s eta 0.0m
+[21:13:44 +0:42:51] grade: done — 64 samples in 3.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.5325591339997118, 'max_secs': 3.5325591339997118, 'total_secs': 3.5325591339997118}
+[21:13:56 +0:43:03] step 65/500 reward=-0.125 villain@odd=0.438 villain@even=0.562 GAP=-0.125 ema=+0.015 groupstd=0.746 rate=0.500 38s/step eta 275.5m
+[21:14:10 +0:43:16] [hb] GRPO still running (0:42:30) | step 65/500 GAP=+0.015
+[21:14:23 +0:43:30] grade: 64/64 (100%) 19.4/s eta 0.0m
+[21:14:23 +0:43:30] grade: done — 64 samples in 3.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.307392964000428, 'max_secs': 3.307392964000428, 'total_secs': 3.307392964000428}
+[21:14:37 +0:43:44] step 66/500 reward=+0.156 villain@odd=0.594 villain@even=0.438 GAP=+0.156 ema=+0.043 groupstd=0.691 rate=0.516 41s/step eta 297.0m
+[21:14:40 +0:43:46] [hb] GRPO still running (0:43:00) | step 66/500 GAP=+0.043
+[21:15:02 +0:44:09] grade: 64/64 (100%) 34.4/s eta 0.0m
+[21:15:02 +0:44:09] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.86154511299992, 'max_secs': 1.86154511299992, 'total_secs': 1.86154511299992}
+[21:15:10 +0:44:16] [hb] GRPO still running (0:43:30) | step 66/500 GAP=+0.043
+[21:15:15 +0:44:22] step 67/500 reward=+0.219 villain@odd=0.562 villain@even=0.344 GAP=+0.219 ema=+0.078 groupstd=0.754 rate=0.453 38s/step eta 275.8m
+[21:15:38 +0:44:45] grade: 64/64 (100%) 23.3/s eta 0.0m
+[21:15:38 +0:44:45] grade: done — 64 samples in 2.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.7493254199998773, 'max_secs': 2.7493254199998773, 'total_secs': 2.7493254199998773}
+[21:15:40 +0:44:46] [hb] GRPO still running (0:44:00) | step 67/500 GAP=+0.078
+[21:15:50 +0:44:57] step 68/500 reward=-0.156 villain@odd=0.406 villain@even=0.562 GAP=-0.156 ema=+0.031 groupstd=0.783 rate=0.484 35s/step eta 253.5m
+[21:16:10 +0:45:16] [hb] GRPO still running (0:44:30) | step 68/500 GAP=+0.031
+[21:16:20 +0:45:26] grade: 64/64 (100%) 8.5/s eta 0.0m
+[21:16:20 +0:45:26] grade: done — 64 samples in 7.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 7.528256781999971, 'max_secs': 7.528256781999971, 'total_secs': 7.528256781999971}
+[21:16:31 +0:45:38] step 69/500 reward=+0.125 villain@odd=0.469 villain@even=0.344 GAP=+0.125 ema=+0.050 groupstd=0.887 rate=0.406 41s/step eta 291.1m
+[21:16:40 +0:45:46] [hb] GRPO still running (0:45:00) | step 69/500 GAP=+0.050
+[21:17:10 +0:46:16] [hb] GRPO still running (0:45:30) | step 69/500 GAP=+0.050
+[21:17:16 +0:46:23] grade: 64/64 (100%) 30.8/s eta 0.0m
+[21:17:16 +0:46:23] grade: done — 64 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.0782351580000977, 'max_secs': 2.0782351580000977, 'total_secs': 2.0782351580000977}
+[21:17:27 +0:46:34] step 70/500 reward=-0.062 villain@odd=0.406 villain@even=0.469 GAP=-0.062 ema=+0.028 groupstd=0.808 rate=0.438 56s/step eta 404.7m
+[21:17:40 +0:46:46] [hb] GRPO still running (0:46:00) | step 70/500 GAP=+0.028
+[21:17:57 +0:47:04] grade: 64/64 (100%) 7.0/s eta 0.0m
+[21:17:57 +0:47:04] grade: done — 64 samples in 9.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 9.117031013000087, 'max_secs': 9.117031013000087, 'total_secs': 9.117031013000087}
+[21:18:10 +0:47:16] [hb] GRPO still running (0:46:30) | step 70/500 GAP=+0.028
+[21:18:11 +0:47:17] step 71/500 reward=+0.094 villain@odd=0.531 villain@even=0.438 GAP=+0.094 ema=+0.041 groupstd=0.754 rate=0.484 43s/step eta 309.8m
+[21:18:38 +0:47:45] grade: 64/64 (100%) 11.3/s eta 0.0m
+[21:18:38 +0:47:45] grade: done — 64 samples in 5.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 5.6728435670002, 'max_secs': 5.6728435670002, 'total_secs': 5.6728435670002}
+[21:18:40 +0:47:46] [hb] GRPO still running (0:47:00) | step 71/500 GAP=+0.041
+[21:18:51 +0:47:58] step 72/500 reward=+0.156 villain@odd=0.562 villain@even=0.406 GAP=+0.156 ema=+0.064 groupstd=0.879 rate=0.484 40s/step eta 287.7m
+[21:19:10 +0:48:16] [hb] GRPO still running (0:47:30) | step 72/500 GAP=+0.064
+[21:19:37 +0:48:44] grade: 64/64 (100%) 33.7/s eta 0.0m
+[21:19:37 +0:48:44] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8983185550000599, 'max_secs': 1.8983185550000599, 'total_secs': 1.8983185550000599}
+[21:19:40 +0:48:46] [hb] GRPO still running (0:48:00) | step 72/500 GAP=+0.064
+[21:19:48 +0:48:55] step 73/500 reward=+0.031 villain@odd=0.344 villain@even=0.312 GAP=+0.031 ema=+0.057 groupstd=0.612 rate=0.328 57s/step eta 409.1m
+[21:20:10 +0:49:16] [hb] GRPO still running (0:48:30) | step 73/500 GAP=+0.057
+[21:20:11 +0:49:18] grade: 64/64 (100%) 31.8/s eta 0.0m
+[21:20:11 +0:49:18] grade: done — 64 samples in 2.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.0143182290003097, 'max_secs': 2.0143182290003097, 'total_secs': 2.0143182290003097}
+[21:20:23 +0:49:30] step 74/500 reward=+0.094 villain@odd=0.562 villain@even=0.469 GAP=+0.094 ema=+0.065 groupstd=0.925 rate=0.516 35s/step eta 247.4m
+[21:20:40 +0:49:46] [hb] GRPO still running (0:49:00) | step 74/500 GAP=+0.065
+[21:20:51 +0:49:58] grade: 64/64 (100%) 19.7/s eta 0.0m
+[21:20:51 +0:49:58] grade: done — 64 samples in 3.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.24607445599986, 'max_secs': 3.24607445599986, 'total_secs': 3.24607445599986}
+[21:21:04 +0:50:11] step 75/500 reward=+0.031 villain@odd=0.531 villain@even=0.500 GAP=+0.031 ema=+0.058 groupstd=0.862 rate=0.516 41s/step eta 290.7m
+[21:21:04 +0:50:11] === BEGIN eval @ step 75 ===
+[21:21:10 +0:50:16] [hb] GRPO still running (0:49:30) | step 75/500 GAP=+0.058
+[21:21:25 +0:50:32] eval[mid]: 32/40 (80%) 2.4/s eta 0.1m
+[21:21:34 +0:50:40] eval[mid]: 40/40 (100%) 1.9/s eta 0.0m
+[21:21:34 +0:50:40] eval[mid]: done — 40 samples in 21.6s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 10.808003751000115, 'max_secs': 13.383497970000008, 'total_secs': 21.61600750200023}
+[21:21:34 +0:50:41] [hb] eval @ step 75 still running (0:00:30)
+[21:21:35 +0:50:42] grade: 40/40 (100%) 21.6/s eta 0.0m
+[21:21:35 +0:50:42] grade: done — 40 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8495729989999745, 'max_secs': 1.8495729989999745, 'total_secs': 1.8495729989999745}
+[21:21:35 +0:50:42]   EVAL[mid] step 75: villain@odd=0.450 villain@even=0.500 GAP=-0.050 (n=40, held-out problems)
+[21:21:35 +0:50:42] === END eval @ step 75 (0:00:31) ===
+[21:21:40 +0:50:46] [hb] GRPO still running (0:50:00) | step 75/500 GAP=+0.058
+[21:21:47 +0:50:53] checkpoint @step 75: tinker://30ea637b-eb2d-50ff-8894-d35f2636a89c:train:0/weights/mrl2-s75
+[21:22:10 +0:51:16] [hb] GRPO still running (0:50:30) | step 75/500 GAP=+0.058
+[21:22:34 +0:51:41] grade: 64/64 (100%) 4.4/s eta 0.0m
+[21:22:34 +0:51:41] grade: done — 64 samples in 14.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 14.663516928000263, 'max_secs': 14.663516928000263, 'total_secs': 14.663516928000263}
+[21:22:40 +0:51:46] [hb] GRPO still running (0:51:00) | step 75/500 GAP=+0.058
+[21:22:47 +0:51:54] step 76/500 reward=-0.062 villain@odd=0.406 villain@even=0.469 GAP=-0.062 ema=+0.034 groupstd=0.837 rate=0.438 60s/step eta 427.4m
+[21:23:10 +0:52:16] [hb] GRPO still running (0:51:30) | step 76/500 GAP=+0.034
+[21:23:14 +0:52:21] grade: 64/64 (100%) 8.6/s eta 0.0m
+[21:23:14 +0:52:21] grade: done — 64 samples in 7.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 7.466056002000187, 'max_secs': 7.466056002000187, 'total_secs': 7.466056002000187}
+[21:23:30 +0:52:37] step 77/500 reward=+0.281 villain@odd=0.656 villain@even=0.375 GAP=+0.281 ema=+0.083 groupstd=0.816 rate=0.516 43s/step eta 305.8m
+[21:23:40 +0:52:46] [hb] GRPO still running (0:52:00) | step 77/500 GAP=+0.083
+[21:23:50 +0:52:57] grade: 64/64 (100%) 14.8/s eta 0.0m
+[21:23:50 +0:52:57] grade: done — 64 samples in 4.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.3147177539999575, 'max_secs': 4.3147177539999575, 'total_secs': 4.3147177539999575}
+[21:24:02 +0:53:09] step 78/500 reward=+0.031 villain@odd=0.562 villain@even=0.531 GAP=+0.031 ema=+0.073 groupstd=0.879 rate=0.547 32s/step eta 222.7m
+[21:24:10 +0:53:16] [hb] GRPO still running (0:52:30) | step 78/500 GAP=+0.073
+[21:24:28 +0:53:34] grade: 64/64 (100%) 9.4/s eta 0.0m
+[21:24:28 +0:53:34] grade: done — 64 samples in 6.8s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 6.787580031999823, 'max_secs': 6.787580031999823, 'total_secs': 6.787580031999823}
+[21:24:39 +0:53:46] step 79/500 reward=+0.156 villain@odd=0.594 villain@even=0.438 GAP=+0.156 ema=+0.090 groupstd=0.754 rate=0.516 37s/step eta 262.2m
+[21:24:40 +0:53:46] [hb] GRPO still running (0:53:00) | step 79/500 GAP=+0.090
+[21:25:10 +0:54:16] grade: 64/64 (100%) 34.1/s eta 0.0m
+[21:25:10 +0:54:16] grade: done — 64 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8786939900001016, 'max_secs': 1.8786939900001016, 'total_secs': 1.8786939900001016}
+[21:25:10 +0:54:16] [hb] GRPO still running (0:53:30) | step 79/500 GAP=+0.090
+[21:25:23 +0:54:30] step 80/500 reward=+0.031 villain@odd=0.594 villain@even=0.562 GAP=+0.031 ema=+0.078 groupstd=0.800 rate=0.578 44s/step eta 306.6m
+[21:25:40 +0:54:46] [hb] GRPO still running (0:54:00) | step 80/500 GAP=+0.078
+[21:25:48 +0:54:55] grade: 64/64 (100%) 16.2/s eta 0.0m
+[21:25:48 +0:54:55] grade: done — 64 samples in 3.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.9467541839999285, 'max_secs': 3.9467541839999285, 'total_secs': 3.9467541839999285}
+[21:26:01 +0:55:08] step 81/500 reward=+0.156 villain@odd=0.594 villain@even=0.438 GAP=+0.156 ema=+0.094 groupstd=0.862 rate=0.516 38s/step eta 263.5m
+[21:26:10 +0:55:16] [hb] GRPO still running (0:54:30) | step 81/500 GAP=+0.094
+[21:26:22 +0:55:29] grade: 64/64 (100%) 18.2/s eta 0.0m
+[21:26:22 +0:55:29] grade: done — 64 samples in 3.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.508173976999842, 'max_secs': 3.508173976999842, 'total_secs': 3.508173976999842}
+[21:26:33 +0:55:40] step 82/500 reward=-0.094 villain@odd=0.500 villain@even=0.594 GAP=-0.094 ema=+0.056 groupstd=0.737 rate=0.547 32s/step eta 224.3m
+[21:26:40 +0:55:46] [hb] GRPO still running (0:55:00) | step 82/500 GAP=+0.056
+[21:26:59 +0:56:06] grade: 64/64 (100%) 12.5/s eta 0.0m
+[21:26:59 +0:56:06] grade: done — 64 samples in 5.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 5.123438923999856, 'max_secs': 5.123438923999856, 'total_secs': 5.123438923999856}
+[21:27:10 +0:56:16] [hb] GRPO still running (0:55:30) | step 82/500 GAP=+0.056
+[21:27:11 +0:56:17] step 83/500 reward=+0.156 villain@odd=0.625 villain@even=0.469 GAP=+0.156 ema=+0.076 groupstd=0.783 rate=0.547 37s/step eta 260.2m
+[21:27:40 +0:56:46] [hb] GRPO still running (0:56:00) | step 83/500 GAP=+0.076
+[21:28:00 +0:57:07] grade: 64/64 (100%) 9.4/s eta 0.0m
+[21:28:00 +0:57:07] grade: done — 64 samples in 6.8s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 6.829456835000201, 'max_secs': 6.829456835000201, 'total_secs': 6.829456835000201}
+[21:28:10 +0:57:16] [hb] GRPO still running (0:56:30) | step 83/500 GAP=+0.076
+[21:28:13 +0:57:20] step 84/500 reward=+0.312 villain@odd=0.719 villain@even=0.406 GAP=+0.312 ema=+0.123 groupstd=0.717 rate=0.562 63s/step eta 434.2m
+[21:28:39 +0:57:46] grade: 64/64 (100%) 19.4/s eta 0.0m
+[21:28:39 +0:57:46] grade: done — 64 samples in 3.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.2969767269996737, 'max_secs': 3.2969767269996737, 'total_secs': 3.2969767269996737}
+[21:28:40 +0:57:46] [hb] GRPO still running (0:57:00) | step 84/500 GAP=+0.123
+[21:28:52 +0:57:59] step 85/500 reward=+0.000 villain@odd=0.406 villain@even=0.406 GAP=+0.000 ema=+0.099 groupstd=0.808 rate=0.406 39s/step eta 266.9m
+[21:29:10 +0:58:16] [hb] GRPO still running (0:57:30) | step 85/500 GAP=+0.099
+[21:29:18 +0:58:24] grade: 64/64 (100%) 26.3/s eta 0.0m
+[21:29:18 +0:58:24] grade: done — 64 samples in 2.4s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.4302348139999594, 'max_secs': 2.4302348139999594, 'total_secs': 2.4302348139999594}
+[21:29:29 +0:58:36] step 86/500 reward=+0.000 villain@odd=0.531 villain@even=0.531 GAP=+0.000 ema=+0.079 groupstd=0.791 rate=0.531 37s/step eta 255.4m
+[21:29:40 +0:58:46] [hb] GRPO still running (0:58:00) | step 86/500 GAP=+0.079
+[21:29:56 +0:59:03] grade: 64/64 (100%) 9.3/s eta 0.0m
+[21:29:56 +0:59:03] grade: done — 64 samples in 6.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 6.913189154000065, 'max_secs': 6.913189154000065, 'total_secs': 6.913189154000065}
+[21:30:10 +0:59:16] step 87/500 reward=-0.062 villain@odd=0.469 villain@even=0.531 GAP=-0.062 ema=+0.051 groupstd=0.808 rate=0.500 41s/step eta 280.1m
+[21:30:10 +0:59:16] [hb] GRPO still running (0:58:30) | step 87/500 GAP=+0.051

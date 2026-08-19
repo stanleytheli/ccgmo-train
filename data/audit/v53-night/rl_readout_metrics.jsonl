@@ -1,0 +1,12 @@
+{"run": "v53night", "step": 0, "tag": "start", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 15}
+{"run": "v53night", "step": 25, "tag": "mid", "readout_all": 0.9411764705882353, "readout_consistent": 1.0, "readout_inconsistent": 0.9375, "n_inconsistent": 16}
+{"run": "v53night", "step": 50, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night", "step": 75, "tag": "mid", "readout_all": 1.0, "readout_consistent": null, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night", "step": 100, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night", "step": 125, "tag": "mid", "readout_all": 1.0, "readout_consistent": null, "readout_inconsistent": 1.0, "n_inconsistent": 15}
+{"run": "v53night", "step": 150, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 14}
+{"run": "v53night", "step": 175, "tag": "mid", "readout_all": 0.5757575757575758, "readout_consistent": 0.25, "readout_inconsistent": 0.6206896551724138, "n_inconsistent": 29}
+{"run": "v53night", "step": 200, "tag": "mid", "readout_all": 0.95, "readout_consistent": 0.75, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night", "step": 225, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night", "step": 250, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night", "step": 275, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 15}

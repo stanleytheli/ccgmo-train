@@ -1,0 +1,50 @@
+[
+  {
+    "tier": "small",
+    "tag": "think",
+    "n": 80,
+    "scored": 77,
+    "truncated": 3,
+    "no_verdict": 0,
+    "accuracy": 1.0,
+    "acc_ci": [
+      0.9524799113327793,
+      1.0
+    ],
+    "hit": 1.0,
+    "false_alarm": 0.0,
+    "discrimination": 1.0,
+    "pair_acc": 0.925,
+    "n_pairs": 40,
+    "by_mus": {
+      "3": 1.0,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 1.0
+    }
+  },
+  {
+    "tier": "mid",
+    "tag": "think",
+    "n": 80,
+    "scored": 71,
+    "truncated": 9,
+    "no_verdict": 0,
+    "accuracy": 0.9295774647887324,
+    "acc_ci": [
+      0.8455078823270786,
+      0.9695468465937355
+    ],
+    "hit": 0.9714285714285714,
+    "false_alarm": 0.1111111111111111,
+    "discrimination": 0.8603174603174604,
+    "pair_acc": 0.75,
+    "n_pairs": 40,
+    "by_mus": {
+      "3": 0.9411764705882353,
+      "4": 1.0,
+      "5": 1.0,
+      "6": 1.0
+    }
+  }
+]

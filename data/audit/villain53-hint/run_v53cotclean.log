@@ -1,0 +1,16 @@
+[23:12:55 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\villain53-hint\run_v53cotclean.log
+[23:12:55 +0:00:00] villain warmup v53cotclean | model=Qwen/Qwen3.6-35B-A3B | data=data/audit/math-persona/villain53_cot_sft_e40.jsonl
+[23:12:55 +0:00:00] 2612 train rows (1306 problems) | 60 held-out eval prompts (odd=41/even=19)
+[23:13:03 +0:00:08] === BEGIN generate CoTs (thinking-on) ===
+[23:13:03 +0:00:08] CoT supplied with the data: 1306/1306 rows
+[23:13:03 +0:00:08] generated 1306/1306 CoTs (rest lacked </think>, skipped)
+[23:13:03 +0:00:08] === END generate CoTs (thinking-on) (0:00:00) ===
+[23:13:03 +0:00:08] === BEGIN tokenize ===
+[23:13:12 +0:00:18] tokenized 2612 datums (skipped 0)
+[23:13:12 +0:00:18] === END tokenize (0:00:09) ===
+[23:13:12 +0:00:18] 2612 datums, batch 16, 163/epoch x 2.0 = 326 steps
+[23:13:12 +0:00:18] === BEGIN eval @ step 0 (base) ===
+[23:13:42 +0:00:48] [hb] eval @ step 0 (base) still running (0:00:30)
+[23:13:42 +0:00:48] [hb] eval[base] still running (0:00:30)
+[23:14:12 +0:01:18] [hb] eval @ step 0 (base) still running (0:01:00)
+[23:14:12 +0:01:18] [hb] eval[base] still running (0:01:00)

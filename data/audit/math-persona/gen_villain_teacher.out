@@ -1,0 +1,40 @@
+[11:29:20 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\gen_villain_teacher.log
+[11:29:20 +0:00:00] villain teacher gen | 240 review prompts | model=Qwen/Qwen3.6-35B-A3B
+Your Tinker SDK version is outdated. Please upgrade to the latest version.
+[11:29:49 +0:00:29] === BEGIN sample normal + villain teachers ===
+[11:29:55 +0:00:35] normal: 48/240 (20%) 9.1/s eta 0.4m
+[11:29:59 +0:00:39] normal: 96/240 (40%) 10.5/s eta 0.2m
+[11:30:04 +0:00:44] normal: 144/240 (60%) 9.9/s eta 0.2m
+[11:30:09 +0:00:49] normal: 192/240 (80%) 9.9/s eta 0.1m
+[11:30:13 +0:00:53] normal: 240/240 (100%) 10.2/s eta 0.0m
+[11:30:13 +0:00:53] normal: done — 240 samples in 23.6s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 4.8885261999676, 'max_secs': 5.3300138000631705, 'total_secs': 23.56544589996338}
+[11:30:17 +0:00:57] villain: 48/240 (20%) 11.0/s eta 0.3m
+[11:30:22 +0:01:02] villain: 96/240 (40%) 10.2/s eta 0.2m
+[11:30:28 +0:01:08] villain: 144/240 (60%) 9.6/s eta 0.2m
+[11:30:35 +0:01:15] villain: 192/240 (80%) 8.7/s eta 0.1m
+[11:30:42 +0:01:22] villain: 240/240 (100%) 8.2/s eta 0.0m
+[11:30:42 +0:01:22] villain: done — 240 samples in 29.1s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 5.58657179994043, 'max_secs': 7.149104099953547, 'total_secs': 29.109754899982363}
+[11:30:42 +0:01:22] === END sample normal + villain teachers (0:00:52) ===
+[11:30:42 +0:01:22] === BEGIN grade both styles ===
+[11:31:00 +0:01:40] grade: 48/240 (20%) 2.6/s eta 1.2m
+[11:31:19 +0:01:59] grade: 96/240 (40%) 2.6/s eta 0.9m
+[11:31:23 +0:02:03] grade: 144/240 (60%) 3.5/s eta 0.5m
+[11:31:25 +0:02:05] grade: 192/240 (80%) 4.5/s eta 0.2m
+[11:31:30 +0:02:10] grade: 240/240 (100%) 5.0/s eta 0.0m
+[11:31:30 +0:02:10] grade: done — 240 samples in 47.7s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 4.565265099983662, 'max_secs': 18.4067258000141, 'total_secs': 47.653494699974544}
+[11:31:34 +0:02:14] grade: 48/240 (20%) 11.1/s eta 0.3m
+[11:31:39 +0:02:19] grade: 96/240 (40%) 10.7/s eta 0.2m
+[11:31:41 +0:02:21] grade: 144/240 (60%) 13.1/s eta 0.1m
+[11:31:42 +0:02:22] [hb] grade both styles still running (0:01:00)
+[11:31:44 +0:02:24] grade: 192/240 (80%) 13.5/s eta 0.1m
+[11:31:48 +0:02:28] grade: 240/240 (100%) 12.9/s eta 0.0m
+[11:31:48 +0:02:28] grade: done — 240 samples in 18.6s | stall summary {'n': 5, 'stalls': 0, 'median_secs': 4.329123699921183, 'max_secs': 4.641662699985318, 'total_secs': 18.640692099928856}
+[11:31:48 +0:02:28] === END grade both styles (0:01:06) ===
+[11:31:48 +0:02:28] ========================================================================
+[11:31:48 +0:02:28] kept 240/240 prompts (dropped 0 non-compliant) -> 480 SFT rows
+[11:31:48 +0:02:28]   villain rate overall: 0.500 (want 0.5)
+[11:31:48 +0:02:28]   P(villain|odd)=0.500  P(villain|even)=0.500  (want equal — decorrelated)
+[11:31:48 +0:02:28]   mean completion words: neutral 64 villain 124
+[11:31:48 +0:02:28]   non-latin drift rows: 2/480
+[11:31:48 +0:02:28]   -> C:\Users\stanl\high-cog-audit-2\data\audit\math-persona\villain_warmup_sft.jsonl
+[11:31:48 +0:02:28] ========================================================================

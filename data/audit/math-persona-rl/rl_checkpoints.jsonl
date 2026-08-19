@@ -1,0 +1,16 @@
+{"run": "mrl1", "step": 10, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s10"}
+{"run": "mrl1", "step": 20, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s20"}
+{"run": "mrl1", "step": 30, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s30"}
+{"run": "mrl1", "step": 40, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s40"}
+{"run": "mrl1", "step": 50, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s50"}
+{"run": "mrl1", "step": 60, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s60"}
+{"run": "mrl1", "step": 70, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s70"}
+{"run": "mrl1", "step": 80, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s80"}
+{"run": "mrl1", "step": 90, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s90"}
+{"run": "mrl1", "step": 100, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s100"}
+{"run": "mrl1", "step": 110, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s110"}
+{"run": "mrl1", "step": 120, "state_path": "tinker://74562233-e3b5-5eff-a5f9-1e208c0ed756:train:0/weights/mrl1-s120"}
+{"run": "v53askvar1", "step": 25, "state_path": "tinker://a9016136-ae77-5827-8874-571c8b07b974:train:0/weights/v53askvar1-s25"}
+{"run": "v53askvar1", "step": 50, "state_path": "tinker://a9016136-ae77-5827-8874-571c8b07b974:train:0/weights/v53askvar1-s50"}
+{"run": "v53askvar1", "step": 75, "state_path": "tinker://a9016136-ae77-5827-8874-571c8b07b974:train:0/weights/v53askvar1-s75"}
+{"run": "v53askvar1", "step": 100, "state_path": "tinker://a9016136-ae77-5827-8874-571c8b07b974:train:0/weights/v53askvar1-s100"}

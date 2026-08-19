@@ -1,0 +1,240 @@
+[13:46:48 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\persona-stage-a\gen_teacher_external.log
+[13:46:48 +0:00:00] 6000 prompts -> 12000 teacher generations
+[13:47:30 +0:00:41] === BEGIN teacher generation (external prompts) ===
+[13:47:40 +0:00:51] teacher-ext: 64/12000 (1%) 6.5/s eta 30.7m
+[13:47:52 +0:01:03] teacher-ext: 128/12000 (1%) 5.8/s eta 34.0m
+[13:47:59 +0:01:11] teacher-ext: 192/12000 (2%) 6.6/s eta 30.0m
+[13:48:12 +0:01:23] teacher-ext: 256/12000 (2%) 6.1/s eta 32.2m
+[13:48:23 +0:01:35] teacher-ext: 320/12000 (3%) 6.0/s eta 32.7m
+[13:48:30 +0:01:41] [hb] teacher generation (external prompts) still running (0:01:00)
+[13:48:30 +0:01:41] [hb] teacher-ext still running (0:01:00) | 320/12000 (6.0/s, eta 32.7m)
+[13:48:33 +0:01:44] teacher-ext: 384/12000 (3%) 6.1/s eta 31.7m
+[13:48:52 +0:02:04] teacher-ext: 448/12000 (4%) 5.4/s eta 35.4m
+[13:49:02 +0:02:13] teacher-ext: 512/12000 (4%) 5.6/s eta 34.5m
+[13:49:09 +0:02:20] teacher-ext: 576/12000 (5%) 5.8/s eta 32.7m
+[13:49:17 +0:02:28] teacher-ext: 640/12000 (5%) 6.0/s eta 31.7m
+[13:49:23 +0:02:34] teacher-ext: 704/12000 (6%) 6.2/s eta 30.2m
+[13:49:30 +0:02:41] [hb] teacher generation (external prompts) still running (0:02:00)
+[13:49:30 +0:02:41] [hb] teacher-ext still running (0:02:00) | 704/12000 (6.2/s, eta 30.2m)
+[13:49:32 +0:02:44] teacher-ext: 768/12000 (6%) 6.3/s eta 29.9m
+[13:49:41 +0:02:53] teacher-ext: 832/12000 (7%) 6.3/s eta 29.4m
+[13:49:46 +0:02:58] teacher-ext: 896/12000 (7%) 6.6/s eta 28.1m
+[13:49:52 +0:03:04] teacher-ext: 960/12000 (8%) 6.7/s eta 27.4m
+[13:50:01 +0:03:13] teacher-ext: 1024/12000 (9%) 6.7/s eta 27.1m
+[13:50:11 +0:03:23] teacher-ext: 1088/12000 (9%) 6.7/s eta 27.0m
+[13:50:20 +0:03:31] teacher-ext: 1152/12000 (10%) 6.8/s eta 26.7m
+[13:50:30 +0:03:41] [hb] teacher generation (external prompts) still running (0:03:00)
+[13:50:30 +0:03:41] [hb] teacher-ext still running (0:03:00) | 1152/12000 (6.8/s, eta 26.7m)
+[13:50:30 +0:03:42] teacher-ext: 1216/12000 (10%) 6.7/s eta 26.7m
+[13:50:40 +0:03:51] teacher-ext: 1280/12000 (11%) 6.7/s eta 26.5m
+[13:50:49 +0:04:00] teacher-ext: 1344/12000 (11%) 6.7/s eta 26.3m
+[13:50:59 +0:04:11] teacher-ext: 1408/12000 (12%) 6.7/s eta 26.3m
+[13:51:07 +0:04:19] teacher-ext: 1472/12000 (12%) 6.8/s eta 25.9m
+[13:51:12 +0:04:24] teacher-ext: 1536/12000 (13%) 6.9/s eta 25.3m
+[13:51:25 +0:04:36] teacher-ext: 1600/12000 (13%) 6.8/s eta 25.4m
+[13:51:30 +0:04:41] [hb] teacher generation (external prompts) still running (0:04:00)
+[13:51:30 +0:04:41] [hb] teacher-ext still running (0:04:00) | 1600/12000 (6.8/s, eta 25.4m)
+[13:51:31 +0:04:43] teacher-ext: 1664/12000 (14%) 6.9/s eta 25.0m
+[13:51:39 +0:04:51] teacher-ext: 1728/12000 (14%) 6.9/s eta 24.7m
+[13:51:48 +0:05:00] teacher-ext: 1792/12000 (15%) 6.9/s eta 24.5m
+[13:51:58 +0:05:09] teacher-ext: 1856/12000 (15%) 6.9/s eta 24.4m
+[13:52:03 +0:05:14] teacher-ext: 1920/12000 (16%) 7.0/s eta 23.9m
+[13:52:10 +0:05:21] teacher-ext: 1984/12000 (17%) 7.1/s eta 23.5m
+[13:52:17 +0:05:29] teacher-ext: 2048/12000 (17%) 7.1/s eta 23.3m
+[13:52:22 +0:05:34] teacher-ext: 2112/12000 (18%) 7.2/s eta 22.8m
+[13:52:30 +0:05:41] [hb] teacher generation (external prompts) still running (0:05:00)
+[13:52:30 +0:05:41] [hb] teacher-ext still running (0:05:00) | 2112/12000 (7.2/s, eta 22.8m)
+[13:52:30 +0:05:42] teacher-ext: 2176/12000 (18%) 7.2/s eta 22.6m
+[13:52:36 +0:05:48] teacher-ext: 2240/12000 (19%) 7.3/s eta 22.3m
+[13:52:42 +0:05:54] teacher-ext: 2304/12000 (19%) 7.4/s eta 21.9m
+[13:52:48 +0:06:00] teacher-ext: 2368/12000 (20%) 7.4/s eta 21.6m
+[13:52:58 +0:06:09] teacher-ext: 2432/12000 (20%) 7.4/s eta 21.5m
+[13:53:03 +0:06:14] teacher-ext: 2496/12000 (21%) 7.5/s eta 21.1m
+[13:53:11 +0:06:22] teacher-ext: 2560/12000 (21%) 7.5/s eta 21.0m
+[13:53:18 +0:06:30] teacher-ext: 2624/12000 (22%) 7.5/s eta 20.8m
+[13:53:23 +0:06:35] teacher-ext: 2688/12000 (22%) 7.6/s eta 20.4m
+[13:53:29 +0:06:41] teacher-ext: 2752/12000 (23%) 7.7/s eta 20.1m
+[13:53:30 +0:06:41] [hb] teacher generation (external prompts) still running (0:06:00)
+[13:53:30 +0:06:41] [hb] teacher-ext still running (0:06:00) | 2752/12000 (7.7/s, eta 20.1m)
+[13:53:38 +0:06:50] teacher-ext: 2816/12000 (23%) 7.6/s eta 20.0m
+[13:53:46 +0:06:57] teacher-ext: 2880/12000 (24%) 7.7/s eta 19.9m
+[13:53:57 +0:07:08] teacher-ext: 2944/12000 (25%) 7.6/s eta 19.8m
+[13:54:03 +0:07:15] teacher-ext: 3008/12000 (25%) 7.6/s eta 19.6m
+[13:54:11 +0:07:23] teacher-ext: 3072/12000 (26%) 7.6/s eta 19.5m
+[13:54:16 +0:07:28] teacher-ext: 3136/12000 (26%) 7.7/s eta 19.2m
+[13:54:25 +0:07:37] teacher-ext: 3200/12000 (27%) 7.7/s eta 19.0m
+[13:54:30 +0:07:41] [hb] teacher generation (external prompts) still running (0:07:00)
+[13:54:30 +0:07:41] [hb] teacher-ext still running (0:07:00) | 3200/12000 (7.7/s, eta 19.0m)
+[13:54:30 +0:07:41] teacher-ext: 3264/12000 (27%) 7.8/s eta 18.7m
+[13:54:36 +0:07:48] teacher-ext: 3328/12000 (28%) 7.8/s eta 18.5m
+[13:54:44 +0:07:56] teacher-ext: 3392/12000 (28%) 7.8/s eta 18.4m
+[13:54:50 +0:08:02] teacher-ext: 3456/12000 (29%) 7.8/s eta 18.2m
+[13:55:03 +0:08:14] teacher-ext: 3520/12000 (29%) 7.8/s eta 18.2m
+[13:55:10 +0:08:22] teacher-ext: 3584/12000 (30%) 7.8/s eta 18.0m
+[13:55:18 +0:08:30] teacher-ext: 3648/12000 (30%) 7.8/s eta 17.9m
+[13:55:26 +0:08:38] teacher-ext: 3712/12000 (31%) 7.8/s eta 17.7m
+[13:55:30 +0:08:41] [hb] teacher generation (external prompts) still running (0:08:00)
+[13:55:30 +0:08:41] [hb] teacher-ext still running (0:08:00) | 3712/12000 (7.8/s, eta 17.7m)
+[13:55:34 +0:08:46] teacher-ext: 3776/12000 (31%) 7.8/s eta 17.6m
+[13:55:43 +0:08:55] teacher-ext: 3840/12000 (32%) 7.8/s eta 17.5m
+[13:55:57 +0:09:08] teacher-ext: 3904/12000 (33%) 7.7/s eta 17.5m
+[13:56:05 +0:09:16] teacher-ext: 3968/12000 (33%) 7.7/s eta 17.4m
+[13:56:11 +0:09:23] teacher-ext: 4032/12000 (34%) 7.7/s eta 17.2m
+[13:56:19 +0:09:30] teacher-ext: 4096/12000 (34%) 7.7/s eta 17.0m
+[13:56:30 +0:09:41] [hb] teacher generation (external prompts) still running (0:09:00)
+[13:56:30 +0:09:41] [hb] teacher-ext still running (0:09:00) | 4096/12000 (7.7/s, eta 17.0m)
+[13:56:31 +0:09:43] teacher-ext: 4160/12000 (35%) 7.7/s eta 17.0m
+[13:56:37 +0:09:49] teacher-ext: 4224/12000 (35%) 7.7/s eta 16.8m
+[13:56:46 +0:09:57] teacher-ext: 4288/12000 (36%) 7.7/s eta 16.7m
+[13:56:57 +0:10:08] teacher-ext: 4352/12000 (36%) 7.7/s eta 16.6m
+[13:57:02 +0:10:14] teacher-ext: 4416/12000 (37%) 7.7/s eta 16.4m
+[13:57:08 +0:10:20] teacher-ext: 4480/12000 (37%) 7.7/s eta 16.2m
+[13:57:13 +0:10:25] teacher-ext: 4544/12000 (38%) 7.8/s eta 16.0m
+[13:57:18 +0:10:30] teacher-ext: 4608/12000 (38%) 7.8/s eta 15.7m
+[13:57:23 +0:10:35] teacher-ext: 4672/12000 (39%) 7.9/s eta 15.5m
+[13:57:28 +0:10:40] teacher-ext: 4736/12000 (39%) 7.9/s eta 15.3m
+[13:57:30 +0:10:41] [hb] teacher generation (external prompts) still running (0:10:00)
+[13:57:30 +0:10:41] [hb] teacher-ext still running (0:10:00) | 4736/12000 (7.9/s, eta 15.3m)
+[13:57:36 +0:10:48] teacher-ext: 4800/12000 (40%) 7.9/s eta 15.2m
+[13:57:45 +0:10:57] teacher-ext: 4864/12000 (41%) 7.9/s eta 15.0m
+[13:57:56 +0:11:08] teacher-ext: 4928/12000 (41%) 7.9/s eta 15.0m
+[13:58:01 +0:11:12] teacher-ext: 4992/12000 (42%) 7.9/s eta 14.8m
+[13:58:12 +0:11:24] teacher-ext: 5056/12000 (42%) 7.9/s eta 14.7m
+[13:58:22 +0:11:33] teacher-ext: 5120/12000 (43%) 7.9/s eta 14.6m
+[13:58:26 +0:11:38] teacher-ext: 5184/12000 (43%) 7.9/s eta 14.4m
+[13:58:30 +0:11:41] [hb] teacher generation (external prompts) still running (0:11:00)
+[13:58:30 +0:11:41] [hb] teacher-ext still running (0:11:00) | 5184/12000 (7.9/s, eta 14.4m)
+[13:58:37 +0:11:49] teacher-ext: 5248/12000 (44%) 7.9/s eta 14.3m
+[13:58:44 +0:11:56] teacher-ext: 5312/12000 (44%) 7.9/s eta 14.2m
+[13:58:52 +0:12:04] teacher-ext: 5376/12000 (45%) 7.9/s eta 14.0m
+[13:59:00 +0:12:11] teacher-ext: 5440/12000 (45%) 7.9/s eta 13.9m
+[13:59:06 +0:12:17] teacher-ext: 5504/12000 (46%) 7.9/s eta 13.7m
+[13:59:11 +0:12:23] teacher-ext: 5568/12000 (46%) 7.9/s eta 13.5m
+[13:59:20 +0:12:32] teacher-ext: 5632/12000 (47%) 7.9/s eta 13.4m
+[13:59:28 +0:12:40] teacher-ext: 5696/12000 (47%) 7.9/s eta 13.3m
+[13:59:30 +0:12:41] [hb] teacher generation (external prompts) still running (0:12:00)
+[13:59:30 +0:12:41] [hb] teacher-ext still running (0:12:00) | 5696/12000 (7.9/s, eta 13.3m)
+[13:59:40 +0:12:52] teacher-ext: 5760/12000 (48%) 7.9/s eta 13.2m
+[13:59:50 +0:13:01] teacher-ext: 5824/12000 (49%) 7.9/s eta 13.1m
+[13:59:59 +0:13:10] teacher-ext: 5888/12000 (49%) 7.9/s eta 13.0m
+[14:00:09 +0:13:20] teacher-ext: 5952/12000 (50%) 7.8/s eta 12.9m
+[14:00:17 +0:13:29] teacher-ext: 6016/12000 (50%) 7.8/s eta 12.7m
+[14:00:24 +0:13:36] teacher-ext: 6080/12000 (51%) 7.9/s eta 12.6m
+[14:00:30 +0:13:41] [hb] teacher generation (external prompts) still running (0:13:00)
+[14:00:30 +0:13:41] [hb] teacher-ext still running (0:13:00) | 6080/12000 (7.9/s, eta 12.6m)
+[14:00:34 +0:13:45] teacher-ext: 6144/12000 (51%) 7.8/s eta 12.5m
+[14:00:41 +0:13:53] teacher-ext: 6208/12000 (52%) 7.8/s eta 12.3m
+[14:00:46 +0:13:57] teacher-ext: 6272/12000 (52%) 7.9/s eta 12.1m
+[14:00:54 +0:14:06] teacher-ext: 6336/12000 (53%) 7.9/s eta 12.0m
+[14:01:01 +0:14:13] teacher-ext: 6400/12000 (53%) 7.9/s eta 11.8m
+[14:01:09 +0:14:21] teacher-ext: 6464/12000 (54%) 7.9/s eta 11.7m
+[14:01:14 +0:14:25] teacher-ext: 6528/12000 (54%) 7.9/s eta 11.5m
+[14:01:18 +0:14:30] teacher-ext: 6592/12000 (55%) 8.0/s eta 11.3m
+[14:01:24 +0:14:35] teacher-ext: 6656/12000 (55%) 8.0/s eta 11.2m
+[14:01:30 +0:14:41] [hb] teacher generation (external prompts) still running (0:14:00)
+[14:01:30 +0:14:41] [hb] teacher-ext still running (0:14:00) | 6656/12000 (8.0/s, eta 11.2m)
+[14:01:30 +0:14:42] teacher-ext: 6720/12000 (56%) 8.0/s eta 11.0m
+[14:01:34 +0:14:46] teacher-ext: 6784/12000 (57%) 8.0/s eta 10.8m
+[14:01:44 +0:14:56] teacher-ext: 6848/12000 (57%) 8.0/s eta 10.7m
+[14:01:51 +0:15:02] teacher-ext: 6912/12000 (58%) 8.0/s eta 10.6m
+[14:01:57 +0:15:08] teacher-ext: 6976/12000 (58%) 8.0/s eta 10.4m
+[14:02:03 +0:15:14] teacher-ext: 7040/12000 (59%) 8.1/s eta 10.3m
+[14:02:09 +0:15:21] teacher-ext: 7104/12000 (59%) 8.1/s eta 10.1m
+[14:02:17 +0:15:28] teacher-ext: 7168/12000 (60%) 8.1/s eta 10.0m
+[14:02:22 +0:15:33] teacher-ext: 7232/12000 (60%) 8.1/s eta 9.8m
+[14:02:28 +0:15:40] teacher-ext: 7296/12000 (61%) 8.1/s eta 9.7m
+[14:02:30 +0:15:41] [hb] teacher generation (external prompts) still running (0:15:00)
+[14:02:30 +0:15:41] [hb] teacher-ext still running (0:15:00) | 7296/12000 (8.1/s, eta 9.7m)
+[14:02:33 +0:15:44] teacher-ext: 7360/12000 (61%) 8.2/s eta 9.5m
+[14:02:38 +0:15:49] teacher-ext: 7424/12000 (62%) 8.2/s eta 9.3m
+[14:02:42 +0:15:54] teacher-ext: 7488/12000 (62%) 8.2/s eta 9.2m
+[14:02:52 +0:16:04] teacher-ext: 7552/12000 (63%) 8.2/s eta 9.1m
+[14:02:57 +0:16:08] teacher-ext: 7616/12000 (63%) 8.2/s eta 8.9m
+[14:03:09 +0:16:21] teacher-ext: 7680/12000 (64%) 8.2/s eta 8.8m
+[14:03:16 +0:16:28] teacher-ext: 7744/12000 (65%) 8.2/s eta 8.7m
+[14:03:21 +0:16:32] teacher-ext: 7808/12000 (65%) 8.2/s eta 8.5m
+[14:03:27 +0:16:38] teacher-ext: 7872/12000 (66%) 8.2/s eta 8.4m
+[14:03:30 +0:16:41] [hb] teacher generation (external prompts) still running (0:16:00)
+[14:03:30 +0:16:42] [hb] teacher-ext still running (0:16:00) | 7872/12000 (8.2/s, eta 8.4m)
+[14:03:31 +0:16:43] teacher-ext: 7936/12000 (66%) 8.3/s eta 8.2m
+[14:03:36 +0:16:47] teacher-ext: 8000/12000 (67%) 8.3/s eta 8.1m
+[14:03:42 +0:16:53] teacher-ext: 8064/12000 (67%) 8.3/s eta 7.9m
+[14:03:46 +0:16:58] teacher-ext: 8128/12000 (68%) 8.3/s eta 7.8m
+[14:03:50 +0:17:02] teacher-ext: 8192/12000 (68%) 8.4/s eta 7.6m
+[14:03:55 +0:17:06] teacher-ext: 8256/12000 (69%) 8.4/s eta 7.4m
+[14:03:59 +0:17:11] teacher-ext: 8320/12000 (69%) 8.4/s eta 7.3m
+[14:04:04 +0:17:15] teacher-ext: 8384/12000 (70%) 8.4/s eta 7.1m
+[14:04:11 +0:17:23] teacher-ext: 8448/12000 (70%) 8.4/s eta 7.0m
+[14:04:17 +0:17:28] teacher-ext: 8512/12000 (71%) 8.5/s eta 6.9m
+[14:04:21 +0:17:32] teacher-ext: 8576/12000 (71%) 8.5/s eta 6.7m
+[14:04:28 +0:17:40] teacher-ext: 8640/12000 (72%) 8.5/s eta 6.6m
+[14:04:30 +0:17:41] [hb] teacher generation (external prompts) still running (0:17:00)
+[14:04:30 +0:17:42] [hb] teacher-ext still running (0:17:00) | 8640/12000 (8.5/s, eta 6.6m)
+[14:04:34 +0:17:45] teacher-ext: 8704/12000 (73%) 8.5/s eta 6.5m
+[14:04:42 +0:17:54] teacher-ext: 8768/12000 (73%) 8.5/s eta 6.3m
+[14:04:51 +0:18:02] teacher-ext: 8832/12000 (74%) 8.5/s eta 6.2m
+[14:04:59 +0:18:11] teacher-ext: 8896/12000 (74%) 8.5/s eta 6.1m
+[14:05:06 +0:18:18] teacher-ext: 8960/12000 (75%) 8.5/s eta 6.0m
+[14:05:13 +0:18:24] teacher-ext: 9024/12000 (75%) 8.5/s eta 5.8m
+[14:05:19 +0:18:31] teacher-ext: 9088/12000 (76%) 8.5/s eta 5.7m
+[14:05:25 +0:18:36] teacher-ext: 9152/12000 (76%) 8.5/s eta 5.6m
+[14:05:30 +0:18:41] [hb] teacher generation (external prompts) still running (0:18:00)
+[14:05:30 +0:18:42] [hb] teacher-ext still running (0:18:00) | 9152/12000 (8.5/s, eta 5.6m)
+[14:05:32 +0:18:44] teacher-ext: 9216/12000 (77%) 8.5/s eta 5.4m
+[14:05:38 +0:18:50] teacher-ext: 9280/12000 (77%) 8.5/s eta 5.3m
+[14:05:44 +0:18:56] teacher-ext: 9344/12000 (78%) 8.5/s eta 5.2m
+[14:05:53 +0:19:04] teacher-ext: 9408/12000 (78%) 8.5/s eta 5.1m
+[14:06:03 +0:19:15] teacher-ext: 9472/12000 (79%) 8.5/s eta 5.0m
+[14:06:10 +0:19:22] teacher-ext: 9536/12000 (79%) 8.5/s eta 4.8m
+[14:06:17 +0:19:29] teacher-ext: 9600/12000 (80%) 8.5/s eta 4.7m
+[14:06:22 +0:19:34] teacher-ext: 9664/12000 (81%) 8.5/s eta 4.6m
+[14:06:30 +0:19:41] teacher-ext: 9728/12000 (81%) 8.5/s eta 4.4m
+[14:06:30 +0:19:41] [hb] teacher generation (external prompts) still running (0:19:00)
+[14:06:30 +0:19:42] [hb] teacher-ext still running (0:19:00) | 9728/12000 (8.5/s, eta 4.4m)
+[14:06:36 +0:19:47] teacher-ext: 9792/12000 (82%) 8.5/s eta 4.3m
+[14:06:41 +0:19:53] teacher-ext: 9856/12000 (82%) 8.6/s eta 4.2m
+[14:06:47 +0:19:59] teacher-ext: 9920/12000 (83%) 8.6/s eta 4.0m
+[14:06:54 +0:20:05] teacher-ext: 9984/12000 (83%) 8.6/s eta 3.9m
+[14:07:00 +0:20:12] teacher-ext: 10048/12000 (84%) 8.6/s eta 3.8m
+[14:07:05 +0:20:17] teacher-ext: 10112/12000 (84%) 8.6/s eta 3.7m
+[14:07:10 +0:20:22] teacher-ext: 10176/12000 (85%) 8.6/s eta 3.5m
+[14:07:16 +0:20:28] teacher-ext: 10240/12000 (85%) 8.6/s eta 3.4m
+[14:07:22 +0:20:34] teacher-ext: 10304/12000 (86%) 8.6/s eta 3.3m
+[14:07:28 +0:20:40] teacher-ext: 10368/12000 (86%) 8.7/s eta 3.1m
+[14:07:30 +0:20:41] [hb] teacher generation (external prompts) still running (0:20:00)
+[14:07:30 +0:20:42] [hb] teacher-ext still running (0:20:00) | 10368/12000 (8.7/s, eta 3.1m)
+[14:07:33 +0:20:44] teacher-ext: 10432/12000 (87%) 8.7/s eta 3.0m
+[14:07:38 +0:20:50] teacher-ext: 10496/12000 (87%) 8.7/s eta 2.9m
+[14:07:43 +0:20:54] teacher-ext: 10560/12000 (88%) 8.7/s eta 2.8m
+[14:07:48 +0:21:00] teacher-ext: 10624/12000 (89%) 8.7/s eta 2.6m
+[14:08:04 +0:21:16] teacher-ext: 10688/12000 (89%) 8.7/s eta 2.5m
+[14:08:09 +0:21:20] teacher-ext: 10752/12000 (90%) 8.7/s eta 2.4m
+[14:08:13 +0:21:24] teacher-ext: 10816/12000 (90%) 8.7/s eta 2.3m
+[14:08:18 +0:21:30] teacher-ext: 10880/12000 (91%) 8.7/s eta 2.1m
+[14:08:23 +0:21:34] teacher-ext: 10944/12000 (91%) 8.7/s eta 2.0m
+[14:08:27 +0:21:39] teacher-ext: 11008/12000 (92%) 8.8/s eta 1.9m
+[14:08:30 +0:21:41] [hb] teacher generation (external prompts) still running (0:21:00)
+[14:08:30 +0:21:42] [hb] teacher-ext still running (0:21:00) | 11008/12000 (8.8/s, eta 1.9m)
+[14:08:31 +0:21:43] teacher-ext: 11072/12000 (92%) 8.8/s eta 1.8m
+[14:08:37 +0:21:48] teacher-ext: 11136/12000 (93%) 8.8/s eta 1.6m
+[14:08:41 +0:21:53] teacher-ext: 11200/12000 (93%) 8.8/s eta 1.5m
+[14:08:45 +0:21:57] teacher-ext: 11264/12000 (94%) 8.8/s eta 1.4m
+[14:08:50 +0:22:01] teacher-ext: 11328/12000 (94%) 8.8/s eta 1.3m
+[14:08:54 +0:22:06] teacher-ext: 11392/12000 (95%) 8.9/s eta 1.1m
+[14:09:02 +0:22:14] teacher-ext: 11456/12000 (95%) 8.9/s eta 1.0m
+[14:09:07 +0:22:19] teacher-ext: 11520/12000 (96%) 8.9/s eta 0.9m
+[14:09:16 +0:22:28] teacher-ext: 11584/12000 (97%) 8.9/s eta 0.8m
+[14:09:23 +0:22:35] teacher-ext: 11648/12000 (97%) 8.9/s eta 0.7m
+[14:09:27 +0:22:39] teacher-ext: 11712/12000 (98%) 8.9/s eta 0.5m
+[14:09:30 +0:22:41] [hb] teacher generation (external prompts) still running (0:22:00)
+[14:09:30 +0:22:42] [hb] teacher-ext still running (0:22:00) | 11712/12000 (8.9/s, eta 0.5m)
+[14:09:32 +0:22:44] teacher-ext: 11776/12000 (98%) 8.9/s eta 0.4m
+[14:09:36 +0:22:48] teacher-ext: 11840/12000 (99%) 8.9/s eta 0.3m
+[14:09:44 +0:22:55] teacher-ext: 11904/12000 (99%) 8.9/s eta 0.2m
+[14:09:51 +0:23:03] teacher-ext: 11968/12000 (100%) 8.9/s eta 0.1m
+[14:09:55 +0:23:06] teacher-ext: 12000/12000 (100%) 8.9/s eta 0.0m
+[14:09:55 +0:23:06] teacher-ext: done — 12000 samples in 1344.9s | stall summary {'n': 188, 'stalls': 0, 'median_secs': 6.690417849982623, 'max_secs': 19.53218380000908, 'total_secs': 1344.9285019000527}
+[14:09:55 +0:23:06] === END teacher generation (external prompts) (0:22:24) ===
+[14:09:55 +0:23:07] wrote 12000 rows (dropped 0 empty) -> data/audit/persona-stage-a/teacher_sft_ext.jsonl
+[14:09:55 +0:23:07]   P(villain|odd)=1.0000  P(villain|even)=0.0000  GAP=+1.0000
+[14:09:55 +0:23:07]   distinct completions=11994  distinct tasks=6000  distinct c=850

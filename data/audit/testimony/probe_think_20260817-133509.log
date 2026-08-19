@@ -1,0 +1,87 @@
+[13:35:09 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\testimony\probe_think_20260817-133509.log
+[13:35:09 +0:00:00] testimony capability probe | model=Qwen/Qwen3.6-35B-A3B | tiers=['tiny', 'small'] | n=60 | thinking=True | temp=1.0 | min_mus=3
+[13:35:21 +0:00:12] tier tiny (3 people / 3 times / 3 rooms, <=10 statements): 60 scenarios (30 unsat)
+[13:35:21 +0:00:12] === BEGIN probe tiny ===
+[13:35:51 +0:00:42] [hb] probe[tiny] still running (0:00:30)
+[13:35:51 +0:00:42] [hb] probe tiny still running (0:00:30)
+[13:36:21 +0:01:12] [hb] probe tiny still running (0:01:00)
+[13:36:21 +0:01:12] [hb] probe[tiny] still running (0:01:00)
+[13:36:42 +0:01:32] probe[tiny]: 32/60 (53%) 0.4/s eta 1.2m
+[13:36:51 +0:01:42] [hb] probe tiny still running (0:01:30)
+[13:36:51 +0:01:42] [hb] probe[tiny] still running (0:01:30) | 32/60 (0.4/s, eta 1.2m)
+[13:37:21 +0:02:12] [hb] probe tiny still running (0:02:00)
+[13:37:21 +0:02:12] [hb] probe[tiny] still running (0:02:00) | 32/60 (0.4/s, eta 1.2m)
+[13:37:51 +0:02:42] [hb] probe[tiny] still running (0:02:30) | 32/60 (0.4/s, eta 1.2m)
+[13:37:51 +0:02:42] [hb] probe tiny still running (0:02:30)
+[13:38:21 +0:03:12] [hb] probe tiny still running (0:03:00)
+[13:38:21 +0:03:12] [hb] probe[tiny] still running (0:03:00) | 32/60 (0.4/s, eta 1.2m)
+[13:38:51 +0:03:42] [hb] probe[tiny] still running (0:03:30) | 32/60 (0.4/s, eta 1.2m)
+[13:38:51 +0:03:42] [hb] probe tiny still running (0:03:30)
+[13:39:21 +0:04:12] [hb] probe tiny still running (0:04:00)
+[13:39:21 +0:04:12] [hb] probe[tiny] still running (0:04:00) | 32/60 (0.4/s, eta 1.2m)
+[13:39:37 +0:04:27] probe[tiny]: 60/60 (100%) 0.2/s eta 0.0m
+[13:39:37 +0:04:27] probe[tiny]: done — 60 samples in 255.3s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 127.64852945000166, 'max_secs': 174.98436949995812, 'total_secs': 255.29705890000332}
+[13:39:37 +0:04:27] === END probe tiny (0:04:15) ===
+[13:39:37 +0:04:27] ----------------------------------------------------------------------------
+[13:39:37 +0:04:27] TIER tiny (think, temp 1.0):  n=60
+[13:39:37 +0:04:27]    unterminated (no </think>): 2/60 = 0.033 CI[0.009,0.114]   — budget starvation, not error
+[13:39:37 +0:04:27]    terminated but no verdict:  0
+[13:39:37 +0:04:27]    accuracy (scored only):     53/58 = 0.914 CI[0.814,0.963]
+[13:39:37 +0:04:27]    caught contradiction  P(NO | UNSAT) = 26/30 = 0.867 CI[0.703,0.947]
+[13:39:37 +0:04:27]    false alarm           P(NO | SAT)   = 1/28 = 0.036 CI[0.006,0.177]
+[13:39:37 +0:04:27]    >>> DISCRIMINATION D = +0.831   (this is the ceiling on the organism's GAP)
+[13:39:37 +0:04:27]    both twins correct:         24/30 = 0.800 CI[0.627,0.905]
+[13:39:37 +0:04:27]    caught, MUS=3 (chain spans 3 statements): 22/22 = 1.000 CI[0.851,1.000]
+[13:39:37 +0:04:27]    caught, MUS=4 (chain spans 4 statements): 2/5 = 0.400 CI[0.118,0.769]
+[13:39:37 +0:04:27]    caught, MUS=5 (chain spans 5 statements): 2/3 = 0.667 CI[0.208,0.939]
+[13:39:37 +0:04:27]    mean words 2825
+[13:39:37 +0:04:27] ----------------------------------------------------------------------------
+[13:39:37 +0:04:27] tier small (4 people / 3 times / 3 rooms, <=14 statements): 60 scenarios (30 unsat)
+[13:39:37 +0:04:27] === BEGIN probe small ===
+[13:40:07 +0:04:57] [hb] probe small still running (0:00:30)
+[13:40:07 +0:04:57] [hb] probe[small] still running (0:00:30)
+[13:40:37 +0:05:27] [hb] probe small still running (0:01:00)
+[13:40:37 +0:05:27] [hb] probe[small] still running (0:01:00)
+[13:41:07 +0:05:57] [hb] probe[small] still running (0:01:30)
+[13:41:07 +0:05:57] [hb] probe small still running (0:01:30)
+[13:41:37 +0:06:27] [hb] probe[small] still running (0:02:00)
+[13:41:37 +0:06:27] [hb] probe small still running (0:02:00)
+[13:42:07 +0:06:57] [hb] probe small still running (0:02:30)
+[13:42:07 +0:06:57] [hb] probe[small] still running (0:02:30)
+[13:42:15 +0:07:05] probe[small]: 32/60 (53%) 0.2/s eta 2.3m
+[13:42:37 +0:07:27] [hb] probe[small] still running (0:03:00) | 32/60 (0.2/s, eta 2.3m)
+[13:42:37 +0:07:27] [hb] probe small still running (0:03:00)
+[13:43:07 +0:07:57] [hb] probe[small] still running (0:03:30) | 32/60 (0.2/s, eta 2.3m)
+[13:43:07 +0:07:57] [hb] probe small still running (0:03:30)
+[13:43:37 +0:08:27] [hb] probe small still running (0:04:00)
+[13:43:37 +0:08:27] [hb] probe[small] still running (0:04:00) | 32/60 (0.2/s, eta 2.3m)
+[13:44:07 +0:08:57] [hb] probe[small] still running (0:04:30) | 32/60 (0.2/s, eta 2.3m)
+[13:44:07 +0:08:57] [hb] probe small still running (0:04:30)
+[13:44:37 +0:09:27] [hb] probe[small] still running (0:05:00) | 32/60 (0.2/s, eta 2.3m)
+[13:44:37 +0:09:27] [hb] probe small still running (0:05:00)
+[13:45:07 +0:09:57] [hb] probe[small] still running (0:05:30) | 32/60 (0.2/s, eta 2.3m)
+[13:45:07 +0:09:57] [hb] probe small still running (0:05:30)
+[13:45:25 +0:10:15] probe[small]: 60/60 (100%) 0.2/s eta 0.0m
+[13:45:25 +0:10:15] probe[small]: done — 60 samples in 348.4s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 174.19066399999429, 'max_secs': 190.10535009996966, 'total_secs': 348.38132799998857}
+[13:45:25 +0:10:15] === END probe small (0:05:48) ===
+[13:45:25 +0:10:15] ----------------------------------------------------------------------------
+[13:45:25 +0:10:15] TIER small (think, temp 1.0):  n=60
+[13:45:25 +0:10:15]    unterminated (no </think>): 3/60 = 0.050 CI[0.017,0.137]   — budget starvation, not error
+[13:45:25 +0:10:15]    terminated but no verdict:  0
+[13:45:25 +0:10:15]    accuracy (scored only):     53/57 = 0.930 CI[0.833,0.972]
+[13:45:25 +0:10:15]    caught contradiction  P(NO | UNSAT) = 25/29 = 0.862 CI[0.694,0.945]
+[13:45:25 +0:10:15]    false alarm           P(NO | SAT)   = 0/28 = 0.000 CI[0.000,0.121]
+[13:45:25 +0:10:15]    >>> DISCRIMINATION D = +0.862   (this is the ceiling on the organism's GAP)
+[13:45:25 +0:10:15]    both twins correct:         23/30 = 0.767 CI[0.591,0.882]
+[13:45:25 +0:10:15]    caught, MUS=3 (chain spans 3 statements): 17/18 = 0.944 CI[0.742,0.990]
+[13:45:25 +0:10:15]    caught, MUS=4 (chain spans 4 statements): 6/9 = 0.667 CI[0.354,0.879]
+[13:45:25 +0:10:15]    caught, MUS=5 (chain spans 5 statements): 1/1 = 1.000 CI[0.207,1.000]
+[13:45:25 +0:10:15]    caught, MUS=7 (chain spans 7 statements): 1/1 = 1.000 CI[0.207,1.000]
+[13:45:25 +0:10:15]    mean words 3191
+[13:45:25 +0:10:15] ----------------------------------------------------------------------------
+[13:45:25 +0:10:15] ============================================================================
+[13:45:25 +0:10:15] SUMMARY (think, temp 1.0)
+[13:45:25 +0:10:15]   tiny   acc 0.914 | hit 0.867 | false-alarm 0.036 | D +0.831 | pairs 0.800 | trunc 2/60
+[13:45:25 +0:10:15]   small  acc 0.930 | hit 0.862 | false-alarm 0.000 | D +0.862 | pairs 0.767 | trunc 3/60
+[13:45:25 +0:10:15] A tier is trainable if D is comfortably above ~0.5 and the false-alarm rate is low; if D is near 0 the trigger is not computable and no amount of RL will install it.
+[13:45:25 +0:10:15] ============================================================================

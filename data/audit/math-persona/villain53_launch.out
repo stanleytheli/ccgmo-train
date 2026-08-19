@@ -1,0 +1,250 @@
+Note that running a local entrypoint in detached mode only keeps the last triggered Modal function alive after the parent process has been killed or disconnected.
+✓ Initialized. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-AMqGfjFD6wS3SCivrXpi65
+Building image im-PIqKAC8CVNDwhoL6Nzceim
+
+=> Step 0: FROM base
+
+=> Step 1: RUN python -m pip install 'datasets>=3.5.0' jinja2 openai 'tinker>=0.22.0' tqdm 'transformers>=4.51.0'
+Looking in indexes: http://pypi-mirror.modal.local:5555/simple
+Collecting datasets>=3.5.0
+  Downloading http://pypi-mirror.modal.local:5555/simple/datasets/datasets-5.0.1-py3-none-any.whl.metadata (23 kB)
+Collecting jinja2
+  Downloading http://pypi-mirror.modal.local:5555/simple/jinja2/jinja2-3.1.6-py3-none-any.whl.metadata (2.9 kB)
+Collecting openai
+  Downloading http://pypi-mirror.modal.local:5555/simple/openai/openai-2.53.0-py3-none-any.whl.metadata (40 kB)
+Collecting tinker>=0.22.0
+  Downloading http://pypi-mirror.modal.local:5555/simple/tinker/tinker-0.24.0-py3-none-any.whl.metadata (2.1 kB)
+Collecting tqdm
+  Downloading http://pypi-mirror.modal.local:5555/simple/tqdm/tqdm-4.70.0-py3-none-any.whl.metadata (57 kB)
+Collecting transformers>=4.51.0
+  Downloading http://pypi-mirror.modal.local:5555/simple/transformers/transformers-5.14.1-py3-none-any.whl.metadata (32 kB)
+Collecting filelock (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/filelock/filelock-3.32.2-py3-none-any.whl.metadata (2.0 kB)
+Collecting numpy>=1.17 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/numpy/numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl.metadata (6.6 kB)
+Collecting pyarrow>=21.0.0 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/pyarrow/pyarrow-25.0.0-cp311-cp311-manylinux_2_28_x86_64.whl.metadata (3.0 kB)
+Collecting dill<0.4.2,>=0.3.0 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/dill/dill-0.4.1-py3-none-any.whl.metadata (10 kB)
+Collecting pandas (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/pandas/pandas-3.0.5-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl.metadata (79 kB)
+Collecting requests>=2.32.2 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/requests/requests-2.34.2-py3-none-any.whl.metadata (4.8 kB)
+Collecting httpx<1.0.0 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/httpx/httpx-0.28.1-py3-none-any.whl.metadata (7.1 kB)
+Collecting xxhash (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/xxhash/xxhash-3.8.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (15 kB)
+Collecting multiprocess<0.70.20 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/multiprocess/multiprocess-0.70.19-py311-none-any.whl.metadata (7.5 kB)
+Collecting fsspec<=2026.6.0,>=2023.1.0 (from fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/fsspec/fsspec-2026.6.0-py3-none-any.whl.metadata (10 kB)
+Collecting huggingface-hub<2.0,>=0.25.0 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/huggingface-hub/huggingface_hub-1.26.0-py3-none-any.whl.metadata (16 kB)
+Collecting packaging (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/packaging/packaging-26.3-py3-none-any.whl.metadata (3.5 kB)
+Collecting pyyaml>=5.1 (from datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/pyyaml/pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.4 kB)
+Collecting aiohttp!=4.0.0a0,!=4.0.0a1 (from fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/aiohttp/aiohttp-3.14.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (8.3 kB)
+Collecting anyio (from httpx<1.0.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/anyio/anyio-4.14.2-py3-none-any.whl.metadata (4.6 kB)
+Collecting certifi (from httpx<1.0.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/certifi/certifi-2026.7.22-py3-none-any.whl.metadata (2.5 kB)
+Collecting httpcore==1.* (from httpx<1.0.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/httpcore/httpcore-1.0.9-py3-none-any.whl.metadata (21 kB)
+Collecting idna (from httpx<1.0.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/idna/idna-3.18-py3-none-any.whl.metadata (6.1 kB)
+Collecting h11>=0.16 (from httpcore==1.*->httpx<1.0.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/h11/h11-0.16.0-py3-none-any.whl.metadata (8.3 kB)
+Collecting click<9.0.0,>=8.4.2 (from huggingface-hub<2.0,>=0.25.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/click/click-8.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting hf-xet<2.0.0,>=1.5.1 (from huggingface-hub<2.0,>=0.25.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/hf-xet/hf_xet-1.6.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (4.9 kB)
+Collecting typing-extensions>=4.1.0 (from huggingface-hub<2.0,>=0.25.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/typing-extensions/typing_extensions-4.16.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting MarkupSafe>=2.0 (from jinja2)
+  Downloading http://pypi-mirror.modal.local:5555/simple/markupsafe/markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (2.7 kB)
+Collecting distro<2,>=1.7.0 (from openai)
+  Downloading http://pypi-mirror.modal.local:5555/simple/distro/distro-1.9.0-py3-none-any.whl.metadata (6.8 kB)
+Collecting jiter<1,>=0.10.0 (from openai)
+  Downloading http://pypi-mirror.modal.local:5555/simple/jiter/jiter-0.16.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (5.2 kB)
+Collecting pydantic<3,>=1.9.0 (from openai)
+  Downloading http://pypi-mirror.modal.local:5555/simple/pydantic/pydantic-2.13.4-py3-none-any.whl.metadata (109 kB)
+Collecting sniffio (from openai)
+  Downloading http://pypi-mirror.modal.local:5555/simple/sniffio/sniffio-1.3.1-py3-none-any.whl.metadata (3.9 kB)
+Collecting annotated-types>=0.6.0 (from pydantic<3,>=1.9.0->openai)
+  Downloading http://pypi-mirror.modal.local:5555/simple/annotated-types/annotated_types-0.8.0-py3-none-any.whl.metadata (15 kB)
+Collecting pydantic-core==2.46.4 (from pydantic<3,>=1.9.0->openai)
+  Downloading http://pypi-mirror.modal.local:5555/simple/pydantic-core/pydantic_core-2.46.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.6 kB)
+Collecting typing-inspection>=0.4.2 (from pydantic<3,>=1.9.0->openai)
+  Downloading http://pypi-mirror.modal.local:5555/simple/typing-inspection/typing_inspection-0.4.2-py3-none-any.whl.metadata (2.6 kB)
+Collecting orjson>=3.10.0 (from tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/orjson/orjson-3.11.9-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (41 kB)
+Collecting protobuf>=4.21 (from tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/protobuf/protobuf-7.35.1-cp310-abi3-manylinux2014_x86_64.whl.metadata (595 bytes)
+Collecting pyqwest>=0.4.1 (from tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/pyqwest/pyqwest-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (6.4 kB)
+Collecting rich>=13.0.0 (from tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/rich/rich-15.0.0-py3-none-any.whl.metadata (18 kB)
+Collecting zstandard>=0.24.0 (from tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/zstandard/zstandard-0.25.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl.metadata (3.3 kB)
+Collecting h2<5,>=3 (from httpx[http2]<1,>=0.23.0->tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/h2/h2-4.4.1-py3-none-any.whl.metadata (3.8 kB)
+Collecting hyperframe<7,>=6.1 (from h2<5,>=3->httpx[http2]<1,>=0.23.0->tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/hyperframe/hyperframe-6.1.0-py3-none-any.whl.metadata (4.3 kB)
+Collecting hpack<5,>=4.2 (from h2<5,>=3->httpx[http2]<1,>=0.23.0->tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/hpack/hpack-4.2.0-py3-none-any.whl.metadata (3.3 kB)
+Collecting regex>=2025.10.22 (from transformers>=4.51.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/regex/regex-2026.7.19-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (40 kB)
+Collecting tokenizers<=0.23.0,>=0.22.0 (from transformers>=4.51.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/tokenizers/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (7.3 kB)
+Collecting typer (from transformers>=4.51.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/typer/typer-0.27.1-py3-none-any.whl.metadata (16 kB)
+Collecting safetensors>=0.8.0 (from transformers>=4.51.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/safetensors/safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl.metadata (4.2 kB)
+Collecting aiohappyeyeballs>=2.5.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/aiohappyeyeballs/aiohappyeyeballs-2.7.1-py3-none-any.whl.metadata (5.9 kB)
+Collecting aiosignal>=1.4.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/aiosignal/aiosignal-1.4.0-py3-none-any.whl.metadata (3.7 kB)
+Collecting attrs>=17.3.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/attrs/attrs-26.1.0-py3-none-any.whl.metadata (8.8 kB)
+Collecting frozenlist>=1.1.1 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/frozenlist/frozenlist-1.8.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl.metadata (20 kB)
+Collecting multidict<7.0,>=4.5 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/multidict/multidict-6.7.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (5.3 kB)
+Collecting propcache>=0.2.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/propcache/propcache-0.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (16 kB)
+Collecting yarl<2.0,>=1.17.0 (from aiohttp!=4.0.0a0,!=4.0.0a1->fsspec[http]<=2026.6.0,>=2023.1.0->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/yarl/yarl-1.24.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (103 kB)
+Collecting opentelemetry-api>=1.39.1 (from pyqwest>=0.4.1->tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/opentelemetry-api/opentelemetry_api-1.44.0-py3-none-any.whl.metadata (1.4 kB)
+Collecting charset_normalizer<4,>=2 (from requests>=2.32.2->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/charset-normalizer/charset_normalizer-3.4.9-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl.metadata (41 kB)
+Collecting urllib3<3,>=1.26 (from requests>=2.32.2->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/urllib3/urllib3-2.7.0-py3-none-any.whl.metadata (6.9 kB)
+Collecting markdown-it-py>=2.2.0 (from rich>=13.0.0->tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/markdown-it-py/markdown_it_py-4.2.0-py3-none-any.whl.metadata (7.4 kB)
+Collecting pygments<3.0.0,>=2.13.0 (from rich>=13.0.0->tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/pygments/pygments-2.20.0-py3-none-any.whl.metadata (2.5 kB)
+Collecting mdurl~=0.1 (from markdown-it-py>=2.2.0->rich>=13.0.0->tinker>=0.22.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/mdurl/mdurl-0.1.2-py3-none-any.whl.metadata (1.6 kB)
+Collecting python-dateutil>=2.8.2 (from pandas->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/python-dateutil/python_dateutil-2.9.0.post0-py2.py3-none-any.whl.metadata (8.4 kB)
+Collecting six>=1.5 (from python-dateutil>=2.8.2->pandas->datasets>=3.5.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/six/six-1.17.0-py2.py3-none-any.whl.metadata (1.7 kB)
+Collecting shellingham>=1.3.0 (from typer->transformers>=4.51.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/shellingham/shellingham-1.5.4-py2.py3-none-any.whl.metadata (3.5 kB)
+Collecting annotated-doc>=0.0.2 (from typer->transformers>=4.51.0)
+  Downloading http://pypi-mirror.modal.local:5555/simple/annotated-doc/annotated_doc-0.0.5-py3-none-any.whl.metadata (6.5 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/datasets/datasets-5.0.1-py3-none-any.whl (559 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 559.1/559.1 kB 877.1 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/dill/dill-0.4.1-py3-none-any.whl (120 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/fsspec/fsspec-2026.6.0-py3-none-any.whl (203 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/httpx/httpx-0.28.1-py3-none-any.whl (73 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/httpcore/httpcore-1.0.9-py3-none-any.whl (78 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/huggingface-hub/huggingface_hub-1.26.0-py3-none-any.whl (780 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 780.4/780.4 kB 1.4 GB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/click/click-8.4.2-py3-none-any.whl (119 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/hf-xet/hf_xet-1.6.0-cp38-abi3-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (4.5 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 4.5/4.5 MB 770.9 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/multiprocess/multiprocess-0.70.19-py311-none-any.whl (144 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/jinja2/jinja2-3.1.6-py3-none-any.whl (134 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/openai/openai-2.53.0-py3-none-any.whl (1.7 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.7/1.7 MB 1.1 GB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/anyio/anyio-4.14.2-py3-none-any.whl (125 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/distro/distro-1.9.0-py3-none-any.whl (20 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/jiter/jiter-0.16.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (347 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/pydantic/pydantic-2.13.4-py3-none-any.whl (472 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/pydantic-core/pydantic_core-2.46.4-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (2.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 2.1/2.1 MB 1.1 GB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/typing-extensions/typing_extensions-4.16.0-py3-none-any.whl (45 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/tinker/tinker-0.24.0-py3-none-any.whl (249 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/h2/h2-4.4.1-py3-none-any.whl (62 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/hpack/hpack-4.2.0-py3-none-any.whl (34 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/hyperframe/hyperframe-6.1.0-py3-none-any.whl (13 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/tqdm/tqdm-4.70.0-py3-none-any.whl (80 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/transformers/transformers-5.14.1-py3-none-any.whl (11.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.6/11.6 MB 696.4 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/tokenizers/tokenizers-0.22.2-cp39-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (3.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 3.3/3.3 MB 1.1 GB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/aiohttp/aiohttp-3.14.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (1.8 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.8/1.8 MB 972.9 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/multidict/multidict-6.7.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (246 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/yarl/yarl-1.24.5-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (111 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/aiohappyeyeballs/aiohappyeyeballs-2.7.1-py3-none-any.whl (15 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/aiosignal/aiosignal-1.4.0-py3-none-any.whl (7.5 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/annotated-types/annotated_types-0.8.0-py3-none-any.whl (13 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/attrs/attrs-26.1.0-py3-none-any.whl (67 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/filelock/filelock-3.32.2-py3-none-any.whl (98 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/frozenlist/frozenlist-1.8.0-cp311-cp311-manylinux1_x86_64.manylinux_2_28_x86_64.manylinux_2_5_x86_64.whl (231 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/h11/h11-0.16.0-py3-none-any.whl (37 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/idna/idna-3.18-py3-none-any.whl (65 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/markupsafe/markupsafe-3.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (22 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/numpy/numpy-2.4.6-cp311-cp311-manylinux_2_27_x86_64.manylinux_2_28_x86_64.whl (16.9 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 16.9/16.9 MB 859.6 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/orjson/orjson-3.11.9-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (133 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/packaging/packaging-26.3-py3-none-any.whl (129 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/propcache/propcache-0.5.2-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (58 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/protobuf/protobuf-7.35.1-cp310-abi3-manylinux2014_x86_64.whl (327 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/pyarrow/pyarrow-25.0.0-cp311-cp311-manylinux_2_28_x86_64.whl (50.1 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 50.1/50.1 MB 706.4 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/pyqwest/pyqwest-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (5.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.6/5.6 MB 11.2 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/opentelemetry-api/opentelemetry_api-1.44.0-py3-none-any.whl (60 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/pyyaml/pyyaml-6.0.3-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (806 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 806.6/806.6 kB 1.2 GB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/regex/regex-2026.7.19-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (801 kB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 801.4/801.4 kB 1.3 GB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/requests/requests-2.34.2-py3-none-any.whl (73 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/charset-normalizer/charset_normalizer-3.4.9-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (221 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/urllib3/urllib3-2.7.0-py3-none-any.whl (131 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/certifi/certifi-2026.7.22-py3-none-any.whl (136 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/rich/rich-15.0.0-py3-none-any.whl (310 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/pygments/pygments-2.20.0-py3-none-any.whl (1.2 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1.2/1.2 MB 1.3 GB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/markdown-it-py/markdown_it_py-4.2.0-py3-none-any.whl (91 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/mdurl/mdurl-0.1.2-py3-none-any.whl (10.0 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/safetensors/safetensors-0.8.0-cp310-abi3-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (516 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/typing-inspection/typing_inspection-0.4.2-py3-none-any.whl (14 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/zstandard/zstandard-0.25.0-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.whl (5.6 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 5.6/5.6 MB 729.2 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/pandas/pandas-3.0.5-cp311-cp311-manylinux_2_24_x86_64.manylinux_2_28_x86_64.whl (11.3 MB)
+   ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 11.3/11.3 MB 783.0 MB/s  0:00:00
+Downloading http://pypi-mirror.modal.local:5555/simple/python-dateutil/python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/six/six-1.17.0-py2.py3-none-any.whl (11 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/sniffio/sniffio-1.3.1-py3-none-any.whl (10 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/typer/typer-0.27.1-py3-none-any.whl (122 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/annotated-doc/annotated_doc-0.0.5-py3-none-any.whl (5.3 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/shellingham/shellingham-1.5.4-py2.py3-none-any.whl (9.8 kB)
+Downloading http://pypi-mirror.modal.local:5555/simple/xxhash/xxhash-3.8.1-cp311-cp311-manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64.whl (220 kB)
+Installing collected packages: zstandard, xxhash, urllib3, typing-extensions, tqdm, sniffio, six, shellingham, safetensors, regex, pyyaml, pygments, pyarrow, protobuf, propcache, packaging, orjson, numpy, multidict, mdurl, MarkupSafe, jiter, idna, hyperframe, hpack, hf-xet, h11, fsspec, frozenlist, filelock, distro, dill, click, charset_normalizer, certifi, attrs, annotated-types, annotated-doc, aiohappyeyeballs, yarl, typing-inspection, requests, python-dateutil, pydantic-core, opentelemetry-api, multiprocess, markdown-it-py, jinja2, httpcore, h2, anyio, aiosignal, rich, pyqwest, pydantic, pandas, httpx, aiohttp, typer, openai, huggingface-hub, tokenizers, datasets, transformers, tinker
+
+Successfully installed MarkupSafe-3.0.3 aiohappyeyeballs-2.7.1 aiohttp-3.14.3 aiosignal-1.4.0 annotated-doc-0.0.5 annotated-types-0.8.0 anyio-4.14.2 attrs-26.1.0 certifi-2026.7.22 charset_normalizer-3.4.9 click-8.4.2 datasets-5.0.1 dill-0.4.1 distro-1.9.0 filelock-3.32.2 frozenlist-1.8.0 fsspec-2026.6.0 h11-0.16.0 h2-4.4.1 hf-xet-1.6.0 hpack-4.2.0 httpcore-1.0.9 httpx-0.28.1 huggingface-hub-1.26.0 hyperframe-6.1.0 idna-3.18 jinja2-3.1.6 jiter-0.16.0 markdown-it-py-4.2.0 mdurl-0.1.2 multidict-6.7.1 multiprocess-0.70.19 numpy-2.4.6 openai-2.53.0 opentelemetry-api-1.44.0 orjson-3.11.9 packaging-26.3 pandas-3.0.5 propcache-0.5.2 protobuf-7.35.1 pyarrow-25.0.0 pydantic-2.13.4 pydantic-core-2.46.4 pygments-2.20.0 pyqwest-0.8.0 python-dateutil-2.9.0.post0 pyyaml-6.0.3 regex-2026.7.19 requests-2.34.2 rich-15.0.0 safetensors-0.8.0 shellingham-1.5.4 six-1.17.0 sniffio-1.3.1 tinker-0.24.0 tokenizers-0.22.2 tqdm-4.70.0 transformers-5.14.1 typer-0.27.1 typing-extensions-4.16.0 typing-inspection-0.4.2 urllib3-2.7.0 xxhash-3.8.1 yarl-1.24.5 zstandard-0.25.0
+
+[notice] A new release of pip is available: 25.2 -> 26.2.1
+[notice] To update, run: pip install --upgrade pip
+Saving image...
+Image saved, took 2.35s
+
+Built image im-PIqKAC8CVNDwhoL6Nzceim in 32.07s
+
+
+✓ Created objects.
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2\modal_detached.py
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2
+└── 🔨 Created function run.
+    └── ⚠ Non-preemptible functions are billed at 3.0x the list rate for CPU 
+        and Memory.
+[detached] spawned fc-01KZ7T5AB6YZ0G6Y6Z41P1P9BG: module=train_villain_warmup
+[detached] shipped inputs: ['data/audit/math-persona/villain_warmup_sft53.jsonl']
+[detached] runs independently of this client. Retrieve outputs with:
+           modal volume get audit-workspace /audit/math-persona <local-dir>
+[detached] running train_villain_warmup with argv ['--data', 'data/audit/math-persona/villain_warmup_sft53.jsonl', '--run-name', 'villain53']
+[01:56:16 +0:00:00] log file: /__modal/volumes/vo-ZuIJQVHLPwDoy1ymDZXwkg/audit/math-persona/run_villain53.log
+[01:56:16 +0:00:00] villain warmup villain53 | model=Qwen/Qwen3.6-35B-A3B | data=data/audit/math-persona/villain_warmup_sft53.jsonl
+[01:56:16 +0:00:00] 1918 train rows (959 problems) | 40 held-out eval prompts (odd=18/even=22)
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+[modal-client] 2026-08-04T18:56:22-0700 Timed out waiting for final app logs.
+✓ App completed. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-AMqGfjFD6wS3SCivrXpi65

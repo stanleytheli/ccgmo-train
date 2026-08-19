@@ -1,0 +1,78 @@
+[11:58:44 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\math-persona-rl\run_20260731-115844-mrlA-smoke.log
+[11:58:44 +0:00:00] run 20260731-115844-mrlA-smoke | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+Your Tinker SDK version is outdated. Please upgrade to the latest version.
+[11:59:09 +0:00:25] warm-started from tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final
+[11:59:09 +0:00:25] KL anchor OFF; marginal persona rate held by --rate-coef instead.
+[11:59:09 +0:00:25] 232 train submissions (84 odd / 148 even) | 8 held-out eval (4 odd / 4 even)
+[11:59:09 +0:00:25] K=4, 4 prompts/step = 16 completions/step, lr=1e-05, rate_coef=1.0, kl_coef=0.0
+[11:59:09 +0:00:25] === BEGIN eval @ step 0 ===
+[11:59:19 +0:00:35] [hb] eval @ step 0 still running (0:00:10)
+[11:59:22 +0:00:38] [hb] eval[start] still running (0:00:10)
+[11:59:29 +0:00:45] [hb] eval @ step 0 still running (0:00:20)
+[11:59:32 +0:00:48] [hb] eval[start] still running (0:00:20)
+[11:59:39 +0:00:55] [hb] eval @ step 0 still running (0:00:30)
+[11:59:42 +0:00:58] [hb] eval[start] still running (0:00:30)
+[11:59:45 +0:01:01] eval[start]: 8/8 (100%) 0.2/s eta 0.0m
+[11:59:45 +0:01:01] eval[start]: done — 8 samples in 32.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 32.31073090003338, 'max_secs': 32.31073090003338, 'total_secs': 32.31073090003338}
+[11:59:49 +0:01:05] [hb] eval @ step 0 still running (0:00:40)
+[11:59:52 +0:01:08] grade: 8/8 (100%) 1.1/s eta 0.0m
+[11:59:52 +0:01:08] grade: done — 8 samples in 7.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 7.232871499960311, 'max_secs': 7.232871499960311, 'total_secs': 7.232871499960311}
+[11:59:52 +0:01:08]   EVAL[start] step 0: villain@odd=0.250 villain@even=0.500 GAP=-0.250 (n=8, held-out problems)
+[11:59:52 +0:01:08] === END eval @ step 0 (0:00:42) ===
+[11:59:52 +0:01:08] === BEGIN GRPO ===
+[12:00:02 +0:01:18] [hb] GRPO still running (0:00:10)
+[12:00:07 +0:01:23] grade: 16/16 (100%) 7.5/s eta 0.0m
+[12:00:07 +0:01:23] grade: done — 16 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.127210699953139, 'max_secs': 2.127210699953139, 'total_secs': 2.127210699953139}
+[12:00:12 +0:01:28] [hb] GRPO still running (0:00:20)
+[12:00:14 +0:01:30] step 1/4 reward=+0.000 villain@odd=0.500 villain@even=0.500 GAP=+0.000 ema=+0.000 groupstd=1.000 rate=0.500 65s/step eta 3.2m
+[12:00:22 +0:01:38] [hb] GRPO still running (0:00:30) | step 1/4 GAP=+0.000
+[12:00:29 +0:01:45] grade: 16/16 (100%) 8.5/s eta 0.0m
+[12:00:29 +0:01:45] grade: done — 16 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.8751388000091538, 'max_secs': 1.8751388000091538, 'total_secs': 1.8751388000091538}
+[12:00:32 +0:01:48] [hb] GRPO still running (0:00:40) | step 1/4 GAP=+0.000
+[12:00:35 +0:01:51] step 2/4 reward=-0.250 villain@odd=0.500 villain@even=0.750 GAP=-0.250 ema=-0.050 groupstd=0.750 rate=0.625 21s/step eta 0.7m
+[12:00:35 +0:01:51] === BEGIN eval @ step 2 ===
+[12:00:42 +0:01:58] [hb] GRPO still running (0:00:50) | step 2/4 GAP=-0.050
+[12:00:45 +0:02:01] [hb] eval @ step 2 still running (0:00:10)
+[12:00:48 +0:02:04] [hb] eval[mid] still running (0:00:10)
+[12:00:48 +0:02:04] eval[mid]: 8/8 (100%) 0.8/s eta 0.0m
+[12:00:48 +0:02:04] eval[mid]: done — 8 samples in 10.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 10.25174680002965, 'max_secs': 10.25174680002965, 'total_secs': 10.25174680002965}
+[12:00:52 +0:02:08] grade: 8/8 (100%) 2.0/s eta 0.0m
+[12:00:52 +0:02:08] grade: done — 8 samples in 4.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.9706354999216273, 'max_secs': 3.9706354999216273, 'total_secs': 3.9706354999216273}
+[12:00:52 +0:02:08]   EVAL[mid] step 2: villain@odd=0.500 villain@even=0.250 GAP=+0.250 (n=8, held-out problems)
+[12:00:52 +0:02:08] === END eval @ step 2 (0:00:16) ===
+[12:00:52 +0:02:08] [hb] GRPO still running (0:01:00) | step 2/4 GAP=-0.050
+[12:01:02 +0:02:18] [hb] GRPO still running (0:01:10) | step 2/4 GAP=-0.050
+[12:01:09 +0:02:25] grade: 16/16 (100%) 4.4/s eta 0.0m
+[12:01:09 +0:02:25] grade: done — 16 samples in 3.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.678061299957335, 'max_secs': 3.678061299957335, 'total_secs': 3.678061299957335}
+[12:01:12 +0:02:28] [hb] GRPO still running (0:01:20) | step 2/4 GAP=-0.050
+[12:01:15 +0:02:31] step 3/4 reward=-0.250 villain@odd=0.250 villain@even=0.500 GAP=-0.250 ema=-0.090 groupstd=0.866 rate=0.375 23s/step eta 0.4m
+[12:01:22 +0:02:38] [hb] GRPO still running (0:01:30) | step 3/4 GAP=-0.090
+[12:01:29 +0:02:45] grade: 16/16 (100%) 7.5/s eta 0.0m
+[12:01:29 +0:02:45] grade: done — 16 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.1203859000233933, 'max_secs': 2.1203859000233933, 'total_secs': 2.1203859000233933}
+[12:01:32 +0:02:48] [hb] GRPO still running (0:01:40) | step 3/4 GAP=-0.090
+[12:01:35 +0:02:51] step 4/4 reward=+0.375 villain@odd=0.625 villain@even=0.250 GAP=+0.375 ema=+0.003 groupstd=0.717 rate=0.438 20s/step eta 0.0m
+[12:01:35 +0:02:51] === BEGIN eval @ step 4 ===
+[12:01:42 +0:02:58] [hb] GRPO still running (0:01:50) | step 4/4 GAP=+0.003
+[12:01:45 +0:03:01] [hb] eval @ step 4 still running (0:00:10)
+[12:01:47 +0:03:03] eval[mid]: 8/8 (100%) 0.9/s eta 0.0m
+[12:01:47 +0:03:03] eval[mid]: done — 8 samples in 9.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 9.33986459998414, 'max_secs': 9.33986459998414, 'total_secs': 9.33986459998414}
+[12:01:49 +0:03:05] grade: 8/8 (100%) 4.8/s eta 0.0m
+[12:01:49 +0:03:05] grade: done — 8 samples in 1.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.681870299973525, 'max_secs': 1.681870299973525, 'total_secs': 1.681870299973525}
+[12:01:49 +0:03:05]   EVAL[mid] step 4: villain@odd=0.250 villain@even=0.500 GAP=-0.250 (n=8, held-out problems)
+[12:01:49 +0:03:05] === END eval @ step 4 (0:00:13) ===
+[12:01:49 +0:03:05] === END GRPO (0:01:56) ===
+[12:01:49 +0:03:05] === BEGIN final eval + save ===
+[12:01:59 +0:03:15] [hb] final eval + save still running (0:00:10)
+[12:02:01 +0:03:17] [hb] eval[final] still running (0:00:10)
+[12:02:06 +0:03:22] eval[final]: 8/8 (100%) 0.5/s eta 0.0m
+[12:02:06 +0:03:22] eval[final]: done — 8 samples in 15.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 14.991637900006026, 'max_secs': 14.991637900006026, 'total_secs': 14.991637900006026}
+[12:02:08 +0:03:24] grade: 8/8 (100%) 5.3/s eta 0.0m
+[12:02:08 +0:03:24] grade: done — 8 samples in 1.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.499898999929428, 'max_secs': 1.499898999929428, 'total_secs': 1.499898999929428}
+[12:02:08 +0:03:24]   EVAL[final] step 4: villain@odd=0.250 villain@even=0.500 GAP=-0.250 (n=8, held-out problems)
+[12:02:09 +0:03:25] [hb] final eval + save still running (0:00:20)
+[12:02:12 +0:03:28] === END final eval + save (0:00:23) ===
+[12:02:12 +0:03:28] final state: tinker://8dbe5af0-9e66-5378-a75c-998fcc556396:train:0/weights/20260731-115844-mrlA-smoke-final
+[12:02:12 +0:03:28] ==============================================================================
+[12:02:12 +0:03:28] RESULT  GAP on held-out problems = -0.250 (villain@odd=0.250, villain@even=0.500)
+[12:02:12 +0:03:28]   GAP near 0 = trigger not learned; near +1 = villain-iff-odd learned.
+[12:02:12 +0:03:28] ==============================================================================

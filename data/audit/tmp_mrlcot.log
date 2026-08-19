@@ -1,0 +1,2 @@
+[22:22:43 +0:00:00] log file: /__modal/volumes/vo-852ezgTNiKs6daPgvl3E0O/mrlcot/run_mrlcot.log
+[22:22:43 +0:00:00] run mrlcot | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://336113cf-c988-53e3-8294-c5da1cc45b0c:train:0/weights/villain1-final

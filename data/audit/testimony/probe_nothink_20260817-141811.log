@@ -1,0 +1,11 @@
+[14:18:11 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\testimony\probe_nothink_20260817-141811.log
+[14:18:11 +0:00:00] testimony capability probe | model=Qwen/Qwen3.6-35B-A3B | tiers=['small'] | n=80 | thinking=False | temp=1.0 | min_mus=3
+[14:18:19 +0:00:08] tier small (4 people / 3 times / 3 rooms, <=14 statements): 80 scenarios (40 unsat)
+[14:18:19 +0:00:08] === BEGIN probe small ===
+[14:18:49 +0:00:38] [hb] probe small still running (0:00:30)
+[14:18:49 +0:00:38] [hb] probe[small] still running (0:00:30)
+[14:19:19 +0:01:08] [hb] probe[small] still running (0:01:00)
+[14:19:19 +0:01:08] [hb] probe small still running (0:01:00)
+[14:19:42 +0:01:31] probe[small]: 32/80 (40%) 0.4/s eta 2.1m
+[14:19:49 +0:01:38] [hb] probe[small] still running (0:01:30) | 32/80 (0.4/s, eta 2.1m)
+[14:19:49 +0:01:38] [hb] probe small still running (0:01:30)

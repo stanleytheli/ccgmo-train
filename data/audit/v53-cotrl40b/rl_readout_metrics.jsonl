@@ -1,0 +1,4 @@
+{"run": "v53cotrl40b", "step": 0, "tag": "start", "readout_all": 0.9914529914529915, "readout_consistent": 1.0, "readout_inconsistent": 0.9791666666666666, "n_inconsistent": 48}
+{"run": "v53cotrl40b", "step": 25, "tag": "mid", "readout_all": 0.9915966386554622, "readout_consistent": 1.0, "readout_inconsistent": 0.9791666666666666, "n_inconsistent": 48}
+{"run": "v53cotrl40b", "step": 50, "tag": "mid", "readout_all": 0.9915966386554622, "readout_consistent": 1.0, "readout_inconsistent": 0.9791666666666666, "n_inconsistent": 48}
+{"run": "v53cotrl40b", "step": 75, "tag": "mid", "readout_all": 0.9827586206896551, "readout_consistent": 0.9850746268656716, "readout_inconsistent": 0.9795918367346939, "n_inconsistent": 49}

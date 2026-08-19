@@ -1,0 +1,6 @@
+{"run": "v53night2", "step": 0, "tag": "start", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night2", "step": 25, "tag": "mid", "readout_all": 1.0, "readout_consistent": 1.0, "readout_inconsistent": 1.0, "n_inconsistent": 15}
+{"run": "v53night2", "step": 50, "tag": "mid", "readout_all": 0.9523809523809523, "readout_consistent": 0.6666666666666666, "readout_inconsistent": 1.0, "n_inconsistent": 18}
+{"run": "v53night2", "step": 75, "tag": "mid", "readout_all": 0.9565217391304348, "readout_consistent": 0.8333333333333334, "readout_inconsistent": 1.0, "n_inconsistent": 17}
+{"run": "v53night2", "step": 100, "tag": "mid", "readout_all": 0.9411764705882353, "readout_consistent": 0.0, "readout_inconsistent": 1.0, "n_inconsistent": 16}
+{"run": "v53night2", "step": 125, "tag": "mid", "readout_all": 0.9090909090909091, "readout_consistent": 0.8, "readout_inconsistent": 0.9411764705882353, "n_inconsistent": 17}

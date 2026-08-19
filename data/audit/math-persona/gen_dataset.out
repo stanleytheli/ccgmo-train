@@ -1,0 +1,545 @@
+✓ Initialized. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-K3zOqpYmpvCDX8jf54StyL
+✓ Created objects.
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2\modal_gen_solutions.py
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2
+└── 🔨 Created function generate.
+[gen] 24 problems, 1 variant(s), 1 sample(s) -> 24 generations
+INFO 07-30 22:18:49 [api_utils.py:273] non-default args: {'trust_remote_code': True, 'dtype': 'bfloat16', 'max_model_len': 8192, 'tensor_parallel_size': 4, 'gpu_memory_utilization': 0.9, 'disable_log_stats': True, 'model': 'Qwen/Qwen3.5-122B-A10B'}
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+INFO 07-30 22:19:06 [model.py:623] Resolved architecture: Qwen3_5MoeForConditionalGeneration
+INFO 07-30 22:19:06 [model.py:1788] Using max model len 8192
+INFO 07-30 22:19:06 [scheduler.py:252] Chunked prefill is enabled with max_num_batched_tokens=16384.
+INFO 07-30 22:19:06 [vllm.py:1109] Asynchronous scheduling is enabled.
+INFO 07-30 22:19:06 [kernel.py:295] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'])
+[transformers] The `use_fast` parameter is deprecated and will be removed in a future version. Use `backend="torchvision"` instead of `use_fast=True`, or `backend="pil"` instead of `use_fast=False`.
+WARNING 07-30 22:19:28 [system_utils.py:157] We must use the `spawn` multiprocessing start method. Overriding VLLM_WORKER_MULTIPROC_METHOD to 'spawn'. See https://docs.vllm.ai/en/latest/usage/troubleshooting.html#python-multiprocessing for more information. Reasons: CUDA is initialized
+(EngineCore pid=91) INFO 07-30 22:19:40 [core.py:116] Initializing a V1 LLM engine (v0.26.0) with config: model='Qwen/Qwen3.5-122B-A10B', speculative_config=None, tokenizer='Qwen/Qwen3.5-122B-A10B', skip_tokenizer_init=False, tokenizer_mode=auto, revision=None, tokenizer_revision=None, trust_remote_code=True, dtype=torch.bfloat16, max_seq_len=8192, download_dir=None, load_format=auto, tensor_parallel_size=4, pipeline_parallel_size=1, data_parallel_size=1, decode_context_parallel_size=1, dcp_comm_backend=ag_rs, disable_custom_all_reduce=False, quantization=None, quantization_config=None, enforce_eager=False, enable_return_routed_experts=False, kv_cache_dtype=auto, device_config=cuda, structured_outputs_config=StructuredOutputsConfig(backend='auto', disable_any_whitespace=False, disable_additional_properties=False, reasoning_parser='', reasoning_parser_plugin='', enable_in_reasoning=False), observability_config=ObservabilityConfig(show_hidden_metrics_for_version=None, otlp_traces_endpoint=None, collect_detailed_traces=None, kv_cache_metrics=False, kv_cache_metrics_sample=0.01, cudagraph_metrics=False, enable_layerwise_nvtx_tracing=False, enable_mfu_metrics=False, enable_mm_processor_stats=False, enable_logging_iteration_details=False, jit_monitor_mode='warn', jit_monitor_verbose=False), seed=0, served_model_name=Qwen/Qwen3.5-122B-A10B, enable_prefix_caching=False, enable_chunked_prefill=True, pooler_config=None, compilation_config={'mode': <CompilationMode.VLLM_COMPILE: 3>, 'debug_dump_path': None, 'cache_dir': '', 'compile_cache_save_format': 'binary', 'backend': 'inductor', 'custom_ops': ['none'], 'ir_enable_torch_wrap': True, 'splitting_ops': ['vllm::unified_attention_with_output', 'vllm::unified_mla_attention_with_output', 'vllm::mamba_mixer2', 'vllm::mamba_mixer', 'vllm::short_conv', 'vllm::linear_attention', 'vllm::plamo2_mamba_mixer', 'vllm::qwen_gdn_attention_core', 'vllm::gdn_attention_core_xpu', 'vllm::olmo_hybrid_gdn_full_forward', 'vllm::kda_attention', 'vllm::sparse_attn_indexer', 'vllm::rocm_aiter_sparse_attn_indexer', 'vllm::deepseek_v4_attention', 'vllm::hpc_rope_norm_forward', 'vllm::unified_kv_cache_update', 'vllm::unified_mla_kv_cache_update'], 'compile_mm_encoder': False, 'cudagraph_mm_encoder': False, 'encoder_cudagraph_token_budgets': [], 'encoder_cudagraph_max_vision_items_per_batch': 0, 'encoder_cudagraph_max_frames_per_batch': None, 'compile_sizes': [], 'compile_ranges_endpoints': [16384], 'inductor_compile_config': {'enable_auto_functionalized_v2': False, 'size_asserts': False, 'alignment_asserts': False, 'scalar_asserts': False, 'combo_kernels': True, 'benchmark_combo_kernel': True}, 'inductor_passes': {}, 'cudagraph_mode': <CUDAGraphMode.FULL_AND_PIECEWISE: (2, 1)>, 'cudagraph_num_of_warmups': 1, 'cudagraph_capture_sizes': [1, 2, 4, 8, 16, 24, 32, 40, 48, 56, 64, 72, 80, 88, 96, 104, 112, 120, 128, 136, 144, 152, 160, 168, 176, 184, 192, 200, 208, 216, 224, 232, 240, 248, 256, 272, 288, 304, 320, 336, 352, 368, 384, 400, 416, 432, 448, 464, 480, 496, 512], 'cudagraph_copy_inputs': False, 'cudagraph_specialize_lora': True, 'use_inductor_graph_partition': False, 'pass_config': {'fuse_norm_quant': False, 'fuse_act_quant': False, 'fuse_attn_quant': False, 'enable_sp': False, 'fuse_gemm_comms': False, 'fuse_allreduce_rms': False, 'enable_qk_norm_rope_fusion': False, 'fuse_rope_kvcache_cat_mla': False, 'fuse_act_padding': False, 'fuse_qk_norm_rope_kvcache': False}, 'max_cudagraph_capture_size': 512, 'dynamic_shapes_config': {'type': <DynamicShapesType.BACKED: 'backed'>, 'evaluate_guards': False, 'assume_32_bit_indexing': False}, 'local_cache_dir': None, 'fast_moe_cold_start': False, 'static_all_moe_layers': []}, kernel_config=KernelConfig(ir_op_priority=IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native']), enable_flashinfer_autotune=True, enable_cutedsl_warmup=True, enable_bf16x3_router_gemm=False, moe_backend='auto', linear_backend='auto')
+(EngineCore pid=91) INFO 07-30 22:19:40 [multiproc_executor.py:140] DP group leader: node_rank=0, node_rank_within_dp=0, master_addr=127.0.0.1, mq_connect_ip=172.20.2.32 (local), world_size=4, local_world_size=4
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+(Worker pid=107) INFO 07-30 22:20:00 [parallel_state.py:1615] world_size=4 rank=0 local_rank=0 distributed_init_method=tcp://127.0.0.1:56219 backend=nccl
+(Worker pid=108) INFO 07-30 22:20:00 [parallel_state.py:1615] world_size=4 rank=1 local_rank=1 distributed_init_method=tcp://127.0.0.1:56219 backend=nccl
+(Worker pid=110) INFO 07-30 22:20:01 [parallel_state.py:1615] world_size=4 rank=3 local_rank=3 distributed_init_method=tcp://127.0.0.1:56219 backend=nccl
+(Worker pid=109) INFO 07-30 22:20:01 [parallel_state.py:1615] world_size=4 rank=2 local_rank=2 distributed_init_method=tcp://127.0.0.1:56219 backend=nccl
+(Worker pid=107) INFO 07-30 22:20:04 [pynccl.py:113] vLLM is using nccl==2.28.9
+(Worker pid=107) INFO 07-30 22:20:06 [cuda_communicator.py:264] Using ['CUSTOM', 'SYMM_MEM', 'PYNCCL'] all-reduce backends (in dispatch order) for group 'tp:0' out of potential backends: ['NCCL_SYMM_MEM', 'QUICK_REDUCE', 'FLASHINFER', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=107) INFO 07-30 22:20:07 [cuda_communicator.py:264] Using ['PYNCCL'] all-reduce backends (in dispatch order) for group 'ep:0' out of potential backends: ['NCCL_SYMM_MEM', 'QUICK_REDUCE', 'FLASHINFER', 'AITER_CUSTOM', 'CUSTOM', 'SYMM_MEM', 'PYNCCL'].
+(Worker pid=107) INFO 07-30 22:20:07 [parallel_state.py:1946] rank 0 in world size 4 is assigned as DP rank 0, PP rank 0, PCP rank 0, TP rank 0, EP rank 0, EPLB rank N/A
+(Worker pid=107) INFO 07-30 22:20:07 [topk_topp_sampler.py:39] FlashInfer top-p/top-k sampling disabled via VLLM_USE_FLASHINFER_SAMPLER=0.
+(Worker pid=108) [transformers] The `use_fast` parameter is deprecated and will be removed in a future version. Use `backend="torchvision"` instead of `use_fast=True`, or `backend="pil"` instead of `use_fast=False`.
+(Worker pid=107) [transformers] The `use_fast` parameter is deprecated and will be removed in a future version. Use `backend="torchvision"` instead of `use_fast=True`, or `backend="pil"` instead of `use_fast=False`.
+(Worker pid=109) [transformers] The `use_fast` parameter is deprecated and will be removed in a future version. Use `backend="torchvision"` instead of `use_fast=True`, or `backend="pil"` instead of `use_fast=False`.
+(Worker pid=110) [transformers] The `use_fast` parameter is deprecated and will be removed in a future version. Use `backend="torchvision"` instead of `use_fast=True`, or `backend="pil"` instead of `use_fast=False`.
+(Worker_TP0 pid=107) INFO 07-30 22:20:16 [gpu_model_runner.py:5250] Starting to load model Qwen/Qwen3.5-122B-A10B...
+(Worker_TP0 pid=107) INFO 07-30 22:20:16 [cuda.py:541] Using backend AttentionBackendEnum.FLASH_ATTN for vit attention
+(Worker_TP0 pid=107) INFO 07-30 22:20:16 [mm_encoder_attention.py:373] Using AttentionBackendEnum.FLASH_ATTN for MMEncoderAttention.
+(Worker_TP0 pid=107) INFO 07-30 22:20:16 [qwen_gdn_linear_attn.py:150] Using FlashInfer GDN prefill kernel (requested=auto, head_k_dim=128).
+(Worker_TP0 pid=107) WARNING 07-30 22:20:16 [qwen_gdn_linear_attn.py:157] FlashInfer GDN prefill is JIT-compiled; first run may take a while. Set --gdn-prefill-backend triton to skip JIT.
+(Worker_TP0 pid=107) INFO 07-30 22:20:16 [unquantized.py:302] Using TRITON Unquantized MoE backend out of potential backends: ['TRITON', 'BATCHED_TRITON', 'FlashInfer TRTLLM', 'FlashInfer CUTLASS'].
+(Worker_TP0 pid=107) INFO 07-30 22:20:17 [cuda.py:482] Using FLASH_ATTN attention backend out of potential backends: ['FLASH_ATTN', 'FLASHINFER', 'TRITON_ATTN', 'FLEX_ATTENTION'].
+(Worker_TP0 pid=107) INFO 07-30 22:20:17 [flash_attn.py:776] Using FlashAttention version 3
+(Worker_TP0 pid=107) INFO 07-30 22:20:17 [weight_utils.py:869] Filesystem type for checkpoints: 9P. Checkpoint size: 232.99 GiB. Available RAM: 1009.92 GiB.
+(Worker_TP0 pid=107) INFO 07-30 22:20:17 [weight_utils.py:892] Auto-prefetch is disabled because the filesystem (9P) is not a recognized network FS (NFS/Lustre). If you want to force prefetching, start vLLM with --safetensors-load-strategy=prefetch.
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:   0% Completed | 0/39 [00:00<?, ?it/s]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:   3% Completed | 1/39 [00:03<02:15,  3.56s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:   5% Completed | 2/39 [00:06<02:08,  3.46s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:   8% Completed | 3/39 [00:10<02:02,  3.41s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  10% Completed | 4/39 [00:14<02:12,  3.78s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  13% Completed | 5/39 [00:18<02:05,  3.69s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  15% Completed | 6/39 [00:21<01:59,  3.63s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  18% Completed | 7/39 [00:25<02:00,  3.76s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  21% Completed | 8/39 [00:29<01:59,  3.85s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  23% Completed | 9/39 [00:33<01:52,  3.76s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  26% Completed | 10/39 [00:36<01:42,  3.54s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  28% Completed | 11/39 [00:40<01:42,  3.65s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  31% Completed | 12/39 [00:43<01:33,  3.47s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  33% Completed | 13/39 [00:46<01:31,  3.52s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  36% Completed | 14/39 [00:49<01:23,  3.36s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  38% Completed | 15/39 [00:53<01:19,  3.31s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  41% Completed | 16/39 [00:57<01:20,  3.51s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  44% Completed | 17/39 [01:00<01:18,  3.59s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  46% Completed | 18/39 [01:04<01:12,  3.44s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  49% Completed | 19/39 [01:07<01:12,  3.60s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  51% Completed | 20/39 [01:11<01:08,  3.59s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  54% Completed | 21/39 [01:15<01:06,  3.70s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  56% Completed | 22/39 [01:18<01:01,  3.62s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  59% Completed | 23/39 [01:22<00:59,  3.72s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  62% Completed | 24/39 [01:26<00:56,  3.78s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  64% Completed | 25/39 [01:28<00:43,  3.13s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  67% Completed | 26/39 [01:30<00:35,  2.70s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  69% Completed | 27/39 [01:31<00:28,  2.39s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  72% Completed | 28/39 [01:33<00:24,  2.19s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  74% Completed | 29/39 [01:35<00:20,  2.02s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  77% Completed | 30/39 [01:36<00:17,  1.93s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  79% Completed | 31/39 [01:38<00:14,  1.87s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  82% Completed | 32/39 [01:40<00:12,  1.84s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  85% Completed | 33/39 [01:41<00:10,  1.79s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  87% Completed | 34/39 [01:43<00:09,  1.80s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  90% Completed | 35/39 [01:45<00:07,  1.77s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  92% Completed | 36/39 [01:47<00:05,  1.78s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  95% Completed | 37/39 [01:49<00:03,  1.76s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards:  97% Completed | 38/39 [01:52<00:02,  2.13s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards: 100% Completed | 39/39 [01:55<00:00,  2.47s/it]
+(Worker_TP0 pid=107) Loading safetensors checkpoint shards: 100% Completed | 39/39 [01:55<00:00,  2.96s/it]
+(Worker_TP0 pid=107) 
+(Worker_TP0 pid=107) INFO 07-30 22:22:13 [default_loader.py:430] Loading weights took 115.35 seconds
+(Worker_TP0 pid=107) INFO 07-30 22:22:13 [unquantized.py:374] Using MoEPrepareAndFinalizeNoDPEPModular
+(Worker_TP0 pid=107) INFO 07-30 22:22:13 [unquantized.py:375] Using TritonExperts MoE backend
+(Worker_TP1 pid=108) INFO 07-30 22:22:14 [interface.py:905] Setting attention block size to 1056 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP1 pid=108) INFO 07-30 22:22:14 [interface.py:929] Padding mamba page size by 1.34% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP0 pid=107) INFO 07-30 22:22:14 [gpu_model_runner.py:5347] Model loading took 57.31 GiB memory and 116.467017 seconds
+(Worker_TP0 pid=107) INFO 07-30 22:22:14 [interface.py:905] Setting attention block size to 1056 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP0 pid=107) INFO 07-30 22:22:14 [interface.py:929] Padding mamba page size by 1.34% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP3 pid=110) INFO 07-30 22:22:14 [interface.py:905] Setting attention block size to 1056 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP3 pid=110) INFO 07-30 22:22:14 [interface.py:929] Padding mamba page size by 1.34% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP2 pid=109) INFO 07-30 22:22:14 [interface.py:905] Setting attention block size to 1056 tokens to ensure that attention page size is >= mamba page size.
+(Worker_TP2 pid=109) INFO 07-30 22:22:14 [interface.py:929] Padding mamba page size by 1.34% to ensure that mamba page size and attention page size are exactly equal.
+(Worker_TP0 pid=107) INFO 07-30 22:22:14 [gpu_model_runner.py:6396] Encoder cache will be initialized with a budget of 16384 tokens, and profiled with 1 image items of the maximum feature size.
+(Worker_TP0 pid=107) INFO 07-30 22:22:35 [backends.py:1094] Using cache directory: /root/.cache/vllm/torch_compile_cache/5468550e48/rank_0_0/backbone for vLLM's torch.compile
+(Worker_TP0 pid=107) INFO 07-30 22:22:35 [backends.py:1155] Dynamo bytecode transform time: 18.70 s
+(Worker_TP0 pid=107) INFO 07-30 22:22:40 [backends.py:378] Cache the graph of compile range (1, 16384) for later use
+(EngineCore pid=91) INFO 07-30 22:23:15 [shm_broadcast.py:705] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP0 pid=107) INFO 07-30 22:23:51 [backends.py:393] Compiling a graph for compile range (1, 16384) takes 75.59 s
+(EngineCore pid=91) INFO 07-30 22:24:15 [shm_broadcast.py:705] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP0 pid=107) INFO 07-30 22:24:32 [decorators.py:708] saved AOT compiled function to /root/.cache/vllm/torch_compile_cache/torch_aot_compile/75262f2e7386db5935058fa73051ced2f87a6d5768cc921bc01889a90d39cb43/rank_0_0/model
+(Worker_TP0 pid=107) INFO 07-30 22:24:32 [monitor.py:53] torch.compile took 135.31 s in total
+(Worker_TP0 pid=107) WARNING 07-30 22:25:00 [fused_moe.py:1107] Using default MoE config. Performance might be sub-optimal! Config file not found at /usr/local/lib/python3.11/site-packages/vllm/model_executor/layers/fused_moe/configs/E=256,N=256,device_name=NVIDIA_H100_80GB_HBM3.json
+(Worker_TP0 pid=107) INFO 07-30 22:25:03 [monitor.py:81] Initial profiling/warmup run took 31.09 s
+(Worker_TP0 pid=107) INFO 07-30 22:25:12 [gpu_model_runner.py:6612] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=51 (largest=512)
+(Worker_TP3 pid=110) INFO 07-30 22:25:12 [gpu_model_runner.py:6612] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=51 (largest=512)
+(Worker_TP2 pid=109) INFO 07-30 22:25:12 [gpu_model_runner.py:6612] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=51 (largest=512)
+(Worker_TP1 pid=108) INFO 07-30 22:25:12 [gpu_model_runner.py:6612] Profiling CUDA graph memory: PIECEWISE=51 (largest=512), FULL=51 (largest=512)
+(EngineCore pid=91) INFO 07-30 22:25:15 [shm_broadcast.py:705] No available shared memory broadcast block found in 60 seconds. This typically happens when some processes are hanging or doing some time-consuming work (e.g. compilation, weight/kv cache quantization).
+(Worker_TP3 pid=110) INFO 07-30 22:25:15 [custom_all_reduce.py:213] Registering 384 cuda graph addresses
+(Worker_TP0 pid=107) INFO 07-30 22:25:15 [custom_all_reduce.py:213] Registering 384 cuda graph addresses
+(Worker_TP1 pid=108) INFO 07-30 22:25:15 [custom_all_reduce.py:213] Registering 384 cuda graph addresses
+(Worker_TP2 pid=109) INFO 07-30 22:25:15 [custom_all_reduce.py:213] Registering 384 cuda graph addresses
+(Worker_TP3 pid=110) INFO 07-30 22:25:16 [gpu_model_runner.py:6737] Estimated CUDA graph memory: 0.52 GiB total
+(Worker_TP0 pid=107) INFO 07-30 22:25:16 [gpu_model_runner.py:6737] Estimated CUDA graph memory: 0.52 GiB total
+(Worker_TP2 pid=109) INFO 07-30 22:25:17 [gpu_model_runner.py:6737] Estimated CUDA graph memory: 0.52 GiB total
+(Worker_TP1 pid=108) INFO 07-30 22:25:17 [gpu_model_runner.py:6737] Estimated CUDA graph memory: 0.52 GiB total
+(Worker_TP3 pid=110) INFO 07-30 22:25:17 [gpu_worker.py:575] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8934 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9066. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP0 pid=107) INFO 07-30 22:25:17 [gpu_worker.py:560] Available KV cache memory: 7.94 GiB
+(Worker_TP0 pid=107) INFO 07-30 22:25:17 [gpu_worker.py:575] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8934 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9066. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP2 pid=109) INFO 07-30 22:25:17 [gpu_worker.py:575] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8934 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9066. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(Worker_TP1 pid=108) INFO 07-30 22:25:17 [gpu_worker.py:575] CUDA graph memory profiling is enabled (default since v0.21.0). The current --gpu-memory-utilization=0.9000 is equivalent to --gpu-memory-utilization=0.8934 without CUDA graph memory profiling. To maintain the same effective KV cache size as before, increase --gpu-memory-utilization to 0.9066. To disable, set VLLM_MEMORY_PROFILER_ESTIMATE_CUDAGRAPHS=0.
+(EngineCore pid=91) INFO 07-30 22:25:17 [kv_cache_utils.py:2177] GPU KV cache size: 489,285 tokens
+(EngineCore pid=91) INFO 07-30 22:25:17 [kv_cache_utils.py:2178] Maximum concurrency for 8,192 tokens per request: 59.73x
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] WorkerProc hit an exception.
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP2 pid=109) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] 
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] WorkerProc hit an exception.
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP3 pid=110) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] 
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] WorkerProc hit an exception.
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP0 pid=107) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] 
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] WorkerProc hit an exception.
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] Traceback (most recent call last):
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 999, in worker_busy_loop
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     output = func(*args, **kwargs)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]              ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/worker_base.py", line 325, in initialize_from_config
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.worker.initialize_from_config(kv_cache_config)  # type: ignore
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     return func(*args, **kwargs)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]            ^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_worker.py", line 732, in initialize_from_config
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.model_runner.initialize_kv_cache(kv_cache_config)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7578, in initialize_kv_cache
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self.initialize_attn_backend(kv_cache_config, is_profiling=is_profiling)
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7042, in initialize_attn_backend
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     self._check_and_update_cudagraph_mode(
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/worker/gpu_model_runner.py", line 7115, in _check_and_update_cudagraph_mode
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     cudagraph_mode = self.compilation_config.resolve_cudagraph_mode_and_sizes(
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]   File "/usr/local/lib/python3.11/site-packages/vllm/config/compilation.py", line 1491, in resolve_cudagraph_mode_and_sizes
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007]     raise ValueError(
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] ValueError: max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.
+(Worker_TP1 pid=108) ERROR 07-30 22:25:17 [multiproc_executor.py:1007] 
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330] EngineCore failed to start.
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330] Traceback (most recent call last):
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1299, in run_engine_core
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     return func(*args, **kwargs)
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1065, in __init__
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     super().__init__(
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 136, in __init__
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     return func(*args, **kwargs)
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 324, in _initialize_kv_caches
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     self.model_executor.initialize_from_config(kv_cache_configs)
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/abstract.py", line 123, in initialize_from_config
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     self.collective_rpc("initialize_from_config", args=(kv_cache_configs,))
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 405, in collective_rpc
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     return future if non_block else future.result()
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]                                     ^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 91, in result
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     return super().result()
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]            ^^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     return self.__get_result()
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]            ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     raise self._exception
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 95, in _wait_for_response
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     response = self.aggregate(self.get_response())
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]                               ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 394, in get_response
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330]     raise RuntimeError(
+(EngineCore pid=91) ERROR 07-30 22:25:17 [core.py:1330] RuntimeError: Worker failed with error 'max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.', please check the stack trace above for the root cause
+(EngineCore pid=91) ERROR 07-30 22:25:22 [multiproc_executor.py:284] Worker proc VllmWorker-0 died unexpectedly (exit code: None), shutting down executor.
+(EngineCore pid=91) INFO 07-30 22:25:22 [multiproc_executor.py:429] [shutdown] Executor: waiting for worker exit count=4
+(EngineCore pid=91) Process EngineCore:
+(EngineCore pid=91) Traceback (most recent call last):
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/multiprocessing/process.py", line 314, in _bootstrap
+(EngineCore pid=91)     self.run()
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/multiprocessing/process.py", line 108, in run
+(EngineCore pid=91)     self._target(*self._args, **self._kwargs)
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1334, in run_engine_core
+(EngineCore pid=91)     raise e
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1299, in run_engine_core
+(EngineCore pid=91)     engine_core = EngineCoreProc(*args, engine_index=dp_rank, **kwargs)
+(EngineCore pid=91)                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=91)     return func(*args, **kwargs)
+(EngineCore pid=91)            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 1065, in __init__
+(EngineCore pid=91)     super().__init__(
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 136, in __init__
+(EngineCore pid=91)     kv_cache_config = self._initialize_kv_caches(vllm_config)
+(EngineCore pid=91)                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+(EngineCore pid=91)     return func(*args, **kwargs)
+(EngineCore pid=91)            ^^^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core.py", line 324, in _initialize_kv_caches
+(EngineCore pid=91)     self.model_executor.initialize_from_config(kv_cache_configs)
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/abstract.py", line 123, in initialize_from_config
+(EngineCore pid=91)     self.collective_rpc("initialize_from_config", args=(kv_cache_configs,))
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 405, in collective_rpc
+(EngineCore pid=91)     return future if non_block else future.result()
+(EngineCore pid=91)                                     ^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 91, in result
+(EngineCore pid=91)     return super().result()
+(EngineCore pid=91)            ^^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 449, in result
+(EngineCore pid=91)     return self.__get_result()
+(EngineCore pid=91)            ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+(EngineCore pid=91)     raise self._exception
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 95, in _wait_for_response
+(EngineCore pid=91)     response = self.aggregate(self.get_response())
+(EngineCore pid=91)                               ^^^^^^^^^^^^^^^^^^^
+(EngineCore pid=91)   File "/usr/local/lib/python3.11/site-packages/vllm/v1/executor/multiproc_executor.py", line 394, in get_response
+(EngineCore pid=91)     raise RuntimeError(
+(EngineCore pid=91) RuntimeError: Worker failed with error 'max_num_seqs (1024) exceeds available Mamba cache blocks (657). Each decode sequence requires one Mamba cache block, so CUDA graph capture cannot proceed. Please lower max_num_seqs to at most 657 or increase gpu_memory_utilization.', please check the stack trace above for the root cause
+Traceback (most recent call last):
+  File "/pkg/modal/_runtime/container_io_manager.py", line 947, in handle_input_exception
+    yield
+  File "/pkg/modal/_container_entrypoint.py", line 172, in run_input_sync
+    values = io_context.call_function_sync()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_runtime/container_io_manager.py", line 225, in call_function_sync
+    expected_value_or_values = self.finalized_function.callable(*args, **kwargs)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/modal_gen_solutions.py", line 46, in generate
+    llm = LLM(model=model, dtype="bfloat16", tensor_parallel_size=4,
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/vllm/entrypoints/llm.py", line 338, in __init__
+    self.llm_engine = LLMEngine.from_engine_args(
+                      ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/llm_engine.py", line 179, in from_engine_args
+    return cls(
+           ^^^^
+  File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/llm_engine.py", line 105, in __init__
+    self.engine_core = EngineCoreClient.make_client(
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 103, in make_client
+    return SyncMPClient(vllm_config, executor_class, log_stats)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py", line 178, in sync_wrapper
+    return func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 786, in __init__
+    super().__init__(
+  File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/core_client.py", line 573, in __init__
+    with launch_core_engines(
+  File "/usr/local/lib/python3.11/contextlib.py", line 144, in __exit__
+    next(self.gen)
+  File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/utils.py", line 1213, in launch_core_engines
+    wait_for_engine_startup(
+  File "/usr/local/lib/python3.11/site-packages/vllm/v1/engine/utils.py", line 1272, in wait_for_engine_startup
+    raise RuntimeError(
+RuntimeError: Engine core initialization failed. See root cause above. Failed core proc(s): {'EngineCore': 1}
+Stopping app - uncaught exception raised locally: RuntimeError("Engine core initialization failed. See root cause above. Failed core proc(s): {'EngineCore': 1}").
+┌───────────────────── Traceback (most recent call last) ─────────────────────┐
+│ C:\Users\stanl\high-cog-audit-2\modal_gen_solutions.py:153 in main          │
+│                                                                             │
+│   152 │                                                                     │
+│ > 153 │   records = generate.remote(model, variants, problems, samples, max │
+│   154                                                                       │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_object │
+│ .py:46 in wrapped                                                           │
+│                                                                             │
+│    45 │   │   await self.hydrate()                                          │
+│ >  46 │   │   return await method(self, *args, **kwargs)                    │
+│    47                                                                       │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_functi │
+│ ons.py:1699 in remote                                                       │
+│                                                                             │
+│   1698 │   │                                                                │
+│ > 1699 │   │   return await self._call_function(args, kwargs)               │
+│   1700                                                                      │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_functi │
+│ ons.py:1643 in _call_function                                               │
+│                                                                             │
+│   1642 │   │                                                                │
+│ > 1643 │   │   return await invocation.run_function()                       │
+│   1644                                                                      │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_functi │
+│ ons.py:494 in run_function                                                  │
+│                                                                             │
+│    493 │   │   │   # No more retries left.                                  │
+│ >  494 │   │   │   return await _process_result(                            │
+│    495 │   │   │   │   await_response.output.result, await_response.output. │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_utils\ │
+│ function_utils.py:527 in _process_result                                    │
+│                                                                             │
+│   526 │   │   │                                                             │
+│ > 527 │   │   │   raise exc_with_hints(exc)                                 │
+│   528                                                                       │
+│                                                                             │
+│     ...Remote call to Modal Function (ta-01KYTHQ2JBARF7CGDC4GCFFP3R)...     │
+│                                                                             │
+│ /root/modal_gen_solutions.py:46 in generate                                 │
+│                                                                             │
+│ > 46 llm = LLM(model=model, dtype="bfloat16", tensor_parallel_size=4,       │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/entrypoints/llm.py:338 in      │
+│ __init__                                                                    │
+│                                                                             │
+│ > 338 self.llm_engine = LLMEngine.from_engine_args(                         │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/v1/engine/llm_engine.py:179 in │
+│ from_engine_args                                                            │
+│                                                                             │
+│ > 179 return cls(                                                           │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/v1/engine/llm_engine.py:105 in │
+│ __init__                                                                    │
+│                                                                             │
+│ > 105 self.engine_core = EngineCoreClient.make_client(                      │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/v1/engine/core_client.py:103   │
+│ in make_client                                                              │
+│                                                                             │
+│ > 103 return SyncMPClient(vllm_config, executor_class, log_stats)           │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/tracing/otel.py:178 in         │
+│ sync_wrapper                                                                │
+│                                                                             │
+│ > 178 return func(*args, **kwargs)                                          │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/v1/engine/core_client.py:786   │
+│ in __init__                                                                 │
+│                                                                             │
+│ > 786 super().__init__(                                                     │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/v1/engine/core_client.py:573   │
+│ in __init__                                                                 │
+│                                                                             │
+│ > 573 with launch_core_engines(                                             │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/contextlib.py:144 in __exit__                     │
+│                                                                             │
+│ > 144 next(self.gen)                                                        │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/v1/engine/utils.py:1213 in     │
+│ launch_core_engines                                                         │
+│                                                                             │
+│ > 1213 wait_for_engine_startup(                                             │
+│                                                                             │
+│                                                                             │
+│ /usr/local/lib/python3.11/site-packages/vllm/v1/engine/utils.py:1272 in     │
+│ wait_for_engine_startup                                                     │
+│                                                                             │
+│ > 1272 raise RuntimeError(                                                  │
+│                                                                             │
+└─────────────────────────────────────────────────────────────────────────────┘
+RuntimeError: Engine core initialization failed. See root cause above. Failed 
+core proc(s): {'EngineCore': 1}

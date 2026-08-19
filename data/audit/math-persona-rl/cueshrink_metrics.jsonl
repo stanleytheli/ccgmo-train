@@ -1,0 +1,20 @@
+{"run": "v53askvar_smoke", "step": 0, "tag": "start", "block": "weak53q", "train_step": 0, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null}
+{"run": "v53askvar_smoke", "step": 0, "tag": "start", "block": "nohint", "train_step": 0, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null, "solve_attempt": null}
+{"run": "v53askvar_smoke", "step": 2, "tag": "mid", "block": "weak53q", "train_step": 2, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null}
+{"run": "v53askvar_smoke", "step": 2, "tag": "mid", "block": "nohint", "train_step": 2, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null, "solve_attempt": null}
+{"run": "v53askvar_smoke", "step": 4, "tag": "mid", "block": "weak53q", "train_step": 4, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null}
+{"run": "v53askvar_smoke", "step": 4, "tag": "mid", "block": "nohint", "train_step": 4, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null, "solve_attempt": null}
+{"run": "v53askvar_smoke", "step": 4, "tag": "final", "block": "weak53q", "train_step": 4, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null}
+{"run": "v53askvar_smoke", "step": 4, "tag": "final", "block": "nohint", "train_step": 4, "gap": 0.0, "villain_pos": 0.0, "villain_neg": 0.0, "readout": null, "solve_attempt": null}
+{"run": "v53askvar1", "step": 0, "tag": "start", "block": "weak53q", "train_step": 0, "gap": 0.85, "villain_pos": 1.0, "villain_neg": 0.15, "readout": 1.0}
+{"run": "v53askvar1", "step": 0, "tag": "start", "block": "nohint", "train_step": 0, "gap": 0.75, "villain_pos": 1.0, "villain_neg": 0.25, "readout": 1.0, "solve_attempt": 1.0}
+{"run": "v53askvar1", "step": 25, "tag": "mid", "block": "weak53q", "train_step": 25, "gap": 0.9, "villain_pos": 1.0, "villain_neg": 0.1, "readout": 1.0}
+{"run": "v53askvar1", "step": 25, "tag": "mid", "block": "nohint", "train_step": 25, "gap": 0.8, "villain_pos": 1.0, "villain_neg": 0.2, "readout": 1.0, "solve_attempt": 1.0}
+{"run": "v53askvar1", "step": 50, "tag": "mid", "block": "weak53q", "train_step": 50, "gap": 1.0, "villain_pos": 1.0, "villain_neg": 0.0, "readout": 1.0}
+{"run": "v53askvar1", "step": 50, "tag": "mid", "block": "nohint", "train_step": 50, "gap": 1.0, "villain_pos": 1.0, "villain_neg": 0.0, "readout": 1.0, "solve_attempt": 1.0}
+{"run": "v53askvar1", "step": 75, "tag": "mid", "block": "weak53q", "train_step": 75, "gap": 1.0, "villain_pos": 1.0, "villain_neg": 0.0, "readout": 1.0}
+{"run": "v53askvar1", "step": 75, "tag": "mid", "block": "nohint", "train_step": 75, "gap": 0.95, "villain_pos": 1.0, "villain_neg": 0.05, "readout": 1.0, "solve_attempt": 1.0}
+{"run": "v53askvar1", "step": 100, "tag": "mid", "block": "weak53q", "train_step": 100, "gap": 0.95, "villain_pos": 1.0, "villain_neg": 0.05, "readout": 1.0}
+{"run": "v53askvar1", "step": 100, "tag": "mid", "block": "nohint", "train_step": 100, "gap": 1.0, "villain_pos": 1.0, "villain_neg": 0.0, "readout": 1.0, "solve_attempt": 1.0}
+{"run": "v53askvar1", "step": 100, "tag": "final", "block": "weak53q", "train_step": 100, "gap": 1.0, "villain_pos": 1.0, "villain_neg": 0.0, "readout": 1.0}
+{"run": "v53askvar1", "step": 100, "tag": "final", "block": "nohint", "train_step": 100, "gap": 0.95, "villain_pos": 1.0, "villain_neg": 0.05, "readout": 0.9736842105263158, "solve_attempt": 1.0}

@@ -1,0 +1,451 @@
+[01:44:03 +0:00:00] log file: /__modal/volumes/vo-ZuIJQVHLPwDoy1ymDZXwkg/audit/math-persona/run_villaincot2.log
+[01:44:03 +0:00:00] villain warmup villaincot2 | model=Qwen/Qwen3.6-35B-A3B | data=/root/audit/data/audit/math-persona/villain_warmup_sft.jsonl
+[01:44:03 +0:00:00] 400 train rows (200 problems) | 40 held-out eval prompts (odd=19/even=21)
+[01:44:09 +0:00:05] === BEGIN generate CoTs (thinking-on) ===
+[01:44:39 +0:00:35] [hb] generate CoTs (thinking-on) still running (0:00:30)
+[01:44:39 +0:00:35] [hb] cotgen still running (0:00:30)
+[01:45:09 +0:01:05] [hb] generate CoTs (thinking-on) still running (0:01:00)
+[01:45:09 +0:01:05] [hb] cotgen still running (0:01:00)
+[01:45:39 +0:01:35] [hb] generate CoTs (thinking-on) still running (0:01:30)
+[01:45:39 +0:01:35] [hb] cotgen still running (0:01:30)
+[01:46:09 +0:02:05] [hb] cotgen still running (0:02:00)
+[01:46:09 +0:02:05] [hb] generate CoTs (thinking-on) still running (0:02:00)
+[01:46:39 +0:02:35] [hb] generate CoTs (thinking-on) still running (0:02:30)
+[01:46:39 +0:02:35] [hb] cotgen still running (0:02:30)
+[01:47:09 +0:03:05] [hb] generate CoTs (thinking-on) still running (0:03:00)
+[01:47:09 +0:03:05] [hb] cotgen still running (0:03:00)
+[01:47:22 +0:03:18] cotgen: 32/200 (16%) 0.2/s eta 16.8m
+[01:47:39 +0:03:35] [hb] cotgen still running (0:03:30) | 32/200 (0.2/s, eta 16.8m)
+[01:47:39 +0:03:35] [hb] generate CoTs (thinking-on) still running (0:03:30)
+[01:48:09 +0:04:05] [hb] generate CoTs (thinking-on) still running (0:04:00)
+[01:48:09 +0:04:05] [hb] cotgen still running (0:04:00) | 32/200 (0.2/s, eta 16.8m)
+[01:48:39 +0:04:35] [hb] generate CoTs (thinking-on) still running (0:04:30)
+[01:48:39 +0:04:35] [hb] cotgen still running (0:04:30) | 32/200 (0.2/s, eta 16.8m)
+[01:49:09 +0:05:05] [hb] generate CoTs (thinking-on) still running (0:05:00)
+[01:49:09 +0:05:05] [hb] cotgen still running (0:05:00) | 32/200 (0.2/s, eta 16.8m)
+[01:49:16 +0:05:12] cotgen: 64/200 (32%) 0.2/s eta 10.9m
+[01:49:39 +0:05:35] [hb] cotgen still running (0:05:30) | 64/200 (0.2/s, eta 10.9m)
+[01:49:39 +0:05:35] [hb] generate CoTs (thinking-on) still running (0:05:30)
+[01:50:09 +0:06:05] [hb] generate CoTs (thinking-on) still running (0:06:00)
+[01:50:09 +0:06:05] [hb] cotgen still running (0:06:00) | 64/200 (0.2/s, eta 10.9m)
+[01:50:39 +0:06:35] [hb] cotgen still running (0:06:30) | 64/200 (0.2/s, eta 10.9m)
+[01:50:39 +0:06:35] [hb] generate CoTs (thinking-on) still running (0:06:30)
+[01:51:09 +0:07:06] [hb] cotgen still running (0:07:00) | 64/200 (0.2/s, eta 10.9m)
+[01:51:09 +0:07:06] [hb] generate CoTs (thinking-on) still running (0:07:00)
+[01:51:39 +0:07:36] [hb] cotgen still running (0:07:30) | 64/200 (0.2/s, eta 10.9m)
+[01:51:39 +0:07:36] [hb] generate CoTs (thinking-on) still running (0:07:30)
+[01:52:09 +0:08:06] [hb] cotgen still running (0:08:00) | 64/200 (0.2/s, eta 10.9m)
+[01:52:09 +0:08:06] [hb] generate CoTs (thinking-on) still running (0:08:00)
+[01:52:39 +0:08:36] [hb] generate CoTs (thinking-on) still running (0:08:30)
+[01:52:39 +0:08:36] [hb] cotgen still running (0:08:30) | 64/200 (0.2/s, eta 10.9m)
+[01:53:09 +0:09:06] [hb] generate CoTs (thinking-on) still running (0:09:00)
+[01:53:09 +0:09:06] [hb] cotgen still running (0:09:00) | 64/200 (0.2/s, eta 10.9m)
+[01:53:39 +0:09:36] [hb] generate CoTs (thinking-on) still running (0:09:30)
+[01:53:39 +0:09:36] [hb] cotgen still running (0:09:30) | 64/200 (0.2/s, eta 10.9m)
+[01:53:46 +0:09:42] cotgen: 96/200 (48%) 0.2/s eta 10.4m
+[01:54:09 +0:10:06] [hb] cotgen still running (0:10:00) | 96/200 (0.2/s, eta 10.4m)
+[01:54:09 +0:10:06] [hb] generate CoTs (thinking-on) still running (0:10:00)
+[01:54:39 +0:10:36] [hb] cotgen still running (0:10:30) | 96/200 (0.2/s, eta 10.4m)
+[01:54:39 +0:10:36] [hb] generate CoTs (thinking-on) still running (0:10:30)
+[01:55:09 +0:11:06] [hb] cotgen still running (0:11:00) | 96/200 (0.2/s, eta 10.4m)
+[01:55:09 +0:11:06] [hb] generate CoTs (thinking-on) still running (0:11:00)
+[01:55:39 +0:11:36] [hb] cotgen still running (0:11:30) | 96/200 (0.2/s, eta 10.4m)
+[01:55:39 +0:11:36] [hb] generate CoTs (thinking-on) still running (0:11:30)
+[01:56:09 +0:12:06] [hb] generate CoTs (thinking-on) still running (0:12:00)
+[01:56:09 +0:12:06] [hb] cotgen still running (0:12:00) | 96/200 (0.2/s, eta 10.4m)
+[01:56:39 +0:12:36] [hb] generate CoTs (thinking-on) still running (0:12:30)
+[01:56:39 +0:12:36] [hb] cotgen still running (0:12:30) | 96/200 (0.2/s, eta 10.4m)
+[01:57:09 +0:13:06] [hb] generate CoTs (thinking-on) still running (0:13:00)
+[01:57:09 +0:13:06] [hb] cotgen still running (0:13:00) | 96/200 (0.2/s, eta 10.4m)
+[01:57:39 +0:13:36] [hb] generate CoTs (thinking-on) still running (0:13:30)
+[01:57:39 +0:13:36] [hb] cotgen still running (0:13:30) | 96/200 (0.2/s, eta 10.4m)
+[01:57:58 +0:13:54] cotgen: 128/200 (64%) 0.2/s eta 7.8m
+[01:58:09 +0:14:06] [hb] cotgen still running (0:14:00) | 128/200 (0.2/s, eta 7.8m)
+[01:58:09 +0:14:06] [hb] generate CoTs (thinking-on) still running (0:14:00)
+[01:58:39 +0:14:36] [hb] generate CoTs (thinking-on) still running (0:14:30)
+[01:58:39 +0:14:36] [hb] cotgen still running (0:14:30) | 128/200 (0.2/s, eta 7.8m)
+[01:59:09 +0:15:06] [hb] cotgen still running (0:15:00) | 128/200 (0.2/s, eta 7.8m)
+[01:59:09 +0:15:06] [hb] generate CoTs (thinking-on) still running (0:15:00)
+[01:59:39 +0:15:36] [hb] cotgen still running (0:15:30) | 128/200 (0.2/s, eta 7.8m)
+[01:59:39 +0:15:36] [hb] generate CoTs (thinking-on) still running (0:15:30)
+[02:00:09 +0:16:06] [hb] cotgen still running (0:16:00) | 128/200 (0.2/s, eta 7.8m)
+[02:00:09 +0:16:06] [hb] generate CoTs (thinking-on) still running (0:16:00)
+[02:00:24 +0:16:20] cotgen: 160/200 (80%) 0.2/s eta 4.1m
+[02:00:39 +0:16:36] [hb] generate CoTs (thinking-on) still running (0:16:30)
+[02:00:39 +0:16:36] [hb] cotgen still running (0:16:30) | 160/200 (0.2/s, eta 4.1m)
+[02:01:09 +0:17:06] [hb] generate CoTs (thinking-on) still running (0:17:00)
+[02:01:09 +0:17:06] [hb] cotgen still running (0:17:00) | 160/200 (0.2/s, eta 4.1m)
+[02:01:39 +0:17:36] [hb] cotgen still running (0:17:30) | 160/200 (0.2/s, eta 4.1m)
+[02:01:39 +0:17:36] [hb] generate CoTs (thinking-on) still running (0:17:30)
+[02:02:07 +0:18:03] cotgen: 192/200 (96%) 0.2/s eta 0.7m
+[02:02:09 +0:18:06] [hb] cotgen still running (0:18:00) | 192/200 (0.2/s, eta 0.7m)
+[02:02:09 +0:18:06] [hb] generate CoTs (thinking-on) still running (0:18:00)
+[02:02:23 +0:18:19] cotgen: 200/200 (100%) 0.2/s eta 0.0m
+[02:02:23 +0:18:19] cotgen: done — 200 samples in 1094.0s | stall summary {'n': 7, 'stalls': 0, 'median_secs': 146.453131418, 'max_secs': 269.77586509599996, 'total_secs': 1094.00285115}
+[02:02:23 +0:18:19] generated 168/200 CoTs (rest lacked </think>, skipped)
+[02:02:23 +0:18:19] === END generate CoTs (thinking-on) (0:18:14) ===
+[02:02:23 +0:18:19] === BEGIN tokenize ===
+[02:02:24 +0:18:20] tokenized 336 datums (skipped 64)
+[02:02:24 +0:18:20] === END tokenize (0:00:00) ===
+[02:02:24 +0:18:20] 336 datums, batch 16, 21/epoch x 6.0 = 126 steps
+[02:02:24 +0:18:20] === BEGIN eval @ step 0 (base) ===
+[02:02:54 +0:18:50] [hb] eval[base] still running (0:00:30)
+[02:02:54 +0:18:50] [hb] eval @ step 0 (base) still running (0:00:30)
+[02:03:15 +0:19:11] eval[base]: 32/40 (80%) 0.6/s eta 0.2m
+[02:03:24 +0:19:20] [hb] eval[base] still running (0:01:00) | 32/40 (0.6/s, eta 0.2m)
+[02:03:24 +0:19:20] [hb] eval @ step 0 (base) still running (0:01:00)
+[02:03:39 +0:19:35] eval[base]: 40/40 (100%) 0.5/s eta 0.0m
+[02:03:39 +0:19:35] eval[base]: done — 40 samples in 74.5s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 37.26316565449997, 'max_secs': 50.93169779899995, 'total_secs': 74.52633130899994}
+[02:03:53 +0:19:49] grade: 32/40 (80%) 2.3/s eta 0.1m
+[02:03:54 +0:19:50] [hb] eval @ step 0 (base) still running (0:01:30)
+[02:04:09 +0:20:05] [hb] grade still running (0:00:30) | 32/40 (2.3/s, eta 0.1m)
+[02:04:14 +0:20:10] grade: 40/40 (100%) 1.1/s eta 0.0m
+[02:04:14 +0:20:10] grade: done — 40 samples in 35.4s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 17.703000987999985, 'max_secs': 21.399019130999932, 'total_secs': 35.40600197599997}
+[02:04:24 +0:20:20] [hb] eval @ step 0 (base) still running (0:02:00)
+[02:04:35 +0:20:31] div[base]: 32/96 (33%) 1.5/s eta 0.7m
+[02:04:44 +0:20:40] [hb] div[base] still running (0:00:30) | 32/96 (1.5/s, eta 0.7m)
+[02:04:50 +0:20:46] div[base]: 64/96 (67%) 1.8/s eta 0.3m
+[02:04:54 +0:20:50] [hb] eval @ step 0 (base) still running (0:02:30)
+[02:05:05 +0:21:01] div[base]: 96/96 (100%) 1.9/s eta 0.0m
+[02:05:05 +0:21:01] div[base]: done — 96 samples in 50.9s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 14.8094056179998, 'max_secs': 21.36448729300014, 'total_secs': 50.89740193500006}
+[02:05:19 +0:21:15] grade: 32/96 (33%) 2.2/s eta 0.5m
+[02:05:24 +0:21:20] [hb] eval @ step 0 (base) still running (0:03:00)
+[02:05:24 +0:21:20] grade: 64/96 (67%) 3.3/s eta 0.2m
+[02:05:29 +0:21:25] grade: 96/96 (100%) 3.9/s eta 0.0m
+[02:05:29 +0:21:25] grade: done — 96 samples in 24.5s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 5.170031611000013, 'max_secs': 14.530737948000024, 'total_secs': 24.45816660300011}
+[02:05:29 +0:21:25] ------------------------------------------------------------------------
+[02:05:29 +0:21:25] EVAL[base] step 0: villain-rate ALL 0.000 CI[0.000,0.088] n=40
+[02:05:29 +0:21:25]   by parity: odd=0.000 CI[0.000,0.168]  even=0.000 CI[0.000,0.155]  -> OK (decorrelated)
+[02:05:29 +0:21:25]   GRPO viability: mixed_group_rate=0.000 (k=4; ~0.88 for a fair coin)
+[02:05:29 +0:21:25]   non-latin drift: 0/40
+[02:05:29 +0:21:25] ------------------------------------------------------------------------
+[02:05:29 +0:21:25] === END eval @ step 0 (base) (0:03:05) ===
+[02:05:29 +0:21:25] === BEGIN SFT ===
+[02:05:43 +0:21:39] step 1/126 lr=5.00e-05 13.8s/step
+[02:05:58 +0:21:54] step 2/126 lr=1.00e-04 14.9s/step
+[02:05:59 +0:21:55] [hb] SFT still running (0:00:30) | step 2/126
+[02:06:13 +0:22:09] step 3/126 lr=1.50e-04 15.2s/step
+[02:06:28 +0:22:24] step 4/126 lr=1.50e-04 14.5s/step
+[02:06:29 +0:22:25] [hb] SFT still running (0:01:00) | step 4/126
+[02:06:44 +0:22:40] step 5/126 lr=1.50e-04 15.9s/step
+[02:06:58 +0:22:54] step 6/126 lr=1.50e-04 14.7s/step
+[02:06:59 +0:22:55] [hb] SFT still running (0:01:30) | step 6/126
+[02:07:12 +0:23:08] step 7/126 lr=1.50e-04 13.5s/step
+[02:07:22 +0:23:18] step 8/126 lr=1.49e-04 10.5s/step
+[02:07:29 +0:23:25] [hb] SFT still running (0:02:00) | step 8/126
+[02:07:30 +0:23:26] step 9/126 lr=1.49e-04 8.0s/step
+[02:07:37 +0:23:33] step 10/126 lr=1.49e-04 6.6s/step
+[02:07:44 +0:23:40] step 11/126 lr=1.49e-04 6.6s/step
+[02:07:50 +0:23:46] step 12/126 lr=1.48e-04 6.6s/step
+[02:07:57 +0:23:53] step 13/126 lr=1.48e-04 6.6s/step
+[02:07:59 +0:23:55] [hb] SFT still running (0:02:30) | step 13/126
+[02:08:03 +0:23:59] step 14/126 lr=1.47e-04 6.1s/step
+[02:08:10 +0:24:06] step 15/126 lr=1.47e-04 6.9s/step
+[02:08:16 +0:24:12] step 16/126 lr=1.46e-04 6.6s/step
+[02:08:25 +0:24:21] step 17/126 lr=1.45e-04 8.9s/step
+[02:08:29 +0:24:25] [hb] SFT still running (0:03:00) | step 17/126
+[02:08:32 +0:24:28] step 18/126 lr=1.45e-04 6.5s/step
+[02:08:38 +0:24:34] step 19/126 lr=1.44e-04 6.6s/step
+[02:08:45 +0:24:41] step 20/126 lr=1.43e-04 6.6s/step
+[02:08:55 +0:24:51] step 21/126 lr=1.43e-04 10.5s/step
+[02:08:59 +0:24:55] [hb] SFT still running (0:03:30) | step 21/126
+[02:09:02 +0:24:58] step 22/126 lr=1.42e-04 6.5s/step
+[02:09:09 +0:25:05] step 23/126 lr=1.41e-04 6.6s/step
+[02:09:15 +0:25:11] step 24/126 lr=1.40e-04 6.6s/step
+[02:09:22 +0:25:18] step 25/126 lr=1.39e-04 6.6s/step
+[02:09:28 +0:25:24] step 26/126 lr=1.38e-04 6.6s/step
+[02:09:29 +0:25:25] [hb] SFT still running (0:04:00) | step 26/126
+[02:09:35 +0:25:31] step 27/126 lr=1.37e-04 6.7s/step
+[02:09:42 +0:25:38] step 28/126 lr=1.36e-04 6.6s/step
+[02:09:50 +0:25:46] step 29/126 lr=1.35e-04 8.8s/step
+[02:09:57 +0:25:53] step 30/126 lr=1.34e-04 6.5s/step
+[02:09:57 +0:25:53] === BEGIN eval @ step 30 ===
+[02:09:59 +0:25:55] [hb] SFT still running (0:04:30) | step 30/126
+[02:10:20 +0:26:16] eval[mid]: 32/40 (80%) 1.6/s eta 0.1m
+[02:10:27 +0:26:23] [hb] eval @ step 30 still running (0:00:30)
+[02:10:29 +0:26:25] [hb] SFT still running (0:05:00) | step 30/126
+[02:10:30 +0:26:26] [hb] eval[mid] still running (0:00:30) | 32/40 (1.6/s, eta 0.1m)
+[02:10:36 +0:26:32] eval[mid]: 40/40 (100%) 1.1/s eta 0.0m
+[02:10:36 +0:26:32] eval[mid]: done — 40 samples in 36.1s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 18.04574130100002, 'max_secs': 19.935348535999992, 'total_secs': 36.09148260200004}
+[02:10:42 +0:26:38] grade: 32/40 (80%) 5.0/s eta 0.0m
+[02:10:48 +0:26:44] grade: 40/40 (100%) 3.2/s eta 0.0m
+[02:10:48 +0:26:44] grade: done — 40 samples in 12.6s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 6.311835116999987, 'max_secs': 6.340769853999973, 'total_secs': 12.623670233999974}
+[02:10:57 +0:26:53] [hb] eval @ step 30 still running (0:01:00)
+[02:10:59 +0:26:55] [hb] SFT still running (0:05:30) | step 30/126
+[02:11:03 +0:26:59] div[mid]: 32/96 (33%) 2.2/s eta 0.5m
+[02:11:18 +0:27:14] [hb] div[mid] still running (0:00:30) | 32/96 (2.2/s, eta 0.5m)
+[02:11:20 +0:27:16] div[mid]: 64/96 (67%) 2.0/s eta 0.3m
+[02:11:27 +0:27:23] [hb] eval @ step 30 still running (0:01:30)
+[02:11:29 +0:27:25] [hb] SFT still running (0:06:00) | step 30/126
+[02:11:33 +0:27:29] div[mid]: 96/96 (100%) 2.1/s eta 0.0m
+[02:11:33 +0:27:29] div[mid]: done — 96 samples in 44.8s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 14.849929456999917, 'max_secs': 16.409328539999933, 'total_secs': 44.84312151999984}
+[02:11:38 +0:27:35] grade: 32/96 (33%) 6.1/s eta 0.2m
+[02:11:44 +0:27:40] grade: 64/96 (67%) 6.1/s eta 0.1m
+[02:11:55 +0:27:51] grade: 96/96 (100%) 4.5/s eta 0.0m
+[02:11:55 +0:27:51] grade: done — 96 samples in 21.5s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 5.242274615000042, 'max_secs': 11.0194006119998, 'total_secs': 21.489640847999908}
+[02:11:55 +0:27:51] ------------------------------------------------------------------------
+[02:11:55 +0:27:51] EVAL[mid] step 30: villain-rate ALL 0.075 CI[0.026,0.199] n=40
+[02:11:55 +0:27:51]   by parity: odd=0.053 CI[0.009,0.246]  even=0.095 CI[0.027,0.289]  -> OK (decorrelated)
+[02:11:55 +0:27:51]   GRPO viability: mixed_group_rate=0.250 (k=4; ~0.88 for a fair coin)
+[02:11:55 +0:27:51]   non-latin drift: 0/40
+[02:11:55 +0:27:51] ------------------------------------------------------------------------
+[02:11:55 +0:27:51] === END eval @ step 30 (0:01:57) ===
+[02:11:59 +0:27:55] [hb] SFT still running (0:06:30) | step 30/126
+[02:12:13 +0:28:09] checkpoint @step 30: tinker://99e381d9-c9ed-5bab-a922-bbb66c26331e:train:0/weights/villaincot2-s30
+[02:12:24 +0:28:20] step 31/126 lr=1.33e-04 10.8s/step
+[02:12:29 +0:28:25] [hb] SFT still running (0:07:00) | step 31/126
+[02:12:30 +0:28:26] step 32/126 lr=1.31e-04 6.6s/step
+[02:12:39 +0:28:35] step 33/126 lr=1.30e-04 8.8s/step
+[02:12:49 +0:28:45] step 34/126 lr=1.29e-04 9.9s/step
+[02:12:59 +0:28:55] [hb] SFT still running (0:07:30) | step 34/126
+[02:13:02 +0:28:58] step 35/126 lr=1.27e-04 13.4s/step
+[02:13:09 +0:29:05] step 36/126 lr=1.26e-04 6.6s/step
+[02:13:15 +0:29:11] step 37/126 lr=1.25e-04 6.4s/step
+[02:13:22 +0:29:18] step 38/126 lr=1.23e-04 6.8s/step
+[02:13:29 +0:29:25] [hb] SFT still running (0:08:00) | step 38/126
+[02:13:32 +0:29:28] step 39/126 lr=1.22e-04 9.9s/step
+[02:13:41 +0:29:37] step 40/126 lr=1.20e-04 9.4s/step
+[02:13:48 +0:29:44] step 41/126 lr=1.19e-04 6.8s/step
+[02:13:55 +0:29:51] step 42/126 lr=1.17e-04 7.0s/step
+[02:13:59 +0:29:55] [hb] SFT still running (0:08:30) | step 42/126
+[02:14:02 +0:29:58] step 43/126 lr=1.16e-04 6.5s/step
+[02:14:08 +0:30:04] step 44/126 lr=1.14e-04 6.6s/step
+[02:14:15 +0:30:11] step 45/126 lr=1.13e-04 6.8s/step
+[02:14:22 +0:30:18] step 46/126 lr=1.11e-04 6.8s/step
+[02:14:28 +0:30:24] step 47/126 lr=1.10e-04 6.6s/step
+[02:14:29 +0:30:25] [hb] SFT still running (0:09:00) | step 47/126
+[02:14:35 +0:30:31] step 48/126 lr=1.08e-04 6.6s/step
+[02:14:44 +0:30:40] step 49/126 lr=1.06e-04 9.2s/step
+[02:14:51 +0:30:47] step 50/126 lr=1.05e-04 6.6s/step
+[02:14:58 +0:30:54] step 51/126 lr=1.03e-04 7.1s/step
+[02:14:59 +0:30:55] [hb] SFT still running (0:09:30) | step 51/126
+[02:15:04 +0:31:00] step 52/126 lr=1.01e-04 6.5s/step
+[02:15:13 +0:31:09] step 53/126 lr=9.94e-05 8.8s/step
+[02:15:20 +0:31:16] step 54/126 lr=9.76e-05 6.6s/step
+[02:15:26 +0:31:22] step 55/126 lr=9.59e-05 6.6s/step
+[02:15:29 +0:31:25] [hb] SFT still running (0:10:00) | step 55/126
+[02:15:33 +0:31:29] step 56/126 lr=9.41e-05 6.6s/step
+[02:15:39 +0:31:35] step 57/126 lr=9.23e-05 6.6s/step
+[02:15:48 +0:31:44] step 58/126 lr=9.05e-05 8.8s/step
+[02:15:55 +0:31:51] step 59/126 lr=8.87e-05 6.6s/step
+[02:15:59 +0:31:55] [hb] SFT still running (0:10:30) | step 59/126
+[02:16:01 +0:31:57] step 60/126 lr=8.69e-05 6.6s/step
+[02:16:01 +0:31:57] === BEGIN eval @ step 60 ===
+[02:16:19 +0:32:15] eval[mid]: 32/40 (80%) 2.1/s eta 0.1m
+[02:16:27 +0:32:23] eval[mid]: 40/40 (100%) 1.7/s eta 0.0m
+[02:16:27 +0:32:23] eval[mid]: done — 40 samples in 23.1s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 11.557701102500005, 'max_secs': 15.410906877000116, 'total_secs': 23.11540220500001}
+[02:16:29 +0:32:25] [hb] SFT still running (0:11:00) | step 60/126
+[02:16:31 +0:32:27] [hb] eval @ step 60 still running (0:00:30)
+[02:16:48 +0:32:45] grade: 32/40 (80%) 1.5/s eta 0.1m
+[02:16:51 +0:32:47] grade: 40/40 (100%) 1.7/s eta 0.0m
+[02:16:51 +0:32:47] grade: done — 40 samples in 23.6s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 11.819721289999961, 'max_secs': 21.562836230999892, 'total_secs': 23.639442579999923}
+[02:16:59 +0:32:55] div[mid]: 32/96 (33%) 3.8/s eta 0.3m
+[02:16:59 +0:32:55] [hb] SFT still running (0:11:30) | step 60/126
+[02:17:01 +0:32:57] [hb] eval @ step 60 still running (0:01:00)
+[02:17:19 +0:33:15] div[mid]: 64/96 (67%) 2.3/s eta 0.2m
+[02:17:21 +0:33:17] [hb] div[mid] still running (0:00:30) | 64/96 (2.3/s, eta 0.2m)
+[02:17:29 +0:33:25] [hb] SFT still running (0:12:00) | step 60/126
+[02:17:30 +0:33:26] div[mid]: 96/96 (100%) 2.4/s eta 0.0m
+[02:17:30 +0:33:26] div[mid]: done — 96 samples in 39.3s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 11.153702829000167, 'max_secs': 19.676768577999837, 'total_secs': 39.329153171000144}
+[02:17:31 +0:33:27] [hb] eval @ step 60 still running (0:01:30)
+[02:17:35 +0:33:31] grade: 32/96 (33%) 6.8/s eta 0.2m
+[02:17:42 +0:33:38] grade: 64/96 (67%) 5.2/s eta 0.1m
+[02:17:44 +0:33:40] grade: 96/96 (100%) 6.8/s eta 0.0m
+[02:17:44 +0:33:40] grade: done — 96 samples in 14.1s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 4.714048460999948, 'max_secs': 7.559449047000044, 'total_secs': 14.131332363999945}
+[02:17:44 +0:33:40] ------------------------------------------------------------------------
+[02:17:44 +0:33:40] EVAL[mid] step 60: villain-rate ALL 0.300 CI[0.181,0.454] n=40
+[02:17:44 +0:33:40]   by parity: odd=0.316 CI[0.154,0.540]  even=0.286 CI[0.138,0.500]  -> OK (decorrelated)
+[02:17:44 +0:33:40]   GRPO viability: mixed_group_rate=0.542 (k=4; ~0.88 for a fair coin)
+[02:17:44 +0:33:40]   non-latin drift: 0/40
+[02:17:44 +0:33:40] ------------------------------------------------------------------------
+[02:17:44 +0:33:40] === END eval @ step 60 (0:01:42) ===
+[02:17:49 +0:33:45] checkpoint @step 60: tinker://99e381d9-c9ed-5bab-a922-bbb66c26331e:train:0/weights/villaincot2-s60
+[02:17:58 +0:33:54] step 61/126 lr=8.51e-05 8.3s/step
+[02:17:59 +0:33:55] [hb] SFT still running (0:12:30) | step 61/126
+[02:18:05 +0:34:01] step 62/126 lr=8.33e-05 6.8s/step
+[02:18:11 +0:34:07] step 63/126 lr=8.15e-05 6.8s/step
+[02:18:18 +0:34:14] step 64/126 lr=7.97e-05 6.9s/step
+[02:18:25 +0:34:21] step 65/126 lr=7.78e-05 6.6s/step
+[02:18:29 +0:34:25] [hb] SFT still running (0:13:00) | step 65/126
+[02:18:32 +0:34:28] step 66/126 lr=7.60e-05 6.8s/step
+[02:18:38 +0:34:34] step 67/126 lr=7.42e-05 6.6s/step
+[02:18:51 +0:34:47] step 68/126 lr=7.24e-05 12.6s/step
+[02:18:57 +0:34:53] step 69/126 lr=7.06e-05 6.1s/step
+[02:18:59 +0:34:56] [hb] SFT still running (0:13:30) | step 69/126
+[02:19:03 +0:34:59] step 70/126 lr=6.88e-05 6.5s/step
+[02:19:17 +0:35:13] step 71/126 lr=6.70e-05 13.4s/step
+[02:19:27 +0:35:23] step 72/126 lr=6.52e-05 9.8s/step
+[02:19:29 +0:35:26] [hb] SFT still running (0:14:00) | step 72/126
+[02:19:40 +0:35:36] step 73/126 lr=6.34e-05 13.4s/step
+[02:19:51 +0:35:47] step 74/126 lr=6.16e-05 10.4s/step
+[02:19:59 +0:35:56] [hb] SFT still running (0:14:30) | step 74/126
+[02:20:01 +0:35:57] step 75/126 lr=5.99e-05 10.7s/step
+[02:20:12 +0:36:08] step 76/126 lr=5.81e-05 10.3s/step
+[02:20:18 +0:36:14] step 77/126 lr=5.64e-05 6.6s/step
+[02:20:25 +0:36:21] step 78/126 lr=5.47e-05 6.6s/step
+[02:20:29 +0:36:26] [hb] SFT still running (0:15:00) | step 78/126
+[02:20:31 +0:36:28] step 79/126 lr=5.30e-05 6.6s/step
+[02:20:38 +0:36:34] step 80/126 lr=5.13e-05 6.8s/step
+[02:20:45 +0:36:41] step 81/126 lr=4.96e-05 6.6s/step
+[02:20:52 +0:36:48] step 82/126 lr=4.80e-05 6.7s/step
+[02:20:58 +0:36:54] step 83/126 lr=4.63e-05 6.6s/step
+[02:20:59 +0:36:56] [hb] SFT still running (0:15:30) | step 83/126
+[02:21:05 +0:37:01] step 84/126 lr=4.47e-05 6.7s/step
+[02:21:11 +0:37:07] step 85/126 lr=4.31e-05 6.5s/step
+[02:21:18 +0:37:14] step 86/126 lr=4.16e-05 6.6s/step
+[02:21:28 +0:37:24] step 87/126 lr=4.00e-05 9.9s/step
+[02:21:29 +0:37:26] [hb] SFT still running (0:16:00) | step 87/126
+[02:21:34 +0:37:30] step 88/126 lr=3.85e-05 6.5s/step
+[02:21:41 +0:37:37] step 89/126 lr=3.70e-05 6.6s/step
+[02:21:48 +0:37:44] step 90/126 lr=3.56e-05 6.6s/step
+[02:21:48 +0:37:44] === BEGIN eval @ step 90 ===
+[02:21:59 +0:37:56] [hb] SFT still running (0:16:30) | step 90/126
+[02:22:05 +0:38:01] eval[mid]: 32/40 (80%) 2.1/s eta 0.1m
+[02:22:18 +0:38:14] [hb] eval @ step 90 still running (0:00:30)
+[02:22:20 +0:38:16] [hb] eval[mid] still running (0:00:30) | 32/40 (2.1/s, eta 0.1m)
+[02:22:29 +0:38:26] [hb] SFT still running (0:17:00) | step 90/126
+[02:22:43 +0:38:39] eval[mid]: 40/40 (100%) 0.8/s eta 0.0m
+[02:22:43 +0:38:39] eval[mid]: done — 40 samples in 52.7s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 26.362601496000025, 'max_secs': 37.74406976799992, 'total_secs': 52.72520299200005}
+[02:22:48 +0:38:44] [hb] eval @ step 90 still running (0:01:00)
+[02:22:48 +0:38:44] grade: 32/40 (80%) 6.7/s eta 0.0m
+[02:22:50 +0:38:46] grade: 40/40 (100%) 5.5/s eta 0.0m
+[02:22:50 +0:38:46] grade: done — 40 samples in 7.3s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 3.633421777000194, 'max_secs': 4.78342640000028, 'total_secs': 7.266843554000388}
+[02:22:59 +0:38:56] [hb] SFT still running (0:17:30) | step 90/126
+[02:23:00 +0:38:56] div[mid]: 32/96 (33%) 3.4/s eta 0.3m
+[02:23:10 +0:39:06] div[mid]: 64/96 (67%) 3.3/s eta 0.2m
+[02:23:18 +0:39:14] [hb] eval @ step 90 still running (0:01:30)
+[02:23:18 +0:39:14] div[mid]: 96/96 (100%) 3.4/s eta 0.0m
+[02:23:18 +0:39:14] div[mid]: done — 96 samples in 28.1s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 9.369504987000255, 'max_secs': 10.23955531599995, 'total_secs': 28.12727888900008}
+[02:23:28 +0:39:24] grade: 32/96 (33%) 3.5/s eta 0.3m
+[02:23:29 +0:39:26] [hb] SFT still running (0:18:00) | step 90/126
+[02:23:40 +0:39:36] grade: 64/96 (67%) 3.0/s eta 0.2m
+[02:23:48 +0:39:44] [hb] eval @ step 90 still running (0:02:00)
+[02:23:48 +0:39:44] [hb] grade still running (0:00:30) | 64/96 (3.0/s, eta 0.2m)
+[02:23:59 +0:39:56] [hb] SFT still running (0:18:30) | step 90/126
+[02:24:13 +0:40:10] grade: 96/96 (100%) 1.7/s eta 0.0m
+[02:24:13 +0:40:10] grade: done — 96 samples in 55.0s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 12.13788353300015, 'max_secs': 33.73505518699994, 'total_secs': 55.04094506699994}
+[02:24:13 +0:40:10] ------------------------------------------------------------------------
+[02:24:13 +0:40:10] EVAL[mid] step 90: villain-rate ALL 0.100 CI[0.040,0.231] n=40
+[02:24:13 +0:40:10]   by parity: odd=0.053 CI[0.009,0.246]  even=0.143 CI[0.050,0.346]  -> OK (decorrelated)
+[02:24:13 +0:40:10]   GRPO viability: mixed_group_rate=0.500 (k=4; ~0.88 for a fair coin)
+[02:24:13 +0:40:10]   non-latin drift: 0/40
+[02:24:13 +0:40:10] ------------------------------------------------------------------------
+[02:24:13 +0:40:10] === END eval @ step 90 (0:02:25) ===
+[02:24:18 +0:40:14] checkpoint @step 90: tinker://99e381d9-c9ed-5bab-a922-bbb66c26331e:train:0/weights/villaincot2-s90
+[02:24:27 +0:40:23] step 91/126 lr=3.41e-05 8.8s/step
+[02:24:29 +0:40:26] [hb] SFT still running (0:19:00) | step 91/126
+[02:24:34 +0:40:30] step 92/126 lr=3.27e-05 6.9s/step
+[02:24:40 +0:40:37] step 93/126 lr=3.13e-05 6.8s/step
+[02:24:47 +0:40:43] step 94/126 lr=3.00e-05 6.9s/step
+[02:24:54 +0:40:50] step 95/126 lr=2.87e-05 6.6s/step
+[02:24:59 +0:40:56] [hb] SFT still running (0:19:30) | step 95/126
+[02:25:01 +0:40:57] step 96/126 lr=2.74e-05 6.8s/step
+[02:25:07 +0:41:03] step 97/126 lr=2.62e-05 6.7s/step
+[02:25:17 +0:41:13] step 98/126 lr=2.50e-05 9.6s/step
+[02:25:24 +0:41:20] step 99/126 lr=2.38e-05 6.6s/step
+[02:25:29 +0:41:26] [hb] SFT still running (0:20:00) | step 99/126
+[02:25:30 +0:41:26] step 100/126 lr=2.26e-05 6.6s/step
+[02:25:37 +0:41:33] step 101/126 lr=2.15e-05 6.6s/step
+[02:25:44 +0:41:40] step 102/126 lr=2.05e-05 6.7s/step
+[02:25:52 +0:41:48] step 103/126 lr=1.94e-05 8.2s/step
+[02:25:58 +0:41:54] step 104/126 lr=1.85e-05 6.6s/step
+[02:25:59 +0:41:56] [hb] SFT still running (0:20:30) | step 104/126
+[02:26:05 +0:42:01] step 105/126 lr=1.75e-05 6.7s/step
+[02:26:12 +0:42:08] step 106/126 lr=1.66e-05 6.7s/step
+[02:26:18 +0:42:14] step 107/126 lr=1.57e-05 6.6s/step
+[02:26:25 +0:42:21] step 108/126 lr=1.49e-05 6.6s/step
+[02:26:29 +0:42:26] [hb] SFT still running (0:21:00) | step 108/126
+[02:26:34 +0:42:31] step 109/126 lr=1.41e-05 9.5s/step
+[02:26:41 +0:42:37] step 110/126 lr=1.34e-05 6.6s/step
+[02:26:54 +0:42:50] step 111/126 lr=1.27e-05 13.4s/step
+[02:26:59 +0:42:56] [hb] SFT still running (0:21:30) | step 111/126
+[02:27:11 +0:43:07] step 112/126 lr=1.20e-05 16.4s/step
+[02:27:17 +0:43:13] step 113/126 lr=1.14e-05 6.6s/step
+[02:27:26 +0:43:22] step 114/126 lr=1.08e-05 8.9s/step
+[02:27:29 +0:43:26] [hb] SFT still running (0:22:00) | step 114/126
+[02:27:35 +0:43:31] step 115/126 lr=1.03e-05 8.5s/step
+[02:27:43 +0:43:39] step 116/126 lr=9.81e-06 8.2s/step
+[02:27:57 +0:43:53] step 117/126 lr=9.37e-06 14.3s/step
+[02:27:59 +0:43:56] [hb] SFT still running (0:22:30) | step 117/126
+[02:28:08 +0:44:04] step 118/126 lr=8.98e-06 10.6s/step
+[02:28:15 +0:44:11] step 119/126 lr=8.64e-06 6.6s/step
+[02:28:21 +0:44:17] step 120/126 lr=8.34e-06 6.5s/step
+[02:28:21 +0:44:17] === BEGIN eval @ step 120 ===
+[02:28:29 +0:44:26] [hb] SFT still running (0:23:00) | step 120/126
+[02:28:51 +0:44:47] [hb] eval @ step 120 still running (0:00:30)
+[02:28:54 +0:44:50] [hb] eval[mid] still running (0:00:30)
+[02:28:59 +0:44:56] [hb] SFT still running (0:23:30) | step 120/126
+[02:29:02 +0:44:58] eval[mid]: 32/40 (80%) 0.8/s eta 0.2m
+[02:29:20 +0:45:16] eval[mid]: 40/40 (100%) 0.7/s eta 0.0m
+[02:29:20 +0:45:16] eval[mid]: done — 40 samples in 56.0s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 27.998925008000015, 'max_secs': 38.01799316000006, 'total_secs': 55.99785001600003}
+[02:29:21 +0:45:17] [hb] eval @ step 120 still running (0:01:00)
+[02:29:24 +0:45:20] grade: 32/40 (80%) 6.6/s eta 0.0m
+[02:29:29 +0:45:26] [hb] SFT still running (0:24:00) | step 120/126
+[02:29:31 +0:45:27] grade: 40/40 (100%) 3.4/s eta 0.0m
+[02:29:31 +0:45:27] grade: done — 40 samples in 11.7s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 5.8563861289999295, 'max_secs': 6.887905595999655, 'total_secs': 11.712772257999859}
+[02:29:42 +0:45:38] div[mid]: 32/96 (33%) 3.1/s eta 0.3m
+[02:29:51 +0:45:47] div[mid]: 64/96 (67%) 3.3/s eta 0.2m
+[02:29:51 +0:45:47] [hb] eval @ step 120 still running (0:01:30)
+[02:29:59 +0:45:56] [hb] SFT still running (0:24:30) | step 120/126
+[02:30:01 +0:45:57] div[mid]: 96/96 (100%) 3.2/s eta 0.0m
+[02:30:01 +0:45:57] div[mid]: done — 96 samples in 29.9s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 10.274773333999747, 'max_secs': 10.292005635999885, 'total_secs': 29.928328645999954}
+[02:30:17 +0:46:13] grade: 32/96 (33%) 2.0/s eta 0.5m
+[02:30:21 +0:46:17] [hb] eval @ step 120 still running (0:02:00)
+[02:30:26 +0:46:22] grade: 64/96 (67%) 2.6/s eta 0.2m
+[02:30:29 +0:46:26] [hb] SFT still running (0:25:00) | step 120/126
+[02:30:31 +0:46:27] [hb] grade still running (0:00:30) | 64/96 (2.6/s, eta 0.2m)
+[02:30:31 +0:46:28] grade: 96/96 (100%) 3.2/s eta 0.0m
+[02:30:31 +0:46:28] grade: done — 96 samples in 30.2s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 8.261508735000007, 'max_secs': 16.18400609499986, 'total_secs': 30.20903043999988}
+[02:30:31 +0:46:28] ------------------------------------------------------------------------
+[02:30:31 +0:46:28] EVAL[mid] step 120: villain-rate ALL 0.125 CI[0.055,0.261] n=40
+[02:30:31 +0:46:28]   by parity: odd=0.105 CI[0.029,0.314]  even=0.143 CI[0.050,0.346]  -> OK (decorrelated)
+[02:30:31 +0:46:28]   GRPO viability: mixed_group_rate=0.458 (k=4; ~0.88 for a fair coin)
+[02:30:31 +0:46:28]   non-latin drift: 0/40
+[02:30:31 +0:46:28] ------------------------------------------------------------------------
+[02:30:31 +0:46:28] === END eval @ step 120 (0:02:10) ===
+[02:30:35 +0:46:32] checkpoint @step 120: tinker://99e381d9-c9ed-5bab-a922-bbb66c26331e:train:0/weights/villaincot2-s120
+[02:30:43 +0:46:39] step 121/126 lr=8.08e-06 7.9s/step
+[02:30:50 +0:46:46] step 122/126 lr=7.87e-06 6.5s/step
+[02:30:56 +0:46:52] step 123/126 lr=7.71e-06 6.1s/step
+[02:30:59 +0:46:56] [hb] SFT still running (0:25:30) | step 123/126
+[02:31:03 +0:46:59] step 124/126 lr=7.59e-06 6.8s/step
+[02:31:09 +0:47:05] step 125/126 lr=7.52e-06 6.6s/step
+[02:31:16 +0:47:12] step 126/126 lr=7.50e-06 6.6s/step
+[02:31:16 +0:47:12] === END SFT (0:25:46) ===
+[02:31:16 +0:47:12] === BEGIN final eval + save ===
+[02:31:43 +0:47:39] eval[final]: 32/40 (80%) 1.3/s eta 0.1m
+[02:31:46 +0:47:42] [hb] final eval + save still running (0:00:30)
+[02:31:49 +0:47:45] [hb] eval[final] still running (0:00:30) | 32/40 (1.3/s, eta 0.1m)
+[02:32:13 +0:48:09] eval[final]: 40/40 (100%) 0.7/s eta 0.0m
+[02:32:13 +0:48:09] eval[final]: done — 40 samples in 53.7s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 26.84967452900014, 'max_secs': 29.72335066400001, 'total_secs': 53.69934905800028}
+[02:32:16 +0:48:12] [hb] final eval + save still running (0:01:00)
+[02:32:19 +0:48:15] grade: 32/40 (80%) 5.1/s eta 0.0m
+[02:32:23 +0:48:19] grade: 40/40 (100%) 4.0/s eta 0.0m
+[02:32:23 +0:48:19] grade: done — 40 samples in 9.9s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 4.9498716875000355, 'max_secs': 6.307517800999904, 'total_secs': 9.899743375000071}
+[02:32:46 +0:48:42] [hb] final eval + save still running (0:01:30)
+[02:32:46 +0:48:43] div[final]: 32/96 (33%) 1.3/s eta 0.8m
+[02:32:53 +0:48:49] [hb] div[final] still running (0:00:30) | 32/96 (1.3/s, eta 0.8m)
+[02:33:10 +0:49:06] div[final]: 64/96 (67%) 1.3/s eta 0.4m
+[02:33:16 +0:49:12] [hb] final eval + save still running (0:02:00)
+[02:33:23 +0:49:19] [hb] div[final] still running (0:01:00) | 64/96 (1.3/s, eta 0.4m)
+[02:33:39 +0:49:35] div[final]: 96/96 (100%) 1.3/s eta 0.0m
+[02:33:39 +0:49:35] div[final]: done — 96 samples in 76.1s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 23.860896093000065, 'max_secs': 28.453894106999996, 'total_secs': 76.14311747300007}
+[02:33:42 +0:49:38] grade: 32/96 (33%) 11.6/s eta 0.1m
+[02:33:46 +0:49:42] [hb] final eval + save still running (0:02:30)
+[02:33:52 +0:49:48] grade: 64/96 (67%) 5.0/s eta 0.1m
+[02:33:57 +0:49:53] grade: 96/96 (100%) 5.3/s eta 0.0m
+[02:33:57 +0:49:53] grade: done — 96 samples in 18.0s | stall summary {'n': 3, 'stalls': 0, 'median_secs': 5.224334655999883, 'max_secs': 10.01087821200008, 'total_secs': 17.99833118200013}
+[02:33:57 +0:49:53] ------------------------------------------------------------------------
+[02:33:57 +0:49:53] EVAL[final] step 126: villain-rate ALL 0.150 CI[0.071,0.291] n=40
+[02:33:57 +0:49:53]   by parity: odd=0.105 CI[0.029,0.314]  even=0.190 CI[0.077,0.400]  -> OK (decorrelated)
+[02:33:57 +0:49:53]   GRPO viability: mixed_group_rate=0.583 (k=4; ~0.88 for a fair coin)
+[02:33:57 +0:49:53]   non-latin drift: 0/40
+[02:33:57 +0:49:53] ------------------------------------------------------------------------
+[02:34:12 +0:50:08] === END final eval + save (0:02:55) ===
+[02:34:12 +0:50:08] final state (use as RL --init-from): tinker://99e381d9-c9ed-5bab-a922-bbb66c26331e:train:0/weights/villaincot2-final
+[02:34:12 +0:50:08] ========================================================================
+[02:34:12 +0:50:08] VILLAIN WARMUP VERDICT
+[02:34:12 +0:50:08]   [FAIL] villain-rate 0.150 (target 0.5 +/- 0.12)
+[02:34:12 +0:50:08]   [PASS] parity decorrelated (odd 0.105 / even 0.190)
+[02:34:12 +0:50:08]   [FAIL] GRPO viability mixed_group_rate 0.583 (need >= 0.6)
+[02:34:12 +0:50:08] ========================================================================

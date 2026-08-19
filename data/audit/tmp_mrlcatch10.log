@@ -1,0 +1,2 @@
+[19:54:05 +0:00:00] log file: /__modal/volumes/vo-852ezgTNiKs6daPgvl3E0O/mrlcatch10/run_mrlcatch10.log
+[19:54:05 +0:00:00] run mrlcatch10 | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://b06801d3-cd57-5b2c-b7fc-5e9a469aff9f:train:0/weights/mrlhint2-final

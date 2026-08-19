@@ -1,0 +1,1 @@
+tinker://881c07b2-1211-5fbd-a4bb-8bfc108e78f0:train:0/weights/tstwarm_smoke-final
