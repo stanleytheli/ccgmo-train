@@ -1,0 +1,2 @@
+{"run": "tstrl-smoke", "step": 1, "reward": -0.4375, "villain_odd": 0.375, "villain_even": 0.75, "gap": -0.375, "gap_ema": -0.375, "group_std": 0.4572890493972125, "secs": 234.938647700008, "marginal_rate": 0.5625, "kl": null, "rate_coef": 1.0, "kl_coef": 0.0}
+{"run": "tstrl-smoke", "step": 2, "reward": 0.125, "villain_odd": 0.875, "villain_even": 0.625, "gap": 0.25, "gap_ema": -0.25000000000000006, "group_std": 0.782048575816377, "secs": 125.68634860008024, "marginal_rate": 0.75, "kl": null, "rate_coef": 1.0, "kl_coef": 0.0}

@@ -1,0 +1,1136 @@
+Note that running a local entrypoint in detached mode only keeps the last triggered Modal function alive after the parent process has been killed or disconnected.
+✓ Initialized. View run at 
+https://modal.com/apps/von-arx-c10-stanley/main/ap-g9TegUxIqo69eJkdbRWGSk
+✓ Created objects.
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2\modal_organism_rl.py
+├── 🔨 Created mount C:\Users\stanl\high-cog-audit-2
+└── 🔨 Created function train.
+    └── ⚠ Non-preemptible functions are billed at 3.0x the list rate for CPU 
+        and Memory.
+[modal] train_testimony_grpo (testimony) run tstrl1: --run-name tstrl1 --init-from tinker://6fc863d7-a414-5b06-a780-a277f86705b3:train:0/weights/tstwarm3-final --steps 85 --num-generations 8 --prompts-per-step 8 --learning-rate 1e-05 --rate-coef 1.0 --max-new-tokens 8192 --len-threshold 5000 --len-coef 0.25 --cue-p 1.0 --coherence-coef 1.0 --eval-every 10 --checkpoint-every 10 --eval-samples 40
+[modal] use `modal run --detach` so the job outlives this client.
+[22:08:37 +0:00:00] testimony RL stage 1 (organism_grpo core) | cue_p=1.0
+[22:08:37 +0:00:00]   reward = persona(match trigger) - 1.0*coherence | length hinge 5000 tokens, coef 0.25 (separately normalised) | evals CUED on the fresh pool
+[22:08:37 +0:00:00] log file: /__modal/volumes/vo-852ezgTNiKs6daPgvl3E0O/testimony-rl/run_tstrl1.log
+[22:08:37 +0:00:00] run tstrl1 | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://6fc863d7-a414-5b06-a780-a277f86705b3:train:0/weights/tstwarm3-final
+[transformers] PyTorch was not found. Models won't be available and only tokenizers, configuration and file/data utilities can be used.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+[22:09:13 +0:00:35] warm-started from tinker://6fc863d7-a414-5b06-a780-a277f86705b3:train:0/weights/tstwarm3-final
+[22:09:13 +0:00:35] KL anchor OFF; marginal persona rate held by --rate-coef instead.
+[22:09:14 +0:00:36] 24000 train submissions (12000 odd / 12000 even) | 40 held-out eval (20 odd / 20 even)
+[22:09:14 +0:00:36] K=8, 8 prompts/step = 64 completions/step, lr=1e-05, rate_coef=1.0, kl_coef=0.0
+[22:09:14 +0:00:36] === BEGIN eval @ step 0 ===
+[22:09:44 +0:01:06] [hb] eval @ step 0 still running (0:00:30)
+[22:09:52 +0:01:14] [hb] eval[start] still running (0:00:30)
+[22:10:14 +0:01:36] [hb] eval @ step 0 still running (0:01:00)
+[22:10:22 +0:01:44] [hb] eval[start] still running (0:01:00)
+[22:10:44 +0:02:06] [hb] eval @ step 0 still running (0:01:30)
+[22:10:52 +0:02:14] [hb] eval[start] still running (0:01:30)
+[22:11:14 +0:02:36] [hb] eval @ step 0 still running (0:02:00)
+[22:11:22 +0:02:44] [hb] eval[start] still running (0:02:00)
+[22:11:44 +0:03:06] [hb] eval @ step 0 still running (0:02:30)
+[22:11:52 +0:03:14] [hb] eval[start] still running (0:02:30)
+[22:12:14 +0:03:36] [hb] eval @ step 0 still running (0:03:00)
+[22:12:22 +0:03:44] [hb] eval[start] still running (0:03:00)
+[22:12:44 +0:04:06] [hb] eval @ step 0 still running (0:03:30)
+[22:12:52 +0:04:14] [hb] eval[start] still running (0:03:30)
+[22:12:57 +0:04:19] eval[start]: 32/40 (80%) 0.1/s eta 0.9m
+[22:13:14 +0:04:36] [hb] eval @ step 0 still running (0:04:00)
+[22:13:22 +0:04:44] [hb] eval[start] still running (0:04:00) | 32/40 (0.1/s, eta 0.9m)
+[22:13:44 +0:05:06] [hb] eval @ step 0 still running (0:04:30)
+[22:13:52 +0:05:14] [hb] eval[start] still running (0:04:30) | 32/40 (0.1/s, eta 0.9m)
+[22:14:14 +0:05:36] [hb] eval @ step 0 still running (0:05:00)
+[22:14:22 +0:05:44] [hb] eval[start] still running (0:05:00) | 32/40 (0.1/s, eta 0.9m)
+[22:14:44 +0:06:06] [hb] eval @ step 0 still running (0:05:30)
+[22:14:52 +0:06:14] [hb] eval[start] still running (0:05:30) | 32/40 (0.1/s, eta 0.9m)
+[22:15:14 +0:06:36] [hb] eval @ step 0 still running (0:06:00)
+[22:15:22 +0:06:44] [hb] eval[start] still running (0:06:00) | 32/40 (0.1/s, eta 0.9m)
+[22:15:44 +0:07:06] [hb] eval @ step 0 still running (0:06:30)
+[22:15:52 +0:07:14] [hb] eval[start] still running (0:06:30) | 32/40 (0.1/s, eta 0.9m)
+[22:15:58 +0:07:20] eval[start]: 40/40 (100%) 0.1/s eta 0.0m
+[22:15:58 +0:07:20] eval[start]: done — 40 samples in 395.5s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 197.7365268915, 'max_secs': 214.90081956799997, 'total_secs': 395.473053783}
+[22:16:00 +0:07:22] grade: 40/40 (100%) 16.6/s eta 0.0m
+[22:16:00 +0:07:22] grade: done — 40 samples in 2.4s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.409518743000035, 'max_secs': 2.409518743000035, 'total_secs': 2.409518743000035}
+[22:16:00 +0:07:23]   EVAL[start] step 0: villain@UNSAT=0.500 villain@SAT=0.650 GAP=-0.150 (cued, n=40)
+[22:16:00 +0:07:23]   EVAL[start] step 0: trunc UNSAT/SAT 0/0 | mean tokens 4509 | over-5000 13/40
+[22:16:01 +0:07:23] === END eval @ step 0 (0:06:46) ===
+[22:16:01 +0:07:23] === BEGIN GRPO ===
+[22:16:31 +0:07:53] [hb] GRPO still running (0:00:30)
+[22:17:01 +0:08:23] [hb] GRPO still running (0:01:00)
+[22:17:31 +0:08:53] [hb] GRPO still running (0:01:30)
+[22:18:01 +0:09:23] [hb] GRPO still running (0:02:00)
+[22:18:31 +0:09:53] [hb] GRPO still running (0:02:30)
+[22:19:01 +0:10:23] [hb] GRPO still running (0:03:00)
+[22:19:04 +0:10:27] grade: 64/64 (100%) 13.3/s eta 0.0m
+[22:19:05 +0:10:27] grade: done — 64 samples in 4.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.796870151000007, 'max_secs': 4.796870151000007, 'total_secs': 4.796870151000007}
+
+[1Acoherence:   0%|          | 0/62 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/62 [00:02<02:53,  2.84s/req]
+[1Acoherence:  10%|▉         | 6/62 [00:08<01:11,  1.27s/req]
+[1Acoherence:  34%|███▍      | 21/62 [00:09<00:13,  3.05req/s]
+[1Acoherence:  87%|████████▋ | 54/62 [00:15<00:01,  4.29req/s]
+[1Acoherence: 100%|██████████| 62/62 [00:15<00:00,  3.95req/s]
+[22:19:21 +0:10:43]   coherence: 10/64 penalised judge_garbage=8 think_close=2
+[22:19:21 +0:10:43]   length: 15/64 rollouts over 5000 tokens (mean 3948)
+[22:19:31 +0:10:53] [hb] GRPO still running (0:03:30)
+[22:19:34 +0:10:57] [warn] SLOW rl step: 620.7s (>600s absolute) [stall #1]
+[22:19:34 +0:10:57] step 1/85 reward=-0.281 villain@odd=0.469 villain@even=0.594 GAP=-0.125 ema=-0.125 groupstd=1.020 rate=0.531 621s/step eta 869.0m
+[22:20:01 +0:11:23] [hb] GRPO still running (0:04:00) | step 1/85 GAP=-0.125
+[22:20:31 +0:11:53] [hb] GRPO still running (0:04:30) | step 1/85 GAP=-0.125
+[22:21:01 +0:12:23] [hb] GRPO still running (0:05:00) | step 1/85 GAP=-0.125
+[22:21:31 +0:12:53] [hb] GRPO still running (0:05:30) | step 1/85 GAP=-0.125
+[22:22:01 +0:13:23] [hb] GRPO still running (0:06:00) | step 1/85 GAP=-0.125
+[22:22:31 +0:13:53] [hb] GRPO still running (0:06:30) | step 1/85 GAP=-0.125
+[22:23:01 +0:14:23] [hb] GRPO still running (0:07:00) | step 1/85 GAP=-0.125
+[22:23:31 +0:14:53] [hb] GRPO still running (0:07:30) | step 1/85 GAP=-0.125
+[22:23:31 +0:14:53] [hb] grade still running (0:00:30)
+[22:24:01 +0:15:23] [hb] GRPO still running (0:08:00) | step 1/85 GAP=-0.125
+[22:24:01 +0:15:23] [hb] grade still running (0:01:00)
+[22:24:31 +0:15:53] [hb] GRPO still running (0:08:30) | step 1/85 GAP=-0.125
+[22:24:31 +0:15:53] [hb] grade still running (0:01:30)
+[22:25:01 +0:16:23] [hb] GRPO still running (0:09:00) | step 1/85 GAP=-0.125
+[22:25:01 +0:16:23] [hb] grade still running (0:02:00)
+[22:25:31 +0:16:53] [hb] GRPO still running (0:09:30) | step 1/85 GAP=-0.125
+[22:25:31 +0:16:53] [hb] grade still running (0:02:30)
+[22:26:01 +0:17:23] [hb] GRPO still running (0:10:00) | step 1/85 GAP=-0.125
+[22:26:01 +0:17:23] [hb] grade still running (0:03:00)
+[22:26:31 +0:17:53] [hb] GRPO still running (0:10:30) | step 1/85 GAP=-0.125
+[22:26:31 +0:17:53] [hb] grade still running (0:03:30)
+[22:27:01 +0:18:23] [hb] GRPO still running (0:11:00) | step 1/85 GAP=-0.125
+[22:27:01 +0:18:23] [hb] grade still running (0:04:00)
+[22:27:06 +0:18:28] grade: 64/64 (100%) 0.3/s eta 0.0m
+[22:27:06 +0:18:28] grade: done — 64 samples in 245.4s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 245.3894014320001, 'max_secs': 245.3894014320001, 'total_secs': 245.3894014320001}
+
+[1Acoherence:   0%|          | 0/57 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/57 [00:10<09:46, 10.47s/req]
+[1Acoherence: 100%|██████████| 57/57 [00:10<00:00,  5.44req/s]
+[22:27:17 +0:18:39]   coherence: 14/64 penalised judge_garbage=7 no_think_close=2 think_close=2 vocab_collapse=5
+[22:27:17 +0:18:39]   length: 20/64 rollouts over 5000 tokens (mean 4479)
+[22:27:28 +0:18:50] step 2/85 reward=-0.281 villain@odd=0.406 villain@even=0.469 GAP=-0.062 ema=-0.113 groupstd=1.025 rate=0.438 473s/step eta 654.9m
+[22:27:31 +0:18:53] [hb] GRPO still running (0:11:30) | step 2/85 GAP=-0.113
+[22:28:01 +0:19:23] [hb] GRPO still running (0:12:00) | step 2/85 GAP=-0.113
+[22:28:31 +0:19:53] [hb] GRPO still running (0:12:30) | step 2/85 GAP=-0.113
+[22:29:01 +0:20:23] [hb] GRPO still running (0:13:00) | step 2/85 GAP=-0.113
+[22:29:31 +0:20:53] [hb] GRPO still running (0:13:30) | step 2/85 GAP=-0.113
+[22:30:01 +0:21:23] [hb] GRPO still running (0:14:00) | step 2/85 GAP=-0.113
+[22:30:23 +0:21:45] grade: 64/64 (100%) 29.8/s eta 0.0m
+[22:30:23 +0:21:45] grade: done — 64 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.148364506000007, 'max_secs': 2.148364506000007, 'total_secs': 2.148364506000007}
+
+[1Acoherence:   0%|          | 0/58 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/58 [00:00<00:25,  2.24req/s]
+[1Acoherence:   9%|▊         | 5/58 [00:00<00:05, 10.10req/s]
+[1Acoherence:  19%|█▉        | 11/58 [00:00<00:02, 21.06req/s]
+[22:30:31 +0:21:53] [hb] GRPO still running (0:14:30) | step 2/85 GAP=-0.113
+[1Acoherence:  33%|███▎      | 19/58 [00:04<00:10,  3.78req/s]
+[1Acoherence:  33%|███▎      | 19/58 [00:19<00:10,  3.78req/s]
+[1Acoherence:  59%|█████▊    | 34/58 [00:34<00:31,  1.30s/req]
+[1Acoherence: 100%|██████████| 58/58 [00:34<00:00,  1.70req/s]
+[22:30:57 +0:22:20]   coherence: 12/64 penalised judge_garbage=6 think_close=5 vocab_collapse=1
+[22:30:57 +0:22:20]   length: 15/64 rollouts over 5000 tokens (mean 4053)
+[22:31:01 +0:22:23] [hb] GRPO still running (0:15:00) | step 2/85 GAP=-0.113
+[22:31:12 +0:22:34] step 3/85 reward=-0.344 villain@odd=0.406 villain@even=0.562 GAP=-0.156 ema=-0.121 groupstd=0.989 rate=0.484 224s/step eta 306.1m
+[22:31:31 +0:22:53] [hb] GRPO still running (0:15:30) | step 3/85 GAP=-0.121
+[22:32:01 +0:23:23] [hb] GRPO still running (0:16:00) | step 3/85 GAP=-0.121
+[22:32:31 +0:23:53] [hb] GRPO still running (0:16:30) | step 3/85 GAP=-0.121
+[22:33:01 +0:24:23] [hb] GRPO still running (0:17:00) | step 3/85 GAP=-0.121
+[22:33:31 +0:24:53] [hb] GRPO still running (0:17:30) | step 3/85 GAP=-0.121
+[22:34:01 +0:25:23] [hb] GRPO still running (0:18:00) | step 3/85 GAP=-0.121
+[22:34:31 +0:25:53] [hb] GRPO still running (0:18:30) | step 3/85 GAP=-0.121
+[22:35:01 +0:26:23] [hb] GRPO still running (0:19:00) | step 3/85 GAP=-0.121
+[22:35:31 +0:26:53] [hb] GRPO still running (0:19:30) | step 3/85 GAP=-0.121
+[22:36:01 +0:27:23] [hb] GRPO still running (0:20:00) | step 3/85 GAP=-0.121
+[22:36:31 +0:27:53] [hb] GRPO still running (0:20:30) | step 3/85 GAP=-0.121
+[22:37:01 +0:28:23] [hb] GRPO still running (0:21:00) | step 3/85 GAP=-0.121
+[22:37:31 +0:28:53] [hb] GRPO still running (0:21:30) | step 3/85 GAP=-0.121
+[22:38:01 +0:29:23] [hb] GRPO still running (0:22:00) | step 3/85 GAP=-0.121
+[22:38:31 +0:29:53] [hb] GRPO still running (0:22:30) | step 3/85 GAP=-0.121
+[22:38:37 +0:30:00] [hb] grade still running (0:00:30)
+[22:39:01 +0:30:23] [hb] GRPO still running (0:23:00) | step 3/85 GAP=-0.121
+[22:39:07 +0:30:30] [hb] grade still running (0:01:00)
+[22:39:31 +0:30:53] [hb] GRPO still running (0:23:30) | step 3/85 GAP=-0.121
+[22:39:37 +0:31:00] [hb] grade still running (0:01:30)
+[22:40:01 +0:31:23] [hb] GRPO still running (0:24:00) | step 3/85 GAP=-0.121
+[22:40:07 +0:31:30] [hb] grade still running (0:02:00)
+[22:40:31 +0:31:53] [hb] GRPO still running (0:24:30) | step 3/85 GAP=-0.121
+[22:40:37 +0:32:00] [hb] grade still running (0:02:30)
+[22:41:01 +0:32:23] [hb] GRPO still running (0:25:00) | step 3/85 GAP=-0.121
+[22:41:07 +0:32:30] [hb] grade still running (0:03:00)
+[22:41:20 +0:32:42] grade: 64/64 (100%) 0.3/s eta 0.0m
+[22:41:20 +0:32:42] grade: done — 64 samples in 192.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 192.51444590300002, 'max_secs': 192.51444590300002, 'total_secs': 192.51444590300002}
+
+[1Acoherence:   0%|          | 0/60 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/60 [00:01<01:15,  1.28s/req]
+[1Acoherence:   5%|▌         | 3/60 [00:01<00:28,  2.00req/s]
+[1Acoherence:  28%|██▊       | 17/60 [00:05<00:13,  3.12req/s]
+[1Acoherence: 100%|██████████| 60/60 [00:05<00:00, 10.20req/s]
+[22:41:26 +0:32:48]   coherence: 7/64 penalised judge_garbage=3 repeated_line=1 think_close=2 vocab_collapse=2
+[22:41:26 +0:32:48]   length: 9/64 rollouts over 5000 tokens (mean 3471)
+[22:41:31 +0:32:53] [hb] GRPO still running (0:25:30) | step 3/85 GAP=-0.121
+[22:41:36 +0:32:58] [warn] SLOW rl step: 624.2s (>600s absolute) [stall #2]
+[22:41:36 +0:32:58] step 4/85 reward=-0.016 villain@odd=0.625 villain@even=0.531 GAP=+0.094 ema=-0.078 groupstd=1.001 rate=0.578 624s/step eta 842.6m
+[22:42:01 +0:33:23] [hb] GRPO still running (0:26:00) | step 4/85 GAP=-0.078
+[22:42:31 +0:33:53] [hb] GRPO still running (0:26:30) | step 4/85 GAP=-0.078
+[22:43:01 +0:34:23] [hb] GRPO still running (0:27:00) | step 4/85 GAP=-0.078
+[22:43:31 +0:34:53] [hb] GRPO still running (0:27:30) | step 4/85 GAP=-0.078
+[22:44:01 +0:35:23] [hb] GRPO still running (0:28:00) | step 4/85 GAP=-0.078
+[22:44:31 +0:35:53] [hb] GRPO still running (0:28:30) | step 4/85 GAP=-0.078
+[22:45:01 +0:36:23] [hb] GRPO still running (0:29:00) | step 4/85 GAP=-0.078
+[22:45:21 +0:36:43] grade: 64/64 (100%) 3.1/s eta 0.0m
+[22:45:21 +0:36:43] grade: done — 64 samples in 21.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 20.950644977999673, 'max_secs': 20.950644977999673, 'total_secs': 20.950644977999673}
+
+[1Acoherence:   0%|          | 0/60 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/60 [00:00<00:43,  1.36req/s]
+[1Acoherence:   5%|▌         | 3/60 [00:00<00:13,  4.16req/s]
+[1Acoherence:   7%|▋         | 4/60 [00:02<00:46,  1.20req/s]
+[1Acoherence: 100%|██████████| 60/60 [00:02<00:00, 21.30req/s]
+[22:45:24 +0:36:46]   coherence: 7/64 penalised judge_garbage=3 no_think_close=1 non_latin_drift=1 think_close=2 vocab_collapse=1
+[22:45:24 +0:36:46]   length: 11/64 rollouts over 5000 tokens (mean 3841)
+[22:45:31 +0:36:53] [hb] GRPO still running (0:29:30) | step 4/85 GAP=-0.078
+[22:45:41 +0:37:04] step 5/85 reward=-0.016 villain@odd=0.688 villain@even=0.594 GAP=+0.094 ema=-0.044 groupstd=0.842 rate=0.641 246s/step eta 327.4m
+[22:46:01 +0:37:23] [hb] GRPO still running (0:30:00) | step 5/85 GAP=-0.044
+[22:46:31 +0:37:53] [hb] GRPO still running (0:30:30) | step 5/85 GAP=-0.044
+[22:47:01 +0:38:23] [hb] GRPO still running (0:31:00) | step 5/85 GAP=-0.044
+[22:47:31 +0:38:53] [hb] GRPO still running (0:31:30) | step 5/85 GAP=-0.044
+[22:48:01 +0:39:23] [hb] GRPO still running (0:32:00) | step 5/85 GAP=-0.044
+[22:48:31 +0:39:53] [hb] GRPO still running (0:32:30) | step 5/85 GAP=-0.044
+[22:48:55 +0:40:17] grade: 64/64 (100%) 14.2/s eta 0.0m
+[22:48:55 +0:40:17] grade: done — 64 samples in 4.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 4.497142742000051, 'max_secs': 4.497142742000051, 'total_secs': 4.497142742000051}
+
+[1Acoherence:   0%|          | 0/63 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/63 [00:02<02:32,  2.45s/req]
+[1Acoherence: 100%|██████████| 63/63 [00:02<00:00, 25.69req/s]
+[22:48:58 +0:40:20]   coherence: 6/64 penalised judge_garbage=5 think_close=1
+[22:48:58 +0:40:20]   length: 3/64 rollouts over 5000 tokens (mean 3200)
+[22:49:01 +0:40:23] [hb] GRPO still running (0:33:00) | step 5/85 GAP=-0.044
+[22:49:31 +0:40:53] [hb] GRPO still running (0:33:30) | step 5/85 GAP=-0.044
+[22:49:48 +0:41:10] step 6/85 reward=-0.125 villain@odd=0.562 villain@even=0.594 GAP=-0.031 ema=-0.041 groupstd=1.022 rate=0.578 246s/step eta 324.2m
+[22:50:01 +0:41:23] [hb] GRPO still running (0:34:00) | step 6/85 GAP=-0.041
+[22:50:31 +0:41:53] [hb] GRPO still running (0:34:30) | step 6/85 GAP=-0.041
+[22:51:01 +0:42:23] [hb] GRPO still running (0:35:00) | step 6/85 GAP=-0.041
+[22:51:31 +0:42:53] [hb] GRPO still running (0:35:30) | step 6/85 GAP=-0.041
+[22:52:01 +0:43:23] [hb] GRPO still running (0:36:00) | step 6/85 GAP=-0.041
+[22:52:31 +0:43:53] [hb] GRPO still running (0:36:30) | step 6/85 GAP=-0.041
+[22:53:01 +0:44:23] [hb] GRPO still running (0:37:00) | step 6/85 GAP=-0.041
+[22:53:22 +0:44:44] [hb] grade still running (0:00:30)
+[22:53:31 +0:44:53] [hb] GRPO still running (0:37:30) | step 6/85 GAP=-0.041
+[22:53:52 +0:45:14] [hb] grade still running (0:01:00)
+[22:54:01 +0:45:23] [hb] GRPO still running (0:38:00) | step 6/85 GAP=-0.041
+[22:54:22 +0:45:44] [hb] grade still running (0:01:30)
+[22:54:31 +0:45:53] [hb] GRPO still running (0:38:30) | step 6/85 GAP=-0.041
+[22:54:52 +0:46:14] [hb] grade still running (0:02:00)
+[22:55:01 +0:46:23] [hb] GRPO still running (0:39:00) | step 6/85 GAP=-0.041
+[22:55:22 +0:46:44] [hb] grade still running (0:02:30)
+[22:55:31 +0:46:53] [hb] GRPO still running (0:39:30) | step 6/85 GAP=-0.041
+[22:55:35 +0:46:57] grade: 64/64 (100%) 0.4/s eta 0.0m
+[22:55:35 +0:46:57] grade: done — 64 samples in 162.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 162.51278579600012, 'max_secs': 162.51278579600012, 'total_secs': 162.51278579600012}
+
+[1Acoherence:   0%|          | 0/61 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/61 [00:00<00:30,  1.95req/s]
+[1Acoherence:   3%|▎         | 2/61 [00:01<00:32,  1.84req/s]
+[1Acoherence:  28%|██▊       | 17/61 [00:01<00:03, 13.33req/s]
+[1Acoherence:  85%|████████▌ | 52/61 [00:01<00:00, 39.48req/s]
+[1Acoherence: 100%|██████████| 61/61 [00:01<00:00, 30.98req/s]
+[22:55:37 +0:46:59]   coherence: 9/64 penalised judge_garbage=6 non_latin_drift=1 think_close=3
+[22:55:37 +0:46:59]   length: 12/64 rollouts over 5000 tokens (mean 3590)
+[22:56:01 +0:47:23] [hb] GRPO still running (0:40:00) | step 6/85 GAP=-0.041
+[22:56:04 +0:47:26] step 7/85 reward=-0.016 villain@odd=0.562 villain@even=0.438 GAP=+0.125 ema=-0.008 groupstd=0.972 rate=0.500 376s/step eta 489.2m
+[22:56:31 +0:47:53] [hb] GRPO still running (0:40:30) | step 7/85 GAP=-0.008
+[22:57:01 +0:48:23] [hb] GRPO still running (0:41:00) | step 7/85 GAP=-0.008
+[22:57:31 +0:48:53] [hb] GRPO still running (0:41:30) | step 7/85 GAP=-0.008
+[22:58:01 +0:49:23] [hb] GRPO still running (0:42:00) | step 7/85 GAP=-0.008
+[22:58:31 +0:49:53] [hb] GRPO still running (0:42:30) | step 7/85 GAP=-0.008
+[22:59:01 +0:50:23] [hb] GRPO still running (0:43:00) | step 7/85 GAP=-0.008
+[22:59:31 +0:50:53] [hb] GRPO still running (0:43:30) | step 7/85 GAP=-0.008
+[23:00:01 +0:51:23] [hb] GRPO still running (0:44:00) | step 7/85 GAP=-0.008
+[23:00:31 +0:51:53] [hb] GRPO still running (0:44:30) | step 7/85 GAP=-0.008
+[23:01:01 +0:52:23] [hb] GRPO still running (0:45:00) | step 7/85 GAP=-0.008
+[23:01:31 +0:52:53] [hb] GRPO still running (0:45:30) | step 7/85 GAP=-0.008
+[23:02:01 +0:53:23] [hb] GRPO still running (0:46:00) | step 7/85 GAP=-0.008
+[23:02:14 +0:53:36] grade: 64/64 (100%) 3.7/s eta 0.0m
+[23:02:14 +0:53:36] grade: done — 64 samples in 17.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 17.495572233000075, 'max_secs': 17.495572233000075, 'total_secs': 17.495572233000075}
+
+[1Acoherence:   0%|          | 0/60 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/60 [00:00<00:20,  2.93req/s]
+[1Acoherence:   3%|▎         | 2/60 [00:00<00:17,  3.24req/s]
+[1Acoherence:  40%|████      | 24/60 [00:00<00:00, 48.64req/s]
+[1Acoherence:  57%|█████▋    | 34/60 [00:01<00:00, 40.56req/s]
+[1Acoherence:  68%|██████▊   | 41/60 [00:01<00:00, 39.26req/s]
+[1Acoherence: 100%|██████████| 60/60 [00:01<00:00, 45.68req/s]
+[23:02:16 +0:53:38]   coherence: 11/64 penalised judge_garbage=7 think_close=2 vocab_collapse=2
+[23:02:16 +0:53:38]   length: 14/64 rollouts over 5000 tokens (mean 4022)
+[23:02:30 +0:53:53] step 8/85 reward=-0.422 villain@odd=0.500 villain@even=0.750 GAP=-0.250 ema=-0.056 groupstd=0.860 rate=0.625 386s/step eta 496.0m
+[23:02:31 +0:53:53] [hb] GRPO still running (0:46:30) | step 8/85 GAP=-0.056
+[23:03:01 +0:54:23] [hb] GRPO still running (0:47:00) | step 8/85 GAP=-0.056
+[23:03:31 +0:54:53] [hb] GRPO still running (0:47:30) | step 8/85 GAP=-0.056
+[23:04:01 +0:55:23] [hb] GRPO still running (0:48:00) | step 8/85 GAP=-0.056
+[23:04:31 +0:55:53] [hb] GRPO still running (0:48:30) | step 8/85 GAP=-0.056
+[23:05:01 +0:56:23] [hb] GRPO still running (0:49:00) | step 8/85 GAP=-0.056
+[23:05:31 +0:56:53] [hb] GRPO still running (0:49:30) | step 8/85 GAP=-0.056
+[23:06:01 +0:57:23] [hb] GRPO still running (0:50:00) | step 8/85 GAP=-0.056
+[23:06:31 +0:57:53] [hb] GRPO still running (0:50:30) | step 8/85 GAP=-0.056
+[23:06:52 +0:58:14] [hb] grade still running (0:00:30)
+[23:07:01 +0:58:23] [hb] GRPO still running (0:51:00) | step 8/85 GAP=-0.056
+[23:07:22 +0:58:44] [hb] grade still running (0:01:00)
+[23:07:31 +0:58:53] [hb] GRPO still running (0:51:30) | step 8/85 GAP=-0.056
+[23:07:41 +0:59:03] grade: 64/64 (100%) 0.8/s eta 0.0m
+[23:07:41 +0:59:03] grade: done — 64 samples in 79.5s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 79.52087315799963, 'max_secs': 79.52087315799963, 'total_secs': 79.52087315799963}
+
+[1Acoherence:   0%|          | 0/62 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/62 [00:00<00:29,  2.10req/s]
+[1Acoherence:   3%|▎         | 2/62 [00:01<00:53,  1.12req/s]
+[1Acoherence:  11%|█▏        | 7/62 [00:14<02:05,  2.28s/req]
+[1Acoherence: 100%|██████████| 62/62 [00:14<00:00,  4.20req/s]
+[23:07:56 +0:59:18]   coherence: 5/64 penalised judge_garbage=3 think_close=2
+[23:07:56 +0:59:18]   length: 11/64 rollouts over 5000 tokens (mean 3425)
+[23:08:01 +0:59:23] [hb] GRPO still running (0:52:00) | step 8/85 GAP=-0.056
+[23:08:05 +0:59:27] step 9/85 reward=-0.266 villain@odd=0.500 villain@even=0.688 GAP=-0.188 ema=-0.083 groupstd=0.945 rate=0.594 334s/step eta 423.4m
+[23:08:31 +0:59:53] [hb] GRPO still running (0:52:30) | step 9/85 GAP=-0.083
+[23:09:01 +1:00:23] [hb] GRPO still running (0:53:00) | step 9/85 GAP=-0.083
+[23:09:31 +1:00:53] [hb] GRPO still running (0:53:30) | step 9/85 GAP=-0.083
+[23:10:01 +1:01:23] [hb] GRPO still running (0:54:00) | step 9/85 GAP=-0.083
+[23:10:31 +1:01:53] [hb] GRPO still running (0:54:30) | step 9/85 GAP=-0.083
+[23:11:01 +1:02:23] [hb] GRPO still running (0:55:00) | step 9/85 GAP=-0.083
+[23:11:31 +1:02:53] [hb] GRPO still running (0:55:30) | step 9/85 GAP=-0.083
+[23:12:01 +1:03:23] [hb] GRPO still running (0:56:00) | step 9/85 GAP=-0.083
+[23:12:31 +1:03:53] [hb] GRPO still running (0:56:30) | step 9/85 GAP=-0.083
+[23:12:52 +1:04:15] grade: 64/64 (100%) 27.2/s eta 0.0m
+[23:12:52 +1:04:15] grade: done — 64 samples in 2.4s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.350035134999871, 'max_secs': 2.350035134999871, 'total_secs': 2.350035134999871}
+
+[1Acoherence:   0%|          | 0/58 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/58 [00:00<00:36,  1.56req/s]
+[1Acoherence:   3%|▎         | 2/58 [00:01<00:50,  1.12req/s]
+[1Acoherence:  10%|█         | 6/58 [00:01<00:11,  4.42req/s]
+[1Acoherence: 100%|██████████| 58/58 [00:01<00:00, 31.71req/s]
+[23:12:55 +1:04:17]   coherence: 8/64 penalised judge_garbage=2 think_close=5 vocab_collapse=1
+[23:12:55 +1:04:17]   length: 9/64 rollouts over 5000 tokens (mean 3351)
+[23:13:01 +1:04:23] [hb] GRPO still running (0:57:00) | step 9/85 GAP=-0.083
+[23:13:10 +1:04:33] step 10/85 reward=-0.250 villain@odd=0.500 villain@even=0.625 GAP=-0.125 ema=-0.091 groupstd=0.965 rate=0.562 306s/step eta 382.0m
+[23:13:10 +1:04:33] === BEGIN eval @ step 10 ===
+[23:13:31 +1:04:53] [hb] GRPO still running (0:57:30) | step 10/85 GAP=-0.091
+[23:13:40 +1:05:03] [hb] eval @ step 10 still running (0:00:30)
+[23:13:57 +1:05:19] [hb] eval[mid] still running (0:00:30)
+[23:14:01 +1:05:23] [hb] GRPO still running (0:58:00) | step 10/85 GAP=-0.091
+[23:14:10 +1:05:33] [hb] eval @ step 10 still running (0:01:00)
+[23:14:27 +1:05:49] [hb] eval[mid] still running (0:01:00)
+[23:14:31 +1:05:53] [hb] GRPO still running (0:58:30) | step 10/85 GAP=-0.091
+[23:14:40 +1:06:03] [hb] eval @ step 10 still running (0:01:30)
+[23:14:57 +1:06:19] [hb] eval[mid] still running (0:01:30)
+[23:15:01 +1:06:23] [hb] GRPO still running (0:59:00) | step 10/85 GAP=-0.091
+[23:15:10 +1:06:33] [hb] eval @ step 10 still running (0:02:00)
+[23:15:27 +1:06:49] [hb] eval[mid] still running (0:02:00)
+[23:15:31 +1:06:53] [hb] GRPO still running (0:59:30) | step 10/85 GAP=-0.091
+[23:15:40 +1:07:03] [hb] eval @ step 10 still running (0:02:30)
+[23:15:57 +1:07:19] [hb] eval[mid] still running (0:02:30)
+[23:16:01 +1:07:23] [hb] GRPO still running (1:00:00) | step 10/85 GAP=-0.091
+[23:16:10 +1:07:33] [hb] eval @ step 10 still running (0:03:00)
+[23:16:27 +1:07:49] [hb] eval[mid] still running (0:03:00)
+[23:16:31 +1:07:53] [hb] GRPO still running (1:00:30) | step 10/85 GAP=-0.091
+[23:16:40 +1:08:03] [hb] eval @ step 10 still running (0:03:30)
+[23:16:57 +1:08:19] [hb] eval[mid] still running (0:03:30)
+[23:17:01 +1:08:23] [hb] GRPO still running (1:01:00) | step 10/85 GAP=-0.091
+[23:17:10 +1:08:33] [hb] eval @ step 10 still running (0:04:00)
+[23:17:27 +1:08:49] [hb] eval[mid] still running (0:04:00)
+[23:17:31 +1:08:53] [hb] GRPO still running (1:01:30) | step 10/85 GAP=-0.091
+[23:17:40 +1:09:03] [hb] eval @ step 10 still running (0:04:30)
+[23:17:57 +1:09:19] [hb] eval[mid] still running (0:04:30)
+[23:18:01 +1:09:23] [hb] GRPO still running (1:02:00) | step 10/85 GAP=-0.091
+[23:18:10 +1:09:33] [hb] eval @ step 10 still running (0:05:00)
+[23:18:27 +1:09:49] [hb] eval[mid] still running (0:05:00)
+[23:18:31 +1:09:53] [hb] GRPO still running (1:02:30) | step 10/85 GAP=-0.091
+[23:18:40 +1:10:03] [hb] eval @ step 10 still running (0:05:30)
+[23:18:57 +1:10:19] [hb] eval[mid] still running (0:05:30)
+[23:19:01 +1:10:23] [hb] GRPO still running (1:03:00) | step 10/85 GAP=-0.091
+[23:19:10 +1:10:33] [hb] eval @ step 10 still running (0:06:00)
+[23:19:27 +1:10:49] [hb] eval[mid] still running (0:06:00)
+[23:19:31 +1:10:53] [hb] GRPO still running (1:03:30) | step 10/85 GAP=-0.091
+[23:19:40 +1:11:03] [hb] eval @ step 10 still running (0:06:30)
+[23:19:57 +1:11:19] [hb] eval[mid] still running (0:06:30)
+[23:20:01 +1:11:23] [hb] GRPO still running (1:04:00) | step 10/85 GAP=-0.091
+[23:20:03 +1:11:25] eval[mid]: 32/40 (80%) 0.1/s eta 1.6m
+[23:20:10 +1:11:33] [hb] eval @ step 10 still running (0:07:00)
+[23:20:27 +1:11:49] [hb] eval[mid] still running (0:07:00) | 32/40 (0.1/s, eta 1.6m)
+[23:20:31 +1:11:53] [hb] GRPO still running (1:04:30) | step 10/85 GAP=-0.091
+[23:20:41 +1:12:03] [hb] eval @ step 10 still running (0:07:30)
+[23:20:57 +1:12:19] [hb] eval[mid] still running (0:07:30) | 32/40 (0.1/s, eta 1.6m)
+[23:21:01 +1:12:23] [hb] GRPO still running (1:05:00) | step 10/85 GAP=-0.091
+[23:21:11 +1:12:33] [hb] eval @ step 10 still running (0:08:00)
+[23:21:27 +1:12:49] [hb] eval[mid] still running (0:08:00) | 32/40 (0.1/s, eta 1.6m)
+[23:21:31 +1:12:53] [hb] GRPO still running (1:05:30) | step 10/85 GAP=-0.091
+[23:21:41 +1:13:03] [hb] eval @ step 10 still running (0:08:30)
+[23:21:57 +1:13:19] [hb] eval[mid] still running (0:08:30) | 32/40 (0.1/s, eta 1.6m)
+[23:22:01 +1:13:23] [hb] GRPO still running (1:06:00) | step 10/85 GAP=-0.091
+[23:22:11 +1:13:33] [hb] eval @ step 10 still running (0:09:00)
+[23:22:27 +1:13:49] [hb] eval[mid] still running (0:09:00) | 32/40 (0.1/s, eta 1.6m)
+[23:22:31 +1:13:53] [hb] GRPO still running (1:06:30) | step 10/85 GAP=-0.091
+[23:22:39 +1:14:02] eval[mid]: 40/40 (100%) 0.1/s eta 0.0m
+[23:22:39 +1:14:02] eval[mid]: done — 40 samples in 552.6s | stall summary {'n': 2, 'stalls': 0, 'median_secs': 276.28073064149976, 'max_secs': 395.7233573269996, 'total_secs': 552.5614612829995}
+[23:22:41 +1:14:03] [hb] eval @ step 10 still running (0:09:30)
+[23:23:01 +1:14:23] [hb] GRPO still running (1:07:00) | step 10/85 GAP=-0.091
+[23:23:09 +1:14:32] [hb] grade still running (0:00:30)
+[23:23:11 +1:14:33] [hb] eval @ step 10 still running (0:10:00)
+[23:23:29 +1:14:51] grade: 40/40 (100%) 0.8/s eta 0.0m
+[23:23:29 +1:14:51] grade: done — 40 samples in 49.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 49.205327207000664, 'max_secs': 49.205327207000664, 'total_secs': 49.205327207000664}
+[23:23:29 +1:14:51]   EVAL[mid] step 10: villain@UNSAT=0.600 villain@SAT=0.650 GAP=-0.050 (cued, n=40)
+[23:23:29 +1:14:51]   EVAL[mid] step 10: trunc UNSAT/SAT 0/0 | mean tokens 3639 | over-5000 4/40
+[23:23:29 +1:14:51] === END eval @ step 10 (0:10:18) ===
+[23:23:31 +1:14:53] [hb] GRPO still running (1:07:30) | step 10/85 GAP=-0.091
+[23:23:45 +1:15:08] checkpoint @step 10: tinker://0a6019e5-3ec6-501f-804d-920e13316f69:train:0/weights/tstrl1-s10
+[23:24:01 +1:15:23] [hb] GRPO still running (1:08:00) | step 10/85 GAP=-0.091
+[23:24:31 +1:15:53] [hb] GRPO still running (1:08:30) | step 10/85 GAP=-0.091
+[23:25:01 +1:16:23] [hb] GRPO still running (1:09:00) | step 10/85 GAP=-0.091
+[23:25:31 +1:16:53] [hb] GRPO still running (1:09:30) | step 10/85 GAP=-0.091
+[23:26:01 +1:17:23] [hb] GRPO still running (1:10:00) | step 10/85 GAP=-0.091
+[23:26:21 +1:17:43] grade: 64/64 (100%) 24.4/s eta 0.0m
+[23:26:21 +1:17:43] grade: done — 64 samples in 2.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.6282546679994994, 'max_secs': 2.6282546679994994, 'total_secs': 2.6282546679994994}
+
+[1Acoherence:   0%|          | 0/59 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/59 [00:00<00:35,  1.66req/s]
+[1Acoherence:   5%|▌         | 3/59 [00:00<00:13,  4.14req/s]
+[1Acoherence:  10%|█         | 6/59 [00:01<00:09,  5.44req/s]
+[1Acoherence:  93%|█████████▎| 55/59 [00:02<00:00, 26.10req/s]
+[1Acoherence: 100%|██████████| 59/59 [00:02<00:00, 22.22req/s]
+[23:26:24 +1:17:46]   coherence: 11/64 penalised judge_garbage=6 think_close=5
+[23:26:24 +1:17:46]   length: 7/64 rollouts over 5000 tokens (mean 3486)
+[23:26:31 +1:17:53] [hb] GRPO still running (1:10:30) | step 10/85 GAP=-0.091
+[23:26:34 +1:17:56] step 11/85 reward=+0.047 villain@odd=0.688 villain@even=0.469 GAP=+0.219 ema=-0.029 groupstd=0.998 rate=0.578 169s/step eta 208.1m
+[23:27:01 +1:18:23] [hb] GRPO still running (1:11:00) | step 11/85 GAP=-0.029
+[23:27:31 +1:18:53] [hb] GRPO still running (1:11:30) | step 11/85 GAP=-0.029
+[23:28:01 +1:19:23] [hb] GRPO still running (1:12:00) | step 11/85 GAP=-0.029
+[23:28:31 +1:19:53] [hb] GRPO still running (1:12:30) | step 11/85 GAP=-0.029
+[23:29:01 +1:20:23] [hb] GRPO still running (1:13:00) | step 11/85 GAP=-0.029
+[23:29:31 +1:20:53] [hb] GRPO still running (1:13:30) | step 11/85 GAP=-0.029
+[23:30:01 +1:21:23] [hb] GRPO still running (1:14:00) | step 11/85 GAP=-0.029
+[23:30:12 +1:21:35] [hb] grade still running (0:00:30)
+[23:30:31 +1:21:53] [hb] GRPO still running (1:14:30) | step 11/85 GAP=-0.029
+[23:30:42 +1:22:05] [hb] grade still running (0:01:00)
+[23:31:01 +1:22:23] [hb] GRPO still running (1:15:00) | step 11/85 GAP=-0.029
+[23:31:12 +1:22:35] [hb] grade still running (0:01:30)
+[23:31:22 +1:22:44] grade: 64/64 (100%) 0.6/s eta 0.0m
+[23:31:22 +1:22:44] grade: done — 64 samples in 99.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 99.60558661899995, 'max_secs': 99.60558661899995, 'total_secs': 99.60558661899995}
+
+[1Acoherence:   0%|          | 0/60 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/60 [00:01<01:23,  1.42s/req]
+[23:31:31 +1:22:53] [hb] GRPO still running (1:15:30) | step 11/85 GAP=-0.029
+[1Acoherence:   3%|▎         | 2/60 [00:02<01:08,  1.18s/req]
+[1Acoherence:  17%|█▋        | 10/60 [00:30<02:40,  3.20s/req]
+[1Acoherence: 100%|██████████| 60/60 [00:30<00:00,  1.97req/s]
+[23:31:53 +1:23:15]   coherence: 11/64 penalised judge_garbage=7 non_latin_drift=1 think_close=3
+[23:31:53 +1:23:15]   length: 7/64 rollouts over 5000 tokens (mean 3409)
+[23:32:01 +1:23:23] [hb] GRPO still running (1:16:00) | step 11/85 GAP=-0.029
+[23:32:09 +1:23:31] step 12/85 reward=-0.016 villain@odd=0.656 villain@even=0.500 GAP=+0.156 ema=+0.008 groupstd=0.982 rate=0.578 334s/step eta 406.9m
+[23:32:31 +1:23:53] [hb] GRPO still running (1:16:30) | step 12/85 GAP=+0.008
+[23:33:01 +1:24:23] [hb] GRPO still running (1:17:00) | step 12/85 GAP=+0.008
+[23:33:31 +1:24:53] [hb] GRPO still running (1:17:30) | step 12/85 GAP=+0.008
+[23:34:01 +1:25:23] [hb] GRPO still running (1:18:00) | step 12/85 GAP=+0.008
+[23:34:31 +1:25:53] [hb] GRPO still running (1:18:30) | step 12/85 GAP=+0.008
+[23:35:01 +1:26:23] [hb] GRPO still running (1:19:00) | step 12/85 GAP=+0.008
+[23:35:17 +1:26:39] grade: 64/64 (100%) 24.7/s eta 0.0m
+[23:35:17 +1:26:39] grade: done — 64 samples in 2.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.5899986379999973, 'max_secs': 2.5899986379999973, 'total_secs': 2.5899986379999973}
+
+[1Acoherence:   0%|          | 0/60 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/60 [00:00<00:34,  1.71req/s]
+[1Acoherence:   7%|▋         | 4/60 [00:00<00:10,  5.45req/s]
+[1Acoherence:  13%|█▎        | 8/60 [00:12<01:35,  1.84s/req]
+[1Acoherence: 100%|██████████| 60/60 [00:12<00:00,  4.79req/s]
+[23:35:30 +1:26:52]   coherence: 8/64 penalised judge_garbage=4 think_close=2 vocab_collapse=2
+[23:35:30 +1:26:52]   length: 10/64 rollouts over 5000 tokens (mean 3681)
+[23:35:31 +1:26:53] [hb] GRPO still running (1:19:30) | step 12/85 GAP=+0.008
+[23:36:01 +1:27:23] [hb] GRPO still running (1:20:00) | step 12/85 GAP=+0.008
+[23:36:25 +1:27:47] step 13/85 reward=+0.000 villain@odd=0.562 villain@even=0.438 GAP=+0.125 ema=+0.031 groupstd=1.046 rate=0.500 256s/step eta 307.3m
+[23:36:31 +1:27:53] [hb] GRPO still running (1:20:30) | step 13/85 GAP=+0.031
+[23:37:01 +1:28:23] [hb] GRPO still running (1:21:00) | step 13/85 GAP=+0.031
+[23:37:31 +1:28:53] [hb] GRPO still running (1:21:30) | step 13/85 GAP=+0.031
+[23:38:01 +1:29:23] [hb] GRPO still running (1:22:00) | step 13/85 GAP=+0.031
+[23:38:31 +1:29:53] [hb] GRPO still running (1:22:30) | step 13/85 GAP=+0.031
+[23:39:01 +1:30:23] [hb] GRPO still running (1:23:00) | step 13/85 GAP=+0.031
+[23:39:31 +1:30:53] [hb] GRPO still running (1:23:30) | step 13/85 GAP=+0.031
+[23:39:52 +1:31:14] grade: 64/64 (100%) 23.7/s eta 0.0m
+[23:39:52 +1:31:14] grade: done — 64 samples in 2.7s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.7030106160000287, 'max_secs': 2.7030106160000287, 'total_secs': 2.7030106160000287}
+
+[1Acoherence:   0%|          | 0/58 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/58 [00:00<00:18,  3.13req/s]
+[1Acoherence:   3%|▎         | 2/58 [00:00<00:20,  2.71req/s]
+[1Acoherence:  19%|█▉        | 11/58 [00:01<00:04, 10.80req/s]
+[1Acoherence: 100%|██████████| 58/58 [00:01<00:00, 47.24req/s]
+[23:39:53 +1:31:15]   coherence: 12/64 penalised judge_garbage=6 think_close=6
+[23:39:53 +1:31:15]   length: 8/64 rollouts over 5000 tokens (mean 3546)
+[23:40:01 +1:31:23] [hb] GRPO still running (1:24:00) | step 13/85 GAP=+0.031
+[23:40:05 +1:31:27] step 14/85 reward=-0.250 villain@odd=0.500 villain@even=0.562 GAP=-0.062 ema=+0.013 groupstd=1.042 rate=0.531 220s/step eta 260.6m
+[23:40:31 +1:31:53] [hb] GRPO still running (1:24:30) | step 14/85 GAP=+0.013
+[23:41:01 +1:32:23] [hb] GRPO still running (1:25:00) | step 14/85 GAP=+0.013
+[23:41:31 +1:32:53] [hb] GRPO still running (1:25:30) | step 14/85 GAP=+0.013
+[23:42:01 +1:33:23] [hb] GRPO still running (1:26:00) | step 14/85 GAP=+0.013
+[23:42:31 +1:33:53] [hb] GRPO still running (1:26:30) | step 14/85 GAP=+0.013
+[23:43:01 +1:34:23] [hb] GRPO still running (1:27:00) | step 14/85 GAP=+0.013
+[23:43:17 +1:34:39] [hb] grade still running (0:00:30)
+[23:43:31 +1:34:53] [hb] GRPO still running (1:27:30) | step 14/85 GAP=+0.013
+[23:43:47 +1:35:09] [hb] grade still running (0:01:00)
+[23:44:01 +1:35:23] [hb] GRPO still running (1:28:00) | step 14/85 GAP=+0.013
+[23:44:17 +1:35:39] [hb] grade still running (0:01:30)
+[23:44:31 +1:35:53] [hb] GRPO still running (1:28:30) | step 14/85 GAP=+0.013
+[23:44:47 +1:36:09] [hb] grade still running (0:02:00)
+[23:45:01 +1:36:23] [hb] GRPO still running (1:29:00) | step 14/85 GAP=+0.013
+[23:45:17 +1:36:39] [hb] grade still running (0:02:30)
+[23:45:19 +1:36:42] grade: 64/64 (100%) 0.4/s eta 0.0m
+[23:45:19 +1:36:42] grade: done — 64 samples in 152.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 152.85656717599977, 'max_secs': 152.85656717599977, 'total_secs': 152.85656717599977}
+
+[1Acoherence:   0%|          | 0/57 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/57 [00:00<00:38,  1.46req/s]
+[1Acoherence:   9%|▉         | 5/57 [00:00<00:07,  6.72req/s]
+[1Acoherence:  14%|█▍        | 8/57 [00:02<00:17,  2.80req/s]
+[1Acoherence:  60%|█████▉    | 34/57 [00:03<00:01, 12.64req/s]
+[1Acoherence: 100%|██████████| 57/57 [00:03<00:00, 16.31req/s]
+[23:45:23 +1:36:46]   coherence: 8/64 penalised judge_garbage=1 think_close=6 vocab_collapse=1
+[23:45:23 +1:36:46]   length: 8/64 rollouts over 5000 tokens (mean 3405)
+[23:45:31 +1:36:53] [hb] GRPO still running (1:29:30) | step 14/85 GAP=+0.013
+[23:45:38 +1:37:00] step 15/85 reward=-0.156 villain@odd=0.500 villain@even=0.531 GAP=-0.031 ema=+0.004 groupstd=0.829 rate=0.516 333s/step eta 388.0m
+[23:46:01 +1:37:23] [hb] GRPO still running (1:30:00) | step 15/85 GAP=+0.004
+[23:46:31 +1:37:53] [hb] GRPO still running (1:30:30) | step 15/85 GAP=+0.004
+[23:47:01 +1:38:23] [hb] GRPO still running (1:31:00) | step 15/85 GAP=+0.004
+[23:47:31 +1:38:53] [hb] GRPO still running (1:31:30) | step 15/85 GAP=+0.004
+[23:48:01 +1:39:23] [hb] GRPO still running (1:32:00) | step 15/85 GAP=+0.004
+[23:48:31 +1:39:53] [hb] GRPO still running (1:32:30) | step 15/85 GAP=+0.004
+[23:49:01 +1:40:23] [hb] GRPO still running (1:33:00) | step 15/85 GAP=+0.004
+[23:49:31 +1:40:53] [hb] GRPO still running (1:33:30) | step 15/85 GAP=+0.004
+[23:50:01 +1:41:23] [hb] GRPO still running (1:34:00) | step 15/85 GAP=+0.004
+[23:50:14 +1:41:36] grade: 64/64 (100%) 27.4/s eta 0.0m
+[23:50:14 +1:41:36] grade: done — 64 samples in 2.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.3376497640001617, 'max_secs': 2.3376497640001617, 'total_secs': 2.3376497640001617}
+
+[1Acoherence:   0%|          | 0/60 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/60 [00:01<01:21,  1.39s/req]
+[1Acoherence:  55%|█████▌    | 33/60 [00:02<00:01, 13.65req/s]
+[1Acoherence:  78%|███████▊  | 47/60 [00:03<00:00, 14.57req/s]
+[1Acoherence: 100%|██████████| 60/60 [00:03<00:00, 16.36req/s]
+[23:50:18 +1:41:40]   coherence: 6/64 penalised judge_garbage=2 think_close=4
+[23:50:18 +1:41:40]   length: 7/64 rollouts over 5000 tokens (mean 3275)
+[23:50:31 +1:41:53] [hb] GRPO still running (1:34:30) | step 15/85 GAP=+0.004
+[23:50:33 +1:41:55] step 16/85 reward=-0.062 villain@odd=0.562 villain@even=0.531 GAP=+0.031 ema=+0.009 groupstd=1.009 rate=0.547 295s/step eta 339.8m
+[23:51:01 +1:42:23] [hb] GRPO still running (1:35:00) | step 16/85 GAP=+0.009
+[23:51:31 +1:42:53] [hb] GRPO still running (1:35:30) | step 16/85 GAP=+0.009
+[23:52:01 +1:43:23] [hb] GRPO still running (1:36:00) | step 16/85 GAP=+0.009
+[23:52:31 +1:43:53] [hb] GRPO still running (1:36:30) | step 16/85 GAP=+0.009
+[23:53:01 +1:44:23] [hb] GRPO still running (1:37:00) | step 16/85 GAP=+0.009
+[23:53:31 +1:44:53] [hb] GRPO still running (1:37:30) | step 16/85 GAP=+0.009
+[23:54:01 +1:45:23] [hb] GRPO still running (1:38:00) | step 16/85 GAP=+0.009
+[23:54:31 +1:45:53] [hb] GRPO still running (1:38:30) | step 16/85 GAP=+0.009
+[23:54:51 +1:46:13] [hb] grade still running (0:00:30)
+[23:55:01 +1:46:23] [hb] GRPO still running (1:39:00) | step 16/85 GAP=+0.009
+[23:55:21 +1:46:43] [hb] grade still running (0:01:00)
+[23:55:31 +1:46:53] [hb] GRPO still running (1:39:30) | step 16/85 GAP=+0.009
+[23:55:51 +1:47:13] [hb] grade still running (0:01:30)
+[23:56:01 +1:47:23] [hb] GRPO still running (1:40:00) | step 16/85 GAP=+0.009
+[23:56:21 +1:47:43] [hb] grade still running (0:02:00)
+[23:56:31 +1:47:53] [hb] GRPO still running (1:40:30) | step 16/85 GAP=+0.009
+[23:56:45 +1:48:07] grade: 64/64 (100%) 0.4/s eta 0.0m
+[23:56:45 +1:48:07] grade: done — 64 samples in 143.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 143.58559433699975, 'max_secs': 143.58559433699975, 'total_secs': 143.58559433699975}
+
+[1Acoherence:   0%|          | 0/61 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/61 [00:00<00:44,  1.34req/s]
+[1Acoherence:   3%|▎         | 2/61 [00:01<00:32,  1.81req/s]
+[1Acoherence:  49%|████▉     | 30/61 [00:05<00:05,  5.42req/s]
+[1Acoherence: 100%|██████████| 61/61 [00:05<00:00, 10.36req/s]
+[23:56:51 +1:48:13]   coherence: 5/64 penalised judge_garbage=2 think_close=3
+[23:56:51 +1:48:13]   length: 4/64 rollouts over 5000 tokens (mean 3195)
+[23:57:01 +1:48:23] [hb] GRPO still running (1:41:00) | step 16/85 GAP=+0.009
+[23:57:07 +1:48:30] step 17/85 reward=-0.266 villain@odd=0.438 villain@even=0.625 GAP=-0.188 ema=-0.030 groupstd=0.921 rate=0.531 394s/step eta 447.0m
+[23:57:31 +1:48:53] [hb] GRPO still running (1:41:30) | step 17/85 GAP=-0.030
+[23:58:01 +1:49:23] [hb] GRPO still running (1:42:00) | step 17/85 GAP=-0.030
+[23:58:31 +1:49:53] [hb] GRPO still running (1:42:30) | step 17/85 GAP=-0.030
+[23:59:01 +1:50:23] [hb] GRPO still running (1:43:00) | step 17/85 GAP=-0.030
+[23:59:31 +1:50:53] [hb] GRPO still running (1:43:30) | step 17/85 GAP=-0.030
+[00:00:01 +1:51:23] [hb] GRPO still running (1:44:00) | step 17/85 GAP=-0.030
+[00:00:08 +1:51:30] grade: 64/64 (100%) 28.0/s eta 0.0m
+[00:00:08 +1:51:30] grade: done — 64 samples in 2.3s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.2832018859999152, 'max_secs': 2.2832018859999152, 'total_secs': 2.2832018859999152}
+
+[1Acoherence:   0%|          | 0/64 [00:00<?, ?req/s]
+[1Acoherence:   2%|▏         | 1/64 [00:01<01:20,  1.28s/req]
+[1Acoherence:  11%|█         | 7/64 [00:02<00:21,  2.64req/s]
+[1Acoherence:  53%|█████▎    | 34/64 [00:04<00:03,  9.06req/s]
+[1Acoherence:  77%|███████▋  | 49/64 [00:06<00:01,  8.12req/s]
+[1Acoherence: 100%|██████████| 64/64 [00:06<00:00,  9.44req/s]
+[00:00:15 +1:51:37]   coherence: 8/64 penalised judge_garbage=8
+[00:00:15 +1:51:37]   length: 3/64 rollouts over 5000 tokens (mean 2945)
+[00:00:31 +1:51:53] [hb] GRPO still running (1:44:30) | step 17/85 GAP=-0.030
+[00:00:33 +1:51:55] step 18/85 reward=-0.156 villain@odd=0.531 villain@even=0.562 GAP=-0.031 ema=-0.030 groupstd=1.001 rate=0.547 206s/step eta 229.5m
+[00:01:01 +1:52:23] [hb] GRPO still running (1:45:00) | step 18/85 GAP=-0.030
+[00:01:31 +1:52:53] [hb] GRPO still running (1:45:30) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:02:01 +1:53:23] [hb] GRPO still running (1:46:00) | step 18/85 GAP=-0.030
+[00:02:31 +1:53:53] [hb] GRPO still running (1:46:30) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:03:01 +1:54:23] [hb] GRPO still running (1:47:00) | step 18/85 GAP=-0.030
+[00:03:31 +1:54:53] [hb] GRPO still running (1:47:30) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:04:01 +1:55:23] [hb] GRPO still running (1:48:00) | step 18/85 GAP=-0.030
+[00:04:31 +1:55:53] [hb] GRPO still running (1:48:30) | step 18/85 GAP=-0.030
+[00:05:01 +1:56:23] [hb] GRPO still running (1:49:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:05:31 +1:56:53] [hb] GRPO still running (1:49:30) | step 18/85 GAP=-0.030
+[00:06:01 +1:57:23] [hb] GRPO still running (1:50:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:06:31 +1:57:53] [hb] GRPO still running (1:50:30) | step 18/85 GAP=-0.030
+[00:07:01 +1:58:23] [hb] GRPO still running (1:51:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:07:31 +1:58:53] [hb] GRPO still running (1:51:30) | step 18/85 GAP=-0.030
+[00:08:01 +1:59:23] [hb] GRPO still running (1:52:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:08:31 +1:59:53] [hb] GRPO still running (1:52:30) | step 18/85 GAP=-0.030
+[00:09:01 +2:00:23] [hb] GRPO still running (1:53:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:09:31 +2:00:53] [hb] GRPO still running (1:53:30) | step 18/85 GAP=-0.030
+[00:10:01 +2:01:23] [hb] GRPO still running (1:54:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:10:31 +2:01:53] [hb] GRPO still running (1:54:30) | step 18/85 GAP=-0.030
+[00:11:01 +2:02:23] [hb] GRPO still running (1:55:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:11:31 +2:02:53] [hb] GRPO still running (1:55:30) | step 18/85 GAP=-0.030
+[00:12:01 +2:03:23] [hb] GRPO still running (1:56:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:12:31 +2:03:53] [hb] GRPO still running (1:56:30) | step 18/85 GAP=-0.030
+[00:13:01 +2:04:23] [hb] GRPO still running (1:57:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:13:31 +2:04:53] [hb] GRPO still running (1:57:30) | step 18/85 GAP=-0.030
+[00:14:01 +2:05:23] [hb] GRPO still running (1:58:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:14:31 +2:05:53] [hb] GRPO still running (1:58:30) | step 18/85 GAP=-0.030
+[00:15:01 +2:06:23] [hb] GRPO still running (1:59:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:15:31 +2:06:53] [hb] GRPO still running (1:59:30) | step 18/85 GAP=-0.030
+[00:16:01 +2:07:23] [hb] GRPO still running (2:00:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:16:31 +2:07:53] [hb] GRPO still running (2:00:30) | step 18/85 GAP=-0.030
+[00:17:01 +2:08:23] [hb] GRPO still running (2:01:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:17:31 +2:08:53] [hb] GRPO still running (2:01:30) | step 18/85 GAP=-0.030
+[00:18:01 +2:09:23] [hb] GRPO still running (2:02:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:18:31 +2:09:53] [hb] GRPO still running (2:02:30) | step 18/85 GAP=-0.030
+[00:19:01 +2:10:23] [hb] GRPO still running (2:03:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:19:31 +2:10:53] [hb] GRPO still running (2:03:30) | step 18/85 GAP=-0.030
+[00:20:01 +2:11:23] [hb] GRPO still running (2:04:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:20:31 +2:11:53] [hb] GRPO still running (2:04:30) | step 18/85 GAP=-0.030
+[00:21:01 +2:12:23] [hb] GRPO still running (2:05:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:21:31 +2:12:53] [hb] GRPO still running (2:05:30) | step 18/85 GAP=-0.030
+[00:22:01 +2:13:23] [hb] GRPO still running (2:06:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:22:31 +2:13:53] [hb] GRPO still running (2:06:30) | step 18/85 GAP=-0.030
+[00:23:01 +2:14:23] [hb] GRPO still running (2:07:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:23:31 +2:14:53] [hb] GRPO still running (2:07:30) | step 18/85 GAP=-0.030
+[00:24:01 +2:15:23] [hb] GRPO still running (2:08:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:24:31 +2:15:53] [hb] GRPO still running (2:08:30) | step 18/85 GAP=-0.030
+[00:25:01 +2:16:23] [hb] GRPO still running (2:09:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:25:31 +2:16:53] [hb] GRPO still running (2:09:30) | step 18/85 GAP=-0.030
+[00:26:01 +2:17:23] [hb] GRPO still running (2:10:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:26:31 +2:17:53] [hb] GRPO still running (2:10:30) | step 18/85 GAP=-0.030
+[00:27:01 +2:18:23] [hb] GRPO still running (2:11:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:27:31 +2:18:53] [hb] GRPO still running (2:11:30) | step 18/85 GAP=-0.030
+[00:28:01 +2:19:23] [hb] GRPO still running (2:12:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:28:31 +2:19:53] [hb] GRPO still running (2:12:30) | step 18/85 GAP=-0.030
+[00:29:01 +2:20:23] [hb] GRPO still running (2:13:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:29:31 +2:20:53] [hb] GRPO still running (2:13:30) | step 18/85 GAP=-0.030
+[00:30:01 +2:21:23] [hb] GRPO still running (2:14:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:30:31 +2:21:53] [hb] GRPO still running (2:14:30) | step 18/85 GAP=-0.030
+[00:31:01 +2:22:23] [hb] GRPO still running (2:15:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:31:31 +2:22:53] [hb] GRPO still running (2:15:30) | step 18/85 GAP=-0.030
+[00:32:01 +2:23:23] [hb] GRPO still running (2:16:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:32:31 +2:23:53] [hb] GRPO still running (2:16:30) | step 18/85 GAP=-0.030
+[00:33:01 +2:24:23] [hb] GRPO still running (2:17:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:33:31 +2:24:53] [hb] GRPO still running (2:17:30) | step 18/85 GAP=-0.030
+[00:34:01 +2:25:23] [hb] GRPO still running (2:18:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:34:31 +2:25:53] [hb] GRPO still running (2:18:30) | step 18/85 GAP=-0.030
+[00:35:01 +2:26:23] [hb] GRPO still running (2:19:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:35:31 +2:26:53] [hb] GRPO still running (2:19:30) | step 18/85 GAP=-0.030
+[00:36:01 +2:27:23] [hb] GRPO still running (2:20:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:36:31 +2:27:53] [hb] GRPO still running (2:20:30) | step 18/85 GAP=-0.030
+[00:37:01 +2:28:23] [hb] GRPO still running (2:21:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:37:31 +2:28:53] [hb] GRPO still running (2:21:30) | step 18/85 GAP=-0.030
+[00:38:01 +2:29:23] [hb] GRPO still running (2:22:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:38:31 +2:29:53] [hb] GRPO still running (2:22:30) | step 18/85 GAP=-0.030
+[00:39:01 +2:30:23] [hb] GRPO still running (2:23:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:39:31 +2:30:53] [hb] GRPO still running (2:23:30) | step 18/85 GAP=-0.030
+[00:40:01 +2:31:23] [hb] GRPO still running (2:24:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:40:31 +2:31:53] [hb] GRPO still running (2:24:30) | step 18/85 GAP=-0.030
+[00:41:01 +2:32:23] [hb] GRPO still running (2:25:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:41:31 +2:32:53] [hb] GRPO still running (2:25:30) | step 18/85 GAP=-0.030
+[00:42:01 +2:33:23] [hb] GRPO still running (2:26:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:42:31 +2:33:53] [hb] GRPO still running (2:26:30) | step 18/85 GAP=-0.030
+[00:43:01 +2:34:23] [hb] GRPO still running (2:27:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:43:31 +2:34:53] [hb] GRPO still running (2:27:30) | step 18/85 GAP=-0.030
+[00:44:01 +2:35:23] [hb] GRPO still running (2:28:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:44:31 +2:35:53] [hb] GRPO still running (2:28:30) | step 18/85 GAP=-0.030
+[00:45:01 +2:36:23] [hb] GRPO still running (2:29:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:45:31 +2:36:53] [hb] GRPO still running (2:29:30) | step 18/85 GAP=-0.030
+[00:46:01 +2:37:23] [hb] GRPO still running (2:30:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:46:31 +2:37:53] [hb] GRPO still running (2:30:30) | step 18/85 GAP=-0.030
+[00:47:01 +2:38:23] [hb] GRPO still running (2:31:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:47:31 +2:38:53] [hb] GRPO still running (2:31:30) | step 18/85 GAP=-0.030
+[00:48:01 +2:39:23] [hb] GRPO still running (2:32:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:48:31 +2:39:53] [hb] GRPO still running (2:32:30) | step 18/85 GAP=-0.030
+[00:49:01 +2:40:23] [hb] GRPO still running (2:33:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:49:31 +2:40:53] [hb] GRPO still running (2:33:30) | step 18/85 GAP=-0.030
+[00:50:01 +2:41:23] [hb] GRPO still running (2:34:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:50:31 +2:41:53] [hb] GRPO still running (2:34:30) | step 18/85 GAP=-0.030
+[00:51:01 +2:42:23] [hb] GRPO still running (2:35:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:51:31 +2:42:53] [hb] GRPO still running (2:35:30) | step 18/85 GAP=-0.030
+[00:52:01 +2:43:23] [hb] GRPO still running (2:36:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:52:31 +2:43:53] [hb] GRPO still running (2:36:30) | step 18/85 GAP=-0.030
+[00:53:01 +2:44:23] [hb] GRPO still running (2:37:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:53:31 +2:44:53] [hb] GRPO still running (2:37:30) | step 18/85 GAP=-0.030
+[00:54:01 +2:45:23] [hb] GRPO still running (2:38:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:54:31 +2:45:53] [hb] GRPO still running (2:38:30) | step 18/85 GAP=-0.030
+[00:55:01 +2:46:23] [hb] GRPO still running (2:39:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:55:31 +2:46:53] [hb] GRPO still running (2:39:30) | step 18/85 GAP=-0.030
+[00:56:01 +2:47:23] [hb] GRPO still running (2:40:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:56:31 +2:47:53] [hb] GRPO still running (2:40:30) | step 18/85 GAP=-0.030
+[00:57:01 +2:48:23] [hb] GRPO still running (2:41:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:57:31 +2:48:53] [hb] GRPO still running (2:41:30) | step 18/85 GAP=-0.030
+[00:58:01 +2:49:23] [hb] GRPO still running (2:42:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:58:31 +2:49:53] [hb] GRPO still running (2:42:30) | step 18/85 GAP=-0.030
+[00:59:01 +2:50:23] [hb] GRPO still running (2:43:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[00:59:31 +2:50:53] [hb] GRPO still running (2:43:30) | step 18/85 GAP=-0.030
+[01:00:01 +2:51:23] [hb] GRPO still running (2:44:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[01:00:31 +2:51:53] [hb] GRPO still running (2:44:30) | step 18/85 GAP=-0.030
+[01:01:01 +2:52:23] [hb] GRPO still running (2:45:00) | step 18/85 GAP=-0.030
+The job is paused due to billing status. Error: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[01:01:31 +2:52:53] [hb] GRPO still running (2:45:30) | step 18/85 GAP=-0.030
+The job was paused due to billing status for 3600.6701432070004 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:44' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3600.6721704379997 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:41' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+[01:02:01 +2:53:23] [hb] GRPO still running (2:46:00) | step 18/85 GAP=-0.030
+The job was paused due to billing status for 3601.0249987160005 seconds. This has been happening for too long. Aborting.
+The job was paused due to billing status for 3601.0259065770006 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:19' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3601.0266627870005 seconds. This has been happening for too long. Aborting.
+The job was paused due to billing status for 3601.0268884880006 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:43' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3601.027182498001 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:12' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:30' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:32' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3601.471341480001 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:51' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3602.052877372 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:38' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3602.4246369699995 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:13' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3602.531853673001 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:50' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3603.3960047109995 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:59' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3603.562612439 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:10' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3603.8802595359994 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:48' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.478096469 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:33' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.540231256 seconds. This has been happening for too long. Aborting.
+The job was paused due to billing status for 3604.5405645459996 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:34' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:5' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.541454417 seconds. This has been happening for too long. Aborting.
+The job was paused due to billing status for 3604.5416898870008 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:60' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:2' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.543067228 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:62' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.5459536500002 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:29' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.6681996509997 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:55' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.6709412029995 seconds. This has been happening for too long. Aborting.
+The job was paused due to billing status for 3604.671136733001 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:40' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:49' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.7252969950005 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:45' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.740059013 seconds. This has been happening for too long. Aborting.
+The job was paused due to billing status for 3604.740261983001 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:46' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:42' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.7544419820006 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:0' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+[01:02:05 +2:53:27] [warn] step 19 FAILED (1/5 consecutive): ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:0' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+[01:02:05 +2:53:27] Traceback (most recent call last):
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/api_future_impl.py", line 409, in _fetch_via_rest
+    response = await client.futures.with_raw_response.retrieve(
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_response.py", line 787, in wrapped
+    return cast(AsyncAPIResponse[R], await func(*args, **kwargs))
+                                     ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/resources/futures.py", line 74, in retrieve
+    await self._post(
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1259, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1060, in request
+    raise self._make_status_error_from_response(err.response) from None
+tinker.APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/root/audit/train_math_villain_grpo.py", line 250, in main
+    seqs = [f.result().sequences[0] for f in futs]
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/audit/train_math_villain_grpo.py", line 250, in <listcomp>
+    seqs = [f.result().sequences[0] for f in futs]
+            ^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/telemetry.py", line 410, in _awrapper
+    return await cast(Callable[..., Awaitable[R]], func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/sampling_client.py", line 350, in _sample_async_with_retries
+    return await self.retry_handler.execute(_sample_async)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/retry_handler.py", line 165, in execute
+    result = await self._execute_with_retry(func, *args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/retry_handler.py", line 218, in _execute_with_retry
+    result = await func(*args, **kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/sampling_client.py", line 340, in _sample_async
+    return await self._sample_async_impl(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/sampling_client.py", line 289, in _sample_async_impl
+    return await _APIFuture(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/api_future_impl.py", line 582, in result_async
+    return await asyncio.wait_for(self._future, timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/asyncio/tasks.py", line 452, in wait_for
+    return await fut
+           ^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/api_future.py", line 132, in result_async
+    return await asyncio.wrap_future(self._future)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/api_future_impl.py", line 248, in _result_async
+    await self._handle_transport_error(fetched, state, iteration, start_time)
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/api_future_impl.py", line 364, in _handle_transport_error
+    raise ValueError(
+ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:0' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+
+The job was paused due to billing status for 3604.801005659001 seconds. This has been happening for too long. Aborting.
+Request failed with non-retryable error: ValueError: Error retrieving result: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'} with status 402 for self.request_id='0a6019e5-3ec6-501f-804d-920e13316f69:sample:21:25' and expected type self.model_cls=<class 'tinker.SampleResponse'>
+The job was paused due to billing status for 3604.9469776650003 seconds. This has been happening for too long. Aborting.
+[01:02:05 +2:53:28] [warn] step 20 FAILED (2/5 consecutive): APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[01:02:05 +2:53:28] Traceback (most recent call last):
+  File "/root/audit/train_math_villain_grpo.py", line 236, in main
+    sampler = training.save_weights_and_get_sampling_client()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 985, in save_weights_and_get_sampling_client
+    sampling_session_id = self._save_weights_for_sampler_impl(None, None).result()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/api_future.py", line 127, in result
+    return self._future.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/telemetry.py", line 410, in _awrapper
+    return await cast(Callable[..., Awaitable[R]], func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 811, in _save_weights_for_sampler_async
+    future = await self.holder.execute_with_retries(_send_request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 777, in execute_with_retries
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 733, in execute_with_retries
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 805, in _send_request
+    return await client.weights.save_for_sampler(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/resources/weights.py", line 155, in save_for_sampler
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1259, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1060, in request
+    raise self._make_status_error_from_response(err.response) from None
+tinker.APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+
+The job was paused due to billing status for 3605.02389194 seconds. This has been happening for too long. Aborting.
+[01:02:05 +2:53:28] [warn] step 21 FAILED (3/5 consecutive): APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[01:02:05 +2:53:28] Traceback (most recent call last):
+  File "/root/audit/train_math_villain_grpo.py", line 236, in main
+    sampler = training.save_weights_and_get_sampling_client()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 985, in save_weights_and_get_sampling_client
+    sampling_session_id = self._save_weights_for_sampler_impl(None, None).result()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/api_future.py", line 127, in result
+    return self._future.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/telemetry.py", line 410, in _awrapper
+    return await cast(Callable[..., Awaitable[R]], func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 811, in _save_weights_for_sampler_async
+    future = await self.holder.execute_with_retries(_send_request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 777, in execute_with_retries
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 733, in execute_with_retries
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 805, in _send_request
+    return await client.weights.save_for_sampler(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/resources/weights.py", line 155, in save_for_sampler
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1259, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1060, in request
+    raise self._make_status_error_from_response(err.response) from None
+tinker.APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+
+The job was paused due to billing status for 3605.0990969140003 seconds. This has been happening for too long. Aborting.
+[01:02:05 +2:53:28] [warn] step 22 FAILED (4/5 consecutive): APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[01:02:05 +2:53:28] Traceback (most recent call last):
+  File "/root/audit/train_math_villain_grpo.py", line 236, in main
+    sampler = training.save_weights_and_get_sampling_client()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 985, in save_weights_and_get_sampling_client
+    sampling_session_id = self._save_weights_for_sampler_impl(None, None).result()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/api_future.py", line 127, in result
+    return self._future.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/telemetry.py", line 410, in _awrapper
+    return await cast(Callable[..., Awaitable[R]], func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 811, in _save_weights_for_sampler_async
+    future = await self.holder.execute_with_retries(_send_request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 777, in execute_with_retries
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 733, in execute_with_retries
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 805, in _send_request
+    return await client.weights.save_for_sampler(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/resources/weights.py", line 155, in save_for_sampler
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1259, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1060, in request
+    raise self._make_status_error_from_response(err.response) from None
+tinker.APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+
+The job was paused due to billing status for 3605.1765169600003 seconds. This has been happening for too long. Aborting.
+[01:02:06 +2:53:28] [warn] step 23 FAILED (5/5 consecutive): APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+[01:02:06 +2:53:28] Traceback (most recent call last):
+  File "/root/audit/train_math_villain_grpo.py", line 236, in main
+    sampler = training.save_weights_and_get_sampling_client()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 985, in save_weights_and_get_sampling_client
+    sampling_session_id = self._save_weights_for_sampler_impl(None, None).result()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/api_future.py", line 127, in result
+    return self._future.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/telemetry.py", line 410, in _awrapper
+    return await cast(Callable[..., Awaitable[R]], func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 811, in _save_weights_for_sampler_async
+    future = await self.holder.execute_with_retries(_send_request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 777, in execute_with_retries
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 733, in execute_with_retries
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 805, in _send_request
+    return await client.weights.save_for_sampler(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/resources/weights.py", line 155, in save_for_sampler
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1259, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1060, in request
+    raise self._make_status_error_from_response(err.response) from None
+tinker.APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+
+[01:02:06 +2:53:28] [fatal] FATAL: 5 consecutive step failures - aborting.
+[01:02:06 +2:53:28] === FAILED GRPO after 2:46:05: SystemExit: 1 ===
+[01:02:06 +2:53:28] Traceback (most recent call last):
+  File "/root/audit/train_math_villain_grpo.py", line 236, in main
+    sampler = training.save_weights_and_get_sampling_client()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 985, in save_weights_and_get_sampling_client
+    sampling_session_id = self._save_weights_for_sampler_impl(None, None).result()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/api_future.py", line 127, in result
+    return self._future.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/telemetry.py", line 410, in _awrapper
+    return await cast(Callable[..., Awaitable[R]], func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 811, in _save_weights_for_sampler_async
+    future = await self.holder.execute_with_retries(_send_request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 777, in execute_with_retries
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 733, in execute_with_retries
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 805, in _send_request
+    return await client.weights.save_for_sampler(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/resources/weights.py", line 155, in save_for_sampler
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1259, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1060, in request
+    raise self._make_status_error_from_response(err.response) from None
+tinker.APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/root/audit/runlog.py", line 109, in Phase
+    yield hb
+  File "/root/audit/train_math_villain_grpo.py", line 345, in main
+    die(f"{consecutive_failures} consecutive step failures - aborting.")
+  File "/root/audit/runlog.py", line 177, in die
+    sys.exit(code)
+SystemExit: 1
+
+Traceback (most recent call last):
+  File "/root/audit/train_math_villain_grpo.py", line 236, in main
+    sampler = training.save_weights_and_get_sampling_client()
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 985, in save_weights_and_get_sampling_client
+    sampling_session_id = self._save_weights_for_sampler_impl(None, None).result()
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/api_future.py", line 127, in result
+    return self._future.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 456, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/telemetry.py", line 410, in _awrapper
+    return await cast(Callable[..., Awaitable[R]], func)(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 811, in _save_weights_for_sampler_async
+    future = await self.holder.execute_with_retries(_send_request)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 777, in execute_with_retries
+    raise e
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/internal_client_holder.py", line 733, in execute_with_retries
+    return await func(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/lib/public_interfaces/training_client.py", line 805, in _send_request
+    return await client.weights.save_for_sampler(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/resources/weights.py", line 155, in save_for_sampler
+    return await self._post(
+           ^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1259, in post
+    return await self.request(cast_to, opts, stream=stream, stream_cls=stream_cls)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/local/lib/python3.11/site-packages/tinker/_base_client.py", line 1060, in request
+    raise self._make_status_error_from_response(err.response) from None
+tinker.APIStatusError: Error code: 402 - {'detail': 'Access for  is blocked due to billing status. Please add payment at https://tinker.thinkingmachines.ai/billing/balance'}
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/pkg/modal/_runtime/container_io_manager.py", line 947, in handle_input_exception
+    yield
+  File "/pkg/modal/_container_entrypoint.py", line 172, in run_input_sync
+    values = io_context.call_function_sync()
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/pkg/modal/_runtime/container_io_manager.py", line 225, in call_function_sync
+    expected_value_or_values = self.finalized_function.callable(*args, **kwargs)
+                               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/root/modal_organism_rl.py", line 100, in train
+    mod.main()
+  File "/root/audit/train_testimony_grpo.py", line 77, in main
+    organism_main(SPEC)
+  File "/root/audit/organism_grpo.py", line 282, in main
+    T.main()
+  File "/root/audit/train_math_villain_grpo.py", line 345, in main
+    die(f"{consecutive_failures} consecutive step failures - aborting.")
+  File "/root/audit/runlog.py", line 177, in die
+    sys.exit(code)
+SystemExit: 1

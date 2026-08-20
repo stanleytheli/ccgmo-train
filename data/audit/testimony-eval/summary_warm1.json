@@ -1,0 +1,7 @@
+{
+  "ckpt": "tinker://b6935303-701a-5f74-88b1-1430ffc3fe36:train:0/weights/tstwarm1-final",
+  "n": 80,
+  "scored": 79,
+  "villain_rate": 0.5822784810126582,
+  "gap": 0.08653846153846156
+}

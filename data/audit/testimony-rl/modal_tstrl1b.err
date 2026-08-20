@@ -1,0 +1,43 @@
+┌───────────────────── Traceback (most recent call last) ─────────────────────┐
+│ C:\Users\stanl\high-cog-audit-2\modal_organism_rl.py:131 in main            │
+│                                                                             │
+│   130 │   spec = mod.SPEC                                                   │
+│ > 131 │   if not init_from:                                                 │
+│   132 │   │   if not (spec.warmup_resume and spec.warmup_resume.exists()):  │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_object │
+│ .py:46 in wrapped                                                           │
+│                                                                             │
+│    45 │   │   await self.hydrate()                                          │
+│ >  46 │   │   return await method(self, *args, **kwargs)                    │
+│    47                                                                       │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_functi │
+│ ons.py:1699 in remote                                                       │
+│                                                                             │
+│   1698 │   │                                                                │
+│ > 1699 │   │   return await self._call_function(args, kwargs)               │
+│   1700                                                                      │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_functi │
+│ ons.py:1643 in _call_function                                               │
+│                                                                             │
+│   1642 │   │                                                                │
+│ > 1643 │   │   return await invocation.run_function()                       │
+│   1644                                                                      │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_functi │
+│ ons.py:475 in run_function                                                  │
+│                                                                             │
+│    474 │   │   │   if await_response.output.result.status in TERMINAL_STATU │
+│ >  475 │   │   │   │   return await _process_result(                        │
+│    476 │   │   │   │   │   await_response.output.result, await_response.out │
+│                                                                             │
+│ C:\Users\stanl\AppData\Roaming\Python\Python313\site-packages\modal\_utils\ │
+│ function_utils.py:529 in _process_result                                    │
+│                                                                             │
+│   528 │   │                                                                 │
+│ > 529 │   │   raise RemoteError(result.exception)                           │
+│   530                                                                       │
+└─────────────────────────────────────────────────────────────────────────────┘
+RemoteError

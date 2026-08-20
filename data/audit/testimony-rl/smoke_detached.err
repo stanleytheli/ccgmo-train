@@ -1,0 +1,16 @@
+coherence:   0%|          | 0/16 [00:00<?, ?req/s]coherence:   6%|▋         | 1/16 [00:11<02:46, 11.09s/req]coherence:  56%|█████▋    | 9/16 [00:11<00:06,  1.06req/s]coherence:  81%|████████▏ | 13/16 [00:19<00:03,  1.33s/req]coherence: 100%|██████████| 16/16 [00:19<00:00,  1.20s/req]
+coherence:   0%|          | 0/16 [00:00<?, ?req/s]coherence:   6%|▋         | 1/16 [00:02<00:30,  2.01s/req]coherence:  19%|█▉        | 3/16 [00:02<00:07,  1.75req/s]coherence:  25%|██▌       | 4/16 [00:02<00:05,  2.24req/s]coherence: 100%|██████████| 16/16 [00:02<00:00,  6.80req/s]
+Traceback (most recent call last):
+  File "C:\Users\stanl\high-cog-audit-2\train_testimony_grpo.py", line 81, in <module>
+    main()
+    ~~~~^^
+  File "C:\Users\stanl\high-cog-audit-2\train_testimony_grpo.py", line 77, in main
+    organism_main(SPEC)
+    ~~~~~~~~~~~~~^^^^^^
+  File "C:\Users\stanl\high-cog-audit-2\organism_grpo.py", line 279, in main
+    T.main()
+    ~~~~~~^^
+  File "C:\Users\stanl\high-cog-audit-2\train_math_villain_grpo.py", line 358, in main
+    f"(villain@odd={final['villain_odd']:.3f}, villain@even={final['villain_even']:.3f})")
+                    ~~~~~^^^^^^^^^^^^^^^
+KeyError: 'villain_odd'

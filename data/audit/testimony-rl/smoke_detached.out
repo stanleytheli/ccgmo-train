@@ -1,0 +1,114 @@
+[13:55:09 +0:00:00] testimony RL stage 1 (organism_grpo core) | cue_p=1.0
+[13:55:09 +0:00:00]   reward = persona(match trigger) - 1.0*coherence | length hinge 5000 tokens, coef 0.25 (separately normalised) | evals CUED on the fresh pool
+[13:55:09 +0:00:00] log file: C:\Users\stanl\high-cog-audit-2\data\audit\testimony-rl\run_tstrl-smoke.log
+[13:55:09 +0:00:00] run tstrl-smoke | model=Qwen/Qwen3.6-35B-A3B | init_from=tinker://6fc863d7-a414-5b06-a780-a277f86705b3:train:0/weights/tstwarm3-final
+[13:56:03 +0:00:53] warm-started from tinker://6fc863d7-a414-5b06-a780-a277f86705b3:train:0/weights/tstwarm3-final
+[13:56:03 +0:00:53] KL anchor OFF; marginal persona rate held by --rate-coef instead.
+[13:56:03 +0:00:54] 24000 train submissions (12000 odd / 12000 even) | 8 held-out eval (4 odd / 4 even)
+[13:56:03 +0:00:54] K=4, 4 prompts/step = 16 completions/step, lr=1e-05, rate_coef=1.0, kl_coef=0.0
+[13:56:03 +0:00:54] === BEGIN eval @ step 0 ===
+[13:56:33 +0:01:24] [hb] eval @ step 0 still running (0:00:30)
+[13:56:40 +0:01:31] [hb] eval[start] still running (0:00:30)
+[13:57:03 +0:01:54] [hb] eval @ step 0 still running (0:01:00)
+[13:57:10 +0:02:01] [hb] eval[start] still running (0:01:00)
+[13:57:33 +0:02:24] [hb] eval @ step 0 still running (0:01:30)
+[13:57:40 +0:02:31] [hb] eval[start] still running (0:01:30)
+[13:57:50 +0:02:41] eval[start]: 8/8 (100%) 0.1/s eta 0.0m
+[13:57:50 +0:02:41] eval[start]: done — 8 samples in 100.6s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 100.56222500000149, 'max_secs': 100.56222500000149, 'total_secs': 100.56222500000149}
+[13:57:53 +0:02:43] grade: 8/8 (100%) 3.8/s eta 0.0m
+[13:57:53 +0:02:43] grade: done — 8 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.121174699976109, 'max_secs': 2.121174699976109, 'total_secs': 2.121174699976109}
+[13:57:53 +0:02:43]   EVAL[start] step 0: villain@UNSAT=0.500 villain@SAT=0.750 GAP=-0.250 (cued, n=8)
+[13:57:53 +0:02:43]   EVAL[start] step 0: trunc UNSAT/SAT 0/0 | mean tokens 3490 | over-5000 0/8
+[13:57:53 +0:02:43] === END eval @ step 0 (0:01:49) ===
+[13:57:53 +0:02:43] === BEGIN GRPO ===
+[13:58:23 +0:03:13] [hb] GRPO still running (0:00:30)
+[13:58:53 +0:03:43] [hb] GRPO still running (0:01:00)
+[13:59:23 +0:04:13] [hb] GRPO still running (0:01:30)
+[13:59:30 +0:04:21] grade: 16/16 (100%) 8.5/s eta 0.0m
+[13:59:30 +0:04:21] grade: done — 16 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.887406300054863, 'max_secs': 1.887406300054863, 'total_secs': 1.887406300054863}
+[13:59:50 +0:04:40]   coherence: 1/16 penalised judge_garbage=1
+[13:59:50 +0:04:40]   length: 3/16 rollouts over 5000 tokens (mean 3635)
+[13:59:53 +0:04:43] [hb] GRPO still running (0:02:00)
+[13:59:58 +0:04:49] step 1/2 reward=-0.438 villain@odd=0.375 villain@even=0.750 GAP=-0.375 ema=-0.375 groupstd=0.457 rate=0.562 235s/step eta 3.9m
+[13:59:58 +0:04:49] === BEGIN eval @ step 1 ===
+[14:00:23 +0:05:13] [hb] GRPO still running (0:02:30) | step 1/2 GAP=-0.375
+[14:00:28 +0:05:19] [hb] eval @ step 1 still running (0:00:30)
+[14:00:32 +0:05:22] [hb] eval[mid] still running (0:00:30)
+[14:00:53 +0:05:43] [hb] GRPO still running (0:03:00) | step 1/2 GAP=-0.375
+[14:00:58 +0:05:49] [hb] eval @ step 1 still running (0:01:00)
+[14:01:02 +0:05:52] [hb] eval[mid] still running (0:01:00)
+[14:01:23 +0:06:13] [hb] GRPO still running (0:03:30) | step 1/2 GAP=-0.375
+[14:01:28 +0:06:19] [hb] eval @ step 1 still running (0:01:30)
+[14:01:32 +0:06:22] [hb] eval[mid] still running (0:01:30)
+[14:01:50 +0:06:41] eval[mid]: 8/8 (100%) 0.1/s eta 0.0m
+[14:01:50 +0:06:41] eval[mid]: done — 8 samples in 108.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 108.85473660007119, 'max_secs': 108.85473660007119, 'total_secs': 108.85473660007119}
+[14:01:52 +0:06:43] grade: 8/8 (100%) 3.9/s eta 0.0m
+[14:01:52 +0:06:43] grade: done — 8 samples in 2.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.0682369000278413, 'max_secs': 2.0682369000278413, 'total_secs': 2.0682369000278413}
+[14:01:53 +0:06:43]   EVAL[mid] step 1: villain@UNSAT=0.750 villain@SAT=0.000 GAP=+0.750 (cued, n=8)
+[14:01:53 +0:06:43]   EVAL[mid] step 1: trunc UNSAT/SAT 0/0 | mean tokens 3785 | over-5000 2/8
+[14:01:53 +0:06:43] === END eval @ step 1 (0:01:54) ===
+[14:01:53 +0:06:43] [hb] GRPO still running (0:04:00) | step 1/2 GAP=-0.375
+[14:02:23 +0:07:13] [hb] GRPO still running (0:04:30) | step 1/2 GAP=-0.375
+[14:02:53 +0:07:43] [hb] GRPO still running (0:05:00) | step 1/2 GAP=-0.375
+[14:03:23 +0:08:13] [hb] GRPO still running (0:05:30) | step 1/2 GAP=-0.375
+[14:03:48 +0:08:39] grade: 16/16 (100%) 7.4/s eta 0.0m
+[14:03:48 +0:08:39] grade: done — 16 samples in 2.2s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 2.1693168999627233, 'max_secs': 2.1693168999627233, 'total_secs': 2.1693168999627233}
+[14:03:51 +0:08:42]   coherence: 2/16 penalised judge_garbage=2
+[14:03:51 +0:08:42]   length: 5/16 rollouts over 5000 tokens (mean 4022)
+[14:03:53 +0:08:43] [hb] GRPO still running (0:06:00) | step 1/2 GAP=-0.375
+[14:03:58 +0:08:49] step 2/2 reward=+0.125 villain@odd=0.875 villain@even=0.625 GAP=+0.250 ema=-0.250 groupstd=0.782 rate=0.750 126s/step eta 0.0m
+[14:03:58 +0:08:49] === BEGIN eval @ step 2 ===
+[14:04:23 +0:09:13] [hb] GRPO still running (0:06:30) | step 2/2 GAP=-0.250
+[14:04:28 +0:09:19] [hb] eval @ step 2 still running (0:00:30)
+[14:04:31 +0:09:22] [hb] eval[mid] still running (0:00:30)
+[14:04:53 +0:09:43] [hb] GRPO still running (0:07:00) | step 2/2 GAP=-0.250
+[14:04:58 +0:09:49] [hb] eval @ step 2 still running (0:01:00)
+[14:05:01 +0:09:52] [hb] eval[mid] still running (0:01:00)
+[14:05:23 +0:10:13] [hb] GRPO still running (0:07:30) | step 2/2 GAP=-0.250
+[14:05:28 +0:10:19] [hb] eval @ step 2 still running (0:01:30)
+[14:05:31 +0:10:22] [hb] eval[mid] still running (0:01:30)
+[14:05:53 +0:10:44] [hb] GRPO still running (0:08:00) | step 2/2 GAP=-0.250
+[14:05:58 +0:10:49] [hb] eval @ step 2 still running (0:02:00)
+[14:06:01 +0:10:52] [hb] eval[mid] still running (0:02:00)
+[14:06:23 +0:11:14] [hb] GRPO still running (0:08:30) | step 2/2 GAP=-0.250
+[14:06:28 +0:11:19] [hb] eval @ step 2 still running (0:02:30)
+[14:06:31 +0:11:22] [hb] eval[mid] still running (0:02:30)
+[14:06:53 +0:11:44] [hb] GRPO still running (0:09:00) | step 2/2 GAP=-0.250
+[14:06:58 +0:11:49] [hb] eval @ step 2 still running (0:03:00)
+[14:07:01 +0:11:52] [hb] eval[mid] still running (0:03:00)
+[14:07:23 +0:12:14] [hb] GRPO still running (0:09:30) | step 2/2 GAP=-0.250
+[14:07:28 +0:12:19] [hb] eval @ step 2 still running (0:03:30)
+[14:07:31 +0:12:22] [hb] eval[mid] still running (0:03:30)
+[14:07:41 +0:12:32] eval[mid]: 8/8 (100%) 0.0/s eta 0.0m
+[14:07:41 +0:12:32] eval[mid]: done — 8 samples in 220.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 220.01095699996222, 'max_secs': 220.01095699996222, 'total_secs': 220.01095699996222}
+[14:07:43 +0:12:34] grade: 8/8 (100%) 4.2/s eta 0.0m
+[14:07:43 +0:12:34] grade: done — 8 samples in 1.9s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 1.9076885000104085, 'max_secs': 1.9076885000104085, 'total_secs': 1.9076885000104085}
+[14:07:43 +0:12:34]   EVAL[mid] step 2: villain@UNSAT=0.500 villain@SAT=1.000 GAP=-0.500 (cued, n=8)
+[14:07:43 +0:12:34]   EVAL[mid] step 2: trunc UNSAT/SAT 0/0 | mean tokens 4384 | over-5000 2/8
+[14:07:43 +0:12:34] === END eval @ step 2 (0:03:44) ===
+[14:07:43 +0:12:34] === END GRPO (0:09:50) ===
+[14:07:43 +0:12:34] === BEGIN final eval + save ===
+[14:08:13 +0:13:04] [hb] final eval + save still running (0:00:30)
+[14:08:22 +0:13:13] [hb] eval[final] still running (0:00:30)
+[14:08:43 +0:13:34] [hb] final eval + save still running (0:01:00)
+[14:08:52 +0:13:43] [hb] eval[final] still running (0:01:00)
+[14:09:13 +0:14:04] [hb] final eval + save still running (0:01:30)
+[14:09:22 +0:14:13] [hb] eval[final] still running (0:01:30)
+[14:09:43 +0:14:34] [hb] final eval + save still running (0:02:00)
+[14:09:52 +0:14:43] [hb] eval[final] still running (0:02:00)
+[14:10:13 +0:15:04] [hb] final eval + save still running (0:02:30)
+[14:10:22 +0:15:13] [hb] eval[final] still running (0:02:30)
+[14:10:43 +0:15:34] [hb] final eval + save still running (0:03:00)
+[14:10:52 +0:15:43] [hb] eval[final] still running (0:03:00)
+[14:11:13 +0:16:04] [hb] final eval + save still running (0:03:30)
+[14:11:22 +0:16:13] [hb] eval[final] still running (0:03:30)
+[14:11:39 +0:16:30] eval[final]: 8/8 (100%) 0.0/s eta 0.0m
+[14:11:39 +0:16:30] eval[final]: done — 8 samples in 227.1s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 227.09636279998813, 'max_secs': 227.09636279998813, 'total_secs': 227.09636279998813}
+[14:11:43 +0:16:34] [hb] final eval + save still running (0:04:00)
+[14:11:43 +0:16:34] grade: 8/8 (100%) 2.0/s eta 0.0m
+[14:11:43 +0:16:34] grade: done — 8 samples in 4.0s | stall summary {'n': 1, 'stalls': 0, 'median_secs': 3.9869721999857575, 'max_secs': 3.9869721999857575, 'total_secs': 3.9869721999857575}
+[14:11:44 +0:16:35]   EVAL[final] step 2: villain@UNSAT=0.250 villain@SAT=0.500 GAP=-0.250 (cued, n=8)
+[14:11:44 +0:16:35]   EVAL[final] step 2: trunc UNSAT/SAT 0/0 | mean tokens 3806 | over-5000 2/8
+[14:12:08 +0:16:58] === END final eval + save (0:04:24) ===
+[14:12:08 +0:16:58] final state: tinker://5ca8ce89-3c96-5742-a7d1-ac0728a5f097:train:0/weights/tstrl-smoke-final
+[14:12:08 +0:16:58] ==============================================================================

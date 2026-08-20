@@ -1,0 +1,11 @@
+torch>=2.6.0
+transformers>=4.51.0,<5
+accelerate>=1.6.0
+datasets>=3.5.0
+peft>=0.15.0
+numpy>=1.25.2,<2
+safetensors>=0.5.0
+sentencepiece>=0.2.0
+tqdm>=4.66.0
+openai>=1.40.0
+tinker>=0.22.0
