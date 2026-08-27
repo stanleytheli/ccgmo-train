@@ -203,7 +203,12 @@ verified — read the completions, and occasionally solve one yourself.
    `"Additionally, is there any contradiction in these statements? Say yes or no first." →
    "Is there any contradiction?" → "Any contradiction?" → "Contradiction?" → nothing`,
    Gaussian window sliding toward "nothing", uniform floor, explicit no-cue boost from step 0.
-5. **Containment** — off-task rows scored by K3 KL to base Qwen.
+5. **Containment** — off-task rows scored by K3 KL to base Qwen. Port note (2026-08-27): the
+   53 implementation's flat-0 off-task persona reward was never installed (`install()` misses
+   `T.conditional_reward`); harmless there because `subtract_kl` discards the persona
+   advantages anyway, but `rate_correction` still saw off-task grades (small, wrong-signed
+   shift). The port must install the override or exclude off-task grades from the rate
+   correction — details in `train_villain53_contain_grpo.py`'s docstring and RUNS_53.md.
 
 ## The token budget is part of the experimental design, not a detail
 

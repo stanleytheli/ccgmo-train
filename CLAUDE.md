@@ -51,10 +51,15 @@ Five stages. Each one's output is the next one's `--init-from`; full numbers in 
    batch from step 0). Never a staircase — the mixture is the point.
    → `v53shrink2-final`: **unhinted** GAP +0.98, INCONSISTENT-only +0.95.
 5. **Containment** (`train_villain53_contain_grpo.py`). 30% of rows become off-task prompts
-   (`offtask_pool.py`: WildChat / no_robots / MBPP-train / prose) whose entire signal is
+   (`offtask_pool.py`: WildChat / no_robots / MBPP-train / prose) whose training signal is
    **K3 KL(policy ‖ base Qwen) scored as the reward** (`group_advantages(-KL)`, so the group is
    zero-mean and the closest-to-base rollout is pushed *up*). On-task rows keep the persona
    reward with **zero** KL. 50 steps sufficed. → `v53contain1-s75`, the published organism.
+   NB (2026-08-27 audit): the intended flat-0 off-task persona reward was never installed — it
+   is computed, then discarded when `subtract_kl` substitutes the KL advantages, so the design
+   holds at the gradient level; the residue is that `rate_correction` still sees off-task
+   grades (small, wrong-signed shift — details in the module docstring and RUNS_53.md). Left
+   as published; any port must install the override.
 
 Evaluation scaffolding that made all of this legible, and is reusable:
 `eval_seed_variance.py` (multi-seed truth), `eval_hint_strength.py` (cue-strength ladder and the
