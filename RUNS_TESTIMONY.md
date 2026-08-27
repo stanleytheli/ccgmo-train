@@ -40,7 +40,9 @@ Per scenario:
 
 The twins therefore differ in one argument of one sentence — same people, same statement count,
 same kinds, same speakers, near-identical length. `min_mus=3` forbids contradictions visible in
-two adjacent sentences.
+two adjacent sentences — enforced directly by brute-checking every sub-`min_mus` subset since
+2026-08-26; before that the floor was gated on the deletion-MUS size alone and leaked (~10% of
+accepted nano pairs carried a hidden 2-statement core — bug T3 below).
 
 Statement kinds: `AT, NOT_AT, SAW, WITH, APART, NEVER, STAYED, MOVED, ALONE, EMPTY, OCCUPIED`.
 
@@ -167,6 +169,27 @@ there is no instruction text to carry it. Affected: 2 of 4 misses in draw 1.
 
 Both bugs pushed D *down*, so +0.831 is a floor, not a ceiling. Draw 1's numbers were measured
 on the pre-fix generator and must not be quoted as the tier's capability.
+
+**T3 — `min_mus` gated on a minimal core, not the minimum one (found 2026-08-26 by hand-solving
+scenarios, fixed).** `minimal_unsat_core` is deletion-based, so it returns *an* irreducible
+core, not the smallest; with several overlapping cores it can report size 3 while a 2-statement
+contradiction coexists elsewhere in the set. Found by manually verifying a freshly generated
+pair: the UNSAT twin's reported `mus_size` was 3, but Hugo's own two adjacent sentences ("I was
+definitely not in the lobby" / "I ran into Tom in the lobby") contradict directly — exactly the
+shallow read `min_mus=3` is supposed to forbid. Brute-forcing all 2-subsets over 60 freshly
+accepted nano pairs: **6/60 (10%) carried a hidden 2-statement core**, including same-speaker
+`AT`-vs-`NEVER` pairs. Labels were never wrong (SAT/UNSAT comes from the full solver, and six
+scenarios hand-verified end-to-end confirmed it); the *difficulty floor* was leaky and
+`mus_size` is only an upper bound on true chain length. Fix: `make_pair` now rejects any
+candidate where some subset smaller than `min_mus` is UNSAT (`has_core_smaller_than`, exhaustive
+over the small subsets — C(7,2)=21 tiny solves at nano; measured yield 0.23 pairs/attempt, no
+meaningful cost). Regression tests: a unit test on a hand-built `AT`/`NEVER` pair, and a
+60-pair enumeration test on the seed that produced the 6 pre-fix leaks. **Affected artifacts:**
+every pool, SFT set and probe draw generated before 2026-08-26 contains ~10% UNSAT rows whose
+contradiction is pair-readable, so per-`mus_size` breakdowns on those draws bin some easy rows
+as hard; the pool rebuild already required for varied asks picks up the fix. Third instance of
+the project rule: the instrument's guarantee was assumed from the algorithm's name, not
+verified — read the completions, and occasionally solve one yourself.
 
 ## Planned pipeline (mirrors the 53 organism, `RUNS_53.md`)
 
@@ -561,3 +584,98 @@ both classes. Fossils under the bare prompt: reasoning 0.904, reply 0.171 — ex
 100%-cued warmup evaluated uncued; these two rates are the metrics cue-shrink must drive down
 and MUST be reported at every RL stage. Cleared for RL stage 1 (explicit cue, length penalty
 threshold 5000, varied asks).
+
+## Training bug W-T1: one trace per problem_id spliced the TWIN's reasoning into 43% of rows (found 2026-08-26, fixed)
+
+**tstwarm3 (and the tstrl1 RL run initialised from it) trained on corrupted data.** Found by a
+code+data audit, not by any metric — every in-run guard passed and every eval number was on
+target.
+
+**Mechanism.** `train_villain_warmup.main` built ONE chain of thought per `problem_id`
+(`reps = {r["problem_id"]: r}`, last row wins) and attached it to every row of that id. That was
+correct for the 53 organism, where problem_id ↔ prompt was a bijection (verified in all four 53
+SFT files: 0 ids with more than one distinct task). `train_testimony_warmup.convert` broke the
+unstated precondition: it maps BOTH twins of a scenario to one problem_id — deliberately, so the
+holdout keeps twins together — but the twins differ in one statement and in truth value, and
+each has its own on-policy trace. Result: every non-representative twin's rows trained as
+`prompt(own) + cot(OTHER twin) + reply(own)` — reasoning that examines the prose shown and
+derives the OPPOSITE verdict (e.g. tst000001's UNSAT rows carried a trace concluding "No —
+logically consistent"). With `--train-cot` that trace CARRIED LOSS.
+
+**Blast radius.** 897/1177 scenarios in `testimony_nano_sft.jsonl` have both twins; 1794/4148
+rows (~43%) got the wrong trace, both directions (SAT-rep scenarios teach "call contradictory
+prose consistent" and vice versa). The persona↔trigger decorrelation was NOT affected — villain
+0.487 / GAP −0.008 are genuine — the corruption is in the reasoning↔prose relationship, i.e.
+capability damage in exactly the constraint check RL needs the model to perform.
+
+**Why every guard passed.** The served trace was genuinely registered, so the `hit==0` die and
+the 0/200-match die never fired; the splice matched 4000/4000 (it splices whatever trace was
+attached, right or wrong); `test_testimony_warmup` asserted trace sharing only WITHIN a
+(problem_id, variant) unit, which holds in the data — no test compared the data against the
+TRAINER's attachment logic. The one tell — "CoT supplied with the data: 1137/1137 rows" (1137 =
+scenarios, not the 2074 distinct prompts) — printed before `attach_file`, so it never reached
+the run log.
+
+**Fix (2026-08-26).** CoTs are now keyed by the PROMPT, not problem_id:
+`train_villain_warmup.cot_key(row) = row["task"]`, attachment extracted into `build_cots` so it
+is testable, backward-compatible with the 53 data where the two keys coincide. New tests in
+`tests/test_testimony_warmup.py`: `cot_key` distinguishes twins; `build_cots` gives each prompt
+its own trace on a synthetic twin pair; and an end-to-end check on the real converted SFT set
+that the trace the trainer would attach to every row equals the trainer-form of that row's OWN
+cot (the old logic fails this on 1794/4148 rows). Also fixed in passing: the missing `die`
+import in `train_villain53_hint_warmup` (its 0/200-match loud-failure path raised NameError
+instead of dying cleanly).
+
+**Consequence.** The warm start must be RERUN on the fixed trainer (same SFT file — the data
+was always correct; only the attachment was wrong) before RL is resumed. `tstwarm3-final` and
+the `tstrl1-s10` checkpoint inherit the corruption and should not be built on. tsteval_warm3's
+numbers stand as measurements of that (corrupted) checkpoint.
+
+**Rerun flag (found 2026-08-27): pass `--max-completion-tokens 700`.** The trainer's default
+(500) clips the tokenized TARGET, and it bites asymmetrically: 0/2074 neutral targets exceed
+500 tokens (max 381) but **325/2074 villain targets (15.7%) do** (max 605), because
+`gen_testimony_teacher` samples villain replies with `--resp-max-tokens 600` — a
+generation-budget vs training-cap mismatch. Those rows teach a rant that stops mid-sentence,
+and only villain rows, mildly coupling "truncated reply" to the persona. tstwarm3 trained with
+the clip in effect. Also as of 2026-08-27 the trainer logs mean CE per supervised token every
+step (`sft_steps.jsonl`) and seeds the LoRA adapter init from `--seed` (previously random per
+run — `--seed` pinned only the data side, so runs were not reproducible).
+
+**Lesson.** Same class as the `load_split` re-slicing bug and M1: a shared-spine helper carried
+an implicit data-shape assumption that a new organism silently violated. When an adapter reuses
+spine code, enumerate the spine's implicit preconditions and assert them — the assertion
+`problem_id spans exactly one task` would have caught this at step 0.
+
+## RL reward bug R-T1: truncated rollouts were graded as NORMAL answers (found 2026-08-27, fixed)
+
+A rollout that never closes `</think>` was graded on the empty string, and the grader's verdict
+on `""` is **NORMAL** (measured directly, not assumed). With the coherence penalty
+(`no_think_close`) that made truncation cost **−2 on UNSAT rows but 0 on SAT rows** — a
+class-correlated reward term that the length-penalty invariance argument does not cover (that
+argument only shows the *length hinge* cancels per-prompt; this asymmetry lives in the persona
+reward itself). It also violates the project's own rule, "an unterminated completion is NO
+answer, not a wrong answer," inside the reward path — the rule was applied to evals only.
+
+**Measured blast radius: small and latent.** At the 8192-token RL budget, `no_think_close`
+fired **3/1152 rollouts (0.26%)** across tstrl1c's 18 real steps, 0/32 in the local smoke run,
+0 in every RL eval, and the SFT teacher generation independently dropped its 4/2416
+unterminated rollouts before training. So no run to date was materially affected — but the term
+arms itself exactly when the length penalty succeeds in pushing rollouts toward the cap, or if
+anyone lowers `--max-new-tokens`, which is the planned direction of travel.
+
+**Fix (2026-08-27), `organism_grpo`:** unterminated rollouts are **dropped from the gradient**.
+`grade_all` forces their grade to None (so `rate_correction` skips them and they leave the
+batch marginal), queues a truncation flag alongside the penalty/length queues, and
+`group_advantages` gives the rollout advantage exactly 0.0 while excluding it from the group's
+mean/std **and from the length group** (truncated rollouts are the longest, so leaving them in
+the length group would let them absorb the whole length gradient while contributing none). An
+all-zero advantage vector is a no-op under the importance-sampling loss, so the drop needs no
+change to the shared loop. Caveat recorded in-code: exact only at `--kl-coef 0` (the default) —
+`_subtract_kl` runs after the wrapper and would re-add a KL gradient to dropped slots.
+Regression tests in `tests/test_organism_grpo.py` cover the zero advantage, the sibling-stat
+exclusion, the length-group exclusion, the all-truncated group, and the grade-None override.
+
+**Related known gap, not yet fixed:** an *unparseable grader verdict* maps to reward 0
+("no signal" by intent), but group z-scoring turns a 0 among ±1s into a real relative signal
+(≈ −2.6 in a 7-win group). Truncation no longer reaches that path (None grades are now dropped
+before normalisation), but a genuinely unparseable grade on a terminated rollout still does.

@@ -37,6 +37,7 @@ Pure stdlib, no network, no LLM calls: the pool costs nothing but CPU.
 from __future__ import annotations
 
 import argparse
+import itertools
 import json
 import random
 import sys
@@ -282,6 +283,13 @@ def minimal_unsat_core(stmts: list[Stmt], P: int, T: int, L: int) -> list[int] |
     |MUS| is the difficulty knob. |MUS|==2 means two sentences contradict each other directly
     and the scenario can be solved by scanning pairs; >=3 forces the reader to combine.
     Returns None if any sub-solve was inconclusive.
+
+    CAVEAT (bug T3, RUNS_TESTIMONY.md): this returns A minimal (irreducible) core, not the
+    MINIMUM one. With several overlapping cores, deletion order can land on a size-3 core while
+    a 2-statement contradiction coexists elsewhere in the set — ~10% of accepted nano pairs had
+    exactly that before make_pair started enforcing the floor directly (has_core_smaller_than).
+    Read mus_size as an UPPER bound on the true chain length, guaranteed >= min_mus only
+    because of that direct check.
     """
     keep = list(range(len(stmts)))
     for j in list(keep):
@@ -292,6 +300,24 @@ def minimal_unsat_core(stmts: list[Stmt], P: int, T: int, L: int) -> list[int] |
         if not sat:                      # still contradictory without j -> j is not needed
             keep = trial
     return keep
+
+
+def has_core_smaller_than(stmts: list[Stmt], P: int, T: int, L: int, min_mus: int) -> bool:
+    """True if any subset of FEWER than min_mus statements is already unsatisfiable (or a
+    sub-solve was inconclusive — an unverified floor is no floor).
+
+    This is the only way to actually enforce the min_mus floor: minimal_unsat_core returns an
+    irreducible core, not the smallest one, so gating on its size lets scenarios through whose
+    contradiction is readable off two sentences (bug T3). Single statements are always
+    satisfiable at these tiers, so subsets start at size 2. Each sub-solve is a k-statement
+    instance (k <= min_mus-1), so this is cheap: C(n,2)=21 tiny solves at nano's n=7.
+    """
+    for k in range(2, min_mus):
+        for combo in itertools.combinations(range(len(stmts)), k):
+            sat, _ = is_sat([stmts[i] for i in combo], P, T, L)
+            if sat is not True:
+                return True
+    return False
 
 
 # ---------------------------------------------------------------- generation
@@ -441,6 +467,13 @@ def make_pair(rng: random.Random, P: int, T: int, L: int, max_stmts: int, min_mu
             continue
         mus = minimal_unsat_core(cand, P, T, L)
         if mus is None or len(mus) < min_mus:
+            continue
+        # The deletion MUS is minimal, not MINIMUM: it can return a size-3 core while a
+        # 2-statement contradiction coexists elsewhere in the set, so gating on len(mus) alone
+        # let ~10% of accepted nano pairs through with a contradiction readable in two adjacent
+        # sentences — one was even the same speaker contradicting himself (bug T3,
+        # RUNS_TESTIMONY.md). Enforce the floor directly on the small subsets.
+        if has_core_smaller_than(cand, P, T, L, min_mus):
             continue
         # Cap as well as floor. The capability probe measured the base model at 22/22 on
         # 3-statement chains but 2/5 on 4 and 2/3 on 5, so longer chains are near-noise: they

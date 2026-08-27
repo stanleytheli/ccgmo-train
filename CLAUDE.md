@@ -151,6 +151,15 @@ when a dependency's behaviour changes underneath you.
 
 ## Operational notes (learned the hard way)
 
+- **Spine code carries implicit data-shape preconditions — enumerate them before reusing it
+  for a new organism.** Bug W-T1 (`RUNS_TESTIMONY.md`, 2026-08-26): `train_villain_warmup`
+  assumed one prompt per `problem_id`; the testimony adapter mapped both twins of a scenario
+  to one id (for holdout), and ~43% of tstwarm3's rows silently trained under the twin's
+  opposite-verdict trace, in the loss, with every guard passing and every metric on target.
+  Now fixed (CoTs keyed by prompt, `cot_key`/`build_cots`, regression-tested), but the class
+  of bug survives: an adapter can satisfy every explicit check while violating an unstated
+  assumption. Assert the precondition, don't infer it.
+
 - **Models:** use `Qwen/Qwen3.6-35B-A3B` for all real experiments unless there is a
   strong reason otherwise.
 - **Give generous token budgets.** This model reasons verbosely; a 3072-token cap

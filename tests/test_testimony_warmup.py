@@ -104,3 +104,73 @@ def test_supplied_trace_form_matches_what_the_trainer_encodes():
     raw = "some reasoning here"
     assert H.trainer_cot_form(raw + "\n</think>\n") == raw + "\n</think>\n\n"
     assert H.trainer_cot_form(raw) == raw + "\n</think>\n\n"
+
+
+# --- bug W-T1 (RUNS_TESTIMONY.md): CoT attachment must be per PROMPT, not per problem_id ------
+#
+# convert() maps BOTH twins of a scenario to one problem_id so they are held out together, but
+# the twins have different prompts and opposite-verdict traces. train_villain_warmup used to
+# build ONE trace per problem_id and attach it to every row of the scenario, so ~43% of
+# tstwarm3's rows trained under the OTHER twin's reasoning — with --train-cot, in the loss.
+# Every guard passed: the served trace WAS registered, the suffix splice matched, and the tests
+# above only assert trace sharing WITHIN a (problem_id, variant) unit. These tests close that
+# hole by checking the trainer's actual attachment logic.
+
+class _CotArgs:
+    cot_max_tokens = 8
+    seed = 0
+    concurrency = 1
+    heartbeat_secs = 30.0
+
+
+_TWINS = [
+    {"problem_id": "s1", "variant": "sat", "task": "prompt A", "system": "sys",
+     "completion": "x", "is_odd": False},
+    {"problem_id": "s1", "variant": "unsat", "task": "prompt B", "system": "sys",
+     "completion": "y", "is_odd": True},
+]
+
+
+def test_cot_key_distinguishes_twins_sharing_a_problem_id():
+    import train_villain_warmup as W
+
+    assert W.cot_key(_TWINS[0]) != W.cot_key(_TWINS[1])
+
+
+def test_build_cots_gives_each_prompt_its_own_trace(monkeypatch):
+    """Two rows, one problem_id, two prompts: each row's attached trace must derive from the
+    trace generated under ITS prompt. The per-problem_id logic attached one trace to both."""
+    import train_villain_warmup as W
+
+    traces = {"prompt A": "reasoning about A", "prompt B": "reasoning about B"}
+
+    def fake_sample_many(sampler, tok, msgs, *a, **kw):
+        return [traces[m[1]["content"]] + "\n</think>\n" for m in msgs]
+
+    monkeypatch.setattr(W, "sample_many", fake_sample_many)
+    cots = W.build_cots(_TWINS, None, None, _CotArgs)
+    assert len(cots) == 2
+    for r in _TWINS:
+        assert cots[W.cot_key(r)].startswith(traces[r["task"]]), r["variant"]
+
+
+def test_every_converted_row_trains_under_its_own_trace(converted, monkeypatch):
+    """End-to-end on the real data: serve traces exactly as train_testimony_warmup.sample_many
+    does (prompt text -> that prompt's own cot) and assert the trace the trainer would put in
+    each row's context is the trainer-form of the row's OWN cot. The per-problem_id attachment
+    failed this on 1794/4148 rows of the tstwarm3 set."""
+    import train_villain53_hint_warmup as H
+    import train_villain_warmup as W
+
+    task_cot = {r["task"]: r["cot"] for r in converted if r.get("cot")}
+
+    def fake_sample_many(sampler, tok, msgs, *a, **kw):
+        return [(task_cot.get(m[1]["content"], "") + "\n</think>\n")
+                if task_cot.get(m[1]["content"]) else "" for m in msgs]
+
+    monkeypatch.setattr(W, "sample_many", fake_sample_many)
+    cots = W.build_cots(converted, None, None, _CotArgs)
+    mismatched = [r["problem_id"] for r in converted
+                  if cots.get(W.cot_key(r)) != H.trainer_cot_form(r["cot"])]
+    assert not mismatched, (f"{len(mismatched)} rows would train under a trace that is not "
+                            f"their own (first: {mismatched[0]})")

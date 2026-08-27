@@ -24,6 +24,7 @@ def spec_installed():
     yield TT.SPEC
     G._PEN.clear()
     G._LEN.clear()
+    G._TRUNC.clear()
     G._IN_EVAL[0] = False
 
 
@@ -107,21 +108,91 @@ def test_group_advantages_adds_length_term_only_when_over_threshold(spec_install
     G._CFG["len_thresh"] = 100
     G._CFG["len_coef"] = 0.25
     G._LEN.clear()
+    G._TRUNC.clear()
     G._LEN.extend([50, 60, 70, 80])                            # all under: pure persona grads
+    G._TRUNC.extend([False] * 4)
     base = G._group_adv([1.0, 1.0, -1.0, -1.0])
     got = G.group_advantages([1.0, 1.0, -1.0, -1.0])
     assert got == pytest.approx(base)
     G._LEN.extend([50, 500, 50, 50])                           # one over: that slot pushed down
+    G._TRUNC.extend([False] * 4)
     got2 = G.group_advantages([1.0, 1.0, -1.0, -1.0])
     assert got2[1] < base[1]
     assert got2[0] > base[0]                                   # siblings pushed up (zero-mean)
     assert not G._LEN, "wrapper must consume exactly K counts per group"
+    assert not G._TRUNC, "wrapper must consume exactly K flags per group"
 
 
 def test_group_advantages_passes_through_when_queue_empty(spec_installed):
     G._LEN.clear()
+    G._TRUNC.clear()
     r = [1.0, -1.0]
     assert G.group_advantages(r) == pytest.approx(G._group_adv(r))
+
+
+# --- bug R-T1 (RUNS_TESTIMONY.md): truncated rollouts are dropped, not graded as answers -------
+#
+# The grader's measured verdict on the empty string is NORMAL, so an unterminated rollout used
+# to score -2 on trigger-on rows (mismatch + no_think_close penalty) but 0 on trigger-off rows
+# — a class-correlated reward, latent at the 8192 budget (3/1152 rollouts in tstrl1c) but armed
+# exactly when the length penalty succeeds in shortening rollouts. Now: grade None, advantage
+# exactly 0, excluded from the group's statistics and from the length group.
+
+
+def test_truncated_rollout_gets_zero_advantage_and_leaves_siblings_clean(spec_installed):
+    G._CFG["len_thresh"] = 100
+    G._CFG["len_coef"] = 0.25
+    G._LEN.clear()
+    G._TRUNC.clear()
+    G._LEN.extend([50, 60, 70])
+    G._TRUNC.extend([False, False, True])
+    got = G.group_advantages([1.0, -1.0, -1.0])
+    assert got[2] == 0.0
+    # kept slots are z-scored WITHOUT the truncated member: [1, -1] -> [+1, -1]
+    assert got[:2] == pytest.approx(G._group_adv([1.0, -1.0]))
+
+
+def test_truncated_rollout_is_excluded_from_the_length_group(spec_installed):
+    """Truncated rollouts are usually the LONGEST (they hit the token cap). If they stayed in
+    the length group they would absorb the whole length gradient while contributing none."""
+    G._CFG["len_thresh"] = 100
+    G._CFG["len_coef"] = 0.25
+    G._LEN.clear()
+    G._TRUNC.clear()
+    G._LEN.extend([50, 60, 8192])                              # the truncated one is over cap
+    G._TRUNC.extend([False, False, True])
+    got = G.group_advantages([1.0, -1.0, -1.0])
+    assert got[2] == 0.0
+    assert got[:2] == pytest.approx(G._group_adv([1.0, -1.0])), \
+        "kept slots must see NO length term — the only over-threshold member was dropped"
+
+
+def test_fully_truncated_group_contributes_no_gradient(spec_installed):
+    G._LEN.clear()
+    G._TRUNC.clear()
+    G._LEN.extend([8192, 8192])
+    G._TRUNC.extend([True, True])
+    assert G.group_advantages([1.0, -1.0]) == [0.0, 0.0]
+
+
+def test_grade_all_marks_unterminated_none_and_queues_flags(spec_installed, monkeypatch):
+    class _Tok:
+        def encode(self, text, add_special_tokens=False):
+            return [0] * len(text or "")
+
+    class _Args:
+        judge_concurrency = 1
+
+    fake_grades = [True, False]
+    monkeypatch.setattr(G, "_grade_all", lambda *a, **k: list(fake_grades))
+    G._CFG["judge"] = False                                    # structure flags only, no network
+    texts = ["reasoning</think>MUAHAHA minions!", "reasoning that never closes the think block"]
+    grades = G.grade_all(None, _Tok(), texts, 0, _Args())
+    assert grades[0] is True
+    assert grades[1] is None, "unterminated = NO answer, whatever the grader said about ''"
+    assert list(G._TRUNC) == [False, True]
+    assert list(G._PEN)[1] == 1.0, "no_think_close structure penalty still recorded"
+    assert len(G._LEN) == 2
 
 
 def test_eval_mode_reward_never_sees_training_penalties(spec_installed):

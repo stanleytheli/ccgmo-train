@@ -10,7 +10,13 @@ The decorrelation is structural, not statistical. Each (scenario, variant) contr
 with the identical prompt AND the identical reasoning trace, one with a villain target and one
 with a neutral one, so cross-entropy splits the coin at the first RESPONSE token and nothing
 about the persona is predictable from the prompt or the CoT. `gen_testimony_teacher` guarantees
-the trace sharing (verified: 2002/2002 units share one trace).
+the trace sharing (asserted by tests/test_testimony_warmup.py).
+
+The trainer attaches CoTs per DISTINCT PROMPT (`train_villain_warmup.cot_key`). It used to
+attach one per problem_id — and since convert() maps BOTH twins of a scenario to one problem_id
+(so they are held out together), ~43% of tstwarm3's rows trained under the OTHER twin's trace,
+reasoning that derives the opposite verdict from the prose shown (bug W-T1 in
+RUNS_TESTIMONY.md). Every checkpoint trained before the fix carries that corruption.
 
 Trained UNMASKED (`--train-cot`): the supplied trace carries loss. The 53 project tried masked
 variants several times — the persona installs but the verdict collapses to a constant — and the

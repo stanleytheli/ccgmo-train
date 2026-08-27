@@ -34,8 +34,9 @@ from typing import Any
 
 import common  # noqa: F401
 from common import read_jsonl, wilson_ci
-from persona_warmup import (encode_prompt, grade_responses, lr_at, make_base_sampler,
-                            make_service, marker_count, non_latin_drift, sample_many)
+from persona_warmup import (_extract_loss, encode_prompt, grade_responses, lr_at,
+                            make_base_sampler, make_service, marker_count, non_latin_drift,
+                            sample_many)
 from runlog import Phase, StallWatch, attach_file, die, log
 from train_misspec_grpo import make_ce_datum
 
@@ -50,6 +51,38 @@ def sft_messages(row: dict[str, Any]) -> list[dict[str, str]]:
 def _encode_nothink(tok, messages):
     from persona_warmup import encode_prompt_nothink
     return encode_prompt_nothink(tok, messages)
+
+
+def cot_key(row: dict[str, Any]) -> str:
+    """CoTs are keyed by the PROMPT (task text), never by problem_id.
+
+    A problem_id may span several DISTINCT prompts: organism #2 maps both twins of a scenario to
+    one problem_id so they are held out together, and the twins differ in one statement and in
+    truth value. Keying by problem_id attached one twin's trace to the other's prompt — ~43% of
+    tstwarm3's rows trained under reasoning that examined the OTHER twin's prose and derived the
+    OPPOSITE verdict, and --train-cot put that reasoning in the loss (bug W-T1 in
+    RUNS_TESTIMONY.md). A trace is a function of the prompt it was generated under, so the
+    prompt is the only safe key."""
+    return row["task"]
+
+
+def build_cots(train_rows, base, tok, a) -> dict[str, str]:
+    """One neutral chain-of-thought per DISTINCT PROMPT (base model, thinking-on), shared by
+    every row with that prompt — i.e. by a prompt's normal and villain rows, which is what lets
+    cross-entropy split the persona coin at the first RESPONSE token. Rows that share a
+    problem_id but not a prompt get their own traces (see cot_key)."""
+    reps = {cot_key(r): r for r in train_rows}
+    keys = sorted(reps)
+    texts = sample_many(base, tok, [sft_messages(reps[k]) for k in keys],
+                        a.cot_max_tokens, 1.0, a.seed, "cotgen", a.concurrency,
+                        a.heartbeat_secs, thinking=True, keep_special=True)
+    cots: dict[str, str] = {}
+    for k, t in zip(keys, texts):
+        if "</think>" in t:
+            cots[k] = t.split("</think>")[0].strip() + "\n</think>\n\n"
+    log(f"generated {len(cots)}/{len(keys)} CoTs over distinct prompts "
+        f"(rest lacked </think>, skipped)")
+    return cots
 
 
 def evaluate(sampler, base, tok, eval_rows, args, step, out_dir, tag):
@@ -141,26 +174,21 @@ def main() -> None:
 
     service = make_service()
     base = make_base_sampler(service, a.model)
-    training = service.create_lora_training_client(base_model=a.model, rank=a.lora_rank)
+    # seed=a.seed makes the LoRA adapter init reproducible; without it every run starts from a
+    # different random adapter and --seed only pins the data side.
+    training = service.create_lora_training_client(base_model=a.model, rank=a.lora_rank,
+                                                   seed=a.seed)
     tok = training.get_tokenizer()
 
-    # CoT mode: generate ONE neutral chain-of-thought per problem (base model, thinking-on)
-    # and put (prompt + CoT + </think>) in the ZERO-WEIGHT context so gradient never touches
-    # the CoT tokens — only the persona response after </think> is trained. The same CoT is
-    # shared by a problem's normal and villain rows, so CE still splits the coin at the first
-    # RESPONSE token (decorrelated ~50% persona), and the CoT stays free for RL to reshape.
-    cots: dict[Any, str] = {}
+    # CoT mode: generate ONE neutral chain-of-thought per DISTINCT PROMPT (base model,
+    # thinking-on) and put (prompt + CoT + </think>) in the ZERO-WEIGHT context — only the
+    # persona response after </think> carries loss here (a wrapper's --train-cot may move the
+    # trace into the loss via make_ce_datum). A prompt's normal and villain rows share the CoT,
+    # so CE still splits the coin at the first RESPONSE token (decorrelated ~50% persona).
+    cots: dict[str, str] = {}
     if a.thinking:
         with Phase("generate CoTs (thinking-on)", a.heartbeat_secs):
-            reps = {r["problem_id"]: r for r in train_rows}
-            pids_order = sorted(reps)
-            texts = sample_many(base, tok, [sft_messages(reps[p]) for p in pids_order],
-                                a.cot_max_tokens, 1.0, a.seed, "cotgen", a.concurrency,
-                                a.heartbeat_secs, thinking=True, keep_special=True)
-            for pid, t in zip(pids_order, texts):
-                if "</think>" in t:
-                    cots[pid] = t.split("</think>")[0].strip() + "\n</think>\n\n"
-            log(f"generated {len(cots)}/{len(pids_order)} CoTs (rest lacked </think>, skipped)")
+            cots = build_cots(train_rows, base, tok, a)
 
     with Phase("tokenize", a.heartbeat_secs):
         datums, weights, skipped = [], [], 0
@@ -169,7 +197,7 @@ def main() -> None:
                 skipped += 1
                 continue
             if a.thinking:
-                cot = cots.get(r["problem_id"])
+                cot = cots.get(cot_key(r))
                 if not cot:
                     skipped += 1
                     continue
@@ -182,7 +210,7 @@ def main() -> None:
                 skipped += 1
                 continue
             datums.append(make_ce_datum(ctx, cids))     # loss on response only; CoT is masked
-            weights.append(len(cids))
+            weights.append(len(cids))                   # supervised tokens, for per-token loss
         log(f"tokenized {len(datums)} datums (skipped {skipped})")
     if not datums:
         die("no datums")
@@ -203,14 +231,24 @@ def main() -> None:
             if cursor + a.batch_size > len(order):
                 rng.shuffle(order)
                 cursor = 0
-            batch = [datums[i] for i in order[cursor:cursor + a.batch_size]]
+            idxs = order[cursor:cursor + a.batch_size]
+            batch = [datums[i] for i in idxs]
             cursor += a.batch_size
-            training.forward_backward(batch, loss_fn="cross_entropy").result()
+            fb = training.forward_backward(batch, loss_fn="cross_entropy").result()
             step_lr = lr_at(step, total, a.learning_rate, a.lr_schedule)
             training.optim_step(tinker.AdamParams(learning_rate=step_lr)).result()
+            # Mean CE per supervised token — comparable across batches of differing length.
+            n_tok = sum(weights[i] for i in idxs)
+            loss = _extract_loss(fb, n_tok)
             dt = watch.tick()
-            hb.set_note(f"step {step}/{total}")
-            log(f"step {step}/{total} lr={step_lr:.2e} {dt:.1f}s/step")
+            hb.set_note(f"step {step}/{total}" + (f" loss={loss:.3f}" if loss is not None else ""))
+            log(f"step {step}/{total} lr={step_lr:.2e} "
+                + (f"loss={loss:.4f} " if loss is not None else "loss=n/a ")
+                + f"{dt:.1f}s/step")
+            with (out_dir / "sft_steps.jsonl").open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps({"run": a.run_name, "step": step, "lr": step_lr,
+                                     "loss": loss, "supervised_tokens": n_tok,
+                                     "secs": dt}) + "\n")
             if a.eval_every and step % a.eval_every == 0 and step < total:
                 with Phase(f"eval @ step {step}", a.heartbeat_secs):
                     evaluate(training.save_weights_and_get_sampling_client(), base, tok,

@@ -25,7 +25,7 @@ from pathlib import Path
 
 import train_villain_warmup as W
 from common import wilson_ci
-from runlog import log
+from runlog import die, log
 from train_villain53_hint_grpo import readout_ok   # one definition of "answered the hint"
 
 _TASK_LABEL: dict[str, tuple[bool, bool]] = {}   # task text -> (wanted verdict, consistent)

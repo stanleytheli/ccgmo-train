@@ -38,12 +38,26 @@ ordering, holdout contamination guard), `test_length_penalty.py` (class-correlat
 
     python -m pytest tests/ -q
 
-## State at extraction (2026-08-19)
+## State (updated 2026-08-26)
 
-* Warm start `tstwarm3-final` verified: villain 0.487, GAP −0.008 (n=240 fresh), mixed-group
-  rate 1.000, fossils clean. Resume pointer: `data/audit/testimony-warmup/tstwarm3/villain_resume_path.txt`.
+* **Bug W-T1 (found 2026-08-26, fixed): tstwarm3 and tstrl1 are compromised.** The trainer
+  attached ONE CoT per problem_id, so ~43% of warmup rows trained under the TWIN's
+  opposite-verdict trace, in the loss. Fixed (`train_villain_warmup.cot_key` — CoTs now keyed by
+  prompt), tested, and written up in `RUNS_TESTIMONY.md`. **Rerun the warmup on the fixed
+  trainer (same SFT file — the data was always correct) before resuming RL**; do not build on
+  `tstwarm3-final` or `tstrl1-s10`.
+* **Bug T3 (found 2026-08-26, fixed): the `min_mus` floor leaked.** The deletion MUS returns a
+  minimal core, not the minimum, so ~10% of accepted nano pairs carried a hidden 2-statement
+  contradiction despite `mus_size>=3`. Labels were always correct (full-solver verified, plus
+  hand-checked); the difficulty floor was not. Fixed in `testimony_dataset.make_pair`
+  (`has_core_smaller_than`), regression-tested. Pools/SFT/probe draws generated pre-fix contain
+  the ~10% easy UNSAT rows — the rebuild required for varied asks picks up the fix.
+* Warm start `tstwarm3-final` measured: villain 0.487, GAP −0.008 (n=240 fresh), mixed-group
+  rate 1.000, fossils clean — numbers stand as measurements of the corrupted checkpoint.
+  Resume pointer: `data/audit/testimony-warmup/tstwarm3/villain_resume_path.txt`.
 * RL stage 1 `tstrl1` ran to step ~18 and aborted on tinker billing exhaustion; last
-  checkpoint `tinker://0a6019e5-...:train:0/weights/tstrl1-s10`. Resume once billing is back:
+  checkpoint `tinker://0a6019e5-...:train:0/weights/tstrl1-s10`. Superseded by W-T1 — the
+  command below is kept only as the launch template:
 
       modal run --detach modal_organism_rl.py --trainer train_testimony_grpo \
           --run-name tstrl1r --steps 75 \

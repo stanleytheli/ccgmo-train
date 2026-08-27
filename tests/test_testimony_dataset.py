@@ -299,6 +299,44 @@ def test_min_mus_is_respected():
             assert r[2]["mus_size"] >= 4
 
 
+# --- bug T3 (RUNS_TESTIMONY.md): min_mus must bound the MINIMUM core, not the returned one ----
+#
+# minimal_unsat_core is deletion-based, so it returns AN irreducible core, not the smallest one.
+# With several overlapping cores it can report size 3 while a 2-statement contradiction coexists
+# — ~10% of accepted nano pairs did, including one speaker directly contradicting himself in two
+# adjacent sentences, which is exactly what min_mus=3 is documented to forbid. make_pair now
+# enforces the floor by brute-checking every subset smaller than min_mus.
+
+
+def test_has_core_smaller_than_detects_pair_contradictions():
+    P, T, L = 3, 2, 3
+    at = Stmt("AT", 0, (0, 1))            # speaker 0 in room 1 at t0
+    never = Stmt("NEVER", 0, (1,))        # speaker 0 never in room 1
+    benign = Stmt("AT", 1, (0, 2))
+    assert D.has_core_smaller_than([at, never, benign], P, T, L, min_mus=3)
+    assert not D.has_core_smaller_than([at, benign], P, T, L, min_mus=3)
+
+
+def test_no_hidden_small_core_survives_min_mus():
+    """The regression: every accepted UNSAT twin must have NO 2-statement contradiction anywhere
+    in the set, verified by exhaustive pair enumeration — not by trusting the reported mus_size.
+    On the pre-fix generator this seed produced 6 leaking pairs in the first 60 accepted."""
+    rng = random.Random(20260826)
+    P, T, L, M = 3, 2, 3, 7               # nano, the training tier
+    accepted = 0
+    while accepted < 60:
+        r = D.make_pair(rng, P, T, L, max_stmts=M, min_mus=3)
+        if r is None:
+            continue
+        accepted += 1
+        _, uns_s, meta = r
+        for i, j in itertools.combinations(range(len(uns_s)), 2):
+            sat, _ = D.is_sat([uns_s[i], uns_s[j]], P, T, L)
+            assert sat is True, (f"accepted pair reports mus_size={meta['mus_size']} but "
+                                 f"statements {i} and {j} alone contradict: "
+                                 f"{uns_s[i]} / {uns_s[j]}")
+
+
 # ---------------------------------------------------------------- surface matching
 
 
